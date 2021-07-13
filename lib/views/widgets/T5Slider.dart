@@ -24,10 +24,7 @@ class T5SliderWidget extends StatelessWidget {
       items: mSliderList!.map((slider) {
         return Builder(
           builder: (BuildContext context) {
-            return  ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-            child:  Container(
-
+            return Container(
               width: MediaQuery.of(context).size.width,
               height: cardSize.height,
               child: Stack(
@@ -35,55 +32,15 @@ class T5SliderWidget extends StatelessWidget {
                   CachedNetworkImage(
                     placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
                     imageUrl: slider.image,
-                    fit: BoxFit.fill,
-                    width: MediaQuery.of(context).size.width,
-                    height: cardSize.height-70,
+                    fit: BoxFit. fill,
                   ),
-                  // Padding(
-                  //     child: Column(
-                  //       mainAxisAlignment: MainAxisAlignment.start,
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: <Widget>[
-                  //         text(
-                  //           t5_avl_balance,
-                  //           textColor: t5White,
-                  //           fontSize: textSizeMedium,
-                  //         ),
-                  //         text(slider.balance, textColor: t5White, fontSize: textSizeLarge, fontFamily: fontBold)
-                  //       ],
-                  //     ),
-                  //     padding: EdgeInsets.all(14)),
-                  // Container(
-                  //   padding: EdgeInsets.all(14),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     crossAxisAlignment: CrossAxisAlignment.end,
-                  //     children: <Widget>[
-                  //       Expanded(
-                  //         child: Column(
-                  //           mainAxisAlignment: MainAxisAlignment.end,
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: <Widget>[
-                  //             text(
-                  //               t5_account_number,
-                  //               textColor: t5White,
-                  //               fontSize: textSizeMedium,
-                  //             ),
-                  //             text(slider.accountNo, textColor: t5White, fontSize: textSizeNormal)
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       text("VISA", textColor: t5White, fontSize: textSizeLarge, fontFamily: fontBold)
-                  //     ],
-                  //   ),
-                  // )
                 ],
               ),
-            ),
             );
           },
         );
       }).toList(),
     );
+
   }
 }
