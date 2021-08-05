@@ -8,7 +8,7 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 
 Login(String username, String password, BuildContext context) async {
   final authorizationEndpoint =
-  Uri.parse("http://dev.codepickles.com:8080/auth/realms/master/protocol/openid-connect/token");
+  Uri.parse("https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token");
   //final username = "testmymikanop";
   //   final password = "test123;";
   final identifier = 'MymikanoAppLogin';

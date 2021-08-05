@@ -5,14 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/T13Constant.dart';
 import 'package:mymikano_app/utils/T13Images.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
 import 'package:mymikano_app/utils/T13Widget.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'SignUpScreen.dart';
@@ -50,6 +47,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
           child: Container(
             margin: EdgeInsets.only(left: spacing_standard_new, right: spacing_standard_new),
             child: Column(
+
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

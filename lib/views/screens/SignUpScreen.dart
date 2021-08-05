@@ -60,8 +60,8 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                 T13Button(
                     textContent: t13_lbl_sign_up,
                     onPressed: () {
-                   Register(usernameController.text.toString(),fnController.text.toString(),lnController.text.toString(),emlController.text.toString(),passwController.text.toString(),this.context);
-                 //     finish(context);
+                    Register(usernameController.text.toString(),fnController.text.toString(),lnController.text.toString(),emlController.text.toString(),passwController.text.toString(),this.context);
+
                     }),
                 SizedBox(height: spacing_large),
                 Row(

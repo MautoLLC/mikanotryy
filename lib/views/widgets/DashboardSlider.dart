@@ -10,7 +10,7 @@ class DashboardSlider extends StatelessWidget {
   late T3DashboardSliderModel model;
 
 
- DashboardSlider(T3DashboardSliderModel model, int pos) {
+  DashboardSlider(T3DashboardSliderModel model, int pos) {
     this.model = model;
   }
 

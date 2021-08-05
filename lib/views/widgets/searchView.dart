@@ -29,4 +29,3 @@ class searchView extends StatelessWidget {
 
   }
 }
-

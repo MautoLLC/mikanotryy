@@ -69,7 +69,6 @@ class T5MaintenanceState extends State<T5Maintenance> {
     final quotations = <Widget>[
       // T5SliderWidget(mSliderList),
 
-
     ];
 
     final tab = [
@@ -77,8 +76,6 @@ class T5MaintenanceState extends State<T5Maintenance> {
       history,
       quotations,
     ];
-
-
 
     return Scaffold(
       backgroundColor: t5DarkNavy,

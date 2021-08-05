@@ -9,16 +9,16 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 Register(String username,String firstname,String lastname,String email, String password, BuildContext context) async{
 
   final authorizationEndpoint =
-  Uri.parse('http://dev.codepickles.com:8080/auth/realms/master/protocol/openid-connect/token');
+  Uri.parse('https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token');
 
 
   final identifier = 'MymikanoApp';
-  final secret = '31f87f65-5d08-4b1b-bb69-74d0f07d81fc';
+  final secret = '9abafef9-82fe-4360-8283-ee7d2e8b3879';
 
   var client = await oauth2.clientCredentialsGrant(
       authorizationEndpoint, identifier, secret);
   final url =
-  Uri.parse('http://dev.codepickles.com:8080/auth/admin/realms/master/users');
+  Uri.parse('https://dev.codepickles.com:8443/auth/admin/realms/master/users');
   final body =  {
     'username':username,
     'enabled': true,

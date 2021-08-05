@@ -5,8 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 
-
-
 class OPSplashScreen extends StatefulWidget {
   static String tag = '/OPSplashScreen';
 
