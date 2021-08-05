@@ -83,3 +83,7 @@ const t13_lbl_1_baths = "1 Baths";
 const t13_20_sqm = "20 sqm";
 const t13_lbl_link_sign_up = "Sign Up";
 const t13_lbl_link_login = "Login";
+const t13_mechanical_repair_desc = "From plumbing to heating and air conditioning, all your mechanical repair requests now made easier.";
+const t13_lbl_proceed = "Proceed";
+const t13_mechanical_repair= "Mechanical Repair";
+const t13_lbl_request = "Request";
