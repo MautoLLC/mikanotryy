@@ -1,6 +1,5 @@
 import 'dart:core';
-
-import 'package:mymikano_app/models/T3_Model.dart';
+import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/T3Images.dart';
 
 List<T3DashboardSliderModel> getDashboardSlider() {

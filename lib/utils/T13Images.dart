@@ -1,4 +1,4 @@
-import 'package:mymikano_app/utils/AppConstant.dart';
+import 'appsettings.dart';
 
 const t13_ic_city2 = "$BaseUrl/images/Theme13/t13_ic_city2.jpg";
 const t13_ic_city1 = "$BaseUrl/images/Theme13/t13_ic_city1.jpg";

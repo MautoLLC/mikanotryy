@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/models/T3_Model.dart';
+import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';

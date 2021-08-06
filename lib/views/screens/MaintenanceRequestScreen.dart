@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/services/SubmitRequestService.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListRealEstatesViewModel.dart';
 import 'package:mymikano_app/views/widgets/DartList.dart';
@@ -14,10 +16,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:mymikano_app/views/widgets/list.dart';
 import 'package:mymikano_app/views/widgets/view.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/T13Constant.dart';
 import 'package:mymikano_app/utils/T13Widget.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
-import 'package:mymikano_app/models/Entry.dart';
+import 'package:mymikano_app/models/EntryModel.dart';
 import 'package:mymikano_app/models/RealEstateModel.dart';
 import '../widgets/EntryExample.dart';
 
@@ -32,35 +33,32 @@ class MaintenanceRequestScreen extends StatefulWidget {
 }
 
 class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+
+  ListRealEstatesViewModel  address2=new ListRealEstatesViewModel();
+  ListCategViewModel  MAINsub=new ListCategViewModel();
+
   int selectedIndex = 0;
   int selectedval = 0;
   int selectedSubCategId=0;
   String selectedSubCateg = "";
   String selectedAddressValue = "";
   int listlength=0;
+
   late DateTime datetime ;
   late DateTime now;
+
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
   var controller3 = TextEditingController();
 
   late Future fetchaddress;
   late Future fetchmainsub;
-  ListRealEstatesViewModel  address2=new ListRealEstatesViewModel();
-  ListCategViewModel  MAINsub=new ListCategViewModel();
-  //late int listcvm;
-  List<String>  address = [
-    "address1",
-    "address2",
-    "address3",
-    "address4",
-    "address5"
-  ];
-
 
   late Directory? appDir;
-  late List<String>? records;
+  List<String>? records;
 
   var p = PageController();
   List<Asset> images = <Asset>[];
@@ -81,8 +79,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   void initState() {
     super.initState();
     init();
-    fetchaddress=address2.fetchRealEstates();
-
 
 
   }
@@ -126,10 +122,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   }
 
   init() async {
-
     now = DateTime.now();
     datetime = DateTime.now().add(Duration(hours: 1));
-    selectedAddressValue = address[0];
     records = [];
     await _deleteCacheDir();
     getTemporaryDirectory().then((value) {
@@ -146,6 +140,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     });
     setState(() {});
     fetchmainsub=MAINsub.fetchSubCategories(this.widget.mainCatg.idMaintenanceCategory);
+    fetchaddress=address2.fetchRealEstates();
+    selectedAddressValue = "";
   }
 
   @override
@@ -397,13 +393,17 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         child: T13Button(
                           textContent: t13_lbl_request,
                           onPressed: () {
-                            if(selectedSubCategId==0)
-                              toast("You should choose a subcategory !");
-                            if(controller2.text=="")
-                              toast("You should choose an address !");
+                       //     selectedSubCategId,selectedIndex,datetime,controller3.text,images, records
+                      if(selectedSubCategId!=0 && controller2.text!=""){
+                         MaintenanceRequestModel mMaintenanceRequest=new  MaintenanceRequestModel(maintenanceCategoryId: selectedSubCategId,
+                          realEstateId: selectedIndex, requestDescription: controller3.text, userId: 1,
+                          preferredVisitTime: datetime,maintenanceRequestImagesFiles:images,maintenanceRequestRecordsFiles:records);
+                          SubmitMaintenanceRequest(mMaintenanceRequest);}
 
-                       //  int id= getEntryid();
-                         else   SubmitMaintenanceRequest(selectedSubCategId,selectedIndex,datetime,controller3.text,images, records);
+                      if(selectedSubCategId==0)
+                        toast("You should choose a subcategory !");
+                      if(controller2.text=="")
+                        toast("You should choose an address !");
                           },
                         ),),
                       SizedBox(height: 10),
@@ -635,6 +635,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   }
 
   Future<void> addressPickerBottomSheet(context) async {
+    selectedAddressValue =  address2.realEstates![0].mrealEstate!.realEstateAddress;
     await showModalBottomSheet(
       shape: RoundedRectangleBorder(
         // side :  BorderSide(width: 1, color:t13Cat3),

@@ -5,8 +5,9 @@ import 'package:mymikano_app/utils/dots_indicator/dots_indicator.dart';
 
 import '../../main.dart';
 
+import 'appsettings.dart';
 import 'colors.dart';
-import 'T5Constant.dart';
+
 
 // ignore: must_be_immutable
 class EditText extends StatefulWidget {

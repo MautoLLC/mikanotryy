@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
@@ -11,58 +13,47 @@ import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:path_provider/path_provider.dart';
 
-SubmitMaintenanceRequest(int categoryId,int realEstateId, DateTime visitTime, String Desc,List<Asset>? assets,List<String>? records) async {
-  final authorizationEndpoint =
-  Uri.parse('https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token');
+SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
 
-  final identifier = 'MymikanoApp';
-  final secret = '9abafef9-82fe-4360-8283-ee7d2e8b3879';
 
   var client = await oauth2.clientCredentialsGrant(
-      authorizationEndpoint, identifier, secret);
+      Uri.parse(authorizationEndpoint), identifier, secret);
 
-  final url =
-  Uri.parse('http://dev.codepickles.com:8085/api/MaintenanceRequests');
+  final url = Uri.parse(PostMaintenaceRequestURL);
 
    String token = client.credentials.toJson();
 
   var request = new http.MultipartRequest("POST", url);
   request.headers['Authorization'] = 'Bearer $token';
   //request.fields['idMaintenanceRequest'] = 1.toString();
-  request.fields['maintenanceCategoryId'] = categoryId.toString();
-  request.fields['preferredVisitTime'] = visitTime.toString();
-  request.fields['realEstateId'] = realEstateId.toString();
+  request.fields['maintenanceCategoryId'] = mMaintenanceRequest.maintenanceCategoryId.toString();
+  request.fields['preferredVisitTime'] = mMaintenanceRequest.preferredVisitTime.toString();
+  request.fields['realEstateId'] = mMaintenanceRequest.realEstateId.toString();
   request.fields['userId'] = 1.toString();
-  request.fields['requestDescription'] = Desc.toString();
+  request.fields['requestDescription'] = mMaintenanceRequest.requestDescription.toString();
 
-   List<MultipartFile> newList = [];
-  for (int i = 0; i < assets!.length; i++) {
+  List<Asset>? mImages=mMaintenanceRequest.maintenanceRequestImagesFiles;
+  List<String>? mRecords=mMaintenanceRequest.maintenanceRequestRecordsFiles;
+  List<MultipartFile> newList = [];
+
+  for (int i = 0; i < mImages!.length; i++) {
     //File imageFile = File(assets[i].toString());
-    File imageFile = await getImageFileFromAssets(assets[i]);
+    File imageFile = await getImageFileFromAssets(mImages[i]);
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
     var imagemultipartFile = new http.MultipartFile("FormFiles", stream, length, filename: basename(imageFile.path));
     newList.add(imagemultipartFile);
   }
-  for (int i = 0; i < records!.length; i++) {
-    File recordFile = File(records[i]);
+  for (int i = 0; i < mRecords!.length; i++) {
+    File recordFile = File(mRecords[i]);
     var stream = new http.ByteStream(DelegatingStream.typed(recordFile.openRead()));
     var length = await recordFile.length();
     var voicemultipartFile = new http.MultipartFile("FormFiles", stream, length, filename: basename(recordFile.path));
     newList.add(voicemultipartFile);
   }
 
-
   request.files.addAll(newList);
 
-
- // var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-//  var length = await imageFile.length();
-//   var multipartFile = new http.MultipartFile(
-//       'FormFiles', stream, length,
-//       filename: basename(imageFile.path));
-
-  //request.files.add(multipartFile);
 
   request.send().then((response) {
     if (response.statusCode == 201)

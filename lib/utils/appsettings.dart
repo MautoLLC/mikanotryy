@@ -1,4 +1,13 @@
-const mainAppName = 'ProKit Flutter';
+const authorizationEndpoint = 'https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token';
+const identifier = 'MymikanoApp';
+const secret = '9abafef9-82fe-4360-8283-ee7d2e8b3879';
+const GetMainCategoriesURL ='http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';
+const GetSubCategoriesURL ="http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories/ChildrenRealEstateMaintenanceCategories/";
+const GetAllCategoriesURL ="http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories";
+const PostMaintenaceRequestURL = 'http://dev.codepickles.com:8085/api/MaintenanceRequests';
+const RegisterUserURL ='https://dev.codepickles.com:8443/auth/dmin/realms/master/users';
+const GetRealEstatesURL ='http://dev.codepickles.com:8085/api/RealEstates';
+const mainAppName = 'My Mikano App';
 
 const fontRegular = 'Regular';
 const fontMedium = 'Medium';
@@ -14,6 +23,17 @@ const textSizeNormal = 20.0;
 const textSizeLarge = 24.0;
 const textSizeXLarge = 30.0;
 const textSizeXXLarge = 35.0;
+
+const spacing_control_half = 2.0;
+const spacing_control = 4.0;
+const spacing_standard = 8.0;
+const spacing_middle = 10.0;
+const spacing_standard_new = 16.0;
+const spacing_large = 24.0;
+const spacing_xlarge = 32.0;
+const spacing_xxLarge = 40.0;
+
+
 
 // Shared Pref
 const appOpenCount = 'appOpenCount';
@@ -47,15 +67,7 @@ const SampleImageUrl3 = '$BaseUrl/images/defaultTheme/slider/03.jpg';
 const SampleImageUrl4 = '$BaseUrl/images/defaultTheme/slider/05.jpg';
 const SampleProfileImageUrl = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200';
 
-const ProductImg1 = '$BaseUrl/images/defaultTheme/product/Bag.png';
-const ProductImg2 = '$BaseUrl/images/defaultTheme/product/Chair.png';
-const ProductImg3 = '$BaseUrl/images/defaultTheme/product/choclate.png';
-const ProductImg4 = '$BaseUrl/images/defaultTheme/product/dumble.png';
-const ProductImg5 = '$BaseUrl/images/defaultTheme/product/headphone.png';
-const ProductImg6 = '$BaseUrl/images/defaultTheme/product/jewellery.png';
-const ProductImg7 = '$BaseUrl/images/defaultTheme/product/shoes.png';
-const ProductImg8 = '$BaseUrl/images/defaultTheme/product/skincare.png';
-const ProductImg9 = '$BaseUrl/images/defaultTheme/product/tshirt.png';
+
 
 const LoremText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text';
 

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mymikano_app/models/T5Models.dart';
-import 'package:mymikano_app/utils/AppConstant.dart';
+import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/T2Colors.dart';
 import 'package:mymikano_app/utils/T5DataGenerator.dart';
 import 'package:mymikano_app/utils/T5Images.dart';
 import 'package:mymikano_app/utils/T5Strings.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/T5GridListing.dart';
 import 'package:nb_utils/nb_utils.dart';
 

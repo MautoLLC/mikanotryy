@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mymikano_app/models/T5Models.dart';
+import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';

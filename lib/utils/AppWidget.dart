@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,8 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/main.dart';
-
 import 'AppColors.dart';
-import 'AppConstant.dart';
+import 'appsettings.dart';
 import 'main/model/ListModels.dart';
 
 Widget text(

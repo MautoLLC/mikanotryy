@@ -1,4 +1,4 @@
-import 'package:mymikano_app/models/T5Models.dart';
+import 'package:mymikano_app/models/DashboardCardModel.dart';
 
 import 'T2Colors.dart';
 import 'T5Images.dart';

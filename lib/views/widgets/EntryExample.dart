@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/models/Entry.dart';
+import 'package:mymikano_app/models/EntryModel.dart';
 import 'package:mymikano_app/utils/colors.dart';
 
 class EntryItem extends StatelessWidget {

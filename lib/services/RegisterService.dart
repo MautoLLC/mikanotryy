@@ -2,23 +2,17 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 
 Register(String username,String firstname,String lastname,String email, String password, BuildContext context) async{
 
-  final authorizationEndpoint =
-  Uri.parse('https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token');
-
-
-  final identifier = 'MymikanoApp';
-  final secret = '9abafef9-82fe-4360-8283-ee7d2e8b3879';
-
   var client = await oauth2.clientCredentialsGrant(
-      authorizationEndpoint, identifier, secret);
-  final url =
-  Uri.parse('https://dev.codepickles.com:8443/auth/admin/realms/master/users');
+      Uri.parse(authorizationEndpoint), identifier, secret);
+
+
   final body =  {
     'username':username,
     'enabled': true,
@@ -30,7 +24,7 @@ Register(String username,String firstname,String lastname,String email, String p
 
   var response =
   //await client.read('https://example.com/api/some_resource.json');
-  await client.post(url,
+  await client.post(Uri.parse(RegisterUserURL),
       body: json.encode(body),
       headers:  {'Content-type': 'application/json',}
   );

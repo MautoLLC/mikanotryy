@@ -6,7 +6,6 @@ class ListCategViewModel {
   List<CategViewModel>? maincategs;
   List<CategViewModel>? subcategs;
   List<CategViewModel>? allcategs;
-  Future<List<Map<String, dynamic>>>? maintenanceCateg;
 
   Future<void> fetchCategories() async {
     final apiresult = await Service().fetchCategs();
@@ -21,19 +20,9 @@ class ListCategViewModel {
   Future<void> fetchSubCategories(int i) async {
     final apiresult = await Service().fetchSubCategs(i);
     this.subcategs = apiresult.map((e) => CategViewModel(e)).toList();
-    // for(int i,i<2,i++)
-    // print(subcategs![1].mcateg!.maintenanceCategoryName);
-    //
-    //    subcategs!.asMap().forEach((i, value) {
-    // //   print(subcategs!.length);
-    //    });
-
   }
 
-  Future<void> fetchCategorybyId(int i) async {
-    final apiresult = await Service().fetchCategbyId(i);
-    this.maintenanceCateg = apiresult as Future<List<Map<String, dynamic>>>? ;
-  }
+
 }
 
 class CategViewModel {

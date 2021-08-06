@@ -1,4 +1,4 @@
-import 'package:mymikano_app/utils/AppConstant.dart';
+import 'appsettings.dart';
 
 const profileImage = 'assets/images/profile.png';
 

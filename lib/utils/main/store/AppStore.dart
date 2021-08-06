@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
-import 'package:mymikano_app/utils/AppConstant.dart';
+
+import '../../appsettings.dart';
+
 
 part 'AppStore.g.dart';
 

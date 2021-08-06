@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,16 +8,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 
 Login(String username, String password, BuildContext context) async {
-  final authorizationEndpoint =
-  Uri.parse("https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token");
-  //final username = "testmymikanop";
-  //   final password = "test123;";
-  final identifier = 'MymikanoAppLogin';
-  final secret = '';
+
+  final secrett = '';
   try {
     var client = await oauth2.resourceOwnerPasswordGrant(
-        authorizationEndpoint, username, password,
-        identifier: identifier, secret: secret);
+        Uri.parse(authorizationEndpoint), username, password,
+        identifier: identifier, secret: secrett);
 
     final directory = await getApplicationDocumentsDirectory();
     String appDocPath = directory.path;

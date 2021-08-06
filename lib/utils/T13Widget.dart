@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
-
 import '../../main.dart';
-
-import 'T13Constant.dart';
 import 'T13Strings.dart';
+import 'appsettings.dart';
+
 
 Padding t13EditTextStyle(var hintText, var contt , {isPassword = true, TextInputType keyboardType = TextInputType.name }) {
   return Padding(

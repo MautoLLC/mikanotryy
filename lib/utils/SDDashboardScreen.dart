@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/models/SDExamCardModel.dart';
+import 'package:mymikano_app/models/DashboardCardModel.dart';
 
 List<SDExamCardModel> cards = [
   SDExamCardModel(
