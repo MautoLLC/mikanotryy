@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:mymikano_app/services/submitRequestService.dart';
+import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
+import 'package:mymikano_app/services/SubmitRequestService.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
+import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
+import 'package:mymikano_app/viewmodels/ListRealEstatesViewModel.dart';
 import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,17 +17,16 @@ import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/T13Constant.dart';
 import 'package:mymikano_app/utils/T13Widget.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
-import 'package:mymikano_app/viewmodels/ListSubCategViewModel.dart';
 import 'package:mymikano_app/models/Entry.dart';
-
+import 'package:mymikano_app/models/RealEstateModel.dart';
 import '../widgets/EntryExample.dart';
 
 class MaintenanceRequestScreen extends StatefulWidget {
   static String tag = '/T13DescriptionScreen';
-  final int maincatId;
+  final Categ mainCatg;
   final List<Entry> mydata ;
 
-  MaintenanceRequestScreen({Key? key, required this.maincatId, required this.mydata}) : super(key: key);
+  MaintenanceRequestScreen({Key? key, required this.mainCatg, required this.mydata}) : super(key: key);
   @override
   MaintenanceRequestScreenState createState() => MaintenanceRequestScreenState();
 }
@@ -32,22 +34,22 @@ class MaintenanceRequestScreen extends StatefulWidget {
 class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int selectedIndex = 0;
-
+  int selectedval = 0;
+  int selectedSubCategId=0;
   String selectedSubCateg = "";
   String selectedAddressValue = "";
+  int listlength=0;
   late DateTime datetime ;
   late DateTime now;
-
   var controller1 = TextEditingController();
   var controller2 = TextEditingController();
   var controller3 = TextEditingController();
 
-  final List<Entry> data2=[] ;
-
-  ListSubCategViewModel listCategViewModel2=new ListSubCategViewModel();
-  ListSubCategViewModel listCategViewModel3=new ListSubCategViewModel();
-
-
+  late Future fetchaddress;
+  late Future fetchmainsub;
+  ListRealEstatesViewModel  address2=new ListRealEstatesViewModel();
+  ListCategViewModel  MAINsub=new ListCategViewModel();
+  //late int listcvm;
   List<String>  address = [
     "address1",
     "address2",
@@ -79,6 +81,10 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   void initState() {
     super.initState();
     init();
+    fetchaddress=address2.fetchRealEstates();
+
+
+
   }
   Future<void> loadAssets() async {
     List<Asset> resultList = <Asset>[];
@@ -120,6 +126,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   }
 
   init() async {
+
     now = DateTime.now();
     datetime = DateTime.now().add(Duration(hours: 1));
     selectedAddressValue = address[0];
@@ -138,11 +145,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       });
     });
     setState(() {});
+    fetchmainsub=MAINsub.fetchSubCategories(this.widget.mainCatg.idMaintenanceCategory);
   }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+
   }
 
   @override
@@ -185,7 +194,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              text(t13_mechanical_repair_desc, maxLine: 5, fontSize: textSizeNormal),
+                              text(this.widget.mainCatg.maintenanceCategoryDescription, maxLine: 5, fontSize: textSizeNormal),
                               // SizedBox(height:30),
                             ],
                           ),
@@ -211,7 +220,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                             finish(context);
                           },
                         ),
-                        text(t13_mechanical_repair, fontSize: textSizeNormal),
+                        text(this.widget.mainCatg.maintenanceCategoryName, fontSize: textSizeNormal),
                       ],
                     ),
                   ),
@@ -220,6 +229,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
               ),
             ),
             SingleChildScrollView(
+
               child:Container(
                 margin: EdgeInsets.all(spacing_standard_new),
                 decoration: BoxDecoration(
@@ -232,15 +242,18 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
 
+
                       SizedBox(height: 20),
                       text("Subcategory", fontFamily: 'Medium',textColor: Colors.black),
                       SizedBox(height: 8),
+
                       GestureDetector(
-
                         onTap: () async {
-
-                          selectedSubCateg= await mFilter(context);
-                          controller1.text = selectedSubCateg;
+                         // selectedSubCateg= await mFilter(context);
+                          Entry rooty=  await mFilter(context);
+                          controller1.text = rooty.title;
+                          selectedSubCategId=rooty.idEntry;
+                      //  controller1.text = selectedSubCateg;
                         },
                         child: AbsorbPointer(
                             child:Padding(
@@ -312,10 +325,12 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                       Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child:  T13Button(
                           textContent: textHolder,
-                          onPressed: () { datetimeBottomSheet(context);},
+                          onPressed: () {
+                            datetimeBottomSheet(context);
+                            },
                         ),),
                       SizedBox(height: 16),
-                      text("Job Description", fontFamily: 'Medium',textColor: Colors.black),
+                      text("Description", fontFamily: 'Medium',textColor: Colors.black),
                       SizedBox(height: 8),
                       Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -340,7 +355,9 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                             maxLines: 5,
                             keyboardType: TextInputType.multiline,
                           )),
-                      SizedBox(height: 25),
+                      SizedBox(height: 16),
+                      text("Voice Messages", fontFamily: 'Medium',textColor: Colors.black),
+                      SizedBox(height: 30),
                       Align(
                         alignment: Alignment.center,
                         child: Container(
@@ -361,7 +378,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                       Records(
                         records: records!,
                       ),
-                      SizedBox(height: 25),
+                      SizedBox(height: 16),
                       text("Images", fontFamily: 'Medium',textColor: Colors.black),
                       SizedBox(height: 8),
                       images.isNotEmpty
@@ -380,7 +397,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         child: T13Button(
                           textContent: t13_lbl_request,
                           onPressed: () {
-                            SubmitMaintenanceRequest(controller1.text.toInt(),images, records);
+                            if(selectedSubCategId==0)
+                              toast("You should choose a subcategory !");
+                            if(controller2.text=="")
+                              toast("You should choose an address !");
+
+                       //  int id= getEntryid();
+                         else   SubmitMaintenanceRequest(selectedSubCategId,selectedIndex,datetime,controller3.text,images, records);
                           },
                         ),),
                       SizedBox(height: 10),
@@ -396,7 +419,9 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
   }
 
-  mFilter<String>(BuildContext context) {
+  mFilter<Entry>(BuildContext context) {
+    listlength=MAINsub.subcategs!.length;
+    if(listlength>0)
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -408,22 +433,27 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       ),
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.3,
+          initialChildSize: 0.5,
           expand: false,
           builder: (context, scrollController) {
-            return Column(
-              children: <Widget>[
-                // Put all heading in column.
-                column,
-                SizedBox(height:30),
-                // Wrap your DaysList in Expanded and provide scrollController to it
-                Expanded(child: DaysList(controller: scrollController)),
-              ],
+                    return
+                      Column(
+                        children: <Widget>[
+                          // Put all heading in column.
+                          column,
+                          SizedBox(height:30),
+                          // Wrap your DaysList in Expanded and provide scrollController to it
+                        Expanded(child: CategsList(controller: scrollController,data: this.widget.mydata,MCategory: this.widget.mainCatg,fetchmainsub: fetchmainsub,listlength: listlength,)),
+
+                        ],
+                      );
+                  }
+               // }
             );
-          },
-        );
+
       },
     );
+    else Text("BYR");
   }
 
   Widget get column {
@@ -444,7 +474,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       ).paddingAll(15.0),
     );
   }
-
+  //
   // mFilter<String>() {
   //   print("this.widget.mydata.length");
   //   print(this.widget.mydata.length);
@@ -591,6 +621,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                     onDateTimeChanged: (DateTime dateTime) {
                       // String formattedDate1 = datetimeFormat.format(dateTime);
                       datetime = dateTime;
+
                       setState(() {});
                     },
                   ),
@@ -639,7 +670,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                     children: [
                       Text('Cancel', style: primaryTextStyle(size: 18,color:Colors.white)).onTap(() {
                         finish(context);
-                        toast('Please select value');
+                        toast('Please select address');
                         setState(() {});
                       }),
                       Text('Done', style: primaryTextStyle(size: 18,color:Colors.white)).onTap(() {
@@ -650,29 +681,49 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   ).paddingAll(15.0),
                 ),
               ),
-              Container(
-                height: 200,
-                child: CupertinoTheme(
-                  data: CupertinoThemeData(
-                    textTheme: CupertinoTextThemeData(
-                      pickerTextStyle: primaryTextStyle(),
-                    ),
-                  ),
-                  child: CupertinoPicker(
-                    scrollController: FixedExtentScrollController(initialItem: selectedIndex),
-                    backgroundColor: Colors.white,
-                    itemExtent: 30,
-                    children: address.map((e) {
-                      return Text(e, style: primaryTextStyle(size: 20));
-                    }).toList(),
-                    onSelectedItemChanged: (int val) {
-                      selectedAddressValue = address[val];
-                      selectedIndex = val;
-                    },
 
-                  ),
-                ),
-              ),
+        Container(
+        height: 200,
+        child: CupertinoTheme(
+        data: CupertinoThemeData(
+        textTheme: CupertinoTextThemeData(
+        pickerTextStyle: primaryTextStyle(),
+        ),
+        ),
+        child:
+
+        FutureBuilder(
+        future: fetchaddress,
+        builder: (BuildContext context,  snapshot) {
+        if(snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasError) {
+        return Text('${snapshot.error}');
+        }
+        // if (!snapshot.hasData) {
+        // print("snapshot");
+        // }
+        return
+        CupertinoPicker(
+        scrollController: FixedExtentScrollController(initialItem: selectedval),
+        backgroundColor: Colors.white,
+        itemExtent: 30,
+        children: address2.realEstates!.map((e) {
+        return Text(e.mrealEstate!.realEstateName.toString(), style: primaryTextStyle(size: 20));
+        }).toList(),
+        onSelectedItemChanged: (int val) {
+        selectedAddressValue = address2.realEstates![val].mrealEstate!.realEstateAddress;
+        selectedIndex = address2.realEstates![val].mrealEstate!.idRealEstate;
+        selectedval=val;
+
+        },
+        );
+
+        }
+        else{
+        return Center( child: const CircularProgressIndicator(),);
+        }} )
+        )
+        )
             ],
           ),
         );
@@ -820,5 +871,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       },
     );
   }
+
+
 
 }

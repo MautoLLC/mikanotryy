@@ -12,6 +12,9 @@ import 'package:mymikano_app/utils/T5DataGenerator.dart';
 import 'package:mymikano_app/utils/T5Images.dart';
 import 'package:mymikano_app/utils/T5Strings.dart';
 import 'package:mymikano_app/views/widgets/T5GridListing.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import 'DashboardScreen.dart';
 
 class T5Maintenance extends StatefulWidget {
   static var tag = "/T5Dashboard";
@@ -81,7 +84,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
       backgroundColor: t5DarkNavy,
       key: _scaffoldKey,
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: <Widget>[
             Container(
               height: 70,
@@ -91,10 +94,22 @@ class T5MaintenanceState extends State<T5Maintenance> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      SvgPicture.asset(t5_arrow_back, width: 25, height: 25, color: t5White),
-                      SizedBox(width: 30),
+                      // IconButton(
+                      //   icon: SvgPicture.asset(t5_arrow_back, width: 25, height: 25, color: t5White),
+                      //   onPressed: () {
+                      //     print("ihh");
+                      //
+                      //   }, //do something,
+                      // ),
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_rounded, color: t5White,size: 30.0,),
+                        onPressed: () {
+                          finish(context);
+                        },
+                      ),
+                      SizedBox(width: 10),
                       SvgPicture.asset(t5_general_repair, width: 25, height: 25, color: t5White),
-                      SizedBox(width: 5),
+                      SizedBox(width: 8),
                       text(t5_maintenance_repair, textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium)
                     ],
                   ),
@@ -102,12 +117,13 @@ class T5MaintenanceState extends State<T5Maintenance> {
                 ],
               ),
             ),
+
             SingleChildScrollView(
-              padding: EdgeInsets.only(top: 100),
+             //padding: EdgeInsets.only(top: 100),
               child: Container(
-                padding: EdgeInsets.only(top: 18),
+          //      padding: EdgeInsets.only(top: 18),
                 alignment: Alignment.topLeft,
-                height: MediaQuery.of(context).size.height - 100,
+                height: MediaQuery.of(context).size.height - 170,
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
                 child: Column(
                   // children: tab[_currentIndex],

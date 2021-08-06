@@ -1,15 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:mymikano_app/utils/colors.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:path_provider/path_provider.dart';
 
-SubmitMaintenanceRequest(int categoryId, List<Asset>? assets,List<String>? records) async {
+SubmitMaintenanceRequest(int categoryId,int realEstateId, DateTime visitTime, String Desc,List<Asset>? assets,List<String>? records) async {
   final authorizationEndpoint =
   Uri.parse('https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token');
 
@@ -26,12 +28,12 @@ SubmitMaintenanceRequest(int categoryId, List<Asset>? assets,List<String>? recor
 
   var request = new http.MultipartRequest("POST", url);
   request.headers['Authorization'] = 'Bearer $token';
-  request.fields['idMaintenanceRequest'] = 1.toString();
+  //request.fields['idMaintenanceRequest'] = 1.toString();
   request.fields['maintenanceCategoryId'] = categoryId.toString();
-  request.fields['preferredVisitTime'] = '2021-08-02T10:55:42.137Z';
-  request.fields['realEstateId'] = 1.toString();
+  request.fields['preferredVisitTime'] = visitTime.toString();
+  request.fields['realEstateId'] = realEstateId.toString();
   request.fields['userId'] = 1.toString();
-  request.fields['requestDescription'] = 'HHH';
+  request.fields['requestDescription'] = Desc.toString();
 
    List<MultipartFile> newList = [];
   for (int i = 0; i < assets!.length; i++) {
@@ -64,9 +66,31 @@ SubmitMaintenanceRequest(int categoryId, List<Asset>? assets,List<String>? recor
 
   request.send().then((response) {
     if (response.statusCode == 201)
+      {
       print("Uploaded!");
-   // print(response.statusCode);
-    // listen for response
+      Fluttertoast.showToast(
+          msg: "Request submitted successfully ! " ,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: t13_edit_text_color ,
+          textColor: Colors.black87,
+          fontSize: 16.0
+      );
+      }
+    else{
+      print("Failed to submit !");
+      Fluttertoast.showToast(
+          msg: "Error in submitting request ! " ,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: t13_edit_text_color ,
+          textColor: Colors.black87,
+          fontSize: 16.0
+      );
+
+    }
     response.stream.transform(utf8.decoder).listen((value) {
       print(value);
     });

@@ -16,7 +16,7 @@ class Recorder extends StatefulWidget {
 
 class _RecorderState extends State<Recorder> {
   IconData _recordIcon = Icons.mic_none;
-  MaterialColor colo = Colors.orange;
+  Color colo = Colors.black;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
   bool stop = false;
   Recording? _current;
@@ -74,7 +74,7 @@ class _RecorderState extends State<Recorder> {
             SizedBox(height: 20,),
             stop == false
                 ? RaisedButton(
-              color: Colors.orange,
+              color: Colors.black,
               onPressed: () async {
                 await _onRecordButtonPressed();
                 setState(() {});

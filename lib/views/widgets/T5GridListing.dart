@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/models/Entry.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/models/T5Models.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/viewmodels/ListCategViewModel.dart';
-import 'package:mymikano_app/viewmodels/ListSubCategViewModel.dart';
+import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/views/screens/MaintenanceRequestScreen.dart';
-
-import '../../../main.dart';
+import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 
 
 // ignore: must_be_immutable
@@ -24,31 +23,44 @@ class T5GridListing extends StatelessWidget {
     return FutureBuilder(
           future:listCategViewModel.fetchCategories(),
           builder: (context, snapshot) {
-          //  print("snapshot");
-            // print(snapshot.data);
-            //   print(listCategViewModel.categs![0].mcateg!.maintenanceCategoryName);
+
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator(),);
+              return Center(child:
+      //        CircularProgressIndicator(),
+
+              SpinKitChasingDots(
+                //color: Colors.grey,
+                itemBuilder: (BuildContext context, int index) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: index.isEven ? t5Cat3 : Colors.black87,
+                    ),
+                  );
+                },),
+
+
+              );
             }
             else {
-           //   return Center(child: Text("beye"),);
+
               return GridView.builder(
                   scrollDirection: Axis.vertical,
                   physics: isScrollable
                       ? ScrollPhysics()
                       : NeverScrollableScrollPhysics(),
-                  itemCount:  listCategViewModel.categs!.length,
+                  itemCount:  listCategViewModel.maincategs!.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 1,
                       crossAxisSpacing: 25,
                       mainAxisSpacing: 25),
                   itemBuilder: (BuildContext context, int index) {
-               int mainCategoryId=listCategViewModel.categs![index].mcateg!.idMaintenanceCategory;
+               Categ mainCategory=listCategViewModel.maincategs![index].mcateg!;
                     return GestureDetector(
                       onTap: ()  {
                         //ExpansionTileDemo().launch(context);
-                        go4(mainCategoryId,context);
+                        go4(mainCategory,context);
                         // getdataTree(mainCategoryId,context);
                      //   yr(mainCategoryId,context);
                      // SubmitMaintenanceRequest();
@@ -84,7 +96,7 @@ class T5GridListing extends StatelessWidget {
                               //     fontSize: textSizeMedium,
                               //     maxLine: 2,
                               //     isCentered: true)
-                              Text(listCategViewModel.categs![index].mcateg!.maintenanceCategoryName),
+                              Text(listCategViewModel.maincategs![index].mcateg!.maintenanceCategoryName),
                             ),
                           ],
                         ),
@@ -96,50 +108,48 @@ class T5GridListing extends StatelessWidget {
 
     );
   }
-  Future go4(int keymaincatId,BuildContext context) async
+  Future go4(Categ mainCategory,BuildContext context) async
   {
-    ListSubCategViewModel listCategViewModel2=new ListSubCategViewModel();
-    ListSubCategViewModel listCategViewModel3=new ListSubCategViewModel();
-    ListSubCategViewModel listCategViewModel4=new ListSubCategViewModel();
+    ListCategViewModel listCategViewModel2=new ListCategViewModel();
+    ListCategViewModel listCategViewModel3=new ListCategViewModel();
+    ListCategViewModel listCategViewModel4=new ListCategViewModel();
     final List<Entry> data3 = <Entry>[];
     List<Entry> data3sub = <Entry>[];
     List<Entry> data4sub = <Entry>[];
-    await  listCategViewModel2.fetchSubCategories(keymaincatId);
+    await  listCategViewModel2.fetchSubCategories(mainCategory.idMaintenanceCategory);
     var l=listCategViewModel2.subcategs!.length;
     print("sub1 list length :");
     print(l);
 
     for (var i = l- 1; i >= 0 ; i--)
     {
-      listCategViewModel3.fetchSubCategories(listCategViewModel2.subcategs![i].msubcateg!.idMaintenanceCategory).then((result) async
+      listCategViewModel3.fetchSubCategories(listCategViewModel2.subcategs![i].mcateg!.idMaintenanceCategory).then((result) async
       {
         data3sub = [];
         for (var j = 0; j < listCategViewModel3.subcategs!.length; j++)
         {
           data4sub = [];
-          listCategViewModel4.fetchSubCategories(listCategViewModel3.subcategs![j].msubcateg!.idMaintenanceCategory).then((result) async
+          listCategViewModel4.fetchSubCategories(listCategViewModel3.subcategs![j].mcateg!.idMaintenanceCategory).then((result) async
           {
             for (var k= 0; k< listCategViewModel4.subcategs!.length; k++) {
               Entry en = Entry(
-                  listCategViewModel4.subcategs![i].msubcateg!.
-                  idMaintenanceCategory,  listCategViewModel4.subcategs![k].msubcateg!
-                  .maintenanceCategoryName
-                  .toString());
+                  listCategViewModel4.subcategs![k].mcateg!.idMaintenanceCategory,
+                  listCategViewModel4.subcategs![k].mcateg!.maintenanceCategoryName.toString());
               data4sub.add(en);
             }
           });
-          Entry e = Entry(listCategViewModel3.subcategs![i].msubcateg!.
+          Entry e = Entry(listCategViewModel3.subcategs![j].mcateg!.
           idMaintenanceCategory,
-              listCategViewModel3.subcategs![j].msubcateg!
+              listCategViewModel3.subcategs![j].mcateg!
                   .maintenanceCategoryName
                   .toString(),
               data4sub
           );
           data3sub.add(e);
         }
-        data3.add(Entry(listCategViewModel2.subcategs![i].msubcateg!.
-        idMaintenanceCategory,listCategViewModel2.subcategs![i].msubcateg!.
-        idMaintenanceCategory
+        data3.add(Entry(listCategViewModel2.subcategs![i].mcateg!.
+        idMaintenanceCategory,listCategViewModel2.subcategs![i].mcateg!.
+        maintenanceCategoryName
             .toString(),
             data3sub));
       });
@@ -148,7 +158,7 @@ class T5GridListing extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => MaintenanceRequestScreen(maincatId: keymaincatId,mydata: data3,)),
+          builder: (context) => MaintenanceRequestScreen(mainCatg: mainCategory,mydata: data3,)),
     );
   }
 

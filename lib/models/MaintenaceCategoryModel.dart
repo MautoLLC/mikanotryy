@@ -1,5 +1,3 @@
-
-
 class Categ {
  final int idMaintenanceCategory;
  final String maintenanceCategoryName;
@@ -44,9 +42,8 @@ class Categ {
       maintenanceCategoryName: json['maintenanceCategoryName'],
       maintenanceCategoryDescription: json['maintenanceCategoryDescription'],
       maintenanceCategoryIcon: json['maintenanceCategoryIcon'],
-        maintenanceCategoryParentId:json['maintenanceCategoryParentId'] ,
+      maintenanceCategoryParentId:json['maintenanceCategoryParentId'] ,
      // maintenanceCategoryParent:json['maintenanceCategoryParent']
-
     );
   }
 }

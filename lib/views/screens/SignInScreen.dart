@@ -1,6 +1,4 @@
-import 'dart:io';
-import 'package:mymikano_app/services/loginService.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
+import 'package:mymikano_app/services/LoginService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,7 +9,6 @@ import 'package:mymikano_app/utils/T13Images.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
 import 'package:mymikano_app/utils/T13Widget.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'SignUpScreen.dart';
 
 class T13SignInScreen extends StatefulWidget {

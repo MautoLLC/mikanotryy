@@ -1,4 +1,5 @@
-
+import 'dart:html';
+import 'package:multi_image_picker/multi_image_picker.dart';
 class MaintenanceRequestModel {
   final int idMaintenanceRequest;
   final int maintenanceCategoryId;
@@ -6,9 +7,8 @@ class MaintenanceRequestModel {
   final int realEstateId;
   final int userId;
   final String requestDescription;
-  final List<String>? maintenanceRequestFiles   ;
-  //final Categ? maintenanceCategoryParent;
-
+  final List<Asset>? maintenanceRequestImagesFiles;
+  final List<File>? maintenanceRequestRecordsFiles;
 
   MaintenanceRequestModel(
       {required  this.idMaintenanceRequest,
@@ -17,7 +17,8 @@ class MaintenanceRequestModel {
         required  this.realEstateId,
         required this.requestDescription,
         required  this.userId,
-        this.maintenanceRequestFiles,
+        this.maintenanceRequestImagesFiles,
+        this.maintenanceRequestRecordsFiles,
         });
 
 

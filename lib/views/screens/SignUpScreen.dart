@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mymikano_app/services/registerService.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:mymikano_app/services/RegisterService.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/T13Constant.dart';

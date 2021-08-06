@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mymikano_app/utils/colors.dart';
+import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 
@@ -14,7 +16,7 @@ class OPSplashScreen extends StatefulWidget {
 
 class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProviderStateMixin {
   startTime() async {
-    var _duration = Duration(seconds: 5);
+    var _duration = Duration(seconds: 2);
     return Timer(_duration, navigationPage);
   }
 
@@ -22,6 +24,7 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
   void initState() {
     super.initState();
     startTime();
+    goAll();
   }
 
   void navigationPage() {
@@ -54,7 +57,7 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
                     return DecoratedBox(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: index.isEven ? Colors.red : Colors.black87,
+                        color: index.isEven ? t5Cat3 : Colors.black87,
                       ),
                     );
                   },),
