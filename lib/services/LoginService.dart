@@ -13,7 +13,7 @@ Login(String username, String password, BuildContext context) async {
   try {
     var client = await oauth2.resourceOwnerPasswordGrant(
         Uri.parse(authorizationEndpoint), username, password,
-        identifier: identifier, secret: secrett);
+        identifier: "MymikanoAppLogin", secret: secrett);
 
     final directory = await getApplicationDocumentsDirectory();
     String appDocPath = directory.path;
@@ -23,6 +23,15 @@ Login(String username, String password, BuildContext context) async {
     File file = File('$appDocPath/credentials.json'); //
     String fileContent = await file.readAsString();
     //print("file cont" + fileContent);
+    Fluttertoast.showToast(
+        msg: "Login Successfull \n" ,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: t13_edit_text_color ,
+        textColor: Colors.black87,
+        fontSize: 16.0
+    );
     Navigator.push(
        context,
       MaterialPageRoute(

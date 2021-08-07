@@ -5,7 +5,7 @@ const GetMainCategoriesURL ='http://dev.codepickles.com:8085/api/RealEstateMaint
 const GetSubCategoriesURL ="http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories/ChildrenRealEstateMaintenanceCategories/";
 const GetAllCategoriesURL ="http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories";
 const PostMaintenaceRequestURL = 'http://dev.codepickles.com:8085/api/MaintenanceRequests';
-const RegisterUserURL ='https://dev.codepickles.com:8443/auth/dmin/realms/master/users';
+const RegisterUserURL ='https://dev.codepickles.com:8443/auth/admin/realms/master/users';
 const GetRealEstatesURL ='http://dev.codepickles.com:8085/api/RealEstates';
 const mainAppName = 'My Mikano App';
 

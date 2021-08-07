@@ -51,8 +51,9 @@ Register(String username,String firstname,String lastname,String email, String p
 
 
   } else {
+
     Fluttertoast.showToast(
-        msg: "Failed to create user ! " ,
+        msg: "Failed to create user ! " +response.body.toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,

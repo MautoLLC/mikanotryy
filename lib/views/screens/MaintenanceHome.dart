@@ -112,18 +112,19 @@ class T5MaintenanceState extends State<T5Maintenance> {
                       SizedBox(width: 8),
                       text(t5_maintenance_repair, textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium)
                     ],
-                  ),
-                  // SvgPicture.asset(t5_options, width: 25, height: 25, color: t5White)
+                  ), // SvgPicture.asset(t5_options, width: 25, height: 25, color: t5White)
                 ],
               ),
             ),
-
-            SingleChildScrollView(
+       Expanded(
+          child:   SingleChildScrollView(
              //padding: EdgeInsets.only(top: 100),
-              child: Container(
+
+                child: Container(
           //      padding: EdgeInsets.only(top: 18),
+
                 alignment: Alignment.topLeft,
-                height: MediaQuery.of(context).size.height - 170,
+             height: MediaQuery.of(context).size.height ,
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
                 child: Column(
                   // children: tab[_currentIndex],
@@ -138,6 +139,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
                       )
                     ]
 
+                  ),
                 ),
               ),
             ),

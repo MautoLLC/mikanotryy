@@ -93,8 +93,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: "Example App",
+          actionBarColor: "#fe4364",
+          actionBarTitle: "My Mikano App",
           allViewTitle: "All Photos",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
@@ -394,6 +394,9 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           textContent: t13_lbl_request,
                           onPressed: () {
                        //     selectedSubCategId,selectedIndex,datetime,controller3.text,images, records
+
+
+
                       if(selectedSubCategId!=0 && controller2.text!=""){
                          MaintenanceRequestModel mMaintenanceRequest=new  MaintenanceRequestModel(maintenanceCategoryId: selectedSubCategId,
                           realEstateId: selectedIndex, requestDescription: controller3.text, userId: 1,
@@ -636,6 +639,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
   Future<void> addressPickerBottomSheet(context) async {
     selectedAddressValue =  address2.realEstates![0].mrealEstate!.realEstateAddress;
+    selectedIndex = address2.realEstates![0].mrealEstate!.idRealEstate;
     await showModalBottomSheet(
       shape: RoundedRectangleBorder(
         // side :  BorderSide(width: 1, color:t13Cat3),
@@ -797,6 +801,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
               width:100,
               child: IconButton(
                 onPressed: () {
+                  print("IM PRESSED");
                   loadAssets();
                 },
                 icon: Icon(Icons.add, color:t5Cat3),
