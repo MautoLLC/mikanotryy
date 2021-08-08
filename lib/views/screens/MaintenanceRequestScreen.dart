@@ -26,8 +26,8 @@ class MaintenanceRequestScreen extends StatefulWidget {
   static String tag = '/T13DescriptionScreen';
   final Categ mainCatg;
   final List<Entry> mydata ;
-
-  MaintenanceRequestScreen({Key? key, required this.mainCatg, required this.mydata}) : super(key: key);
+  final int listlength;
+  MaintenanceRequestScreen({Key? key, required this.mainCatg, required this.mydata, required this.listlength}) : super(key: key);
   @override
   MaintenanceRequestScreenState createState() => MaintenanceRequestScreenState();
 }
@@ -39,13 +39,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
   ListRealEstatesViewModel  address2=new ListRealEstatesViewModel();
   ListCategViewModel  MAINsub=new ListCategViewModel();
-
+  int x=0;
   int selectedIndex = 0;
   int selectedval = 0;
   int selectedSubCategId=0;
   String selectedSubCateg = "";
   String selectedAddressValue = "";
-  int listlength=0;
+
 
   late DateTime datetime ;
   late DateTime now;
@@ -142,6 +142,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     fetchmainsub=MAINsub.fetchSubCategories(this.widget.mainCatg.idMaintenanceCategory);
     fetchaddress=address2.fetchRealEstates();
     selectedAddressValue = "";
+
   }
 
   @override
@@ -239,48 +240,78 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                     children: <Widget>[
 
 
-                      SizedBox(height: 20),
-                      text("Subcategory", fontFamily: 'Medium',textColor: Colors.black),
-                      SizedBox(height: 8),
+                     SizedBox(height: 20),
 
-                      GestureDetector(
-                        onTap: () async {
-                         // selectedSubCateg= await mFilter(context);
-                          Entry rooty=  await mFilter(context);
-                          controller1.text = rooty.title;
-                          selectedSubCategId=rooty.idEntry;
+                if (this.widget.listlength>0) ...[
+
+                  text("Subcategory", fontFamily: 'Medium',textColor: Colors.black),
+                  SizedBox(height: 8),
+
+                  GestureDetector(
+                    onTap: () async {
+
+                      Entry rooty=  await mFilter(context);
+                      controller1.text = rooty.title;
+                      selectedSubCategId=rooty.idEntry;
                       //  controller1.text = selectedSubCateg;
-                        },
-                        child: AbsorbPointer(
-                            child:Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: TextFormField(
-                                  style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular , color:t5Cat3),
-                                  cursorColor: black,
-                                  controller:controller1,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
-                                    hintStyle: primaryTextStyle(color: t5Cat3),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    suffixIcon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: t5Cat3,
-                                      size: 24,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
-                                    ),
-                                  ),
-                                ))
+                    },
+                    child: AbsorbPointer(
+                        child:Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: TextFormField(
+                              style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular , color:t5Cat3),
+                              cursorColor: black,
+                              controller:controller1,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
+                                hintStyle: primaryTextStyle(color: t5Cat3),
+                                filled: true,
+                                fillColor: Colors.white,
+                                suffixIcon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: t5Cat3,
+                                  size: 24,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
+                                ),
+                              ),
+                            ))
 
-                        ),
+                    ),
+                  ),
+
+                ] else ...[
+                text("Maincategory", fontFamily: 'Medium',textColor: Colors.black),
+      AbsorbPointer(
+        child:Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: TextFormField(
+                    style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular , color:t5Cat3),
+                    cursorColor: black,
+                   initialValue: this.widget.mainCatg.maintenanceCategoryName,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
+                      hintStyle: primaryTextStyle(color: t5Cat3),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
+                      ),
+                    ),
+                  ),),),
+                        ],
+
                       SizedBox(height: 16),
                       text("Address", fontFamily: 'Medium', textColor: Colors.black),
                       SizedBox(height: 8),
@@ -393,12 +424,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         child: T13Button(
                           textContent: t13_lbl_request,
                           onPressed: () {
-                       //     selectedSubCategId,selectedIndex,datetime,controller3.text,images, records
 
+                      if (this.widget.listlength == 0)
+                         selectedSubCategId=this.widget.mainCatg.idMaintenanceCategory;
 
 
                       if(selectedSubCategId!=0 && controller2.text!=""){
-                         MaintenanceRequestModel mMaintenanceRequest=new  MaintenanceRequestModel(maintenanceCategoryId: selectedSubCategId,
+                         MaintenanceRequestModel mMaintenanceRequest=new MaintenanceRequestModel(maintenanceCategoryId: selectedSubCategId,
                           realEstateId: selectedIndex, requestDescription: controller3.text, userId: 1,
                           preferredVisitTime: datetime,maintenanceRequestImagesFiles:images,maintenanceRequestRecordsFiles:records);
                           SubmitMaintenanceRequest(mMaintenanceRequest);}
@@ -423,8 +455,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   }
 
   mFilter<Entry>(BuildContext context) {
-    listlength=MAINsub.subcategs!.length;
-    if(listlength>0)
+   // listlength=MAINsub.subcategs!.length;
+
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -445,8 +477,9 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           // Put all heading in column.
                           column,
                           SizedBox(height:30),
+                         /// if(listlength>0)
                           // Wrap your DaysList in Expanded and provide scrollController to it
-                        Expanded(child: CategsList(controller: scrollController,data: this.widget.mydata,MCategory: this.widget.mainCatg,fetchmainsub: fetchmainsub,listlength: listlength,)),
+                        Expanded(child: CategsList(controller: scrollController,data: this.widget.mydata,MCategory: this.widget.mainCatg,fetchmainsub: fetchmainsub,listlength: this.widget.listlength,)),
 
                         ],
                       );
@@ -456,7 +489,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
       },
     );
-    else Text("BYR");
+   // else selectedSubCategId=this.widget.mainCatg.idMaintenanceCategory;
   }
 
   Widget get column {
@@ -489,7 +522,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   //
   //     builder: (BuildContext context) {
   //       return StatefulBuilder(
-  //           builder: (BuildContext context, StateSetter setState) {
+  //           builder: (BuildContext context, StateSetter setStat
   //             //  if(this.widget.mydata.length>0) {
   //             return SingleChildScrollView(
   //               child: IntrinsicHeight(
@@ -801,7 +834,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
               width:100,
               child: IconButton(
                 onPressed: () {
-                  print("IM PRESSED");
                   loadAssets();
                 },
                 icon: Icon(Icons.add, color:t5Cat3),

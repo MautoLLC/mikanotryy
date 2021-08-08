@@ -207,11 +207,10 @@ print(length);
             if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-            else if (this.listlength == 0) {
-              return Text("NO SUBS");
-              //EntryItem(Entry(this.MCategory.idMaintenanceCategory,this.MCategory.maintenanceCategoryName), context);
-
-          }
+            //  if (this.listlength == 0) {
+            // //  return Text("NO SUBS");
+            // return EntryItem(Entry(this.MCategory.idMaintenanceCategory,this.MCategory.maintenanceCategoryName), context);
+            //  }
             else {
 
               return Container(

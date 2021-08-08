@@ -24,7 +24,7 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
   void initState() {
     super.initState();
     startTime();
-    goAll();
+  //  goAll();
   }
 
   void navigationPage() {
