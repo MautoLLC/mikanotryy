@@ -136,13 +136,13 @@ length=listsubs.length;
           listsubs = await checksub(idcurr);
           // print("length of" + j.maintenanceCategoryName.toString() + " sbs list " +
           //     listsubs.length.toString());
-          Entry s= Entry(j.idMaintenanceCategory!,j.maintenanceCategoryName!);
+          Entry s= Entry(j.idMaintenanceCategory!,j.maintenanceCategoryName);
           subdata.add(s);
         }
-        Entry p= Entry(k.idMaintenanceCategory!,v.maintenanceCategoryName!,subdata);
+        Entry p= Entry(k.idMaintenanceCategory!,k.maintenanceCategoryName,subdata);
         subdata2.add(p);
       }
-      Entry p= Entry(v.idMaintenanceCategory!,v.maintenanceCategoryName!,subdata2);
+      Entry p= Entry(v.idMaintenanceCategory!,v.maintenanceCategoryName,subdata2);
 
       data.add(p);
     }
