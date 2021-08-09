@@ -59,11 +59,9 @@ class T5GridListing extends StatelessWidget {
                Categ mainCategory=listCategViewModel.maincategs![index].mcateg!;
                     return GestureDetector(
                       onTap: ()  {
-                        //ExpansionTileDemo().launch(context);
-                        go4(mainCategory,context);
-                        // getdataTree(mainCategoryId,context);
-                     //   yr(mainCategoryId,context);
-                     // SubmitMaintenanceRequest();
+
+                        goAll(mainCategory,context);
+
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -108,59 +106,130 @@ class T5GridListing extends StatelessWidget {
 
     );
   }
-  Future go4(Categ mainCategory,BuildContext context) async
+  Future goAll(Categ mainCategory,BuildContext context) async
   {
-    ListCategViewModel listCategViewModel2=new ListCategViewModel();
-    ListCategViewModel listCategViewModel3=new ListCategViewModel();
-    ListCategViewModel listCategViewModel4=new ListCategViewModel();
-    final List<Entry> data3 = <Entry>[];
-    List<Entry> data3sub = <Entry>[];
-    List<Entry> data4sub = <Entry>[];
-    await  listCategViewModel2.fetchSubCategories(mainCategory.idMaintenanceCategory);
-    var l=listCategViewModel2.subcategs!.length;
-    print("sub1 list length :");
-    print(l);
 
-    for (var i = l- 1; i >= 0 ; i--)
-    {
-      listCategViewModel3.fetchSubCategories(listCategViewModel2.subcategs![i].mcateg!.idMaintenanceCategory).then((result) async
-      {
-        data3sub = [];
-        for (var j = 0; j < listCategViewModel3.subcategs!.length; j++)
-        {
-          data4sub = [];
-          listCategViewModel4.fetchSubCategories(listCategViewModel3.subcategs![j].mcateg!.idMaintenanceCategory).then((result) async
-          {
-            for (var k= 0; k< listCategViewModel4.subcategs!.length; k++) {
-              Entry en = Entry(
-                  listCategViewModel4.subcategs![k].mcateg!.idMaintenanceCategory,
-                  listCategViewModel4.subcategs![k].mcateg!.maintenanceCategoryName.toString());
-              data4sub.add(en);
-            }
-          });
-          Entry e = Entry(listCategViewModel3.subcategs![j].mcateg!.
-          idMaintenanceCategory,
-              listCategViewModel3.subcategs![j].mcateg!
-                  .maintenanceCategoryName
-                  .toString(),
-              data4sub
-          );
-          data3sub.add(e);
+    final List<Entry> data = <Entry>[];
+    List<Entry> subdata =<Entry>[];
+    List<Entry> subdata2 =<Entry>[];
+
+    List<Categ> listsubs=[];
+
+    int idcurr;
+    listsubs= await checksub(mainCategory.idMaintenanceCategory);
+int length;
+length=listsubs.length;
+    for (var v in listsubs) {
+      idcurr = v.idMaintenanceCategory;
+      listsubs = await checksub(idcurr);
+      // print("length of" + v.maintenanceCategoryName.toString() + " sbs list " +
+      //     listsubs.length.toString());
+      subdata=[];
+      for (var k in listsubs) {
+        idcurr = k.idMaintenanceCategory;
+        listsubs = await checksub(idcurr);
+        // print("length of" + k.maintenanceCategoryName.toString() + " sbs list " +
+        //     listsubs.length.toString());
+        subdata2=[];
+        for (var j in listsubs) {
+          idcurr = j.idMaintenanceCategory;
+          listsubs = await checksub(idcurr);
+          // print("length of" + j.maintenanceCategoryName.toString() + " sbs list " +
+          //     listsubs.length.toString());
+          Entry s= Entry(j.idMaintenanceCategory!,j.maintenanceCategoryName!);
+          subdata.add(s);
         }
-        data3.add(Entry(listCategViewModel2.subcategs![i].mcateg!.
-        idMaintenanceCategory,listCategViewModel2.subcategs![i].mcateg!.
-        maintenanceCategoryName
-            .toString(),
-            data3sub));
-      });
+        Entry p= Entry(k.idMaintenanceCategory!,v.maintenanceCategoryName!,subdata);
+        subdata2.add(p);
+      }
+      Entry p= Entry(v.idMaintenanceCategory!,v.maintenanceCategoryName!,subdata2);
+
+      data.add(p);
     }
 
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => MaintenanceRequestScreen(mainCatg: mainCategory,mydata: data3,listlength: l,)),
+          builder: (context) => MaintenanceRequestScreen(mainCatg: mainCategory,mydata: data,listlength: length,)),
     );
+
   }
+
+  Future<List<Categ>> checksub(int idParentCat) async {
+    List<Categ> listsubs=[];
+
+    ListCategViewModel listCategViewModel=new ListCategViewModel();
+
+    await  listCategViewModel.fetchAllCategories();
+
+
+    int parentcategid;
+    String parentcategname;
+
+    for (var v in listCategViewModel.allcategs!) {
+      if (v.mcateg!.maintenanceCategoryParentId == idParentCat) {
+        // print("Category " + idParentCat.toString()
+        //
+        //   + " subs : " + v.mcateg!.maintenanceCategoryName);
+        listsubs.add(v.mcateg!);
+      }
+    }
+
+    return listsubs;
+  }
+  // Future go4(Categ mainCategory,BuildContext context) async
+  // {
+  //   ListCategViewModel listCategViewModel2=new ListCategViewModel();
+  //   ListCategViewModel listCategViewModel3=new ListCategViewModel();
+  //   ListCategViewModel listCategViewModel4=new ListCategViewModel();
+  //   final List<Entry> data3 = <Entry>[];
+  //   List<Entry> data3sub = <Entry>[];
+  //   List<Entry> data4sub = <Entry>[];
+  //   await  listCategViewModel2.fetchSubCategories(mainCategory.idMaintenanceCategory);
+  //   var l=listCategViewModel2.subcategs!.length;
+  //   print("sub1 list length :");
+  //   print(l);
+  //
+  //   for (var i = l- 1; i >= 0 ; i--)
+  //   {
+  //     listCategViewModel3.fetchSubCategories(listCategViewModel2.subcategs![i].mcateg!.idMaintenanceCategory).then((result) async
+  //     {
+  //       data3sub = [];
+  //       for (var j = 0; j < listCategViewModel3.subcategs!.length; j++)
+  //       {
+  //         data4sub = [];
+  //         listCategViewModel4.fetchSubCategories(listCategViewModel3.subcategs![j].mcateg!.idMaintenanceCategory).then((result) async
+  //         {
+  //           for (var k= 0; k< listCategViewModel4.subcategs!.length; k++) {
+  //             Entry en = Entry(
+  //                 listCategViewModel4.subcategs![k].mcateg!.idMaintenanceCategory,
+  //                 listCategViewModel4.subcategs![k].mcateg!.maintenanceCategoryName.toString());
+  //             data4sub.add(en);
+  //           }
+  //         });
+  //         Entry e = Entry(listCategViewModel3.subcategs![j].mcateg!.
+  //         idMaintenanceCategory,
+  //             listCategViewModel3.subcategs![j].mcateg!
+  //                 .maintenanceCategoryName
+  //                 .toString(),
+  //             data4sub
+  //         );
+  //         data3sub.add(e);
+  //       }
+  //       data3.add(Entry(listCategViewModel2.subcategs![i].mcateg!.
+  //       idMaintenanceCategory,listCategViewModel2.subcategs![i].mcateg!.
+  //       maintenanceCategoryName
+  //           .toString(),
+  //           data3sub));
+  //     });
+  //   }
+  //
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => MaintenanceRequestScreen(mainCatg: mainCategory,mydata: data3,listlength: l,)),
+  //   );
+  // }
 
 //   Future yr (int keymaincatId,BuildContext context) async
 // {
@@ -316,24 +385,3 @@ class T5GridListing extends StatelessWidget {
   //   // );
   // }
 }
-//
-// Future<int> hasSub(int keymaincatId) async {
-//   ListSubCategViewModel listCategViewModel2=new ListSubCategViewModel();
-//   await listCategViewModel2.fetchSubCategories(keymaincatId);
-//   var l = listCategViewModel2.subcategs!.length;
-//
-//
-//
-//   print("length : "+l.toString());
-//
-//   // if(l==0)
-//   // return Future<bool>.value(false);
-//   // else {
-//   //   int getLengh(){
-//   //     return l;
-//   //   }
-//     return Future<int>.value(l);
-//   //}
-// }
-//
-

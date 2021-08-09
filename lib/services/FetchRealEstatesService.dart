@@ -12,8 +12,6 @@ class RealEstatesService {
 
     final response = await client.get(Uri.parse(GetRealEstatesURL));
 
-    //print(response.body.toString());
-
     if (response.statusCode == 200)
     {
       final json= jsonDecode(response.body) as List<dynamic>;

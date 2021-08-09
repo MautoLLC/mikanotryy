@@ -16,7 +16,7 @@ class OPSplashScreen extends StatefulWidget {
 
 class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProviderStateMixin {
   startTime() async {
-    var _duration = Duration(seconds: 2);
+    var _duration = Duration(seconds: 5);
     return Timer(_duration, navigationPage);
   }
 
@@ -24,7 +24,7 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
   void initState() {
     super.initState();
     startTime();
-  //  goAll();
+    //goAll();
   }
 
   void navigationPage() {

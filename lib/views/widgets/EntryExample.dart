@@ -27,7 +27,7 @@ class EntryItem extends StatelessWidget {
           borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
         ),
         child:Theme(
-            data: ThemeData().copyWith(dividerColor: Colors.grey),
+            data: ThemeData().copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
               key: PageStorageKey<Entry>(root),
               title: Text(root.title),

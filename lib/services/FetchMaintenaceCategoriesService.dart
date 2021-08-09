@@ -15,8 +15,6 @@ Future<List<Categ>> fetchCategs() async{
 
   final response = await client.get(url);
 
-  print(response.body.toString());
-
 if (response.statusCode == 200)
 {
 

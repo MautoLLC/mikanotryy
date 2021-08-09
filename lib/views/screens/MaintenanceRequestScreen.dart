@@ -38,7 +38,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
 
   ListRealEstatesViewModel  address2=new ListRealEstatesViewModel();
-  ListCategViewModel  MAINsub=new ListCategViewModel();
+
   int x=0;
   int selectedIndex = 0;
   int selectedval = 0;
@@ -55,7 +55,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   var controller3 = TextEditingController();
 
   late Future fetchaddress;
-  late Future fetchmainsub;
 
   late Directory? appDir;
   List<String>? records;
@@ -139,7 +138,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       });
     });
     setState(() {});
-    fetchmainsub=MAINsub.fetchSubCategories(this.widget.mainCatg.idMaintenanceCategory);
+
     fetchaddress=address2.fetchRealEstates();
     selectedAddressValue = "";
 
@@ -455,8 +454,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   }
 
   mFilter<Entry>(BuildContext context) {
-   // listlength=MAINsub.subcategs!.length;
-
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -479,7 +476,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           SizedBox(height:30),
                          /// if(listlength>0)
                           // Wrap your DaysList in Expanded and provide scrollController to it
-                        Expanded(child: CategsList(controller: scrollController,data: this.widget.mydata,MCategory: this.widget.mainCatg,fetchmainsub: fetchmainsub,listlength: this.widget.listlength,)),
+                        Expanded(child: CategsList(controller: scrollController,data: this.widget.mydata,listlength: this.widget.listlength,)),
 
                         ],
                       );
