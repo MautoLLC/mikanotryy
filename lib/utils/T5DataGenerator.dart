@@ -1,4 +1,5 @@
 import 'package:mymikano_app/models/DashboardCardModel.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 
 import 'T2Colors.dart';
 import 'T5Images.dart';
@@ -241,5 +242,73 @@ List<T5Bill> getListData() {
   return list;
 }
 
+List<MaintenanceRequestModel2> getMaintenanceListData() {
+  List<MaintenanceRequestModel2> list = [];
+  var bill = MaintenanceRequestModel2();
+  bill.categoryname = "Water bill";
+  bill.preferredVisitTimee = "1969-07-20 20:18:04Z";
+  bill.maintenanceStatusDescription = "Pending";
+  bill.userId = 1;
+  bill.maintenanceCategoryId = 1;
+
+  list.add(bill);
+
+  var bill1 = MaintenanceRequestModel2();
+  bill1.categoryname = "Water bill";
+  bill1.preferredVisitTimee = "1969-07-20 20:18:04Z";
+  bill1.maintenanceStatusDescription = "Accepted";
+  bill1.userId = 1;
+  bill1.maintenanceCategoryId = 1;
+
+  list.add(bill1);
+
+  var bill2 = MaintenanceRequestModel2();
+  bill2.categoryname = "Water bill";
+  bill2.preferredVisitTimee = "1969-07-20 20:18:04Z";
+  bill2.maintenanceStatusDescription = "Accepted";
+  bill2.userId = 1;
+  bill2.maintenanceCategoryId = 1;
+
+  list.add(bill2);
+  var bill3 = MaintenanceRequestModel2();
+  bill3.categoryname = "Water bill";
+  bill3.preferredVisitTimee = "1969-07-20 20:18:04Z";
+  bill3.maintenanceStatusDescription = "Accepted";
+  bill3.userId = 1;
+  bill3.maintenanceCategoryId = 1;
+
+  list.add(bill3);
+
+  var bill4 = MaintenanceRequestModel2();
+  bill4.categoryname = "Water bill";
+  bill4.preferredVisitTimee = "1969-07-20 20:18:04Z";
+  bill4.maintenanceStatusDescription = "Accepted";
+  bill4.userId = 1;
+  bill4.maintenanceCategoryId = 1;
+
+  list.add(bill4);
+  var bill5 = MaintenanceRequestModel2();
+  bill5.categoryname = "Water bill";
+  bill5.preferredVisitTimee = "1969-07-20 20:18:04Z";
+  bill5.maintenanceStatusDescription = "Accepted";
+  bill5.userId = 1;
+  bill5.maintenanceCategoryId = 1;
+
+  list.add(bill);
+  list.add(bill2);
+  list.add(bill);
+  list.add(bill);
+  list.add(bill1);
+  list.add(bill2);
+  list.add(bill3);
+  list.add(bill4);
+  list.add(bill);
+  list.add(bill1);
+  list.add(bill2);
+  list.add(bill3);
+  list.add(bill4);
+
+  return list;
+}
 
 

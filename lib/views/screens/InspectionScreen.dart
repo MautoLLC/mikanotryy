@@ -276,138 +276,8 @@ mList=QIBusBookingModel("", "", ""," ");
       form.reset();
     }
   }
-  void show(BuildContext context) {
-    showModalBottomSheet<void>(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
-          )
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-
-              color:Colors.white70,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)
-              )
-          ),
-          height: 255,
-          child: Column(
-            children: [
-              Expanded(
-                child:Container(
-                  decoration: BoxDecoration(
-                      color: t5Cat3, // or some other color
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0)
-                      )
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Add Custom Component', style: primaryTextStyle(size: 18,color:Colors.white))
-                    ],
-                  ).paddingAll(15.0),
-                ),
-              ),
-              Container(
-                height: 200,
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Name",
-                        style: primaryTextStyle(color: Colors.black),
-                      ),
-                      8.height,
-                      editTextStyle("Enter Name",1,_component.componentName),
-                      16.height,
-                      Text(
-                        "Description",
-                        style: primaryTextStyle(color:Colors.black),
-                      ),
-                      8.height,
-                      editTextStyle("Description",3,_component.componentDescription ),
-
-                      30.height,
-                      GestureDetector(
-                        onTap: () {
-                          // _onSubmit();
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: boxDecoration(bgColor: t5Cat3, radius: 20),
-                          padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                          child: Center(
-                            child: Text(
-                              "Submit",
-                              style: primaryTextStyle(color: white),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-        );
-      },
-    );
-  }
-
-  Padding editTextStyle(var hintText , var  maxLines, var comp) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: TextFormField(
-        maxLines: maxLines,
-        style: TextStyle(fontSize: 16, fontFamily: fontRegular),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(24, 16, 24, 16),
-          hintText: hintText,
-          hintStyle: primaryTextStyle(color: grey),
-          filled: true,
-          fillColor:Colors.white,
-          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
-          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
-        ),
-        validator: (val) =>
-        (val!.length == 0 ? 'This field is mandatory' : null),
-        onSaved: (val) => setState(() => comp = val!),
-      ),
-    );
-  }
 
 
-  Widget get column {
-    return Container(
-      height:57,
-      decoration: BoxDecoration(
-          color: t5Cat3, // or some other color
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
-          )
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('Add Custom Component', style: primaryTextStyle(size: 18,color:Colors.white))
-        ],
-      ).paddingAll(15.0),
-    );
-  }
 
   mFormBottomSheet(BuildContext aContext) {
     showModalBottomSheet(
@@ -415,23 +285,22 @@ mList=QIBusBookingModel("", "", ""," ");
       context: aContext,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), color:t5Cat3),
-            // padding: EdgeInsets.all(16),
+        return SingleChildScrollView(
+            child: Container(
+            padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)), color:t5White),
             child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // Expanded(
-                  //   child:
                   Container(
-                    // width:  double.infinity,
                     height:57,
                     decoration: BoxDecoration(
                         color: t5Cat3, // or some other color
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)
+                            topLeft: Radius.circular(24.0),
+                            topRight: Radius.circular(24.0)
                         )
                     ),
                     child: Row(
@@ -445,7 +314,9 @@ mList=QIBusBookingModel("", "", ""," ");
                   ),
 
                   8.height,
-                  Container(
+                Padding(
+                    padding: const EdgeInsets.only(bottom :0.0),
+                  child:Container(
                     color:Colors.white,
                     padding: EdgeInsets.all(16),
                     child: Form(
@@ -525,7 +396,7 @@ mList=QIBusBookingModel("", "", ""," ");
                         ],
                       ),
                     ),
-                  )]) );
+                  ) )]) ));
       },
     );
   }

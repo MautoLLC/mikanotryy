@@ -54,9 +54,8 @@ class T5GridListing extends StatelessWidget {
 
               return GridView.builder(
                   scrollDirection: Axis.vertical,
-                  physics: isScrollable
-                      ? ScrollPhysics()
-                      : NeverScrollableScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
                   itemCount:  listCategViewModel.maincategs!.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

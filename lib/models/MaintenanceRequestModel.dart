@@ -3,6 +3,8 @@ import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestStatus.dart';
 
 class MaintenanceRequestModel {
+
+
   late final int? idMaintenanceRequest;
   final int maintenanceCategoryId;
   Categ? maintenanceCategory;
@@ -50,4 +52,15 @@ class MaintenanceRequestModel {
   }
 
 
+}
+
+class MaintenanceRequestModel2 {
+
+
+  late final int maintenanceCategoryId;
+  late final String? preferredVisitTimee;
+  late final String categoryname;
+  late final int realEstateId;
+  late int userId;
+  late String maintenanceStatusDescription;
 }

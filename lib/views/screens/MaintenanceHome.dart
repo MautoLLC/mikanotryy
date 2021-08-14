@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/T2Colors.dart';
 import 'package:mymikano_app/utils/T5DataGenerator.dart';
@@ -15,6 +17,7 @@ import 'package:mymikano_app/views/widgets/T5GridListing.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:connectivity/connectivity.dart';
 import 'DashboardScreen.dart';
+import 'MyRequestsScreen2.dart';
 
 class T5Maintenance extends StatefulWidget {
   static var tag = "/T5Dashboard";
@@ -29,6 +32,8 @@ class T5MaintenanceState extends State<T5Maintenance> {
   var currentIndexPage = 0;
   var currentIndex = 0;
   List<T5Category>? mFavouriteList;
+  List<T5Bill>? cardList;
+  List<MaintenanceRequestModel2>? reqList;
   List<T5Slider>? mSliderList;
 
   @override
@@ -37,6 +42,8 @@ class T5MaintenanceState extends State<T5Maintenance> {
     passwordVisible = false;
     mFavouriteList = getCategoryItems();
     mSliderList = getSliders();
+    cardList =getListData();
+    reqList = getMaintenanceListData();
   }
 
   void changeSldier(int index) {
@@ -52,101 +59,100 @@ class T5MaintenanceState extends State<T5Maintenance> {
     width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-    final maintenance = <Widget>[
-    // T5SliderWidget(mSliderList),
-    SizedBox(height: 20),
-    Expanded(
-    child: Padding(
-    padding: EdgeInsets.all(24.0),
-    child: T5GridListing(mFavouriteList, false),
-    ),
-    )
-    ];
 
-    final history = <Widget>[
-      // T5SliderWidget(mSliderList),
-
-
-    ];
-
-    final quotations = <Widget>[
-      // T5SliderWidget(mSliderList),
-
-    ];
-
-    final tab = [
-      maintenance,
-      history,
-      quotations,
-    ];
-
-    return Scaffold(
-      backgroundColor: t5DarkNavy,
-      key: _scaffoldKey,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 70,
-              margin: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return  new MaterialApp(
+        home:Scaffold(
+        backgroundColor: t5DarkNavy,
+        key: _scaffoldKey,
+        body: SafeArea(
+          child:DefaultTabController(
+          length: 2,
+            child: Scaffold(
+            appBar: AppBar(
+            shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
+            backgroundColor: t5DarkNavy,
+            toolbarHeight:120,
+            title:Row(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      // IconButton(
-                      //   icon: SvgPicture.asset(t5_arrow_back, width: 25, height: 25, color: t5White),
-                      //   onPressed: () {
-                      //     print("ihh");
-                      //
-                      //   }, //do something,
-                      // ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_rounded, color: t5White,size: 30.0,),
-                        onPressed: () {
-                          finish(context);
-                        },
+                IconButton(
+                  icon: Icon(Icons.arrow_back_rounded, color: t5White,size: 30.0,),
+                   onPressed: () {
+                     finish(context);
+                      },
+                   ),
+                  SizedBox(width: 10),
+                  SvgPicture.asset(t5_general_repair, width: 25, height: 25, color: t5White),
+                  SizedBox(width: 8),
+                  text(t5_maintenance_repair, textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium)
+                 ],
+                ),
+                bottom: TabBar(
+                onTap: (index) {
+                print(index);
+                },
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelColor: t5White,
+                  labelStyle: boldTextStyle(),
+                  indicator: MD2Indicator( //it begins here
+                  indicatorHeight: 4,
+                  indicatorColor: Colors.white,
+                  indicatorSize: MD2IndicatorSize.full //3 different modes tiny-normal-full
+                  ),
+                  tabs: [
+                  Tab(
+                  text: "Maintenance",
+                  ),
+                  Tab(
+                  text: "My Requests",
+                  ),
+
+                  ],
+                  ),
+                  ),
+              body: TabBarView(
+                children: [
+                  Container(
+                    color:t5DarkNavy,
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
+                      child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(24.0),
+                                child: T5GridListing(mFavouriteList, false),
+                              ),
+                            ),
+                          ]
                       ),
-                      SizedBox(width: 10),
-                      SvgPicture.asset(t5_general_repair, width: 25, height: 25, color: t5White),
-                      SizedBox(width: 8),
-                      text(t5_maintenance_repair, textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium)
-                    ],
-                  ), // SvgPicture.asset(t5_options, width: 25, height: 25, color: t5White)
+                    ),
+                  ),
+                  Container(
+                    color:t5DarkNavy,
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
+                      child: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(24.0),
+                                child: MyRequestsScreen2(cardList,reqList),
+                              ),
+                            ),
+                          ]
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-       Expanded(
-          child:   SingleChildScrollView(
-             //padding: EdgeInsets.only(top: 100),
-
-                child: Container(
-          //      padding: EdgeInsets.only(top: 18),
-
-                alignment: Alignment.topLeft,
-             height: MediaQuery.of(context).size.height ,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
-                child: Column(
-                  // children: tab[_currentIndex],
-                   children: <Widget>[
-                      // T5SliderWidget(mSliderList),
-                      SizedBox(height: 20),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(24.0),
-                          child: T5GridListing(mFavouriteList, false),
-                        ),
-                      )
-                    ]
-
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-     // bottomNavigationBar: (),
-    );
+          // bottomNavigationBar: T5BottomBar(),
+        )
+      );
   }
+
 }
