@@ -475,7 +475,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           column,
                           SizedBox(height:30),
                          /// if(listlength>0)
-                          // Wrap your DaysList in Expanded and provide scrollController to it
+
                         Expanded(child: CategsList(controller: scrollController,data: this.widget.mydata,listlength: this.widget.listlength,)),
 
                         ],
@@ -486,7 +486,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
       },
     );
-   // else selectedSubCategId=this.widget.mainCatg.idMaintenanceCategory;
+
   }
 
   Widget get column {
@@ -734,9 +734,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
         if (snapshot.hasError) {
         return Text('${snapshot.error}');
         }
-        // if (!snapshot.hasData) {
-        // print("snapshot");
-        // }
         return
         CupertinoPicker(
         scrollController: FixedExtentScrollController(initialItem: selectedval),

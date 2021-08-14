@@ -54,7 +54,6 @@ SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
 
   request.files.addAll(newList);
 
-
   request.send().then((response) {
     if (response.statusCode == 201)
       {
@@ -70,7 +69,7 @@ SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
       );
       }
     else{
-      print("Failed to submit !");
+      print("Failed to submit !"+ response.toString());
       Fluttertoast.showToast(
           msg: "Error in submitting request ! " ,
           toastLength: Toast.LENGTH_SHORT,

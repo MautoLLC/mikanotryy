@@ -7,6 +7,7 @@ import 'package:mymikano_app/utils/SDDashboardScreen.dart';
 import 'package:mymikano_app/utils/T3DataGenerator.dart';
 import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/utils/colors.dart';
+import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:mymikano_app/views/widgets/DashboardSlider.dart';
 import 'package:mymikano_app/views/widgets/SfLinearGauge.dart';
 import 'package:mymikano_app/views/widgets/SfRadialGauge.dart';
@@ -21,6 +22,7 @@ import 'package:mymikano_app/utils/T5Images.dart';
 import 'package:mymikano_app/utils/T5Strings.dart';
 import 'package:mymikano_app/views/widgets/T5Slider.dart';
 
+import 'MyInspectionsScreen.dart';
 import 'MaintenanceHome.dart';
 
 class Dashboard extends StatefulWidget {
@@ -232,7 +234,17 @@ class DashboardState extends State<Dashboard> {
                                           child: SizerUtil.deviceType == DeviceType.mobile?
                                           Text(t5_view_all, style: boldTextStyle(size: 14, color:  Colors.white))
                                               :Text(t5_view_all, style: boldTextStyle(size: 24, color:  Colors.white)),
-                                          onTap: () {},
+                                          onTap: () {
+
+                                         //  toast("view all");
+                                        //    fetchreq(context);
+                                       /// fetchinspections(context);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => T5Listing()),
+                                            );
+                                          },
                                         )
                                       ],
                                     ),

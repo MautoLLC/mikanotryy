@@ -1,3 +1,5 @@
+const t13_add_component= "Add new custom component";
+
 const t13_lbl_get_started = "Get Started";
 const t13_hint_Email = "Email";
 const t13_hint_password = "Password";

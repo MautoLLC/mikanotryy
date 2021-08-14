@@ -170,6 +170,76 @@ List<T5Slider> getSliders() {
   return list;
 }
 
+List<T5Bill> getListData() {
+  List<T5Bill> list = [];
+  var bill = T5Bill();
+  bill.name = "Electric bill";
+  bill.day = "22";
+  bill.icon = t5_light_bulb;
+  bill.amount = "\$155.00";
+  bill.date = "10/2/2019";
+
+  list.add(bill);
+
+  var bill1 = T5Bill();
+  bill1.name = "Water bill";
+  bill1.day = "20";
+  bill1.icon = t5_drop;
+  bill1.amount = "\$855.00";
+  bill1.date = "10/2/2019";
+
+  list.add(bill1);
+
+  var bill2 = T5Bill();
+  bill2.name = "Water bill";
+  bill2.day = "12";
+  bill2.icon = t5_drop;
+  bill2.amount = "\$155.00";
+  bill2.isPaid = true;
+  bill2.date = "10/2/2019";
+
+  list.add(bill2);
+
+  var bill3 = T5Bill();
+  bill3.name = "Phone bill";
+  bill3.day = "12";
+  bill3.icon = t5_call_answer;
+  bill3.amount = "\$25.00";
+  bill3.date = "10/2/2019";
+
+  list.add(bill3);
+
+  var bill4 = T5Bill();
+  bill4.name = "Internet bill";
+  bill4.day = "11";
+  bill4.icon = t5_wifi;
+  bill4.amount = "\$70.00";
+  bill4.date = "10/2/2019";
+
+  list.add(bill4);
+  var bill5 = T5Bill();
+  bill5.name = "Electric bill";
+  bill5.day = "10";
+  bill5.icon = t5_light_bulb;
+  bill5.amount = "\$600.00";
+  bill5.date = "10/2/2019";
+  bill5.isPaid = true;
+  list.add(bill);
+  list.add(bill2);
+  list.add(bill);
+  list.add(bill);
+  list.add(bill1);
+  list.add(bill2);
+  list.add(bill3);
+  list.add(bill4);
+  list.add(bill);
+  list.add(bill1);
+  list.add(bill2);
+  list.add(bill3);
+  list.add(bill4);
+
+  return list;
+}
 
 
 

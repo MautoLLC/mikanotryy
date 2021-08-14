@@ -1,9 +1,63 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/EntryModel.dart';
+import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/viewmodels/ListInspectionsViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
+import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
+import 'package:mymikano_app/views/screens/MyInspectionsScreen.dart';
+import 'package:mymikano_app/views/screens/MyRequestsScreen.dart';
 import 'EntryExample.dart';
+Future fetchreq(BuildContext context) async {
+  List<MaintenanceRequestModel> mRequest = [];
+  try {
+    ListMaintenanceRequestsViewModel listCategViewModel = new ListMaintenanceRequestsViewModel();
+    await listCategViewModel.fetchMaintenanceRequests();
+    for (int i = 0; i < listCategViewModel.maintenanceRequests!.length; i++) {
+      MaintenanceRequestModel m = listCategViewModel.maintenanceRequests![i]
+          .mMaintenacerequest!;
+      //print(m!.maintenanceCategory!.maintenanceCategoryName);
+      mRequest.add(m);
+    }
+  }
+    on Exception catch (e) {
+
+    print(e.toString()+"failed to fetdh");
+    }
+
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => MyRequests(mRequestt: mRequest)),
+  );
+}
+// Future fetchinspections(BuildContext context) async {
+//   List<InspectionModel> mInspection = [];
+//   try {
+//     ListInspectionsViewModel listCategViewModel = new ListInspectionsViewModel();
+//     await listCategViewModel.fetchInspections();
+//     for (int i = 0; i < listCategViewModel.inspections!.length; i++) {
+//       InspectionModel m = listCategViewModel.inspections![i]
+//           .mInspection!;
+//       //print(m!.maintenanceCategory!.maintenanceCategoryName);
+//       mInspection.add(m);
+//     }
+//   }
+//   on Exception catch (e) {
+//
+//     print(e.toString()+"failed to fetch");
+//   }
+//
+//
+//   Navigator.push(
+//     context,
+//     MaterialPageRoute(
+//         builder: (context) => T5Listing()),
+//   );
+// }
 
 // Future goAll(int id) async
 // {
@@ -63,29 +117,26 @@ import 'EntryExample.dart';
 //
 //
 //   }
-//   //  for (var v in listCategViewModel.allcategs!) {
-//  //    if (v.mcateg!.maintenanceCategoryParentId == parentcategid) {
-//  //      print("Category " + parentcategname.toString()
-//  //      //    listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName
-//  //      //        .toString()
-//  //          + " subs : " + v.mcateg!.maintenanceCategoryName);
-//  //    parentcategid = v.mcateg!.idMaintenanceCategory;
-//  //      //Entry s= Entry(v.mcateg!.idMaintenanceCategory!,v.mcateg!.maintenanceCategoryName!);
-//  //      //   subdata.add(s);
-//  //    }
-//  //    //  Entry p= Entry(listCategViewModel.allcategs![i].mcateg!.idMaintenanceCategory,listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName.toString(),subdata);
-//  //    // data.add(p);
-//  // }
-//
-// //}
-//
+  //  for (var v in listCategViewModel.allcategs!) {
+ //    if (v.mcateg!.maintenanceCategoryParentId == parentcategid) {
+ //      print("Category " + parentcategname.toString()
+ //      //    listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName
+ //      //        .toString()
+ //          + " subs : " + v.mcateg!.maintenanceCategoryName);
+ //    parentcategid = v.mcateg!.idMaintenanceCategory;
+ //      //Entry s= Entry(v.mcateg!.idMaintenanceCategory!,v.mcateg!.maintenanceCategoryName!);
+ //      //   subdata.add(s);
+ //    }
+ //    //  Entry p= Entry(listCategViewModel.allcategs![i].mcateg!.idMaintenanceCategory,listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName.toString(),subdata);
+ //    // data.add(p);
+ // }
+
+//}
+
 // Future<List<Categ>> checksub(int idParentCat) async {
 //   List<Categ> listsubs=[];
-//
 //   ListCategViewModel listCategViewModel=new ListCategViewModel();
-//
 //   await  listCategViewModel.fetchAllCategories();
-//
 //
 //   int parentcategid;
 //   String parentcategname;

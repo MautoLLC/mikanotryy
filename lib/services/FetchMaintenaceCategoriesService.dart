@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/views/widgets/T5Expandable.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 
 
@@ -47,7 +45,6 @@ Future<List<Categ>> fetchSubCategs(int idMainCat) async{
     {
     throw Exception('Error fetching');}
 }
-
 
 
 Future<List<Categ>> fetchAllCategs() async{

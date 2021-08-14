@@ -36,4 +36,12 @@ class T3DashboardSliderModel {
   T3DashboardSliderModel(this.dishName, this.dishType, this.type, this.userName, this.dishImg, this.userImg);
 }
 
-
+class T5Bill {
+  var name;
+  var day;
+  var date;
+  var isPaid = false;
+  late var icon;
+  var amount;
+  var wallet = "Mastercard";
+}

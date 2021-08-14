@@ -187,7 +187,7 @@ class _RecorderState extends State<Recorder> {
     // DateTime.now()!
     // millisecondsSinceEpoch?
     Directory appDirec =
-    Directory("${appDir!.path}/$jrecord/");
+    Directory("${appDir.path}/$jrecord/");
     if (await appDirec.exists()) {
       String patho = "${appDirec.path}$dato";
       print("path for file11 ${patho}");

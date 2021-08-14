@@ -1,12 +1,29 @@
-const authorizationEndpoint = 'https://dev.codepickles.com:8443/auth/realms/master/protocol/openid-connect/token';
+const KeyCloakBaseUrl = 'https://dev.codepickles.com:8443';
 const identifier = 'MymikanoApp';
 const secret = '9abafef9-82fe-4360-8283-ee7d2e8b3879';
-const GetMainCategoriesURL ='http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';
-const GetSubCategoriesURL ="http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories/ChildrenRealEstateMaintenanceCategories/";
-const GetAllCategoriesURL ="http://dev.codepickles.com:8085/api/RealEstateMaintenanceCategories";
-const PostMaintenaceRequestURL = 'http://dev.codepickles.com:8085/api/MaintenanceRequests';
-const RegisterUserURL ='https://dev.codepickles.com:8443/auth/admin/realms/master/users';
-const GetRealEstatesURL ='http://dev.codepickles.com:8085/api/RealEstates';
+const authorizationEndpoint = '$KeyCloakBaseUrl/auth/realms/master/protocol/openid-connect/token';
+const RegisterUserURL ='$KeyCloakBaseUrl/auth/admin/realms/master/users';
+
+const MaintenanceApiBaseUrl = 'http://dev.codepickles.com:8085';
+const GetMainCategoriesURL ='$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';
+const GetSubCategoriesURL ="$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories/ChildrenRealEstateMaintenanceCategories/";
+const GetAllCategoriesURL ="$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories";
+const PostMaintenaceRequestURL = '$MaintenanceApiBaseUrl/api/MaintenanceRequests';
+const GetRealEstatesURL ='$MaintenanceApiBaseUrl/api/RealEstates';
+const GetMaintenaceRequestURL='$MaintenanceApiBaseUrl/api/MaintenanceRequests';
+
+const InspectionApiBaseUrl = 'http://dev.codepickles.com:8087';
+const GetInspectionURL='$InspectionApiBaseUrl/api/Inspections/';
+const GetTechnicianInspectionURL='$InspectionApiBaseUrl/api/Inspections/TechnicianInspections/';
+const PostInspectionCustomChecklistItemURL='$InspectionApiBaseUrl/api/Inspections/CustomChecklistItem?inspectionID=';
+const GetPredefinedCheckListByCategURL='$InspectionApiBaseUrl/api/PredefinedChecklistItems/CategoryChecklist?categoryID=';
+const GetCustomCheckListByInspectionURL='$InspectionApiBaseUrl/api/Inspections/InspectionChecklist/';
+const ChangeStatusCustomCheckListURL='/api/Inspections/InspectionChecklistItem';
+const inspectionChecklistItemIDParameter="inspectionChecklistItemID";
+const componentStatusIDParameter="componentStatusID";
+const ComponentsURL='$InspectionApiBaseUrl/api/Components';
+const ComponentsStatusURL='$InspectionApiBaseUrl/api/ComponentStatus';
+
 const mainAppName = 'My Mikano App';
 
 const fontRegular = 'Regular';
@@ -67,9 +84,5 @@ const SampleImageUrl3 = '$BaseUrl/images/defaultTheme/slider/03.jpg';
 const SampleImageUrl4 = '$BaseUrl/images/defaultTheme/slider/05.jpg';
 const SampleProfileImageUrl = 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200';
 
-
-
 const LoremText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.This is simply text';
 
-// App Names
-const mpAppName = 'Music PodCast';

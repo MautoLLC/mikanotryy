@@ -3,8 +3,6 @@ import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:mymikano_app/utils/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/T5Images.dart';
-
-
 import 'DashboardScreen.dart';
 import 'SignUpScreen.dart';
 
@@ -25,7 +23,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     T13SignUpScreen (),
     T13SignUpScreen (),
    // BankingSaving(),
-   //BankingMenu(),
+ //BankingMenu(),
   ];
 
   @override
@@ -48,7 +46,6 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
         selectedItemColor: t5ColorPrimary,
         unselectedItemColor: Banking_TextColorPrimary,
         items: <BankingBottomNavigationBarItem>[
-
           BankingBottomNavigationBarItem(icon: t5_img_settings),
           BankingBottomNavigationBarItem(icon: t5_notification_2),
           BankingBottomNavigationBarItem(icon: t5_img_home),
