@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/models/ComponentStatusModel.dart';
 import 'package:mymikano_app/models/InspectionChecklistItem.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
@@ -159,24 +158,28 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
    // toast(idStsSelected.toString());
     await  changeChecklistItemStatus(widget.checklistItem!.idInspectionChecklistItem!, idStsSelected);
     //finish(context);
+    Navigator.pop(context);
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => T13InspectionScreen(mInspection:widget.mInspection,statusList: this.widget.statusList,category: this.widget.category,),
       ),
     );
+
+
   }
   _cancel() async {
 
     currentValue=defaultValue;
     toast(currentValue);
-    finish(context);
-    // Navigator.pop(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => T13InspectionScreen(),
-    //   ),
-    // );
+  // finish(context);
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => T13InspectionScreen(mInspection:widget.mInspection,statusList: this.widget.statusList,category: this.widget.category,),
+      ),
+    );
 
   }
 

@@ -192,12 +192,16 @@ mList=QIBusBookingModel("", "", ""," ");
                                                       )
                                                     ],
                                                   ),
-                                                    onTap: () =>  Navigator.push(
+                                                    onTap: () => {
+
+                                                    Navigator.pop(context),
+                                                    Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
                                                         builder: (context) => BankingShareInformation(checklistItem: icvm.inpectionItems![index].inspectionchecklistItem,mInspection: this.widget.mInspection,statusList: this.widget.statusList,category:this.widget.category),
                                                       ),
                                                     )
+                                                  }
                                                 )
                                             ),
                                             decoration: new BoxDecoration(

@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/services/SubmitRequestService.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
+import 'package:mymikano_app/utils/T5Images.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListRealEstatesViewModel.dart';
@@ -171,7 +173,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: t13_edit_text_color,
+                color: Colors.white,
               ),
               child:Stack(
                 alignment: Alignment.bottomLeft,
@@ -179,13 +181,15 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                 children: <Widget>[
 
                   Container(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.center,
                     height: height * 0.5,
                     margin: EdgeInsets.all(spacing_standard_new),
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          decoration: boxDecoration(bgColor: Colors.white, radius: 30.0),
+                    //   Expanded(
+                         //child:
+                         Container(
+                          decoration: boxDecoration(bgColor: t13_edit_text_color, radius: 30.0),
                           padding: EdgeInsets.all(spacing_standard_new),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +199,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: spacing_middle),
+            //),
+                        SizedBox(height: 180),
                         T13Button(
                           textContent: t13_lbl_proceed,
                           onPressed: () {
@@ -205,6 +210,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                       ],
                     ),
                   ),
+
                   Container(
                     alignment: Alignment.topLeft,
                     margin: EdgeInsets.all(8),
@@ -216,10 +222,27 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                             finish(context);
                           },
                         ),
-                        text(this.widget.mainCatg.maintenanceCategoryName, fontSize: textSizeNormal),
+
                       ],
                     ),
                   ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(top: 50, left: 15),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          CircleAvatar(
+                      backgroundColor: t5Cat3,
+                      child: SvgPicture.asset(t5_general_repair, height: 40, width: 40,color: t5White,),
+                      radius: 40,
+                    ),
+                          text(""+
+                              this.widget.mainCatg.maintenanceCategoryName, fontSize: textSizeNormal)]
+                  ),),
+
+
 
                 ],
               ),
