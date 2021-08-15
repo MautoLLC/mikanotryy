@@ -70,7 +70,9 @@ class T5ProfileState extends State<T5Profile> {
 
     return
       GestureDetector(
-        onTap: () {
+        onTap: () async {
+
+          await init();
           Navigator.push(
             context,
             MaterialPageRoute(
