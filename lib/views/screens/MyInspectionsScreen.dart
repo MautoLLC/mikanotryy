@@ -153,8 +153,8 @@ String n="b";
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-              reqq=this.widget.reqs.firstWhere((element) => element.idMaintenanceRequest == inspViewModel.inspections![index].mInspection!.maintenanceRequestID);
-              catgg =  this.widget.cnames.firstWhere((element) => element.idMaintenanceCategory == reqq.maintenanceCategoryId);
+              reqq=this.widget.reqs.firstWhere((element) => element.idMaintenanceRequest == inspViewModel.inspections![index].mInspection!.maintenanceRequestID, orElse:()=> this.widget.reqs[0] );
+              catgg =  this.widget.cnames.firstWhere((element) => element.idMaintenanceCategory == reqq.maintenanceCategoryId,orElse:()=> this.widget.cnames[0]);
 
               DateTime startTime = DateTime.parse(inspViewModel.inspections![index].mInspection!.inspectionStartTime);
               String month =  DateFormat.MMM().format(startTime);
@@ -162,10 +162,13 @@ String n="b";
               children: <Widget>[
               GestureDetector(
               onTap: () {
+                reqq=this.widget.reqs.firstWhere((element) => element.idMaintenanceRequest == inspViewModel.inspections![index].mInspection!.maintenanceRequestID, orElse:()=> this.widget.reqs[0] );
+                catgg =  this.widget.cnames.firstWhere((element) => element.idMaintenanceCategory == reqq.maintenanceCategoryId,orElse:()=> this.widget.cnames[0]);
               Navigator.push(
               context,
               MaterialPageRoute(
-              builder: (context) => T13InspectionScreen( mInspection:inspViewModel.inspections![index].mInspection!,statusList: statusList,)),
+
+              builder: (context) => T13InspectionScreen( mInspection:inspViewModel.inspections![index].mInspection!,statusList: statusList,category: catgg,)),
               );
               },
               child:Container(

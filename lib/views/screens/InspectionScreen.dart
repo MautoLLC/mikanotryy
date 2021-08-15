@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
+import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/services/AddCustomComponentService.dart';
 import 'package:mymikano_app/utils/QiBusConstant.dart';
 import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
@@ -19,7 +20,8 @@ class T13InspectionScreen extends StatefulWidget {
   late final String title;
   InspectionModel mInspection;
   List<ComponentStatusViewModel> statusList=[];
-  T13InspectionScreen({Key? key, required this.mInspection, required this.statusList}) : super(key: key);
+  Categ category;
+  T13InspectionScreen({Key? key, required this.mInspection, required this.statusList,required this.category}) : super(key: key);
   @override
   T13InspectionScreenState createState() => T13InspectionScreenState();
 }
@@ -90,7 +92,8 @@ mList=QIBusBookingModel("", "", ""," ");
                         IconButton(
                           icon: Icon(Icons.arrow_back_rounded) ,
                           onPressed: () {
-                            finish(context);
+                          //  finish(context);
+                            Navigator.pop(context);
                           },
                         ),
 
@@ -124,7 +127,7 @@ mList=QIBusBookingModel("", "", ""," ");
                                   Container(
                                     decoration: BoxDecoration(  color:Colors.white, borderRadius: BorderRadius.circular(12.0),boxShadow: [BoxShadow(blurRadius:7,color: Colors.black12 ,offset: Offset(3,3))]),
                                     padding: EdgeInsets.fromLTRB(spacing_standard_new, spacing_control, spacing_standard_new, spacing_control),
-                                    child: text(this.widget.mInspection.maintenanceRequestID.toString(), textColor: t5Cat1),
+                                    child: text(this.widget.category.maintenanceCategoryName.toString(), textColor: t5Cat1),
                                   ),]),
                                   SizedBox(height:10),
                                   text("Inspection Checklist", fontFamily: 'Medium',textColor: Colors.black).paddingAll(8),
@@ -192,7 +195,7 @@ mList=QIBusBookingModel("", "", ""," ");
                                                     onTap: () =>  Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                        builder: (context) => BankingShareInformation(checklistItem: icvm.inpectionItems![index].inspectionchecklistItem,mInspection: this.widget.mInspection,statusList: this.widget.statusList,),
+                                                        builder: (context) => BankingShareInformation(checklistItem: icvm.inpectionItems![index].inspectionchecklistItem,mInspection: this.widget.mInspection,statusList: this.widget.statusList,category:this.widget.category),
                                                       ),
                                                     )
                                                 )

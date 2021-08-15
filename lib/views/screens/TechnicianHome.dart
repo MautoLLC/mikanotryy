@@ -68,7 +68,6 @@ class T5ProfileState extends State<T5Profile> {
 
   Widget gridItem() {
 
-
     return
       GestureDetector(
         onTap: () {

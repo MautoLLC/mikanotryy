@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/ComponentStatusModel.dart';
 import 'package:mymikano_app/models/InspectionChecklistItem.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
+import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/services/ChangeComponentStatusService.dart';
 import 'package:mymikano_app/utils/QiBusConstant.dart';
 import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
@@ -15,8 +16,9 @@ class BankingShareInformation extends StatefulWidget {
   static var tag = "/BankingShareInformation";
   late final InspectionChecklistItem? checklistItem;
   late final InspectionModel mInspection;
+  Categ category;
   List<ComponentStatusViewModel> statusList=[];
-  BankingShareInformation({ Key? key, required this.checklistItem, required this.mInspection,required this.statusList}) : super(key: key);
+  BankingShareInformation({ Key? key, required this.checklistItem, required this.mInspection,required this.statusList,required this.category}) : super(key: key);
 
   @override
   _BankingShareInformationState createState() => _BankingShareInformationState();
@@ -160,7 +162,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => T13InspectionScreen(mInspection:widget.mInspection,statusList: this.widget.statusList,),
+        builder: (context) => T13InspectionScreen(mInspection:widget.mInspection,statusList: this.widget.statusList,category: this.widget.category,),
       ),
     );
   }
