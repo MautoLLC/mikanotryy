@@ -63,6 +63,7 @@ const isDarkModeOnPref = 'isDarkModeOnPref';
 const dateFormat = 'MMM dd, yyyy';
 
 const BaseUrl = 'https://iqonic.design/themeforest-images/prokit';
+const BaseUrl2 = 'https://assets.iqonic.design/old-themeforest-images/prokit';
 const SourceCodeUrl = 'https://codecanyon.net/item/prokit-flutter-app-ui-design-templete-kit/25787190?s_rank=11';
 const PlayStoreUrl = 'https://play.google.com/store/apps/details?id=';
 const DocumentationUrl = 'https://iqonic.design/docs/product/prokit-flutter/';

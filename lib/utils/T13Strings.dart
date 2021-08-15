@@ -89,3 +89,4 @@ const t13_mechanical_repair_desc = "From plumbing to heating and air conditionin
 const t13_lbl_proceed = "Proceed";
 const t13_mechanical_repair= "Mechanical Repair";
 const t13_lbl_request = "Request";
+const t13_my_inspections ="My Inspections";

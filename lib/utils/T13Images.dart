@@ -10,6 +10,7 @@ const t13_ic_walk1 = "$BaseUrl/images/Theme13/t13_ic_walk1.png";
 const t13_ic_item3 = "$BaseUrl/images/Theme13/t13_ic_item3.jpg";
 const t13_ic_item2 = "$BaseUrl/images/Theme13/t13_ic_item2.jpg";
 const t13_ic_logo = "https://www.mikano-intl.com/intl/images/logo-dark.png";
+const t5_ic_light_logo= "https://www.mikano-intl.com/intl/images/logo-light.png";
 const t13_ic_item1 = "$BaseUrl/images/Theme13/t13_ic_item1.jpg";
 const t13_ic_description = "$BaseUrl/images/Theme13/t13_ic_description.jpg";
 const t13_ic_dashboard = "$BaseUrl/images/Theme13/t13_ic_dashboard.png";
@@ -35,3 +36,5 @@ const t13_ic_turkey = "images/theme13/t13_ic_turkey.svg";
 const t13_ic_usa = "images/theme13/t13_ic_usa.svg";
 const t13_ic_profile = "$BaseUrl/images/Theme13/t13_ic_profile.png";
 const t13_ic_profile1 = "$BaseUrl/images/Theme13/t13_ic_profile1.png";
+const t13_ic_inspection = "images/theme5/inspection.svg";
+
