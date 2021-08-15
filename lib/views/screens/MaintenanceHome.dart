@@ -72,7 +72,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
             title:Row(
                 children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.arrow_back_rounded, color: t5White,size: 30.0,),
+                  icon: Icon(Icons.keyboard_arrow_left, color: t5White,size: 40.0),
                    onPressed: () {
                      finish(context);
                       },

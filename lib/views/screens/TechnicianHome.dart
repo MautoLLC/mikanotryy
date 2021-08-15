@@ -82,16 +82,17 @@ class T5ProfileState extends State<T5Profile> {
       Container(
         width: width!*0.5,
         height: width!*0.5,
+          decoration: boxDecoration(radius: 24, showShadow: true, bgColor: t5White),
         padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
-          border: Border.all(color: Colors.white70,   width: 1.0,),
-          borderRadius: BorderRadius.all(
-              Radius.circular(20.0) //                 <--- border radius here
-          ),
-          gradient: LinearGradient(colors: [cards[0].startColor!, cards[0].endColor!]),
-
-        ),
+        // decoration: BoxDecoration(
+        //   boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
+        //   border: Border.all(color: Colors.white70,   width: 1.0,),
+        //   borderRadius: BorderRadius.all(
+        //       Radius.circular(20.0) //                 <--- border radius here
+        //   ),
+        //   gradient: LinearGradient(colors: [cards[0].startColor!, cards[0].endColor!]),
+        //
+        // ),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +125,7 @@ class T5ProfileState extends State<T5Profile> {
     changeStatusColor(t5DarkNavy);
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: t5LayoutBackgroundWhite,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: <Widget>[
@@ -157,7 +158,7 @@ class T5ProfileState extends State<T5Profile> {
 
 
             SingleChildScrollView(
-              padding: EdgeInsets.only(top: 80),
+              padding: EdgeInsets.only(top: 70),
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: <Widget>[
@@ -165,12 +166,12 @@ class T5ProfileState extends State<T5Profile> {
                     margin: EdgeInsets.only(top: 50),
                     padding: EdgeInsets.only(top: 60),
                     alignment: Alignment.topCenter,
-                    decoration: BoxDecoration(color: t5LayoutBackgroundWhite, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24))),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        text(tech.firstname + " "+ tech.lastname, textColor: t5TextColorPrimary, fontFamily: fontMedium, fontSize: textSizeNormal),
+                        text(tech.firstname + " "+ tech.lastname, textColor: t5TextColorPrimary, fontFamily: fontBold, fontSize: textSizeNormal),
                         text(tech.email, fontSize: textSizeLargeMedium),
                         SizedBox(height: 58),
                         gridItem()
