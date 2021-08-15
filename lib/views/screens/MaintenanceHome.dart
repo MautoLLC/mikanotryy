@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:md2_tab_indicator/md2_tab_indicator.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
@@ -15,8 +14,6 @@ import 'package:mymikano_app/utils/T5Strings.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/T5GridListing.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:connectivity/connectivity.dart';
-import 'DashboardScreen.dart';
 import 'MyRequestsScreen2.dart';
 
 class T5Maintenance extends StatefulWidget {
@@ -91,13 +88,15 @@ class T5MaintenanceState extends State<T5Maintenance> {
                 print(index);
                 },
                   indicatorSize: TabBarIndicatorSize.label,
-                  labelColor: t5White,
-                  labelStyle: boldTextStyle(),
-                  indicator: MD2Indicator( //it begins here
-                  indicatorHeight: 4,
                   indicatorColor: Colors.white,
-                  indicatorSize: MD2IndicatorSize.full //3 different modes tiny-normal-full
-                  ),
+                  labelColor: t5White,
+                  indicatorWeight:4,
+                  labelStyle: boldTextStyle(),
+                  // indicator: MD2Indicator( //it begins here
+                  // indicatorHeight: 4,
+                  // indicatorColor: Colors.white,
+                  // indicatorSize: MD2IndicatorSize.full //3 different modes tiny-normal-full
+                  // ),
                   tabs: [
                   Tab(
                   text: "Maintenance",

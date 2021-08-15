@@ -5,6 +5,7 @@ import 'package:mymikano_app/views/screens/MyInspectionsScreen.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:mymikano_app/views/screens/MyRequestsScreen.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
+import 'package:mymikano_app/views/screens/TechnicianHome.dart';
 import 'package:sizer/sizer.dart';
 
 AppStore appStore = AppStore();
@@ -36,8 +37,8 @@ class MyApp extends StatelessWidget {
             //T5Maintenance(),
             //T11SignUp(),
             //MyRequests(),
-     OPSplashScreen(),
-
+    // OPSplashScreen(),
+              T5Profile(),
            // T5Listing(),
        //   T13InspectionScreen(),
             //  QIBusBooking(),

@@ -43,9 +43,6 @@ class T5GridListing extends StatelessWidget {
               );
             }
 
-            if (snapshot.hasData) {
-              return Center(child:Text("no internet"));
-            }
             if (snapshot.hasError) {
               return Center(child:Text("Please check you internet connection and try again !"
                 ,textAlign:TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0,color: Colors.black)));
@@ -115,7 +112,7 @@ class T5GridListing extends StatelessWidget {
 
     );
   }
-  Future goAll(Categ mainCategory,BuildContext context) async
+  Future  goAll(Categ mainCategory,BuildContext context) async
   {
     final List<Entry> data = <Entry>[];
     List<Entry> subdata =<Entry>[];

@@ -52,7 +52,7 @@ dependencies:
   permission_handler: ^8.1.4+1
   flutter_launcher_icons: ^0.9.1
   connectivity: ^3.0.6
-  md2_tab_indicator: ^1.0.2
+
 #  flutter_absolute_path:
 #    git:
 #      url: https://github.com/kornperkus/flutter_absolute_path.git

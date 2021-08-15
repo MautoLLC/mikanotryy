@@ -35,8 +35,7 @@ class MaintenanceRequestModel {
   factory MaintenanceRequestModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceRequestModel(
       idMaintenanceRequest: json['idMaintenanceRequest'],
-      maintenanceCategory:Categ.fromJson(
-          json["maintenanceCategory"]),
+      maintenanceCategory:Categ.fromJson(json["maintenanceCategory"]),
       maintenanceCategoryId: json['maintenanceCategoryId'],
       preferredVisitTimee: json['preferredVisitTime'],
       realEstateId: json['realEstateId'],

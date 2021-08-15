@@ -24,7 +24,7 @@ Future fetchreq(BuildContext context) async {
   }
     on Exception catch (e) {
 
-    print(e.toString()+"failed to fetdh");
+    print(e.toString()+"failed to fetch");
     }
 
 

@@ -2,26 +2,27 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:mymikano_app/models/ComponentStatusModel.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
-import 'package:mymikano_app/models/PredefinedChecklistModel.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/QiBusConstant.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/T5DataGenerator.dart';
-import 'package:mymikano_app/utils/T5Strings.dart';
 import 'package:mymikano_app/utils/T5Widget.dart';
-import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
+import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListInspectionsViewModel.dart';
-import 'package:mymikano_app/viewmodels/ListPredefinedChecklistItemsViewModel.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import '../../main.dart';
 import 'InspectionScreen.dart';
 
 class T5Listing extends StatefulWidget {
   static var tag = "/T5Listing";
-
+  List<Categ> cnames=[];
+  List<MaintenanceRequestModel> reqs=[];
+  T5Listing({Key? key,  required this.cnames,required this.reqs}) : super(key: key);
   @override
   T5ListingState createState() => T5ListingState();
 }
@@ -30,47 +31,50 @@ class T5ListingState extends State<T5Listing> {
   int selectedPos = 1;
   late List<T5Bill> mListings;
   ListInspectionsViewModel inspViewModel = new ListInspectionsViewModel();
+  ListComponentStatusesViewModel compSts=new ListComponentStatusesViewModel();
+  List<ComponentStatusViewModel> statusList=[];
   late Future fetchinspections;
   @override
   void initState() {
     super.initState();
     selectedPos = 1;
     mListings = getListData();
-
     fetchinspections=inspViewModel.fetchInspections();
-
+    init();
   }
+  init() async {
+    print("ff "+this.widget.cnames.length.toString());
+    await compSts.fetchComponentStatus();
+    int l = compSts.componentStatuses!.length;
+    for (int i = 0; i < l; i++) {
+      ComponentStatus sts = new ComponentStatus(
+          idComponentStatus: compSts.componentStatuses![i].mcomponentStatus!
+              .idComponentStatus,
+          componentStatusDescription: compSts.componentStatuses![i]
+              .mcomponentStatus!.componentStatusDescription);
+      ComponentStatusViewModel csvm = new ComponentStatusViewModel(sts);
+      statusList.add(csvm);
+    }
+  }
+  String findcateg(int id)  {
+String n="b";
+  for (var v in this.widget.cnames) {
+    if (v.idMaintenanceCategory == id) {
+     n=v.maintenanceCategoryName;
+     break;
+    }
+  }
+  return n;
 
-  // Categ fetchgetcategorydetails(int idCat)  {
-  //   List<PredefinedChecklistModel> mItems = [];
-  //  late InspectionModel im;
-  //   try {
-  //     ListPredefinedChecklistViewModel listCategViewModel = new ListPredefinedChecklistViewModel();
-  //     await listCategViewModel.fetchItems(idCat);
-  //     for (int i = 0; i < listCategViewModel.items!.length; i++) {
-  //       PredefinedChecklistModel m = listCategViewModel.items![i]
-  //           .mItem!;
-  //       //print(m!.maintenanceCategory!.maintenanceCategoryName);
-  //       mItems.add(m);
-  //     }
-  //   }
-  //   on Exception catch (e) {
-  //
-  //     print(e.toString()+"failed to fetch");
-  //   }
-  //   for (var v in this.widget.mInspections) {
-  //     if (v.idInspection == index) {
-  //       im=v;
-  //     }
-  //     }
-  //
-  //
-  // }
+
+}
+
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-  //  changeStatusColor(appStore.appBarColor!);
-
+    Categ catgg;
+    MaintenanceRequestModel reqq;
     return Scaffold(
         backgroundColor: Colors.white,
       body: Container(
@@ -88,25 +92,24 @@ class T5ListingState extends State<T5Listing> {
               child: Container(
                 padding: EdgeInsets.only(left: 20.0, right: 20),
                 child:  FutureBuilder(
-    future: fetchinspections,
-    builder: (BuildContext context,  snapshot) {
-    if(snapshot.connectionState == ConnectionState.done) {
-    if (snapshot.hasError) {
-    return Text('${snapshot.error}');
-    }
-    // if (!snapshot.hasData) {
-    // print("snapshot");
-    // }
-    return
-                ListView.builder(
+                          future: fetchinspections,
+                          builder: (BuildContext context,  snapshot) {
+                          if(snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasError) {
+                          return Text('${snapshot.error}'+"CHECK YOUR INTERNET");
+                          }
+                          return
+                     ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: inspViewModel.inspections!.length,
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     itemBuilder: (context, index) {
+                      reqq=this.widget.reqs.firstWhere((element) => element.idMaintenanceRequest == inspViewModel.inspections![index].mInspection!.maintenanceRequestID);
+                       catgg =  this.widget.cnames.firstWhere((element) => element.idMaintenanceCategory == reqq.maintenanceCategoryId);
+
                       DateTime startTime = DateTime.parse(inspViewModel.inspections![index].mInspection!.inspectionStartTime);
                       String month =  DateFormat.MMM().format(startTime);
-
                       return Column(
                         children: <Widget>[
                           Container(
@@ -175,7 +178,7 @@ class T5ListingState extends State<T5Listing> {
                                                 Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                            builder: (context) => T13InspectionScreen( mInspection:inspViewModel.inspections![index].mInspection!,)),
+                                                            builder: (context) => T13InspectionScreen( mInspection:inspViewModel.inspections![index].mInspection!,statusList: statusList,)),
                                                       );
                                               //  fetchChecklistItems(this.widget.mInspections[index].maintenanceRequestID,this.widget.mInspections[index].idInspection, context);
                                               },
@@ -187,7 +190,8 @@ class T5ListingState extends State<T5Listing> {
                                         ],
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       ),
-                                      text(inspViewModel.inspections![index].mInspection!.maintenanceRequestID.toString(), fontSize: textSizeMedium)
+                                //     text(inspViewModel.inspections![index].mInspection!.maintenanceRequestID.toString(), fontSize: textSizeMedium)
+text(catgg.maintenanceCategoryName,fontSize: textSizeMedium),
                                     ],
                                   ),
                                 )

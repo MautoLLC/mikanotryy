@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/utils/SDDashboardScreen.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
+import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
+import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
+import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/utils/T13Images.dart';
@@ -12,6 +18,9 @@ import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/QiBusConstant.dart';
 import 'package:mymikano_app/utils/T5Images.dart';
+import 'package:sizer/sizer.dart';
+
+import 'MyInspectionsScreen.dart';
 
 class T5Profile extends StatefulWidget {
   static var tag = "/T5Profile";
@@ -22,13 +31,31 @@ class T5Profile extends StatefulWidget {
 
 class T5ProfileState extends State<T5Profile> {
   double? width;
-  TechnicianModel tech = new TechnicianModel(1,"Joe","Doe",t5_profile_7,"71 675 389","JoeDoe@gmail.com");
+  TechnicianModel tech = new TechnicianModel(1,"Joe","Doe",t5_profile_7,"71 675 389","JoeDoe@mikano-intl.com");
+  ListCategViewModel lcvm =new ListCategViewModel();
+  ListMaintenanceRequestsViewModel mrqvm =new ListMaintenanceRequestsViewModel();
+  List<Categ> catnames=[];
+  List<MaintenanceRequestModel> reqst=[];
 
   @override
   void initState() {
+    init();
     super.initState();
   }
+  init() async {
+    await lcvm.fetchAllCategories();
+    int l = lcvm.allcategs!.length;
+    for (int i = 0; i < l; i++) {
 
+      catnames.add(lcvm.allcategs![i].mcateg!);
+    }
+
+    await mrqvm.fetchMaintenanceRequests();
+    for (int i = 0; i < mrqvm.maintenanceRequests!.length; i++) {
+
+      reqst.add( mrqvm.maintenanceRequests![i].mMaintenacerequest!);
+    }
+  }
   var currentIndex = 0;
   // var iconList = <String>[t5_analysis];
   // var nameList = <String>[t5_statistics];
@@ -40,29 +67,56 @@ class T5ProfileState extends State<T5Profile> {
   }
 
   Widget gridItem() {
-    return Container(
-        width: width!*0.6,
-        height: width!*0.6,
-        decoration: boxDecoration(radius: 24, showShadow: true, bgColor: t5White),
+
+
+    return
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => T5Listing(cnames: catnames,reqs: reqst,)),
+          );
+    },
+    child:
+      Container(
+        width: width!*0.5,
+        height: width!*0.5,
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
+          border: Border.all(color: Colors.white70,   width: 1.0,),
+          borderRadius: BorderRadius.all(
+              Radius.circular(20.0) //                 <--- border radius here
+          ),
+          gradient: LinearGradient(colors: [cards[0].startColor!, cards[0].endColor!]),
+
+        ),
+
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-
-        // Expanded(
-        // child: FittedBox(
-        //   fit: BoxFit.contain,
-           SvgPicture.asset(
-             t13_ic_inspection,
-              width: width! / 3,
-              height: width! / 3,
-              color: black,
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: t5Cat2,
+              child: SvgPicture.asset(t13_ic_inspection2, height: 90, width: 90,color:Colors.white),
             ),
+           /// SizedBox(height:5),
 
-         text("My Inspections", fontSize: textSizeNormal, textColor: t5TextColorPrimary, fontFamily: fontSemibold)
+        //    SvgPicture.asset(
+        //      t13_ic_inspection2,
+        //       width: width! / 3,
+        //       height: width! / 3,
+        //      color: black,
+        //     ),
+            Flexible(child: AutoSizeText("My Inspections", style: boldTextStyle(color: Colors.black, size: 20)))
+         //text("My Inspections", fontSize: textSizeNormal, textColor: t5TextColorPrimary, fontFamily: fontSemibold)
 
       ],
-        ));
+        )
+   )
+      );
   }
 
   @override
@@ -82,7 +136,7 @@ class T5ProfileState extends State<T5Profile> {
                 padding:EdgeInsets.only(top:10),
                 alignment: Alignment.topLeft,
                 height: 60,
-                      child: commonCacheImageWidget(t5_ic_light_logo, 40,width: width!*0.3),
+                      child: commonCacheImageWidget(t5_ic_light_logo, 40,width: width!*0.33),
 
 
 
@@ -118,7 +172,7 @@ class T5ProfileState extends State<T5Profile> {
                       children: <Widget>[
                         text(tech.firstname + " "+ tech.lastname, textColor: t5TextColorPrimary, fontFamily: fontMedium, fontSize: textSizeNormal),
                         text(tech.email, fontSize: textSizeLargeMedium),
-                        SizedBox(height: 24),
+                        SizedBox(height: 58),
                         gridItem()
                         // SizedBox(height: 16),
                       ],

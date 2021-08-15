@@ -8,7 +8,6 @@ import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
-
 import 'Booking.dart';
 import 'InspectionScreen.dart';
 
@@ -16,7 +15,8 @@ class BankingShareInformation extends StatefulWidget {
   static var tag = "/BankingShareInformation";
   late final InspectionChecklistItem? checklistItem;
   late final InspectionModel mInspection;
-  BankingShareInformation({ Key? key, required this.checklistItem, required this.mInspection}) : super(key: key);
+  List<ComponentStatusViewModel> statusList=[];
+  BankingShareInformation({ Key? key, required this.checklistItem, required this.mInspection,required this.statusList}) : super(key: key);
 
   @override
   _BankingShareInformationState createState() => _BankingShareInformationState();
@@ -26,18 +26,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
 
   late String defaultValue ;
   late String currentValue ;
-  ListComponentStatusesViewModel compSts=new ListComponentStatusesViewModel();
-
-List<ComponentStatus> statusList=[];
-
-  List<String> exercises = [
-    'good',
-    'poor',
-    'satisfactory',
-    'repair',
-    'replace',
-    'N/A',
-  ];
+  late int idStsSelected;
 
   int mIsSelect = 0;
 
@@ -47,28 +36,16 @@ List<ComponentStatus> statusList=[];
   void initState() {
     defaultValue = widget.checklistItem!.componentStatus!.componentStatusDescription;
     currentValue= widget.checklistItem!.componentStatus!.componentStatusDescription;
-   // init();
+
     super.initState();
   }
-void init() async{
-  // await compSts.fetchComponentStatus();
-  // print("init()");
-  // int l=compSts.componentStatuses!.length;
-  // print(l);
-  // print(compSts.componentStatuses![0].mcomponentStatus!.componentStatusDescription);
-  // for(int i=0;i<l;i++)
-  //   {
-  //     ComponentStatus sts= new ComponentStatus(idComponentStatus: compSts.componentStatuses![i].mcomponentStatus!.idComponentStatus, componentStatusDescription: compSts.componentStatuses![i].mcomponentStatus!.componentStatusDescription);
-  //     statusList.add(sts);
-  //   }
-  // setState(() {
-  //
-  // });
-}
+
   @override
   Widget build(BuildContext context) {
-// print("statusList.length");
-// print(statusList.length);
+    print("helloi");
+    print(this.widget.statusList.length);
+    print("hellpp");
+    print(this.widget.statusList[0].mcomponentStatus!.componentStatusDescription.toString());
     return Scaffold(
       // backgroundColor: Banking_app_Background,
       body: Container(
@@ -105,8 +82,9 @@ void init() async{
               Divider(height: 24),
               text(t13_status),
               GridView.builder(
+
                 scrollDirection: Axis.vertical,
-                itemCount: exercises.length,
+                itemCount: this.widget.statusList.length,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -116,15 +94,16 @@ void init() async{
                       // padding: EdgeInsets.all(8),
                       // margin: EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: currentValue == exercises[index] ? switchColor(exercises[index]) : Colors.white,
+                        color: currentValue == this.widget.statusList[index].mcomponentStatus!.componentStatusDescription ? switchColor(this.widget.statusList[index].mcomponentStatus!.componentStatusDescription.toString()) : Colors.white,
                         borderRadius: BorderRadius.circular(24),
-                        border: Border.all(color: currentValue == exercises[index] ? white : grey),
+                        border: Border.all(color: currentValue == this.widget.statusList[index].mcomponentStatus!.componentStatusDescription.toString() ? white : grey),
                       ),
-                      child: Center(child:Text(exercises[index], style: primaryTextStyle(color: currentValue == exercises[index] ? white : grey)),
+                      child: Center(child:Text(this.widget.statusList[index].mcomponentStatus!.componentStatusDescription.toString(), style: primaryTextStyle(color: currentValue == this.widget.statusList[index].mcomponentStatus!.componentStatusDescription.toString() ? white : grey)),
                       )).onTap(() {
+                         idStsSelected=this.widget.statusList[index].mcomponentStatus!.idComponentStatus;
                     mIsSelect = index;
                     setState(() {
-                      currentValue = exercises[index];
+                      currentValue = this.widget.statusList[index].mcomponentStatus!.componentStatusDescription.toString();
                     });
                   }, splashColor: white);
                 },
@@ -175,12 +154,13 @@ void init() async{
   _save() async {
     // toast(currentValue);
     // toast(widget.checklistItem!.idInspectionChecklistItem!.toString());
-    await  changeChecklistItemStatus(widget.checklistItem!.idInspectionChecklistItem!, 4);
+   // toast(idStsSelected.toString());
+    await  changeChecklistItemStatus(widget.checklistItem!.idInspectionChecklistItem!, idStsSelected);
     //finish(context);
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => T13InspectionScreen(mInspection:widget.mInspection),
+        builder: (context) => T13InspectionScreen(mInspection:widget.mInspection,statusList: this.widget.statusList,),
       ),
     );
   }
@@ -200,22 +180,22 @@ void init() async{
 
   switchColor<Color>(String status) {
 
-      if (status.toUpperCase() == exercises[5].toUpperCase()) {
+      if (status.toUpperCase() ==this.widget.statusList[5].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
         return Colors.grey;
       }
-      else if (status.toUpperCase() == exercises[1].toUpperCase()) {
+      else if (status.toUpperCase() == this.widget.statusList[4].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
         return Colors.amberAccent;
       }
-      else if (status.toUpperCase() == exercises[3].toUpperCase()) {
+      else if (status.toUpperCase() == this.widget.statusList[1].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
         return Colors.red;
       }
-      else if (status.toUpperCase() == exercises[0].toUpperCase()) {
+      else if (status.toUpperCase() == this.widget.statusList[2].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
         return Colors.orange;
       }
-      else if (status.toUpperCase() ==exercises[4].toUpperCase()) {
+      else if (status.toUpperCase() ==this.widget.statusList[0].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
         return Colors.blue;
       }
-      else if (status.toUpperCase() == exercises[2].toUpperCase()) {
+      else if (status.toUpperCase() == this.widget.statusList[3].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
         return Colors.green;
       }
       else {

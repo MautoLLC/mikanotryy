@@ -4,6 +4,7 @@ import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/services/AddCustomComponentService.dart';
 import 'package:mymikano_app/utils/QiBusConstant.dart';
+import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/models/QiBusModel.dart';
 import 'package:mymikano_app/utils/colors.dart';
@@ -17,15 +18,15 @@ class T13InspectionScreen extends StatefulWidget {
   static String tag = '/T13DescriptionScreen';
   late final String title;
   InspectionModel mInspection;
-
-  T13InspectionScreen({Key? key, required this.mInspection}) : super(key: key);
+  List<ComponentStatusViewModel> statusList=[];
+  T13InspectionScreen({Key? key, required this.mInspection, required this.statusList}) : super(key: key);
   @override
   T13InspectionScreenState createState() => T13InspectionScreenState();
 }
 
 class T13InspectionScreenState extends State<T13InspectionScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
- // Component _component =Component(0,"","","",0.0,"poor");
+
 
   ComponentModel _component = new ComponentModel(componentName: '',componentDescription: '', componentProvider: '', componentUnitPrice: 0);
 
@@ -191,7 +192,7 @@ mList=QIBusBookingModel("", "", ""," ");
                                                     onTap: () =>  Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                        builder: (context) => BankingShareInformation(checklistItem: icvm.inpectionItems![index].inspectionchecklistItem,mInspection: this.widget.mInspection),
+                                                        builder: (context) => BankingShareInformation(checklistItem: icvm.inpectionItems![index].inspectionchecklistItem,mInspection: this.widget.mInspection,statusList: this.widget.statusList,),
                                                       ),
                                                     )
                                                 )
