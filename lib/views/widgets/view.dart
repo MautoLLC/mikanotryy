@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'audio_recorder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -20,12 +21,14 @@ class _RecorderState extends State<Recorder> {
   RecordingStatus _currentStatus = RecordingStatus.Unset;
   bool stop = false;
   Recording? _current;
+   String duration ="0.0.0.0";
   // Recorder properties
   late FlutterAudioRecorder? audioRecorder;
 
   @override
   void initState() {
     super.initState();
+   // duration =checkDuration();
     checkPermission();
   }
   checkPermission()async{
@@ -50,11 +53,22 @@ class _RecorderState extends State<Recorder> {
 
     }
   }
+  // checkDuration<String>() {
+  //     if (_current == null) {
+  //       return "0:0:0:0";
+  //     }
+  //    else{
+  //       _current!.duration.toString();
+  //     }
+  //
+  //
+  //     }
 
   @override
   void dispose() {
     _currentStatus = RecordingStatus.Unset;
     audioRecorder = null;
+    duration="0.0.0.0";
     super.dispose();
   }
 
@@ -67,8 +81,10 @@ class _RecorderState extends State<Recorder> {
           children: [
             SizedBox(height: 20,),
             Text(
-              (_current==null)?"0:0:0:0":_current!.duration.toString() ,
+              // duration,
               // ?? "0:0:0:0"
+            duration,
+            // (_current == null)? "0:0:0:0":_current!.duration.toString(),
               style: TextStyle(color: Colors.black, fontSize: 20),
             ),
             SizedBox(height: 20,),
@@ -125,7 +141,7 @@ class _RecorderState extends State<Recorder> {
                     ),
                   ),
                   RaisedButton(
-                    color: Colors.orange,
+                    color: Colors.black12,
                     onPressed: _currentStatus != RecordingStatus.Unset
                         ? _stop
                         : null,
@@ -208,6 +224,7 @@ class _RecorderState extends State<Recorder> {
     var recording = await audioRecorder!.current(channel: 0);
     setState(() {
       _current = recording!;
+      duration=_current!.duration.toString();
     });
 
     const tick = const Duration(milliseconds: 50);
@@ -221,6 +238,7 @@ class _RecorderState extends State<Recorder> {
       setState(() {
         _current = current!;
         _currentStatus = _current!.status!;
+        duration=_current!.duration.toString();
       });
     });
   }
@@ -231,6 +249,7 @@ class _RecorderState extends State<Recorder> {
     setState(() {
       _recordIcon = Icons.pause;
       colo = Colors.red;
+      // duration= checkDuration();
     });
   }
 
@@ -240,6 +259,7 @@ class _RecorderState extends State<Recorder> {
     setState(() {
       _recordIcon = Icons.mic;
       colo = Colors.green;
+      duration="0:0:0:0";
     });
   }
 
@@ -249,10 +269,13 @@ class _RecorderState extends State<Recorder> {
     widget.save();
     setState(() {
       _current = result!;
+
       _currentStatus = _current!.status!;
       _current!.duration = null;
       _recordIcon = Icons.mic;
       stop = false;
+      duration="0:0:0:0";
+      // duration=checkDuration();
     });
   }
 

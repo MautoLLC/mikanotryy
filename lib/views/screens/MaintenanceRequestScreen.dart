@@ -89,7 +89,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 9,
+        maxImages: 3,
         enableCamera: true,
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
@@ -166,6 +166,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: PageView(
           controller: p,
@@ -173,7 +174,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: t13_edit_text_color,
               ),
               child:Stack(
                 alignment: Alignment.bottomLeft,
@@ -189,7 +190,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                     //   Expanded(
                          //child:
                          Container(
-                          decoration: boxDecoration(bgColor: t13_edit_text_color, radius: 30.0),
+                          decoration: boxDecoration(bgColor: Colors.white70, radius: 24.0),
                           padding: EdgeInsets.all(spacing_standard_new),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,34 +214,36 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
                   Container(
                     alignment: Alignment.topLeft,
-                    margin: EdgeInsets.all(8),
+                    margin: EdgeInsets.only(left:5,top:30),
                     child: Row(
                       children: <Widget>[
                         IconButton(
-                          icon: Icon(Icons.arrow_back_rounded) ,
+                          icon: Icon(Icons.keyboard_arrow_left, color: Colors.black,size: 40.0) ,
                           onPressed: () {
                             finish(context);
                           },
                         ),
+                        SizedBox(width: 10),
+                        text(this.widget.mainCatg.maintenanceCategoryName, textColor: Colors.black, fontSize: textSizeNormal,fontFamily: fontBold)
 
                       ],
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    margin: EdgeInsets.only(top: 50, left: 15),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          CircleAvatar(
-                      backgroundColor: t5Cat3,
-                      child: SvgPicture.asset(t5_general_repair, height: 40, width: 40,color: t5White,),
-                      radius: 40,
-                    ),
-                          text(""+
-                              this.widget.mainCatg.maintenanceCategoryName, fontSize: textSizeNormal)]
-                  ),),
+                  // Container(
+                  //   alignment: Alignment.topLeft,
+                  //   margin: EdgeInsets.only(top: 70, left: 15),
+                  //   child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //       children: <Widget>[
+                  //         CircleAvatar(
+                  //     backgroundColor: t5Cat3,
+                  //     child: SvgPicture.asset(t5_general_repair, height: 40, width: 40,color: t5White,),
+                  //     radius: 40,
+                  //   ),
+                  //         text(""+
+                  //             this.widget.mainCatg.maintenanceCategoryName, fontSize: textSizeNormal)]
+                  // ),),
 
 
 
@@ -248,19 +251,34 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
               ),
             ),
             SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
 
-              child:Container(
-                margin: EdgeInsets.all(spacing_standard_new),
-                decoration: BoxDecoration(
-                  color: t13_edit_text_color,
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child:Container(
-                  margin: EdgeInsets.all(spacing_standard_new),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
+              child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
 
+                  SizedBox(height: 30),
+              Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_left, color: Colors.black,size: 40.0),
+                      onPressed: () {
+                       finish(context);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    text("Maintenance Request", textColor: Colors.black, fontSize: textSizeNormal,fontFamily: fontBold)
+                  ]),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+
+                    child:Container(
+                      color:Colors.white,
+                      margin: EdgeInsets.all(spacing_standard_new),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
 
                      SizedBox(height: 20),
 
@@ -288,18 +306,18 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                 contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
                                 hintStyle: primaryTextStyle(color: t5Cat3),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: t13_edit_text_color,
                                 suffixIcon: Icon(
-                                  Icons.arrow_drop_down,
+                                  Icons.keyboard_arrow_down_sharp,
                                   color: t5Cat3,
                                   size: 24,
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(24),
                                   borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(24),
                                   borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                                 ),
                               ),
@@ -321,13 +339,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                       contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
                       hintStyle: primaryTextStyle(color: t5Cat3),
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor:t13_edit_text_color,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                       ),
                     ),
@@ -350,18 +368,18 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                     contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
                                     hintStyle: primaryTextStyle(color: black),
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: t13_edit_text_color,
                                     suffixIcon: Icon(
-                                      Icons.arrow_drop_down,
+                                      Icons.keyboard_arrow_down_sharp,
                                       color: t5Cat3,
                                       size: 24,
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(24),
                                       borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(24),
                                       borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                                     ),
                                   ),
@@ -391,13 +409,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                               contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
                               hintStyle: primaryTextStyle(color: black),
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: t13_edit_text_color,
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(24),
                                 borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(24),
                                 borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
                               ),
                             ),
@@ -436,7 +454,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           spacing: 16,
                           children: [
                             generate(),
-                            images.length < 9 ? uploadImage():SizedBox(),
+                            images.length < 3 ? uploadImage():SizedBox(),
                           ])
                           : SizedBox(),
                       SizedBox(height: 8),
@@ -466,13 +484,12 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                       SizedBox(height: 10),
                     ],
                   ),
-                ),
-              ),
-            ),
-          ],
+                ), ),
+            // ),
+               ],
         ),
       ),
-    );
+   ])) );
 
   }
 
@@ -482,13 +499,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0)
           )
       ),
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
-          initialChildSize: 0.5,
+          initialChildSize: 0.4,
           expand: false,
           builder: (context, scrollController) {
                     return
@@ -518,8 +535,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       decoration: BoxDecoration(
           color: t5Cat3, // or some other color
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0)
           )
       ),
       child: Row(
@@ -618,8 +635,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       shape: RoundedRectangleBorder(
         // side :  BorderSide(width: 1, color:t13Cat3),
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0)
           )
       ),
       builder: (BuildContext e) {
@@ -627,8 +644,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
           decoration: BoxDecoration(
               color:t5Cat3,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)
+                  topLeft: Radius.circular(24.0),
+                  topRight: Radius.circular(24.0)
               )
           ),
           height: 255,
@@ -639,8 +656,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   decoration: BoxDecoration(
                       color: t5Cat3, // or some other color
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0)
+                          topLeft: Radius.circular(24.0),
+                          topRight: Radius.circular(24.0)
                       )
                   ),
                   child: Row(
@@ -697,8 +714,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       shape: RoundedRectangleBorder(
         // side :  BorderSide(width: 1, color:t13Cat3),
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0)
           )
       ),
       context: context,
@@ -707,8 +724,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
           decoration: BoxDecoration(
               color:t5Cat3,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)
+                  topLeft: Radius.circular(24.0),
+                  topRight: Radius.circular(24.0)
               )
           ),
           height: 255,
@@ -719,8 +736,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   decoration: BoxDecoration(
                       color: t5Cat3, // or some other color
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0)
+                          topLeft: Radius.circular(24.0),
+                          topRight: Radius.circular(24.0)
                       )
                   ),
                   child: Row(
@@ -795,13 +812,13 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
               (index) {
             Asset asset = images[index];
             return ClipRRect(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(24),
                 child: Stack(
                   children: [
                     AssetThumb(
                       asset: asset,
-                      height: 100,
-                      width: 100,
+                      height: 70,
+                      width: 70,
                     ),
                     Positioned(
                       right: 5,
@@ -809,7 +826,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                       child: InkWell(
                         child: Icon(
                           Icons.cancel,
-                          size: 30,
+                          size: 24,
                           color: Colors.red,
                         ),
                         onTap: () {
@@ -838,17 +855,17 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           DottedBorderWidget(
-            radius: 30,
+            radius: 24,
             color: t5Cat3,
             child:
             Container(
               // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(24),
                   color: t5Cat3.withOpacity(0.2)),
               // height: 200,
-              height:100,
+              height:70,
               // width: context.width() * 0.35,35
-              width:100,
+              width:70,
               child: IconButton(
                 onPressed: () {
                   loadAssets();
@@ -878,8 +895,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
 
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0)
+              topLeft: Radius.circular(24.0),
+              topRight: Radius.circular(24.0)
           )
       ),
       context: context,
@@ -887,10 +904,10 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
         return Container(
           decoration: BoxDecoration(
 
-              color:Colors.white70,
+              color:Colors.white,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)
+                  topLeft: Radius.circular(24.0),
+                  topRight: Radius.circular(24.0)
               )
           ),
           height: 255,
@@ -901,8 +918,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   decoration: BoxDecoration(
                       color: t5Cat3, // or some other color
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0)
+                          topLeft: Radius.circular(24.0),
+                          topRight: Radius.circular(24.0)
                       )
                   ),
                   child: Row(

@@ -117,7 +117,7 @@ class DashboardState extends State<Dashboard> {
                                   boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
                                   border: Border.all(color: Colors.white70,   width: 1.0,),
                                   borderRadius: BorderRadius.all(
-                                      Radius.circular(20.0) //                 <--- border radius here
+                                      Radius.circular(24.0) //                 <--- border radius here
                                   ),
                                   gradient: LinearGradient(colors: [cards[0].startColor!, cards[0].endColor!]),
 
@@ -155,7 +155,7 @@ class DashboardState extends State<Dashboard> {
                                 boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
                                 border: Border.all(color: Colors.white70,   width: 1.0,),
                                 borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0) //                 <--- border radius here
+                                    Radius.circular(24.0) //                 <--- border radius here
                                 ),
                                 gradient: LinearGradient(colors: [Colors.white, Colors.white]),
                               ),
@@ -217,7 +217,7 @@ class DashboardState extends State<Dashboard> {
                               boxShadow: <BoxShadow>[
                                 BoxShadow(color:Colors.black26, blurRadius: 0.5, spreadRadius: 0.5),
                               ],
-                              borderRadius: BorderRadius.circular(40.0)),
+                              borderRadius: BorderRadius.circular(24.0)),
                           // height :   SizerUtil.deviceType == DeviceType.mobile? MediaQuery.of(context).size.height / 3.7:MediaQuery.of(context).size.height / 7,
 
                           child:Expanded(

@@ -33,7 +33,7 @@ class _RecordsState extends State<Records> {
       itemBuilder: (BuildContext context, int i) {
         return Card(
           shape:OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(24),
             borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
           ),
           elevation: 5,
