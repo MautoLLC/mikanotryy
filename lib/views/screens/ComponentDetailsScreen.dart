@@ -48,40 +48,53 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
     print("hellpp");
     print(this.widget.statusList[0].mcomponentStatus!.componentStatusDescription.toString());
     return Scaffold(
-      // backgroundColor: Banking_app_Background,
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: SingleChildScrollView(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        // Container(
+        //   padding: EdgeInsets.all(16),
+        child:SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              30.height,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
 
-                  30.height,
-                  Text(widget.checklistItem!.customComponent.componentName +"\nDetails", style: boldTextStyle(size: 30, color: Banking_TextColorPrimary)),
-                ],
-              ),
-              20.height,
+              SizedBox(height: 30),
+              Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_left, color: Colors.black,size: 40.0),
+                      onPressed: () {
+                        _cancel();
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    text(widget.checklistItem!.customComponent.componentName +" Details", textColor: Colors.black, fontSize: textSizeNormal,fontFamily: fontBold)
+                  ]),
+           Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child:Container(
+            margin: EdgeInsets.all(spacing_standard_new),
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
 
-              20.height,
-              ticketInfo(t13_name, widget.checklistItem!.customComponent.componentName ,Colors.black),
+            SizedBox(height:20),
+            ticketInfo(t13_name, widget.checklistItem!.customComponent.componentName ,Colors.black,col:Colors.black87),
 
-              Divider(height: 24),
-              ticketInfo(t13_description ,widget.checklistItem!.customComponent.componentDescription ,Colors.black),
+            Divider(height: 24),
+            ticketInfo(t13_description ,widget.checklistItem!.customComponent.componentDescription ,Colors.black,col:Colors.black87),
 
 
-              Divider(height: 24),
+            Divider(height: 24),
 
-              ticketInfo(t13_provider,widget.checklistItem!.customComponent.componentProvider ,Colors.black),
+            ticketInfo(t13_provider,widget.checklistItem!.customComponent.componentProvider ,Colors.black,col:Colors.black87),
 
-              Divider(height: 24),
-              ticketInfo(t13_unit_price,"\$"+widget.checklistItem!.customComponent.componentUnitPrice.toString() ,Colors.black),
+            Divider(height: 24),
+            ticketInfo(t13_unit_price,"\$"+widget.checklistItem!.customComponent.componentUnitPrice.toString(),Colors.black ,col:Colors.black87),
 
-              Divider(height: 24),
-              text(t13_status),
+            Divider(height: 24),
+            text(t13_status,fontFamily: fontBold,textColor: Colors.black),
+            SizedBox(height:20),
               GridView.builder(
 
                 scrollDirection: Axis.vertical,
@@ -112,7 +125,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                 // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, mainAxisSpacing:16, crossAxisSpacing:16, childAspectRatio: 8),
               ),
               40.height,
-              Row(
+             Row(
                 children: <Widget>[
                   Expanded(
                     flex: 1,
@@ -145,6 +158,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                   )
                 ],
               )
+              ]))),
             ],
           ),
         ),
@@ -185,27 +199,27 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
 
   switchColor<Color>(String status) {
 
-      if (status.toUpperCase() ==this.widget.statusList[5].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
-        return Colors.grey;
-      }
-      else if (status.toUpperCase() == this.widget.statusList[4].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
-        return Colors.amberAccent;
-      }
-      else if (status.toUpperCase() == this.widget.statusList[1].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
-        return Colors.red;
-      }
-      else if (status.toUpperCase() == this.widget.statusList[2].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
-        return Colors.orange;
-      }
-      else if (status.toUpperCase() ==this.widget.statusList[0].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
-        return Colors.blue;
-      }
-      else if (status.toUpperCase() == this.widget.statusList[3].mcomponentStatus!.componentStatusDescription.toString().toUpperCase()) {
-        return Colors.green;
-      }
-      else {
-        return Colors.grey;
-      }
+    if (status.toUpperCase() == "N/A".toUpperCase()) {
+      return Colors.grey;
+    }
+    else if (status.toUpperCase() == 'poor'.toUpperCase()) {
+      return Colors.amberAccent;
+    }
+    else if (status.toUpperCase() == 'repair'.toUpperCase()) {
+      return Colors.red;
+    }
+    else if (status.toUpperCase() == 'good'.toUpperCase()) {
+      return Colors.orange;
+    }
+    else if (status.toUpperCase() == 'replace'.toUpperCase()) {
+      return Colors.blue;
+    }
+    else if(status.toUpperCase() == 'satisfactory'.toUpperCase()) {
+      return Colors.green;
+    }
+    else{
+      return Colors.grey;
+    }
 
   }
 }

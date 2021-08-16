@@ -90,18 +90,29 @@ String n="b";
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left, size: 40),
-                  onPressed: () {
-                    finish(context);
-                  },
-                ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0, top: 20,bottom: 5),
-                child: text("My inspections", textColor:  Colors.white, fontFamily: fontBold, fontSize: textSizeXLarge),
-                // child: text("My inspections",  textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium),
-
-              )
+            Row(
+            children: <Widget>[
+              //   IconButton(
+              //     icon: Icon(Icons.keyboard_arrow_left, size: 40),
+              //     onPressed: () {
+              //       finish(context);
+              //     },
+              //   ),
+              // Padding(
+              //   padding: EdgeInsets.only(left: 20.0, top: 20,bottom: 5),
+              //   child: text("My inspections", textColor:  Colors.white, fontFamily: fontBold, fontSize: textSizeXLarge),
+              //   // child: text("My inspections",  textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium),
+              //
+              // )
+              IconButton(
+                icon: Icon(Icons.keyboard_arrow_left, color: t5White,size: 40.0),
+              onPressed: () {
+                finish(context);
+              },
+            ),
+                SizedBox(width: 10),
+                text("My Inspections", textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium)
+                ]),
           ])
     // Row(
     //           children: <Widget>[

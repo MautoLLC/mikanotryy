@@ -77,60 +77,40 @@ mList=QIBusBookingModel("", "", ""," ");
     changeStatusColor(Colors.black);
     return Scaffold(
       key: _scaffoldKey,
-
+      backgroundColor: Colors.white,
       body: SafeArea(
 
         child:SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.topLeft,
-                    margin: EdgeInsets.all(8),
-                    child: Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.arrow_back_rounded) ,
-                          onPressed: () {
-                          //  finish(context);
-                            Navigator.pop(context);
-                          },
-                        ),
+                SizedBox(height: 30),
+                      Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.keyboard_arrow_left, color: Colors.black,size: 40.0),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            SizedBox(width: 10),
+                            text("Inspection", textColor: Colors.black, fontSize: textSizeNormal, fontFamily: fontBold)
+                          ]),
 
-                        SizedBox(width: 10),
-
-                        text("Inspection", fontSize: textSizeNormal),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(spacing_standard_new),
-                    child:Container(
+                    Container(
                       margin: EdgeInsets.all(spacing_standard_new),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child:Booking(mList),
+                            child:Booking(mList,this.widget.category.maintenanceCategoryName.toString()),
                           ),
                           SizedBox(height:20),
-                          Container(
-                            padding: EdgeInsets.all(spacing_middle),
-                            decoration: boxDecoration(showShadow: true, bgColor: Colors.white, radius: 30),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                            children: <Widget>[
-                              text("Category ", fontFamily: 'Medium',textColor: Colors.black).paddingAll(8),
-                                  Container(
-                                    decoration: BoxDecoration(  color:Colors.white, borderRadius: BorderRadius.circular(12.0),boxShadow: [BoxShadow(blurRadius:7,color: Colors.black12 ,offset: Offset(3,3))]),
-                                    padding: EdgeInsets.fromLTRB(spacing_standard_new, spacing_control, spacing_standard_new, spacing_control),
-                                    child: text(this.widget.category.maintenanceCategoryName.toString(), textColor: t5Cat1),
-                                  ),]),
-                                  SizedBox(height:10),
-                                  text("Inspection Checklist", fontFamily: 'Medium',textColor: Colors.black).paddingAll(8),
+
+                                  text("Inspection Checklist", fontFamily: fontBold,textColor: Colors.black).paddingAll(8),
                                   SizedBox(height:8),
 
                                       FutureBuilder(
@@ -153,12 +133,12 @@ mList=QIBusBookingModel("", "", ""," ");
                                             child: Card(
                                                 margin: EdgeInsets.symmetric(vertical: 5),
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  borderRadius: BorderRadius.circular(24),
                                                 ),
                                                 child: new ListTile(
 
                                                   shape:RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius: BorderRadius.circular(24),
                                                   ),
 
                                                   title: new Text( icvm.inpectionItems![index].inspectionchecklistItem!.customComponent.componentName.toString()),
@@ -205,7 +185,7 @@ mList=QIBusBookingModel("", "", ""," ");
                                                 )
                                             ),
                                             decoration: new BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20.0),
+                                              borderRadius: BorderRadius.circular(24.0),
                                               boxShadow: [BoxShadow(blurRadius:7,color: Colors.black12 ,offset: Offset(3,3))],
                                             ));
                                       }
@@ -220,7 +200,7 @@ mList=QIBusBookingModel("", "", ""," ");
                                           mFormBottomSheet(context);
                                         },
                                         shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                                            borderRadius: BorderRadius.all(Radius.circular(24.0))),
                                         label: Text('Add new custom component',
                                           style: TextStyle(color: Colors.white),),
                                         icon: Icon(Icons.add, color:Colors.white),
@@ -228,14 +208,12 @@ mList=QIBusBookingModel("", "", ""," ");
                                         splashColor: t5Cat3.withOpacity(0.7),
                                         color: t5Cat3,
                                       )),
-                                ]),
-                          ),
+
                           SizedBox(height: 40),
 
                         ],
                       ),
                     ),
-                  ),
                 ])
         ),
 
@@ -249,7 +227,7 @@ mList=QIBusBookingModel("", "", ""," ");
       return Colors.grey;
     }
     else if (status.toUpperCase() == 'poor'.toUpperCase()) {
-      return Colors.yellow;
+      return Colors.amberAccent;
     }
     else if (status.toUpperCase() == 'repair'.toUpperCase()) {
       return Colors.red;
@@ -348,8 +326,8 @@ mList=QIBusBookingModel("", "", ""," ");
                                 hintStyle: primaryTextStyle(color: grey),
                                 filled: true,
                                 fillColor:Colors.white,
-                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
-                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
+                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
+                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
                               ),
                               validator: (val) =>
                               (val!.length == 0 ? 'This field is mandatory' : null),
@@ -373,8 +351,8 @@ mList=QIBusBookingModel("", "", ""," ");
                                 hintStyle: primaryTextStyle(color: grey),
                                 filled: true,
                                 fillColor:Colors.white,
-                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
-                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(20), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
+                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
+                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Color(0xFFA8ABAD), width: 1.0)),
                               ),
                               validator: (val) =>
                               (val!.length == 0 ? 'This field is mandatory' : null),
@@ -391,7 +369,7 @@ mList=QIBusBookingModel("", "", ""," ");
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              decoration: boxDecoration(bgColor: t5Cat3, radius: 20),
+                              decoration: boxDecoration(bgColor: t5Cat3, radius: 24),
                               padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                               child: Center(
                                 child: Text(

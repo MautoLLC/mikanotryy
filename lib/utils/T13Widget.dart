@@ -23,11 +23,11 @@ Padding t13EditTextStyle(var hintText, var contt , {isPassword = true, TextInput
           filled: true,
           fillColor: t13_edit_text_color,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(24),
             borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(24),
             borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
           ),
         ),
@@ -54,7 +54,7 @@ class T13ButtonState extends State<T13Button> {
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(color: t13_white),
         elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         padding: EdgeInsets.all(0.0),
       ),
       onPressed: widget.onPressed,
@@ -63,7 +63,7 @@ class T13ButtonState extends State<T13Button> {
           gradient: LinearGradient(
             colors: <Color>[t5Cat3, t5Cat3],
           ),
-          borderRadius: BorderRadius.all(Radius.circular(80.0)),
+          borderRadius: BorderRadius.all(Radius.circular(24.0)),
         ),
         child: Center(
           child: Padding(
