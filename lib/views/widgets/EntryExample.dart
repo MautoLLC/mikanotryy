@@ -10,6 +10,7 @@ class EntryItem extends StatelessWidget {
   final BuildContext context;
 
 
+
   Widget _buildTiles(Entry root) {
 
     if (root.children.isEmpty) return ListTile(
@@ -23,7 +24,7 @@ class EntryItem extends StatelessWidget {
     ); // Closing the sheet.);
     return  Card(
         shape:OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(24),
           borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
         ),
         child:Theme(
@@ -31,8 +32,8 @@ class EntryItem extends StatelessWidget {
             child: ExpansionTile(
               key: PageStorageKey<Entry>(root),
               title: Text(root.title),
-              iconColor: Colors.white,
-              textColor: Colors.black,
+              iconColor: t5Cat3,
+              textColor: t5Cat3,
               children: root.children.map(_buildTiles).toList(),
             )
         ));

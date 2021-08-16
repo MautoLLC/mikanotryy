@@ -121,26 +121,35 @@ class T5GridListing extends StatelessWidget {
     List<Categ> listsubs=[];
 
     int idcurr;
-    listsubs= await checksub(mainCategory.idMaintenanceCategory);
+    ListCategViewModel listCategViewModel=new ListCategViewModel();
+
+    await  listCategViewModel.fetchAllCategories();
+    List<CategViewModel> all=listCategViewModel.allcategs!;
+    listsubs= await checksub(mainCategory.idMaintenanceCategory,all);
 int length;
 length=listsubs.length;
+    if(listsubs.length>0)
     for (var v in listsubs) {
       idcurr = v.idMaintenanceCategory;
-      listsubs = await checksub(idcurr);
-      // print("length of" + v.maintenanceCategoryName.toString() + " sbs list " +
-      //     listsubs.length.toString());
-      subdata=[];
+      listsubs = await checksub(idcurr,all);
+      print("length of" + v.maintenanceCategoryName.toString() + " sbs list " +
+          listsubs.length.toString());
+
+      if(listsubs.length>0)
       for (var k in listsubs) {
+        subdata=[];
         idcurr = k.idMaintenanceCategory;
-        listsubs = await checksub(idcurr);
-        // print("length of" + k.maintenanceCategoryName.toString() + " sbs list " +
-        //     listsubs.length.toString());
-        subdata2=[];
+        listsubs = await checksub(idcurr,all);
+        print("length of" + k.maintenanceCategoryName.toString() + " sbs list " +
+            listsubs.length.toString());
+
+        if(listsubs.length>0)
         for (var j in listsubs) {
+          subdata2=[];
           idcurr = j.idMaintenanceCategory;
-          listsubs = await checksub(idcurr);
-          // print("length of" + j.maintenanceCategoryName.toString() + " sbs list " +
-          //     listsubs.length.toString());
+          listsubs = await checksub(idcurr,all);
+          print("length of" + j.maintenanceCategoryName.toString() + " sbs list " +
+              listsubs.length.toString());
           Entry s= Entry(j.idMaintenanceCategory,j.maintenanceCategoryName);
           subdata.add(s);
         }
@@ -148,7 +157,7 @@ length=listsubs.length;
         subdata2.add(p);
       }
       Entry p= Entry(v.idMaintenanceCategory,v.maintenanceCategoryName,subdata2);
-
+      subdata2=[];
       data.add(p);
     }
 
@@ -160,18 +169,12 @@ length=listsubs.length;
 
   }
 
-  Future<List<Categ>> checksub(int idParentCat) async {
+  Future<List<Categ>> checksub(int idParentCat,List<CategViewModel> all) async {
     List<Categ> listsubs=[];
 
-    ListCategViewModel listCategViewModel=new ListCategViewModel();
-
-    await  listCategViewModel.fetchAllCategories();
 
 
-    int parentcategid;
-    String parentcategname;
-
-    for (var v in listCategViewModel.allcategs!) {
+    for (var v in all) {
       if (v.mcateg!.maintenanceCategoryParentId == idParentCat) {
         // print("Category " + idParentCat.toString()
         //

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
@@ -53,9 +54,16 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
   }
 
   init() async {
-    if(this.widget.mInspection != null)
-    mList = QIBusBookingModel(this.widget.mInspection.technicianID.toString(), this.widget.mInspection.inspectionStartTime.toString(), this.widget.mInspection.inspectionDuration.toString(), this.widget.mInspection.inspectionComments.toString());
-else
+    if(this.widget.mInspection != null) {
+      DateTime date = DateTime.parse(
+          this.widget.mInspection.inspectionStartTime.toString());
+      String startTimee = DateFormat.MMMMd().format(date);
+      String formattedTime = DateFormat.jm().format(date);
+      mList = QIBusBookingModel(this.widget.mInspection.technicianID.toString(),
+          startTimee+", "+formattedTime,
+          this.widget.mInspection.inspectionDuration.toString()+" hours",
+          this.widget.mInspection.inspectionComments.toString());
+    }else
 mList=QIBusBookingModel("", "", ""," ");
     setState(() {});
   }

@@ -43,10 +43,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
 
   @override
   Widget build(BuildContext context) {
-    print("helloi");
-    print(this.widget.statusList.length);
-    print("hellpp");
-    print(this.widget.statusList[0].mcomponentStatus!.componentStatusDescription.toString());
+    changeStatusColor(Colors.black);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -54,10 +51,10 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
         //   padding: EdgeInsets.all(16),
         child:SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+           crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
 
+            children: <Widget>[
               SizedBox(height: 30),
               Row(
                   children: <Widget>[
@@ -79,18 +76,18 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
             children: <Widget>[
 
             SizedBox(height:20),
-            ticketInfo(t13_name, widget.checklistItem!.customComponent.componentName ,Colors.black,col:Colors.black87),
+            ticketInfo(t13_name, widget.checklistItem!.customComponent.componentName ,Colors.black87,col:Colors.black),
 
             Divider(height: 24),
-            ticketInfo(t13_description ,widget.checklistItem!.customComponent.componentDescription ,Colors.black,col:Colors.black87),
+            ticketInfo(t13_description ,widget.checklistItem!.customComponent.componentDescription ,Colors.black87,col:Colors.black),
 
 
             Divider(height: 24),
 
-            ticketInfo(t13_provider,widget.checklistItem!.customComponent.componentProvider ,Colors.black,col:Colors.black87),
+            ticketInfo(t13_provider, widget.checklistItem!.customComponent.componentProvider ,Colors.black87,col:Colors.black),
 
             Divider(height: 24),
-            ticketInfo(t13_unit_price,"\$"+widget.checklistItem!.customComponent.componentUnitPrice.toString(),Colors.black ,col:Colors.black87),
+            ticketInfo(t13_unit_price,"\$"+widget.checklistItem!.customComponent.componentUnitPrice.toString(),Colors.black87 ,col:Colors.black),
 
             Divider(height: 24),
             text(t13_status,fontFamily: fontBold,textColor: Colors.black),
@@ -124,8 +121,8 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing:8, childAspectRatio: 3),
                 // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, mainAxisSpacing:16, crossAxisSpacing:16, childAspectRatio: 8),
               ),
-              40.height,
-             Row(
+            180.height,
+              Row(
                 children: <Widget>[
                   Expanded(
                     flex: 1,
@@ -138,18 +135,19 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                         padding: EdgeInsets.only(top: 8, bottom: 8),
                         decoration: BoxDecoration(border: Border.all(color: food_textColorPrimary), borderRadius: BorderRadius.circular(24)),
                         child: Text(t13_cancel, style: primaryTextStyle()).center(),
-                      ),
-                    ),
+                      ),),
                   ),
                   SizedBox(width: 16),
                   Expanded(
                     flex: 1,
+
                     child: GestureDetector(
                       onTap: () {
                         // finish(context);
                         _save();
                       },
                       child: Container(
+                        alignment: Alignment.bottomLeft,
                         padding: EdgeInsets.only(top: 8, bottom: 8),
                         decoration: BoxDecoration(color: t5Cat3, borderRadius: BorderRadius.circular(24)),
                         child: Text(t13_save, style: primaryTextStyle(color: food_white)).center(),
@@ -158,8 +156,19 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                   )
                 ],
               )
+
               ]))),
+               // Expanded(
+               //   child: Container(
+               //     color: Colors.amber,
+               //     width: 100,
+               //   ),
+               // ),
+
+
             ],
+
+
           ),
         ),
       ),

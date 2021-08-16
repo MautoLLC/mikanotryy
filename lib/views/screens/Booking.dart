@@ -105,6 +105,9 @@ class BookingState extends State<Booking> {
   }
 }
 Widget ticketInfo(var label, var value ,Color color,{Color? col}) {
+String val="";
+if(value=="") val="N/A";
+else val=value.toString();
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -113,7 +116,8 @@ Widget ticketInfo(var label, var value ,Color color,{Color? col}) {
         flex: 2,
       ),
       Expanded(
-        child: text(value.toString(), textColor: color , maxLine: 10),
+
+        child: text(val.toString(), textColor: color , maxLine: 10),
         flex: 3,
       ),
     ],

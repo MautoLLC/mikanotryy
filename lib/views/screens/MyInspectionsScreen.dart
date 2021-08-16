@@ -44,7 +44,7 @@ class T5ListingState extends State<T5Listing> {
     init();
   }
   init() async {
-    print("ff "+this.widget.cnames.length.toString());
+   ;
     await compSts.fetchComponentStatus();
     int l = compSts.componentStatuses!.length;
     for (int i = 0; i < l; i++) {
@@ -72,8 +72,8 @@ String n="b";
 
   @override
   Widget build(BuildContext context) {
+    changeStatusColor(Colors.black);
     var width = MediaQuery.of(context).size.width;
-    changeStatusColor(t5DarkNavy);
     width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -206,12 +206,12 @@ String n="b";
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: <Widget>[
-              text("Inspection "+(index+1).toString() ,textColor: Colors.black, fontSize: textSizeMedium, fontFamily: fontBold),
+              text("Inspection"+(index+1).toString() ,textColor: Colors.black, fontSize: textSizeMedium, fontFamily: fontBold),
               //    text(mListings[index].amount, textColor: appStore.textSecondaryColor, fontSize: textSizeMedium, fontFamily: fontSemibold)
               // Flexible(child: AutoSizeText("Inspection "+(index+1).toString(), style: boldTextStyle(color: Colors.black, size: 18))),
 
               //     text(inspViewModel.inspections![index].mInspection!.maintenanceRequestID.toString(), fontSize: textSizeMedium)
-              text(catgg.maintenanceCategoryName,fontSize: textSizeMedium,maxLine:2),
+              text(catgg.maintenanceCategoryName,fontSize: textSizeMedium,maxLine:3),
               ],
               ),
               ),
