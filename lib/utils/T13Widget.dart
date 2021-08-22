@@ -6,14 +6,13 @@ import '../../main.dart';
 import 'T13Strings.dart';
 import 'appsettings.dart';
 
-
-Padding t13EditTextStyle(var hintText, var contt , {isPassword = true, TextInputType keyboardType = TextInputType.name }) {
+Padding t13EditTextStyle(var hintText, var contt,
+    {isPassword = true, TextInputType keyboardType = TextInputType.name}) {
   return Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: TextFormField(
         style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular),
         obscureText: isPassword,
-        keyboardType: keyboardType,
         cursorColor: black,
         controller: contt,
         decoration: InputDecoration(
@@ -54,7 +53,8 @@ class T13ButtonState extends State<T13Button> {
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(color: t13_white),
         elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
         padding: EdgeInsets.all(0.0),
       ),
       onPressed: widget.onPressed,
@@ -85,7 +85,8 @@ Widget mSale(BuildContext context) {
     alignment: Alignment.bottomLeft,
     margin: EdgeInsets.only(left: spacing_middle, bottom: spacing_standard_new),
     child: Container(
-      padding: EdgeInsets.fromLTRB(spacing_standard_new, spacing_control_half, spacing_standard_new, spacing_control_half),
+      padding: EdgeInsets.fromLTRB(spacing_standard_new, spacing_control_half,
+          spacing_standard_new, spacing_control_half),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[t13_colorPrimary, t13_color_gradient1],
@@ -109,7 +110,8 @@ var mSearch = Container(
       hintStyle: primaryTextStyle(color: black),
       border: InputBorder.none,
       suffixIcon: Icon(Icons.search, color: appStore.iconColor),
-      contentPadding: EdgeInsets.only(left: 26.0, bottom: 8.0, top: 8.0, right: 50.0),
+      contentPadding:
+          EdgeInsets.only(left: 26.0, bottom: 8.0, top: 8.0, right: 50.0),
     ),
   ),
   alignment: Alignment.center,

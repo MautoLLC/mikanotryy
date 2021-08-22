@@ -16,7 +16,6 @@ class T13SignInScreen extends StatefulWidget {
 
   @override
   T13SignInScreenState createState() => T13SignInScreenState();
-
 }
 
 class T13SignInScreenState extends State<T13SignInScreen> {
@@ -42,17 +41,19 @@ class T13SignInScreenState extends State<T13SignInScreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.only(left: spacing_standard_new, right: spacing_standard_new),
+            margin: EdgeInsets.only(
+                left: spacing_standard_new, right: spacing_standard_new),
             child: Column(
-
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                commonCacheImageWidget(t13_ic_logo, 85 , width: width*0.8 ),
+                commonCacheImageWidget(t13_ic_logo, 85, width: width * 0.8),
                 SizedBox(height: spacing_xlarge),
-                t13EditTextStyle(t13_hint_Email,emailController, isPassword: false),
+                t13EditTextStyle(t13_hint_Email, emailController,
+                    isPassword: false),
                 SizedBox(height: spacing_standard_new),
-                t13EditTextStyle(t13_hint_password,passController, isPassword: true),
+                t13EditTextStyle(t13_hint_password, passController,
+                    isPassword: true),
                 SizedBox(height: spacing_large),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,9 +62,8 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                       child: T13Button(
                         textContent: t13_lbl_login,
                         onPressed: () {
-                           Login(emailController.text.toString(),passController.text.toString(),this.context) ;
-
-                       //   finish(context);
+                          Login(emailController.text.toString(),
+                              passController.text.toString(), this.context);
                         },
                       ),
                       flex: 2,
@@ -98,25 +98,25 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     ),
                     GestureDetector(
                       onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => T13SignUpScreen())),
-
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => T13SignUpScreen())),
                       child: Container(
-                        child: text(t13_lbl_sign_up, fontSize: 14.0, fontFamily: fontMedium),
+                        child: text(t13_lbl_sign_up,
+                            fontSize: 14.0, fontFamily: fontMedium),
                         //alignment: Alignment.bottomLeft,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: spacing_standard_new),
-                text(t13_lbl_forgot_your_password, textColor: t13_textColorSecondary),
+                text(t13_lbl_forgot_your_password,
+                    textColor: t13_textColorSecondary),
               ],
             ),
           ),
         ),
       ),
     );
-
   }
-
 }

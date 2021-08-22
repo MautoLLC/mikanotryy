@@ -4,10 +4,11 @@ import 'package:mymikano_app/utils/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/T5Images.dart';
 import 'DashboardScreen.dart';
+import 'PlaceholderScreen.dart';
 import 'SignUpScreen.dart';
+import 'TechnicianHome.dart';
 
 class Theme5Dashboard extends StatefulWidget {
-
   @override
   _Theme5DashboardState createState() => _Theme5DashboardState();
 }
@@ -15,15 +16,11 @@ class Theme5Dashboard extends StatefulWidget {
 class _Theme5DashboardState extends State<Theme5Dashboard> {
   var selectedIndex = 0;
   var pages = [
-    //BankingTransfer(),
-   // BankingPayment(),
-    T13SignInScreen (),
-    T13SignInScreen (),
-    Dashboard (),
-    T13SignUpScreen (),
-    T13SignUpScreen (),
-   // BankingSaving(),
- //BankingMenu(),
+    PlaceHolder(),
+    PlaceHolder(),
+    Dashboard(),
+    PlaceHolder(),
+    T5Profile(),
   ];
 
   @override
@@ -53,7 +50,8 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
           BankingBottomNavigationBarItem(icon: t5_user),
         ],
         currentIndex: selectedIndex,
-        unselectedIconTheme: IconThemeData(color: Banking_TextColorPrimary, size: 20),
+        unselectedIconTheme:
+            IconThemeData(color: Banking_TextColorPrimary, size: 20),
         selectedIconTheme: IconThemeData(color: t5ColorPrimary, size: 20),
         onTap: _onItemTapped,
         type: BankingBottomNavigationBarType.fixed,

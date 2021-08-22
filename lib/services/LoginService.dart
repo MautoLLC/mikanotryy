@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 
 Login(String username, String password, BuildContext context) async {
-
   final secrett = '';
   try {
     var client = await oauth2.resourceOwnerPasswordGrant(
@@ -17,30 +16,25 @@ Login(String username, String password, BuildContext context) async {
 
     final directory = await getApplicationDocumentsDirectory();
     String appDocPath = directory.path;
-    File('$appDocPath/credentials.json').writeAsString(
-        client.credentials.toJson());
+    File('$appDocPath/credentials.json')
+        .writeAsString(client.credentials.accessToken);
     // print(client.credentials.expiration);
-    File file = File('$appDocPath/credentials.json'); //
+    File file = File('${directory.path}/credentials.json'); //
     String fileContent = await file.readAsString();
-    //print("file cont" + fileContent);
+    print(fileContent);
     Fluttertoast.showToast(
-        msg: "Login Successfull \n" ,
+        msg: "Login Successfull \n",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color ,
+        backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
     Navigator.push(
-       context,
-      MaterialPageRoute(
-          builder: (context) => Theme5Dashboard()),
+      context,
+      MaterialPageRoute(builder: (context) => Theme5Dashboard()),
     );
-
-  }
-
-  on Exception catch (e) {
+  } on Exception catch (e) {
     print(e);
 
     Fluttertoast.showToast(
@@ -48,15 +42,10 @@ Login(String username, String password, BuildContext context) async {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color ,
+        backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
-        fontSize: 16.0
-    );
-
+        fontSize: 16.0);
   }
 
-
-
   //   FormatException
-
 }
