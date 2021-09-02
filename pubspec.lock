@@ -314,20 +314,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
-  flutter_dotenv:
-    dependency: "direct main"
-    description:
-      name: flutter_dotenv
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.2"
-  flutter_gauge:
-    dependency: "direct main"
-    description:
-      name: flutter_gauge
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.8"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -356,13 +342,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.22.0"
-  flutter_switch:
-    dependency: "direct main"
-    description:
-      name: flutter_switch
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -373,13 +352,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_xlider:
-    dependency: "direct main"
-    description:
-      name: flutter_xlider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.4.0"
   fluttertoast:
     dependency: "direct main"
     description:
@@ -541,13 +513,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.4.0"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   normalize:
     dependency: transitive
     description:
@@ -674,13 +639,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.0"
   rflutter_alert:
     dependency: "direct main"
     description:
