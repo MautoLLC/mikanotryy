@@ -89,6 +89,7 @@ flutter:
   assets:
     - images/theme5/
     - images/LikeButton/image/grey.jpg
+    - .env
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

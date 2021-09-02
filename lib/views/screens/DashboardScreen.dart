@@ -13,6 +13,7 @@ import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
+import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:mymikano_app/views/widgets/DashboardSlider.dart';
 import 'package:mymikano_app/views/widgets/SfLinearGauge.dart';
@@ -174,7 +175,12 @@ class DashboardState extends State<Dashboard> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        print("Pressed");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Dashboard_Index(),
+                          ),
+                        );
                       },
                       child: Container(
                         // height: cardSize.height,
