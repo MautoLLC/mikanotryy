@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
 import 'package:mymikano_app/views/screens/InspectionScreen.dart';
@@ -14,8 +15,9 @@ import 'package:sizer/sizer.dart';
 import 'models/DashboardCardModel.dart';
 
 AppStore appStore = AppStore();
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 

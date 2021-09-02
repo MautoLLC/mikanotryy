@@ -18,9 +18,10 @@ class ChecklistItemsService {
     Directory directory = await getApplicationDocumentsDirectory();
     File file = File('${directory.path}/credentials.json');
     String fileContent = await file.readAsString();
+    print(fileContent);
     headers = {
       "Accept": "application/json",
-      'Authorization': 'Bearer $fileContent'
+      // 'Authorization': 'Bearer $fileContent'
     };
   }
 
@@ -30,6 +31,7 @@ class ChecklistItemsService {
 
     PrepareHeader();
     final response = await http.get(url, headers: headers);
+    // print(response.body);
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
@@ -47,14 +49,20 @@ class ChecklistItemsService {
         Uri.parse(GetCustomCheckListByInspectionURL + inspId.toString());
 
     PrepareHeader();
-    final response = await http.get(url, headers: headers);
-    print(response.body);
+    dynamic response = await http.get(url, headers: headers);
+    // print(response.body);
 
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as List<dynamic>;
-      final listresult =
-          json.map((e) => InspectionChecklistItem.fromJson(e)).toList();
+      List<InspectionChecklistItem> listresult = [];
+      final json = await jsonDecode(response.body);
 
+      for (var item in json) {
+        print(item);
+        InspectionChecklistItem temp = InspectionChecklistItem.fromJson(item);
+        print(temp.toString());
+        listresult.add(temp);
+      }
+      print("HERE");
       return listresult;
     } else {
       throw Exception('Error fetching');

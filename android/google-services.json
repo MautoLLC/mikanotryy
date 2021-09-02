@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "612745398831",
+    "project_id": "mymikano",
+    "storage_bucket": "mymikano.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612745398831:android:13f5cbdffcc2f6b42954da",
+        "android_client_info": {
+          "package_name": "com.codepickles.mymikano_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612745398831-0hrr2no1nkgukvckdtr88m8qmq0t5cc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-i5M1Sp3bJdrApfPO_vLzUA-ClelF0R8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612745398831-0hrr2no1nkgukvckdtr88m8qmq0t5cc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

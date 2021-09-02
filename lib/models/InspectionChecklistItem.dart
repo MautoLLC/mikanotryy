@@ -10,8 +10,8 @@ class InspectionChecklistItem {
   final InspectionModel? inspection;
   final int? predefinedChecklistItemID;
   final PredefinedChecklistModel? predefinedChecklistItem;
-  final int customComponentID;
-  final ComponentModel customComponent;
+  final int? customComponentID;
+  final ComponentModel? customComponent;
   final int? componentStatusID;
   final ComponentStatus? componentStatus;
 
@@ -31,13 +31,23 @@ class InspectionChecklistItem {
     return InspectionChecklistItem(
       idInspectionChecklistItem: json['idInspectionChecklistItem'],
       inspectionID: json['inspectionID'],
-      //    inspection:InspectionModel.fromJson(json["inspection"]),
-      //   predefinedChecklistItemID: json['predefinedChecklistItemID'],
-      //   predefinedChecklistItem: PredefinedChecklistModel.fromJson(json['predefinedChecklistItem']),
+      inspection: json["inspection"] == null
+          ? null
+          : InspectionModel.fromJson(json["inspection"]),
+      predefinedChecklistItemID: json['predefinedChecklistItemID'] == null
+          ? null
+          : json['predefinedChecklistItemID'],
+      predefinedChecklistItem: json['predefinedChecklistItem'] == null
+          ? null
+          : PredefinedChecklistModel.fromJson(json['predefinedChecklistItem']),
       customComponentID: json['customComponentID'],
-      customComponent: ComponentModel.fromJson(json['customComponent']),
+      customComponent: json['customComponent'] == null
+          ? null
+          : ComponentModel.fromJson(json['customComponent']),
       componentStatusID: json['componentStatusID'],
-      componentStatus: ComponentStatus.fromJson(json['componentStatus']),
+      componentStatus: json['componentStatus'] == null
+          ? null
+          : ComponentStatus.fromJson(json['componentStatus']),
     );
   }
 }
