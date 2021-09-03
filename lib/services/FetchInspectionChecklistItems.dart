@@ -59,10 +59,9 @@ class ChecklistItemsService {
       for (var item in json) {
         print(item);
         InspectionChecklistItem temp = InspectionChecklistItem.fromJson(item);
-        print(temp.toString());
+
         listresult.add(temp);
       }
-      print("HERE");
       return listresult;
     } else {
       throw Exception('Error fetching');

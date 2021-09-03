@@ -21,6 +21,7 @@ void main() async {
   // await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
   print("dotenv.isInitialized ===>>> ${DotEnv().isInitialized}");
+
   runApp(MyApp());
 }
 

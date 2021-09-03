@@ -1,6 +1,6 @@
 class InspectionModel {
   int idInspection;
-  int technicianID;
+  String technicianID;
   int maintenanceRequestID;
   String inspectionStartTime;
   int inspectionDuration;
@@ -17,14 +17,17 @@ class InspectionModel {
       required this.inspectionComments});
 
   factory InspectionModel.fromJson(Map<String, dynamic> json) {
+    print(json['technicianID']);
     return InspectionModel(
       idInspection: json['idInspection'],
-      technicianID: json['technicianID'],
+      technicianID: (json['technicianID'].toString()),
       maintenanceRequestID: json['maintenanceRequestID'],
       inspectionStartTime: json['inspectionStartTime'],
       inspectionDuration: json['inspectionDuration'],
       isRepaired: json['isRepaired'],
-      inspectionComments: json['inspectionComments'],
+      inspectionComments: json['inspectionComments'] == null
+          ? "null"
+          : json['inspectionComments'],
     );
   }
 }

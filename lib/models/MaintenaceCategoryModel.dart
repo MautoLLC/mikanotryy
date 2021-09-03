@@ -1,20 +1,19 @@
 class Categ {
- final int idMaintenanceCategory;
- final String maintenanceCategoryName;
- final String maintenanceCategoryDescription;
- final String maintenanceCategoryIcon;
- final  int? maintenanceCategoryParentId;
- //final Categ? maintenanceCategoryParent;
+  final int idMaintenanceCategory;
+  final String maintenanceCategoryName;
+  final String maintenanceCategoryDescription;
+  final String maintenanceCategoryIcon;
+  final int? maintenanceCategoryParentId;
+  //final Categ? maintenanceCategoryParent;
 
-
-  Categ(
-      {required  this.idMaintenanceCategory,
-        required  this.maintenanceCategoryName,
-        required  this.maintenanceCategoryDescription,
-        required  this.maintenanceCategoryIcon,
-        this.maintenanceCategoryParentId,
-        //this.maintenanceCategoryParent,
-       });
+  Categ({
+    required this.idMaintenanceCategory,
+    required this.maintenanceCategoryName,
+    required this.maintenanceCategoryDescription,
+    required this.maintenanceCategoryIcon,
+    this.maintenanceCategoryParentId,
+    //this.maintenanceCategoryParent,
+  });
 
   // Categ.fromJson(Map<String, dynamic> json) {
   //   id = json['id'];
@@ -41,9 +40,11 @@ class Categ {
       idMaintenanceCategory: json['idMaintenanceCategory'],
       maintenanceCategoryName: json['maintenanceCategoryName'],
       maintenanceCategoryDescription: json['maintenanceCategoryDescription'],
-      maintenanceCategoryIcon: json['maintenanceCategoryIcon'],
-      maintenanceCategoryParentId:json['maintenanceCategoryParentId'] ,
-     // maintenanceCategoryParent:json['maintenanceCategoryParent']
+      maintenanceCategoryIcon: json['maintenanceCategoryIcon'] == null
+          ? "null"
+          : json['maintenanceCategoryIcon'],
+      maintenanceCategoryParentId: json['maintenanceCategoryParentId'],
+      // maintenanceCategoryParent:json['maintenanceCategoryParent']
     );
   }
 }
