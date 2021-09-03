@@ -14,6 +14,7 @@ import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
+import 'package:mymikano_app/views/screens/WebViewScreen.dart';
 import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:mymikano_app/views/widgets/DashboardSlider.dart';
 import 'package:mymikano_app/views/widgets/SfLinearGauge.dart';
@@ -289,7 +290,14 @@ class DashboardState extends State<Dashboard> {
                                               style: boldTextStyle(
                                                   size: 24,
                                                   color: Colors.white)),
-                                  onTap: () {},
+                                  onTap: () {
+                                    print("tap view all");
+                                    Navigator.push(
+                                      context,
+                                        MaterialPageRoute(builder: (context) => WebView()),
+                                    );
+
+                                  },
                                 )
                               ],
                             ),
@@ -307,8 +315,17 @@ class DashboardState extends State<Dashboard> {
                               itemCount: mSliderListings.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return DashboardSlider(
-                                    mSliderListings[index], index);
+                                return  GestureDetector(
+                                  child: DashboardSlider(
+                                    mSliderListings[index], index),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => WebView()),
+                                    );
+
+                                  },
+                                );
                               },
                             ),
                           ),
