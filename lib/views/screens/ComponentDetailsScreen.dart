@@ -181,8 +181,6 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                               itemBuilder: (context, index) {
                                 return Container(
                                     padding: EdgeInsets.only(top: 8, bottom: 8),
-                                    // padding: EdgeInsets.all(8),
-                                    // margin: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: currentValue ==
                                               this
@@ -228,6 +226,18 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                                                   ? white
                                                   : grey)),
                                     )).onTap(() {
+                                  ListComponentStatusesViewModel()
+                                      .changeComponentStatus(
+                                          widget.checklistItem!
+                                                      .idInspectionChecklistItem ==
+                                                  null
+                                              ? null
+                                              : widget.checklistItem!
+                                                  .idInspectionChecklistItem,
+                                          widget
+                                              .statusList[index]
+                                              .mcomponentStatus!
+                                              .idComponentStatus);
                                   idStsSelected = this
                                       .widget
                                       .statusList[index]

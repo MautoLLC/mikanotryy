@@ -21,7 +21,7 @@ void PrepareHeader() async {
   };
 }
 
-changeChecklistItemStatus(int itemId, int StatusId) async {
+changeChecklistItemStatus(int? itemId, int? StatusId) async {
   try {
     final queryParameters = {
       inspectionChecklistItemIDParameter: itemId.toString(),
@@ -29,9 +29,9 @@ changeChecklistItemStatus(int itemId, int StatusId) async {
     };
     final url = Uri.http("dev.codepickles.com:8087",
         ChangeStatusCustomCheckListURL, queryParameters);
-
+    print(url);
     PrepareHeader();
-    final response = await http.get(url, headers: headers);
+    final response = await http.post(url, headers: headers);
     print(response.body);
     // print(url);
     //  print(response.statusCode);
