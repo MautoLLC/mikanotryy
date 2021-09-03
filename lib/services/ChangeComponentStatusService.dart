@@ -31,10 +31,10 @@ changeChecklistItemStatus(int? itemId, int? StatusId) async {
         ChangeStatusCustomCheckListURL, queryParameters);
     print(url);
     PrepareHeader();
-    final response = await http.post(url, headers: headers);
+    final response = await http.put(url, headers: headers);
     print(response.body);
     // print(url);
-    //  print(response.statusCode);
+    print(response.statusCode);
     if (response.statusCode == 204) {
       print("Component status updated!");
       Fluttertoast.showToast(
