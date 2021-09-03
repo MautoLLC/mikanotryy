@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
 import 'package:mymikano_app/views/screens/InspectionScreen.dart';
 import 'package:mymikano_app/views/screens/MyInspectionsScreen.dart';
@@ -16,6 +17,11 @@ import 'models/DashboardCardModel.dart';
 
 AppStore appStore = AppStore();
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  await dotenv.load(fileName: ".env");
+  print("dotenv.isInitialized ===>>> ${DotEnv().isInitialized}");
+
   runApp(MyApp());
 }
 

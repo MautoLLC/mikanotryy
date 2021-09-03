@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gauge/flutter_gauge.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class Custom_Card_CircularGuage extends StatelessWidget {
   String Icon;
@@ -54,15 +54,48 @@ class Custom_Card_CircularGuage extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            FlutterGauge(
-              index: double.parse(Value),
-              counterStyle: TextStyle(color: Colors.black, fontSize: 30),
-              circleColor: Colors.green,
-              activeColor: Colors.orange,
-              secondsMarker: SecondsMarker.secondsAndMinute,
-              number: Number.all,
-              numberInAndOut: NumberInAndOut.outside,
-            )
+            //FlutterGauge(index:double.parse(Value),counterStyle : TextStyle(color: Colors.black,fontSize: 30),circleColor: Colors.green,activeColor: Colors.orange,secondsMarker: SecondsMarker.secondsAndMinute,number: Number.all,numberInAndOut: NumberInAndOut.outside,)
+            SfRadialGauge(axes: <RadialAxis>[
+              RadialAxis(
+                  minimum: 0,
+                  maximum: 100,
+                  tickOffset: 28,
+                  ranges: <GaugeRange>[
+                    GaugeRange(
+                        startValue: 0,
+                        endValue: 30,
+                        color: Colors.green,
+                        startWidth: 15,
+                        endWidth: 20),
+                    GaugeRange(
+                        startValue: 30,
+                        endValue: 70,
+                        color: Colors.orange,
+                        startWidth: 20,
+                        endWidth: 30),
+                    GaugeRange(
+                        startValue: 70,
+                        endValue: 100,
+                        color: Colors.red,
+                        startWidth: 30,
+                        endWidth: 35)
+                  ],
+                  pointers: <GaugePointer>[
+                    NeedlePointer(
+                        value: double.parse(Value),
+                        tailStyle: TailStyle(width: 8, length: 0.2))
+                  ],
+                  annotations: <GaugeAnnotation>[
+                    GaugeAnnotation(
+                        widget: Container(
+                            child: Text(Value.toString(),
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold))),
+                        angle: 90,
+                        positionFactor: 0.8)
+                  ])
+            ])
           ],
         ),
       ),
