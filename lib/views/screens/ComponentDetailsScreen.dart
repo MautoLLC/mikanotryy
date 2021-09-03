@@ -108,12 +108,23 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                                 t13_description,
                                 (widget.checklistItem!.customComponent == null
                                     ? widget
-                                        .checklistItem!
-                                        .predefinedChecklistItem!
-                                        .component!
-                                        .componentDescription
+                                                .checklistItem!
+                                                .predefinedChecklistItem!
+                                                .component!
+                                                .componentDescription ==
+                                            null
+                                        ? "not available"
+                                        : widget
+                                            .checklistItem!
+                                            .predefinedChecklistItem!
+                                            .component!
+                                            .componentDescription
                                     : widget.checklistItem!.customComponent!
-                                        .componentDescription)!,
+                                                .componentDescription ==
+                                            null
+                                        ? "not available"
+                                        : widget.checklistItem!.customComponent!
+                                            .componentDescription)!,
                                 Colors.black87,
                                 col: Colors.black),
                             Divider(height: 24),
@@ -121,12 +132,23 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                                 t13_provider,
                                 (widget.checklistItem!.customComponent == null
                                     ? widget
-                                        .checklistItem!
-                                        .predefinedChecklistItem!
-                                        .component!
-                                        .componentProvider
+                                                .checklistItem!
+                                                .predefinedChecklistItem!
+                                                .component!
+                                                .componentProvider ==
+                                            null
+                                        ? "not available"
+                                        : widget
+                                            .checklistItem!
+                                            .predefinedChecklistItem!
+                                            .component!
+                                            .componentProvider
                                     : widget.checklistItem!.customComponent!
-                                        .componentProvider)!,
+                                                .componentProvider ==
+                                            null
+                                        ? "not available"
+                                        : widget.checklistItem!.customComponent!
+                                            .componentProvider)!,
                                 Colors.black87,
                                 col: Colors.black),
                             Divider(height: 24),

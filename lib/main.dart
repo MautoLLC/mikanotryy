@@ -16,8 +16,6 @@ import 'models/DashboardCardModel.dart';
 
 AppStore appStore = AppStore();
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 

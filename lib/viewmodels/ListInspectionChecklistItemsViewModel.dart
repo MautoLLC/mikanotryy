@@ -10,9 +10,8 @@ class ListInspectionChecklistItemsViewModel {
 
   Future<void> fetchInspectionItems(int inspId) async {
     final apiresult = await ChecklistItemsService().fetchAllItems(inspId);
-    print("apiresult ===>>> ${apiresult.toString()}");
     inpectionItems = [];
-    for (int i = 0; i < apiresult.length - 1; i++) {
+    for (int i = 0; i < apiresult.length; i++) {
       print(apiresult[i].customComponent.toString() != "null"
           ? apiresult[i].customComponent!.componentName
           : apiresult[i].predefinedChecklistItem!.component!.componentName);

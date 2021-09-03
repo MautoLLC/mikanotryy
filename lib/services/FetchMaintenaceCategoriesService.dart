@@ -57,6 +57,7 @@ class Service {
     // List jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
+      print(json[3]["maintenanceCategoryIcon"]);
       final listresult = json.map((e) => Categ.fromJson(e)).toList();
 
       return listresult;

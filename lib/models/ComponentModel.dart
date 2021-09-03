@@ -15,10 +15,16 @@ class ComponentModel {
   factory ComponentModel.fromJson(Map<String, dynamic> json) {
     print(json);
     return ComponentModel(
-      idComponent: json['idComponent'],
-      componentName: json['componentName'],
+      idComponent: json['idComponent'] == null
+          ? json['idCustomComponent']
+          : json['idComponent'],
+      componentName: json['componentName'] == null
+          ? json['customComponentName']
+          : json['componentName'],
       componentDescription: json['componentDescription'] == null
-          ? null
+          ? json['customComponentDescription'] == null
+              ? null
+              : json['customComponentDescription']
           : json['componentDescription'],
       componentProvider: json['componentProvider'] == null
           ? null

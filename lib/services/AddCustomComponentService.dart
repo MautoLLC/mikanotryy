@@ -29,6 +29,8 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
         "$PostInspectionCustomChecklistItemURL${idInspection.toString()}");
     print(url);
     await PrepareHeader();
+    print(
+        "comp.componentDescription.toString() ====>>>> ${comp.componentDescription.toString()}");
     var response = await http.post(url,
         headers: headers,
         body: json.encode({
@@ -39,12 +41,7 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
               : comp.componentProvider.toString(),
           "customComponentUnitPrice": comp.componentUnitPrice
         }));
-    print(response.statusCode);
-    print(response.reasonPhrase);
     if (response.statusCode == 200) {
-      toast("Component " +
-          comp.componentName.toString() +
-          " added successfully ");
       print("Component created!");
       Fluttertoast.showToast(
           msg: "Component created! ",
