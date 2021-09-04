@@ -91,6 +91,18 @@ flutter:
     - images/theme5/
     - images/LikeButton/image/grey.jpg
     - .env
+    - assets/battery.jpg
+    - assets/chrono.jpg
+    - assets/chrono.png
+    - assets/electricity.jpg
+    - assets/engine.png
+    - assets/fuellevel.jpg
+    - assets/fuellevel.png
+    - assets/generator.png
+    - assets/oilpressure.png
+    - assets/poweroff.jpg
+    - assets/Poweron.png
+    - assets/temp.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
