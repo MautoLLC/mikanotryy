@@ -22,7 +22,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
-  print("dotenv.isInitialized ===>>> ${DotEnv().isInitialized}");
   FirebaseMessaging _fcm = FirebaseMessaging.instance;
   PushNotificationService(_fcm);
   runApp(MyApp());

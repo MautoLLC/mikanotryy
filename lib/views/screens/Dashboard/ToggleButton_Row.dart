@@ -21,74 +21,91 @@ class _ToggleButton_RowState extends State<ToggleButton_Row> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Text("Controller Mode",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  //fontStyle: FontStyle.italic,
-                  color: Colors.orange,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'CG',
-                )),
-            Spacer(),
-            FlutterSwitch(
-              activeText: "Auto",
-              inactiveText: "Manual",
-              value: widget.status,
-              activeColor: Colors.orange,
-              activeTextColor: Color(0XFF130925),
-              inactiveTextColor: Color(0XFF130925),
-              valueFontSize: 10.0,
-              width: 110,
-              borderRadius: 30.0,
-              showOnOff: true,
-              onToggle: (val) {
-                setState(() {
-                  widget.status = val;
-                  //change the mode to manual//
-                  widget.DashBoardModelView.SwitchControllerMode(widget.status);
-                  //and then let the second toggle for on and off appear//
-                });
-              },
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            children: [
+              Text("Mode",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    //fontStyle: FontStyle.italic,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
+                  )),
+              Spacer(),
+              FlutterSwitch(
+                activeText: "Auto",
+                inactiveText: "Manual",
+                value: widget.status,
+                activeColor: Colors.white,
+                inactiveColor: Colors.white,
+                activeTextColor: Color(Colors.grey[700]!.value),
+                inactiveTextColor: Color(Colors.grey[700]!.value),
+                toggleColor: Color(Colors.grey[700]!.value),
+                switchBorder:
+                    Border.all(color: Color(Colors.grey[700]!.value), width: 1),
+                valueFontSize: 10.0,
+                width: 80,
+                height: 30,
+                borderRadius: 30.0,
+                showOnOff: true,
+                onToggle: (val) {
+                  setState(() {
+                    widget.status = val;
+                    //change the mode to manual//
+                    widget.DashBoardModelView.SwitchControllerMode(
+                        widget.status);
+                    //and then let the second toggle for on and off appear//
+                  });
+                },
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: 10,
         ),
         if (!widget.status)
-          Row(
-            children: [
-              Text("Switch Generator On/Off",
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    //fontStyle: FontStyle.italic,
-                    color: Colors.orange,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'CG',
-                  )),
-              Spacer(),
-              FlutterSwitch(
-                activeText: "On",
-                inactiveText: "Off",
-                value: widget.power,
-                activeColor: Colors.orange,
-                activeTextColor: Color(0XFF130925),
-                inactiveTextColor: Color(0XFF130925),
-                valueFontSize: 10.0,
-                width: 110,
-                borderRadius: 30.0,
-                showOnOff: true,
-                onToggle: (val) {
-                  setState(() {
-                    widget.power = val;
-                    //turn off or on generator//
-                    widget.DashBoardModelView.SwitchOnOff(widget.power);
-                  });
-                },
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              children: [
+                Text("Generator",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      //fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                    )),
+                Spacer(),
+                FlutterSwitch(
+                  activeText: "On",
+                  inactiveText: "Off",
+                  value: widget.power,
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.white,
+                  activeTextColor: Color(Colors.grey[700]!.value),
+                  inactiveTextColor: Color(Colors.grey[700]!.value),
+                  toggleColor: Color(Colors.grey[700]!.value),
+                  switchBorder: Border.all(
+                      color: Color(Colors.grey[700]!.value), width: 1),
+                  valueFontSize: 10.0,
+                  width: 80,
+                  height: 30,
+                  borderRadius: 30.0,
+                  showOnOff: true,
+                  onToggle: (val) {
+                    setState(() {
+                      widget.power = val;
+                      //turn off or on generator//
+                      widget.DashBoardModelView.SwitchOnOff(widget.power);
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
       ],
     );

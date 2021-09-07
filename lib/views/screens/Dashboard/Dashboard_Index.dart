@@ -8,12 +8,12 @@ import 'package:mymikano_app/models/Sensor_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';
 import 'package:mymikano_app/viewmodels/DashBoard_ModelView.dart';
 import 'package:provider/provider.dart';
+import 'Card_ImageTitleDescription.dart';
+import 'Card_ImageTitleTime.dart';
+import 'Card_ImageValue.dart';
 import 'Custom_Alert.dart';
-import 'Custom_Card.dart';
-import 'Custom_CardWithFrequency.dart';
 import 'Custom_Card_CircularGauge.dart';
-import 'Engine_State.dart';
-import 'Sliders_Section.dart';
+import 'Row_TitleValueUnit.dart';
 import 'Time.dart';
 import 'ToggleButton_Row.dart';
 
@@ -103,20 +103,33 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            backgroundColor: Color(0XFF130925),
+            backgroundColor: Colors.white,
             appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
               title: Text(
-                'Generator Dashboard',
-                style: TextStyle(fontSize: 20.0, fontFamily: 'CG'),
+                'Generator',
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontFamily: 'Roboto',
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
               ),
               centerTitle: true,
-              backgroundColor: Color(0XFF130925),
+              backgroundColor: Colors.white,
               bottom: PreferredSize(
                   child: Container(
                     color: Colors.orange,
-                    height: 1.0,
+                    height: 0.0,
                   ),
-                  preferredSize: Size.fromHeight(1.0)),
+                  preferredSize: Size.fromHeight(0.0)),
             ),
             body: FutureBuilder<String>(
               future: FetchData(),
@@ -127,8 +140,8 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                 print(snapshot.connectionState);
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                      child: SpinKitWave(
-                    color: Colors.orange,
+                      child: SpinKitCircle(
+                    color: Colors.black,
                     size: 65,
                   ));
                 } else if (snapshot.connectionState == ConnectionState.done) {
@@ -144,51 +157,127 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                         child: SingleChildScrollView(
                             child: Column(
                           children: [
-                            //Buttons_Row(PowerOffImage:"assets/poweroff.jpg" ,PowerOnImage:"assets/Poweron.png"),
                             ToggleButton_Row(
                                 status: ControllerModeStatus,
                                 power: PowerStatus,
                                 DashBoardModelView: DashModelView),
                             SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
-                            Engine_State(
-                                EngineState: EngineState.value,
-                                BreakerState: BreakState.value),
-                            SizedBox(height: 20),
-                            Time(
-                                Icon: "assets/chrono.jpg",
-                                hours: Hours,
-                                minutes: Minutes,
-                                headerh: 'Hours',
-                                headerm: 'Minutes'),
-                            SizedBox(height: 20),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Card_ImageTitleDescription(
+                                    ImagePath: "assets/EngineState.png",
+                                    Title: "Engine State",
+                                    Description: EngineState.value,
+                                  ),
+                                  flex: 1,
+                                ),
+                                Expanded(
+                                  child: Card_ImageTitleDescription(
+                                    ImagePath: "assets/Breaker.png",
+                                    Title: "Breaker State",
+                                    Description: BreakState.value,
+                                  ),
+                                  flex: 1,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Card_ImageTitleTime(
+                              ImagePath: "assets/RunningHours.png",
+                              Title: "Running Hours",
+                              Hours: Hours,
+                              Minutes: Minutes,
+                              Headerh: "Hours",
+                              Headerm: "Minutes",
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Custom_Card_CircularGuage(
-                                Icon: 'assets/generator.png',
-                                Description: 'Nominal Rpm',
+                                Title: 'RPM',
                                 Unit: Rpm.unit + "*100",
                                 Value: ((Rpm.value) / 100).toString()),
-                            Custom_Card(
-                                Icon: 'assets/battery.jpg',
-                                Description: "Battery Voltage",
-                                Value: BatteryVoltage.value.toString(),
-                                Unit: BatteryVoltage.unit.toString()),
-                            Sliders_Section(
-                                OilValue: OilPressure.value.toString(),
-                                CoolantValue: CoolantTemp.value.toString(),
-                                FuelValue: FuelLevel.value.toString()),
-                            Custom_CardWithFrequency(
-                              Icon: 'assets/generator.png',
-                              Description: "Ph-N [V]",
-                              Frequency: GeneratorFrequency.value.toString(),
-                              Unit: GeneratorVoltage.unit,
-                              Value: GeneratorVoltage.value.toString(),
+                            SizedBox(
+                              height: 10,
                             ),
-                            Custom_Card(
-                                Icon: 'assets/generator.png',
-                                Description: "Load [Kw]",
-                                Value: GeneratorLoad.value.toString(),
-                                Unit: GeneratorLoad.unit.toString()),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Card_ImageTitleDescription(
+                                    ImagePath: "assets/Battery.png",
+                                    Title: "Battery",
+                                    Description:
+                                        BatteryVoltage.value.toString() +
+                                            " " +
+                                            BatteryVoltage.unit.toString(),
+                                  ),
+                                  flex: 1,
+                                ),
+                                Expanded(
+                                  child: Card_ImageValue(
+                                      ImagePath: 'assets/OilPressure.png',
+                                      Value: OilPressure.value.toString() +
+                                          " " +
+                                          OilPressure.unit.toString()),
+                                  flex: 1,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Card_ImageValue(
+                                    ImagePath: "assets/Temperature.png",
+                                    Value: CoolantTemp.value.toString() +
+                                        " " +
+                                        CoolantTemp.unit.toString(),
+                                  ),
+                                  flex: 1,
+                                ),
+                                Expanded(
+                                  child: Card_ImageValue(
+                                      ImagePath: 'assets/Fuel.png',
+                                      Value: FuelLevel.value.toString() +
+                                          " " +
+                                          FuelLevel.unit.toString()),
+                                  flex: 1,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row_TitleValueUnit(
+                              Title: "Ph-N",
+                              Value: GeneratorVoltage.value.toString(),
+                              Unit: GeneratorVoltage.unit.toString(),
+                            ),
+                            Row_TitleValueUnit(
+                              Title: "Load",
+                              Value: GeneratorLoad.value.toString(),
+                              Unit: GeneratorLoad.unit.toString(),
+                            ),
+
+                            ///////////////// commented by youssef k and corresponds to the old design////////
+                            //Buttons_Row(PowerOffImage:"assets/poweroff.jpg" ,PowerOnImage:"assets/Poweron.png"),
+                            //SizedBox(height: 20,),
+                            //Engine_State(EngineState:EngineState.value,BreakerState:BreakState.value),
+                            //SizedBox(height:20 ),
+                            //Time(Icon:"assets/chrono.jpg",hours:Hours,minutes:Minutes,headerh:'Hours',headerm:'Minutes'),
+                            //SizedBox(height:20 ),
+                            //Custom_Card_CircularGuage(Icon:'assets/generator.png',Description:'Nominal Rpm',Unit:Rpm.unit+"*100"  ,Value:((Rpm.value)/100).toString()),
+                            //Custom_Card(Icon:'assets/battery.jpg',Description: "Battery Voltage",Value:BatteryVoltage.value.toString(),Unit: BatteryVoltage.unit.toString()),
+                            //Sliders_Section(OilValue:OilPressure.value.toString(),CoolantValue:CoolantTemp.value.toString(),FuelValue: FuelLevel.value.toString()),
+                            //Custom_CardWithFrequency(Icon:'assets/generator.png',Description:"Ph-N [V]" ,Frequency:GeneratorFrequency.value.toString(),Unit: GeneratorVoltage.unit,Value: GeneratorVoltage.value.toString(),),
+                            //Custom_Card(Icon:'assets/generator.png',Description: "Load [Kw]",Value:GeneratorLoad.value.toString(),Unit: GeneratorLoad.unit.toString()),
                           ],
                         )));
                   } else {
