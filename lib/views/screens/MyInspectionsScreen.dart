@@ -239,7 +239,7 @@ class T5ListingState extends State<T5Listing> {
                                                             right: 16),
                                                         width: width / 7.2,
                                                         height: width / 7.2,
-                                                        child: SvgPicture.asset(
+                                                        child: Image.asset(
                                                             mListings[index]
                                                                 .icon),
                                                         padding: EdgeInsets.all(

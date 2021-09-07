@@ -7,6 +7,8 @@ import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 
+import 'SignInScreen.dart';
+
 class OPSplashScreen extends StatefulWidget {
   static String tag = '/OPSplashScreen';
 
@@ -14,7 +16,8 @@ class OPSplashScreen extends StatefulWidget {
   _OPSplashScreenState createState() => _OPSplashScreenState();
 }
 
-class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProviderStateMixin {
+class _OPSplashScreenState extends State<OPSplashScreen>
+    with SingleTickerProviderStateMixin {
   startTime() async {
     var _duration = Duration(seconds: 5);
     return Timer(_duration, navigationPage);
@@ -24,7 +27,6 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
   void initState() {
     super.initState();
     startTime();
-    //goAll();
   }
 
   void navigationPage() {
@@ -32,8 +34,7 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Theme5Dashboard(),
-           // T13SignInScreen(),
+        builder: (context) => T13SignInScreen(),
       ),
     );
   }
@@ -49,7 +50,8 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                Image.asset('images/theme5/logo-dark.png', height: 85, fit: BoxFit.fill),
+                Image.asset('images/MyMikanoLogo.png',
+                    height: 85, fit: BoxFit.fill),
                 SizedBox(height: 10),
                 SpinKitChasingDots(
                   //color: Colors.grey,
@@ -60,8 +62,9 @@ class _OPSplashScreenState extends State<OPSplashScreen> with SingleTickerProvid
                         color: index.isEven ? t5Cat3 : Colors.black87,
                       ),
                     );
-                  },),
-              // Text("MyMikano", style: boldTextStyle(size: 20)),
+                  },
+                ),
+                // Text("MyMikano", style: boldTextStyle(size: 20)),
               ],
             ),
           ),

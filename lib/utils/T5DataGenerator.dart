@@ -3,6 +3,7 @@ import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 
 import 'T2Colors.dart';
 import 'T5Images.dart';
+
 List<T5Category> getDItems() {
   List<T5Category> list = [];
 
@@ -40,6 +41,7 @@ List<T5Category> getDItems() {
   list.add(category);
   return list;
 }
+
 List<T5Category> getCategoryItems() {
   List<T5Category> list = [];
 
@@ -159,11 +161,11 @@ List<T5Slider> getSliders() {
   T5Slider model2 = T5Slider();
   model2.balance = "\$150000";
   model2.accountNo = "145 250 230 120 150";
-  model2.image =  t5_card1;
+  model2.image = t5_card1;
   T5Slider model3 = T5Slider();
   model3.balance = "\$150000";
   model3.accountNo = "145 250 230 120 150";
-  model3.image =  t5_card1;
+  model3.image = t5_card1;
 
   list.add(model1);
   list.add(model2);
@@ -310,5 +312,3 @@ List<MaintenanceRequestModel2> getMaintenanceListData() {
 
   return list;
 }
-
-

@@ -40,7 +40,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BankingBottomNavigationBar(
-        selectedItemColor: t5ColorPrimary,
+        selectedItemColor: t5Cat3,
         unselectedItemColor: Banking_TextColorPrimary,
         items: <BankingBottomNavigationBarItem>[
           BankingBottomNavigationBarItem(icon: t5_img_settings),
@@ -52,7 +52,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
         currentIndex: selectedIndex,
         unselectedIconTheme:
             IconThemeData(color: Banking_TextColorPrimary, size: 20),
-        selectedIconTheme: IconThemeData(color: t5ColorPrimary, size: 20),
+        selectedIconTheme: IconThemeData(color: t5Cat3, size: 20),
         onTap: _onItemTapped,
         type: BankingBottomNavigationBarType.fixed,
       ),

@@ -55,8 +55,6 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        // Container(
-        //   padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,80 +258,11 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                                       mainAxisSpacing: 8,
                                       crossAxisSpacing: 8,
                                       childAspectRatio: 3),
-                              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, mainAxisSpacing:16, crossAxisSpacing:16, childAspectRatio: 8),
                             ),
-                            180.height,
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // finish(context);
-                                      _cancel();
-                                    },
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.only(top: 8, bottom: 8),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: food_textColorPrimary),
-                                          borderRadius:
-                                              BorderRadius.circular(24)),
-                                      child: Text(t13_cancel,
-                                              style: primaryTextStyle())
-                                          .center(),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 16),
-                                Expanded(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // finish(context);
-                                      _save();
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.bottomLeft,
-                                      padding:
-                                          EdgeInsets.only(top: 8, bottom: 8),
-                                      decoration: BoxDecoration(
-                                          color: t5Cat3,
-                                          borderRadius:
-                                              BorderRadius.circular(24)),
-                                      child: Text(t13_save,
-                                              style: primaryTextStyle(
-                                                  color: food_white))
-                                          .center(),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
+                            160.height,
                           ]))),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  _save() async {
-    // toast(currentValue);
-    // toast(widget.checklistItem!.idInspectionChecklistItem!.toString());
-    // toast(idStsSelected.toString());
-    await changeChecklistItemStatus(
-        widget.checklistItem!.idInspectionChecklistItem!, idStsSelected);
-    //finish(context);
-    Navigator.pop(context);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => T13InspectionScreen(
-          mInspection: widget.mInspection,
-          statusList: this.widget.statusList,
-          category: this.widget.category,
         ),
       ),
     );

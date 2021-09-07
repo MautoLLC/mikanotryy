@@ -32,7 +32,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
         height: width * 0.11,
         child: Padding(
           padding: EdgeInsets.all(spacing_standard),
-          child: SvgPicture.asset(icon, color: t13_white),
+          child: Image.asset(icon, color: t13_white),
         ),
       );
     }
@@ -61,28 +61,15 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     Expanded(
                       child: T13Button(
                         textContent: t13_lbl_login,
-                        onPressed: () {
-                          Login(emailController.text.toString(),
+                        onPressed: () async {
+                          await Login(emailController.text.toString(),
                               passController.text.toString(), this.context);
+                          emailController.text = "";
+                          passController.text = "";
                         },
                       ),
                       flex: 2,
                     ),
-                    // SizedBox(
-                    //   width: spacing_standard_new,
-                    // ),
-                    // Expanded(
-                    //   flex: 1,
-                    //   child: Row(
-                    //     children: <Widget>[
-                    //       mSocial(t13_dark_blue_color, t13_ic_facebook),
-                    //       SizedBox(
-                    //         width: spacing_standard_new,
-                    //       ),
-                    //       mSocial(t13_blue_color, t13_ic_twitter),
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ),
                 SizedBox(height: spacing_large),
@@ -104,14 +91,10 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                       child: Container(
                         child: text(t13_lbl_sign_up,
                             fontSize: 14.0, fontFamily: fontMedium),
-                        //alignment: Alignment.bottomLeft,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: spacing_standard_new),
-                text(t13_lbl_forgot_your_password,
-                    textColor: t13_textColorSecondary),
               ],
             ),
           ),

@@ -23,13 +23,14 @@ Login(String username, String password, BuildContext context) async {
     String fileContent = await file.readAsString();
     print(fileContent);
     Fluttertoast.showToast(
-        msg: "Login Successfull \n",
+        msg: "Login Successfull",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
         fontSize: 16.0);
+    // SnackBar(content: Text())
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Theme5Dashboard()),
@@ -38,7 +39,7 @@ Login(String username, String password, BuildContext context) async {
     print(e);
 
     Fluttertoast.showToast(
-        msg: "Login Failed \n" + e.toString(),
+        msg: "Login Failed" + e.toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,

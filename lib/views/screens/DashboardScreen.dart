@@ -172,7 +172,6 @@ class DashboardState extends State<Dashboard> {
                         );
                       },
                       child: Container(
-                        // height: cardSize.height,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(

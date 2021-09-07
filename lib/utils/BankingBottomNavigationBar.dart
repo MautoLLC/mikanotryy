@@ -48,12 +48,14 @@ class BankingBottomNavigationBar extends StatefulWidget {
         assert(0 <= currentIndex && currentIndex < items.length),
         assert(elevation >= 0.0),
         assert(iconSize >= 0.0),
-        assert(selectedItemColor == null || fixedColor == null, 'Either selectedItemColor or fixedColor can be specified, but not both'),
+        assert(selectedItemColor == null || fixedColor == null,
+            'Either selectedItemColor or fixedColor can be specified, but not both'),
         assert(selectedFontSize >= 0.0),
         assert(unselectedFontSize >= 0.0),
         type = _type(type, items),
         selectedItemColor = selectedItemColor ?? fixedColor,
-        showUnselectedLabels = showUnselectedLabels ?? _defaultShowUnselected(_type(type, items)),
+        showUnselectedLabels =
+            showUnselectedLabels ?? _defaultShowUnselected(_type(type, items)),
         super(key: key);
 
   /// Defines the appearance of the button items that are arrayed within the
@@ -176,7 +178,9 @@ class BankingBottomNavigationBar extends StatefulWidget {
     if (type != null) {
       return type;
     }
-    return items.length <= 3 ? BankingBottomNavigationBarType.fixed : BankingBottomNavigationBarType.shifting;
+    return items.length <= 3
+        ? BankingBottomNavigationBarType.fixed
+        : BankingBottomNavigationBarType.shifting;
   }
 
   // Used by the [T4BottomNavigationBar] constructor to set the [showUnselected]
@@ -194,7 +198,8 @@ class BankingBottomNavigationBar extends StatefulWidget {
   }
 
   @override
-  _BankingBottomNavigationBarState createState() => _BankingBottomNavigationBarState();
+  _BankingBottomNavigationBarState createState() =>
+      _BankingBottomNavigationBarState();
 }
 
 // This represents a single tile in the bottom navigation bar. It is intended
@@ -248,10 +253,12 @@ class _BottomNavigationTile extends StatelessWidget {
     final double unselectedIconSize = unselectedIconTheme.size ?? iconSize;
     // The amount that the selected icon is bigger than the unselected icons,
     // (or zero if the selected icon is not bigger than the unselected icons).
-    final double selectedIconDiff = math.max(selectedIconSize - unselectedIconSize, 0);
+    final double selectedIconDiff =
+        math.max(selectedIconSize - unselectedIconSize, 0);
     // The amount that the unselected icons are bigger than the selected icon,
     // (or zero if the unselected icons are not any bigger than the selected icon).
-    final double unselectedIconDiff = math.max(unselectedIconSize - selectedIconSize, 0);
+    final double unselectedIconDiff =
+        math.max(unselectedIconSize - selectedIconSize, 0);
 
     // Defines the padding for the animating icons + labels.
     //
@@ -320,7 +327,8 @@ class _BottomNavigationTile extends StatelessWidget {
             InkResponse(
               onTap: onTap,
               child: Padding(
-                padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
+                padding:
+                    EdgeInsets.only(top: topPadding, bottom: bottomPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -386,7 +394,11 @@ class _TileIcon extends StatelessWidget {
       alignment: Alignment.topCenter,
       heightFactor: 1.0,
       child: Container(
-        child: SvgPicture.asset(item.icon, width: selectedIconTheme.size, height: selectedIconTheme.size, color: selected ? selectedIconTheme.color : unselectedIconTheme.color),
+        child: SvgPicture.asset(item.icon,
+            width: selectedIconTheme.size,
+            height: selectedIconTheme.size,
+            color:
+                selected ? selectedIconTheme.color : unselectedIconTheme.color),
       ),
     );
   }
@@ -475,7 +487,8 @@ class _Label extends StatelessWidget {
   }
 }
 
-class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar> with TickerProviderStateMixin {
+class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
+    with TickerProviderStateMixin {
   List<AnimationController> _controllers = <AnimationController>[];
   late List<CurvedAnimation> _animations;
 
@@ -486,20 +499,23 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
   // animation is complete.
   Color? _backgroundColor;
 
-  static final Animatable<double> _flexTween = Tween<double>(begin: 1.0, end: 1.5);
+  static final Animatable<double> _flexTween =
+      Tween<double>(begin: 1.0, end: 1.5);
 
   void _resetState() {
     for (AnimationController controller in _controllers) controller.dispose();
     for (_Circle circle in _circles) circle.dispose();
     _circles.clear();
 
-    _controllers = List<AnimationController>.generate(widget.items.length, (int index) {
+    _controllers =
+        List<AnimationController>.generate(widget.items.length, (int index) {
       return AnimationController(
         duration: kThemeAnimationDuration,
         vsync: this,
       )..addListener(_rebuild);
     });
-    _animations = List<CurvedAnimation>.generate(widget.items.length, (int index) {
+    _animations =
+        List<CurvedAnimation>.generate(widget.items.length, (int index) {
       return CurvedAnimation(
         parent: _controllers[index],
         curve: Curves.fastOutSlowIn,
@@ -530,7 +546,8 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
     super.dispose();
   }
 
-  double _evaluateFlex(Animation<double> animation) => _flexTween.evaluate(animation);
+  double _evaluateFlex(Animation<double> animation) =>
+      _flexTween.evaluate(animation);
 
   void _pushCircle(int index) {
     if (widget.items[index].backgroundColor != null) {
@@ -582,7 +599,8 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
       _controllers[oldWidget.currentIndex].reverse();
       _controllers[widget.currentIndex].forward();
     } else {
-      if (_backgroundColor != widget.items[widget.currentIndex].backgroundColor) _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
+      if (_backgroundColor != widget.items[widget.currentIndex].backgroundColor)
+        _backgroundColor = widget.items[widget.currentIndex].backgroundColor;
     }
   }
 
@@ -591,16 +609,21 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
   static TextStyle? _effectiveTextStyle(TextStyle? textStyle, double fontSize) {
     textStyle ??= const TextStyle();
     // Prefer the font size on textStyle if present.
-    return textStyle.fontSize == null ? textStyle.copyWith(fontSize: fontSize) : textStyle;
+    return textStyle.fontSize == null
+        ? textStyle.copyWith(fontSize: fontSize)
+        : textStyle;
   }
 
   List<Widget> _createTiles() {
-    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    final MaterialLocalizations localizations =
+        MaterialLocalizations.of(context);
 
     final ThemeData themeData = Theme.of(context);
 
-    final TextStyle? effectiveSelectedLabelStyle = _effectiveTextStyle(widget.selectedLabelStyle, widget.selectedFontSize);
-    final TextStyle? effectiveUnselectedLabelStyle = _effectiveTextStyle(widget.unselectedLabelStyle, widget.unselectedFontSize);
+    final TextStyle? effectiveSelectedLabelStyle =
+        _effectiveTextStyle(widget.selectedLabelStyle, widget.selectedFontSize);
+    final TextStyle? effectiveUnselectedLabelStyle = _effectiveTextStyle(
+        widget.unselectedLabelStyle, widget.unselectedFontSize);
 
     Color? themeColor;
     switch (themeData.brightness) {
@@ -616,7 +639,8 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
     switch (widget.type) {
       case BankingBottomNavigationBarType.fixed:
         colorTween = ColorTween(
-          begin: widget.unselectedItemColor ?? themeData.textTheme.caption!.color,
+          begin:
+              widget.unselectedItemColor ?? themeData.textTheme.caption!.color,
           end: widget.selectedItemColor ?? widget.fixedColor ?? themeColor,
         );
         break;
@@ -647,7 +671,8 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
         selected: i == widget.currentIndex,
         showSelectedLabels: widget.showSelectedLabels,
         showUnselectedLabels: widget.showUnselectedLabels,
-        indexLabel: localizations.tabLabel(tabIndex: i + 1, tabCount: widget.items.length),
+        indexLabel: localizations.tabLabel(
+            tabIndex: i + 1, tabCount: widget.items.length),
       ));
     }
     return tiles;
@@ -670,7 +695,9 @@ class _BankingBottomNavigationBarState extends State<BankingBottomNavigationBar>
     assert(debugCheckHasMediaQuery(context));
 
     // Labels apply up to _bottomMargin padding. Remainder is media padding.
-    final double additionalBottomPadding = math.max(MediaQuery.of(context).padding.bottom - widget.selectedFontSize / 2.0, 0.0);
+    final double additionalBottomPadding = math.max(
+        MediaQuery.of(context).padding.bottom - widget.selectedFontSize / 2.0,
+        0.0);
     Color? backgroundColor;
     switch (widget.type) {
       case BankingBottomNavigationBarType.fixed:
@@ -742,15 +769,20 @@ class _Circle {
     double weightSum(Iterable<Animation<double>> animations) {
       // We're adding flex values instead of animation values to produce correct
       // ratios.
-      return animations.map<double>(state._evaluateFlex).fold<double>(0.0, (double sum, double value) => sum + value);
+      return animations
+          .map<double>(state._evaluateFlex)
+          .fold<double>(0.0, (double sum, double value) => sum + value);
     }
 
     final double allWeights = weightSum(state._animations);
     // These weights sum to the start edge of the indexed item.
-    final double leadingWeights = weightSum(state._animations.sublist(0, index));
+    final double leadingWeights =
+        weightSum(state._animations.sublist(0, index));
 
     // Add half of its flex value in order to get to the center.
-    return (leadingWeights + state._evaluateFlex(state._animations[index]) / 2.0) / allWeights;
+    return (leadingWeights +
+            state._evaluateFlex(state._animations[index]) / 2.0) /
+        allWeights;
   }
 
   void dispose() {
@@ -783,7 +815,8 @@ class _RadialPainter extends CustomPainter {
     if (textDirection != oldPainter.textDirection) return true;
     if (circles == oldPainter.circles) return false;
     if (circles.length != oldPainter.circles.length) return true;
-    for (int i = 0; i < circles.length; i += 1) if (circles[i] != oldPainter.circles[i]) return true;
+    for (int i = 0; i < circles.length; i += 1)
+      if (circles[i] != oldPainter.circles[i]) return true;
     return false;
   }
 
@@ -802,7 +835,8 @@ class _RadialPainter extends CustomPainter {
           leftFraction = circle.horizontalLeadingOffset;
           break;
       }
-      final Offset center = Offset(leftFraction * size.width, size.height / 2.0);
+      final Offset center =
+          Offset(leftFraction * size.width, size.height / 2.0);
       final Tween<double> radiusTween = Tween<double>(
         begin: 0.0,
         end: _maxRadius(center, size),
@@ -825,7 +859,7 @@ class BankingBottomNavigationBarItem {
     this.title,
     Widget? activeIcon,
     this.backgroundColor,
-  })  : activeIcon = activeIcon as String? ?? icon;
+  }) : activeIcon = activeIcon as String? ?? icon;
 
   /// The icon of the item.
   ///

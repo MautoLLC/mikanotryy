@@ -21,48 +21,54 @@ class T5DashBoardListing extends StatelessWidget {
     return GridView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
+        physics:
+            isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
         itemCount: mFavouriteList!.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5,childAspectRatio: 0.8, crossAxisSpacing: 8, mainAxisSpacing: 8),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 5,
+            childAspectRatio: 0.8,
+            crossAxisSpacing: 8,
+            mainAxisSpacing: 8),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {},
             child: Container(
               alignment: Alignment.center,
-              decoration: boxDecoration(radius: 10, showShadow: true, bgColor: Colors.white),
+              decoration: boxDecoration(
+                  radius: 10, showShadow: true, bgColor: Colors.white),
               child: Column(
-
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-
                     child: Container(
-                      height: width /7.5,
+                      height: width / 7.5,
                       width: width / 7.5,
-                      // margin: EdgeInsets.only(bottom: 4, top:8),
                       padding: EdgeInsets.all(5),
-                      decoration: boxDecoration(bgColor: mFavouriteList![index].color, radius: 10),
-                      child: SvgPicture.asset(
-
+                      decoration: boxDecoration(
+                          bgColor: mFavouriteList![index].color, radius: 10),
+                      child: Image.asset(
                         mFavouriteList![index].icon,
                         color: t5White,
-
                       ),
-
                     ),
                   ),
-                  SizedBox(height:4),
-                  Flexible(child:  SizerUtil.deviceType == DeviceType.mobile?AutoSizeText( mFavouriteList![index].name ,  style: TextStyle(color: appStore.textSecondaryColor, fontSize: 9.0), maxLines: 1):
-                  AutoSizeText( mFavouriteList![index].name ,  style: TextStyle(color: appStore.textSecondaryColor, fontSize: 20.0), maxLines: 1))
+                  SizedBox(height: 4),
+                  Flexible(
+                      child: SizerUtil.deviceType == DeviceType.mobile
+                          ? AutoSizeText(mFavouriteList![index].name,
+                              style: TextStyle(
+                                  color: appStore.textSecondaryColor,
+                                  fontSize: 9.0),
+                              maxLines: 1)
+                          : AutoSizeText(mFavouriteList![index].name,
+                              style: TextStyle(
+                                  color: appStore.textSecondaryColor,
+                                  fontSize: 20.0),
+                              maxLines: 1))
                 ],
-
-
               ),
-
             ),
           );
-        }
-    );
-
+        });
   }
 }

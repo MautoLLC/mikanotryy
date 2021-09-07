@@ -215,7 +215,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         ],
                       ),
                     ),
-
                     Container(
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(left: 5, top: 30),
@@ -236,21 +235,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         ],
                       ),
                     ),
-                    // Container(
-                    //   alignment: Alignment.topLeft,
-                    //   margin: EdgeInsets.only(top: 70, left: 15),
-                    //   child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //       children: <Widget>[
-                    //         CircleAvatar(
-                    //     backgroundColor: t5Cat3,
-                    //     child: SvgPicture.asset(t5_general_repair, height: 40, width: 40,color: t5White,),
-                    //     radius: 40,
-                    //   ),
-                    //         text(""+
-                    //             this.widget.mainCatg.maintenanceCategoryName, fontSize: textSizeNormal)]
-                    // ),),
                   ],
                 ),
               ),

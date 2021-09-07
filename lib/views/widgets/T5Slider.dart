@@ -4,8 +4,6 @@ import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/views/widgets/T5SliderWidget.dart';
 
-
-
 // ignore: must_be_immutable
 class T5SliderWidget extends StatelessWidget {
   List<T5Slider>? mSliderList;
@@ -29,10 +27,14 @@ class T5SliderWidget extends StatelessWidget {
               height: cardSize.height,
               child: Stack(
                 children: <Widget>[
-                  CachedNetworkImage(
-                    placeholder: placeholderWidgetFn() as Widget Function(BuildContext, String)?,
-                    imageUrl: slider.image,
-                    fit: BoxFit. fill,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: CachedNetworkImage(
+                      placeholder: placeholderWidgetFn() as Widget Function(
+                          BuildContext, String)?,
+                      imageUrl: slider.image,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ],
               ),
@@ -41,6 +43,5 @@ class T5SliderWidget extends StatelessWidget {
         );
       }).toList(),
     );
-
   }
 }

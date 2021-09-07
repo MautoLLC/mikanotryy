@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
@@ -14,13 +15,16 @@ import 'package:mymikano_app/views/screens/TechnicianHome.dart';
 import 'package:sizer/sizer.dart';
 
 import 'models/DashboardCardModel.dart';
+import 'services/pushNotificationService.dart';
 
 AppStore appStore = AppStore();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
   print("dotenv.isInitialized ===>>> ${DotEnv().isInitialized}");
+  FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  PushNotificationService(_fcm);
   runApp(MyApp());
 }
 
@@ -60,7 +64,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: new T13SignInScreen(),
+        home: new OPSplashScreen(),
       );
     });
   }

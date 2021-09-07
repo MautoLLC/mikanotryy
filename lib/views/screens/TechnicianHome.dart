@@ -73,12 +73,9 @@ class T5ProfileState extends State<T5Profile> {
     for (int i = 0; i < mrqvm.maintenanceRequests!.length; i++) {
       reqst.add(mrqvm.maintenanceRequests![i].mMaintenacerequest!);
     }
-    setState(() {});
   }
 
   var currentIndex = 0;
-  // var iconList = <String>[t5_analysis];
-  // var nameList = <String>[t5_statistics];
 
   void changePage(int index) {
     setState(() {
@@ -105,16 +102,6 @@ class T5ProfileState extends State<T5Profile> {
             decoration:
                 boxDecoration(radius: 24, showShadow: true, bgColor: t5White),
             padding: EdgeInsets.all(10),
-            // decoration: BoxDecoration(
-            //   boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
-            //   border: Border.all(color: Colors.white70,   width: 1.0,),
-            //   borderRadius: BorderRadius.all(
-            //       Radius.circular(20.0) //                 <--- border radius here
-            //   ),
-            //   gradient: LinearGradient(colors: [cards[0].startColor!, cards[0].endColor!]),
-            //
-            // ),
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -125,19 +112,9 @@ class T5ProfileState extends State<T5Profile> {
                   child: SvgPicture.asset(t13_ic_inspection2,
                       height: 90, width: 90, color: Colors.white),
                 ),
-
-                /// SizedBox(height:5),
-
-                //    SvgPicture.asset(
-                //      t13_ic_inspection2,
-                //       width: width! / 3,
-                //       height: width! / 3,
-                //      color: black,
-                //     ),
                 Flexible(
                     child: AutoSizeText("My Inspections",
                         style: boldTextStyle(color: Colors.black, size: 20)))
-                //text("My Inspections", fontSize: textSizeNormal, textColor: t5TextColorPrimary, fontFamily: fontSemibold)
               ],
             )));
   }
@@ -161,18 +138,6 @@ class T5ProfileState extends State<T5Profile> {
                 height: 60,
                 child: commonCacheImageWidget(t5_ic_light_logo, 40,
                     width: width! * 0.33),
-
-                // IconButton(
-                //   icon: Icon(Icons.keyboard_arrow_left, size: 40, color: t5White),
-                //   onPressed: () {
-                //     finish(context);
-                //   },
-                // ),
-                // text("Account", textColor: t5White, fontSize: textSizeNormal, fontFamily: fontMedium),
-                // Padding(
-                //   padding: EdgeInsets.only(right: 16.0),
-                //   child: SvgPicture.asset(t5_options, width: 25, height: 25, color: t5White),
-                // ),
               ),
             ),
             SingleChildScrollView(
@@ -200,27 +165,12 @@ class T5ProfileState extends State<T5Profile> {
                         text(tech!.email, fontSize: textSizeLargeMedium),
                         SizedBox(height: 58),
                         gridItem()
-                        // SizedBox(height: 16),
                       ],
                     ),
                   ),
-                  // CircleAvatar(
-                  //   radius: 16.0,
-                  //   child: ClipRRect(
-                  //     child: Image.asset(t5_options, width: 25, height: 25, color: t5White),
-                  //     borderRadius: BorderRadius.circular(50.0),
-                  //   ),
-                  // ),
                   CircleAvatar(
                       backgroundImage: CachedNetworkImageProvider(tech!.image),
                       radius: 50)
-
-                  // CircleAvatar(backgroundImage: AssetImage(t5_options, width: 25, height: 25, color: t5White), radius: 50)
-                  //
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  //   child: commonCacheImageWidget(tech.image, width! * 0.28, fit: BoxFit.cover, width: width! * 0.28),
-                  // ),
                 ],
               ),
             ),

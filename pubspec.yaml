@@ -91,18 +91,43 @@ flutter:
     - images/theme5/
     - images/LikeButton/image/grey.jpg
     - .env
-    - assets/battery.jpg
-    - assets/chrono.jpg
-    - assets/chrono.png
-    - assets/electricity.jpg
-    - assets/engine.png
-    - assets/fuellevel.jpg
-    - assets/fuellevel.png
-    - assets/generator.png
-    - assets/oilpressure.png
-    - assets/poweroff.jpg
-    - assets/Poweron.png
-    - assets/temp.png
+    # Splash Screen
+    - images/MyMikanoLogo.png
+    # My Requests Page Folder
+    - images/Bulb_Icon.png
+    - images/MaintenanceAndRepair.png
+    - images/MyRequestsCarousel.png
+    - images/TelephoneIcon.png
+    - images/WaterDroplet.png
+    - images/WIFIIcon.png
+    # Mechanical Repaire Page
+    - images/MechanicalRepairImg.png
+    - images/MechanicalRepairPurpleIcon.png
+    # Maintenance Page Folder
+    - images/SecurityIcon.png
+    - images/Carousel.png
+    - images/CleaningIcon.png
+    - images/ElectricalRepairIcon.png
+    - images/GeneralRepairIcon.png
+    - images/LandscapeIcon.png
+    - images/MechaniclRepairPageIcon.png
+    - images/MechanicalRepairIcon.png
+    # Home Page Folder
+    - images/ElectricalIcon.png
+    - images/GeneratorIcon.png
+    - images/HeavyIndrustriesIcon.png
+    - images/MaintenanceAndRepairRedIcon.png
+    - images/MedicalIcon.png
+    - images/MikanoShopBreaker.png
+    - images/MikanoShopCarousel.png
+    - images/MotorsIcon.png
+    - images/MyMikanoHomePageLogo.png
+    - images/PhilipsBulb.png
+    - images/RPMHomepageIcon.png
+    - images/ThermometerHomepageIcon.png
+    # General Repair Page Folder
+    - images/GeneralRepairGreenIcon.png
+    - images/GeneralRepairImage.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
