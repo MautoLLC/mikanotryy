@@ -9,6 +9,8 @@ import 'package:mymikano_app/utils/T13Images.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
 import 'package:mymikano_app/utils/T13Widget.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'MainDashboard.dart';
 import 'SignUpScreen.dart';
 
 class T13SignInScreen extends StatefulWidget {
@@ -21,6 +23,25 @@ class T13SignInScreen extends StatefulWidget {
 class T13SignInScreenState extends State<T13SignInScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  init() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.getBool('IsLoggedIn') == true
+        ? Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+          )
+        : null;
+    print(
+        "prefs.getBool('IsLoggedIn') ====>>>> ${prefs.getBool('IsLoggedIn')}");
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

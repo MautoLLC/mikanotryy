@@ -37,7 +37,7 @@ const ComponentsStatusURL = '$InspectionApiBaseUrl/api/ComponentStatus';
 
 const mainAppName = 'My Mikano App';
 
-const fontRegular = 'Regular';
+const fontRegular = 'Roboto';
 const fontMedium = 'Medium';
 const fontSemibold = 'Semibold';
 const fontBold = 'Bold';

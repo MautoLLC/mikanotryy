@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/main.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
-import 'package:mymikano_app/utils/dots_indicator/dots_indicator.dart';
-
-import '../../main.dart';
-
+import 'AppWidget.dart';
 import 'appsettings.dart';
 import 'colors.dart';
-
+import 'dots_indicator/src/dots_decorator.dart';
+import 'dots_indicator/src/dots_indicator.dart';
 
 // ignore: must_be_immutable
 class EditText extends StatefulWidget {
@@ -46,7 +44,10 @@ class EditTextState extends State<EditText> {
     return TextFormField(
       controller: widget.mController,
       obscureText: widget.isPassword,
-      style: TextStyle(color: appStore.textPrimaryColor, fontSize: textSizeLargeMedium, fontFamily: fontRegular),
+      style: TextStyle(
+          color: appStore.textPrimaryColor,
+          fontSize: textSizeLargeMedium,
+          fontFamily: fontRegular),
       decoration: InputDecoration(
         suffixIcon: widget.isSecure
             ? GestureDetector(
@@ -140,7 +141,11 @@ class TopBarState extends State<TopBar> {
                 finish(context);
               },
             ),
-            Center(child: text(widget.titleName, textColor: appStore.textPrimaryColor, fontSize: textSizeNormal, fontFamily: fontBold))
+            Center(
+                child: text(widget.titleName,
+                    textColor: appStore.textPrimaryColor,
+                    fontSize: textSizeNormal,
+                    fontFamily: fontBold))
           ],
         ),
       ),
@@ -221,7 +226,12 @@ Widget ring(String description) {
         ),
       ),
       SizedBox(height: 16),
-      text(description, textColor: appStore.textPrimaryColor, fontSize: textSizeNormal, fontFamily: fontSemibold, isCentered: true, maxLine: 2)
+      text(description,
+          textColor: appStore.textPrimaryColor,
+          fontSize: textSizeNormal,
+          fontFamily: fontSemibold,
+          isCentered: true,
+          maxLine: 2)
     ],
   );
 }
@@ -265,7 +275,15 @@ class PinEntryTextField extends StatefulWidget {
   final isTextObscure;
   final showFieldAsBox;
 
-  PinEntryTextField({this.lastPin, this.fields: 4, this.onSubmit, this.fieldWidth: 40.0, this.fontSize: 20.0, this.isTextObscure: false, this.showFieldAsBox: false}) : assert(fields > 0);
+  PinEntryTextField(
+      {this.lastPin,
+      this.fields: 4,
+      this.onSubmit,
+      this.fieldWidth: 40.0,
+      this.fontSize: 20.0,
+      this.isTextObscure: false,
+      this.showFieldAsBox: false})
+      : assert(fields > 0);
 
   @override
   State createState() {
@@ -285,7 +303,8 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
     super.initState();
     _pin = List<String?>.filled(widget.fields, null, growable: false);
     _focusNodes = List<FocusNode?>.filled(widget.fields, null, growable: false);
-    _textControllers = List<TextEditingController?>.filled(widget.fields, null, growable: false);
+    _textControllers = List<TextEditingController?>.filled(widget.fields, null,
+        growable: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() {
         if (widget.lastPin != null) {
@@ -313,11 +332,15 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
       FocusScope.of(context).requestFocus(_focusNodes[0]);
     }
 
-    return Row(mainAxisAlignment: MainAxisAlignment.center, verticalDirection: VerticalDirection.down, children: textFields);
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        verticalDirection: VerticalDirection.down,
+        children: textFields);
   }
 
   void clearTextFields() {
-    _textControllers.forEach((TextEditingController? tEditController) => tEditController!.clear());
+    _textControllers.forEach(
+        (TextEditingController? tEditController) => tEditController!.clear());
     _pin.clear();
   }
 
@@ -344,14 +367,19 @@ class PinEntryTextFieldState extends State<PinEntryTextField> {
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         maxLength: 1,
-        style: TextStyle(fontWeight: FontWeight.bold, color: appStore.textPrimaryColor, fontFamily: fontMedium, fontSize: widget.fontSize),
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: appStore.textPrimaryColor,
+            fontFamily: fontMedium,
+            fontSize: widget.fontSize),
         focusNode: _focusNodes[i],
         obscureText: widget.isTextObscure,
         decoration: InputDecoration(
           counterText: "",
           border: widget.showFieldAsBox
               ? OutlineInputBorder(
-                  borderSide: BorderSide(width: 2.0, color: appStore.iconColor!),
+                  borderSide:
+                      BorderSide(width: 2.0, color: appStore.iconColor!),
                 )
               : null,
           enabledBorder: UnderlineInputBorder(

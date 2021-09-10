@@ -31,7 +31,7 @@ class _OPSplashScreenState extends State<OPSplashScreen>
 
   void navigationPage() {
     finish(context);
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => T13SignInScreen(),
@@ -50,21 +50,12 @@ class _OPSplashScreenState extends State<OPSplashScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
+                Spacer(),
                 Image.asset('images/MyMikanoLogo.png',
                     height: 85, fit: BoxFit.fill),
-                SizedBox(height: 10),
-                SpinKitChasingDots(
-                  //color: Colors.grey,
-                  itemBuilder: (BuildContext context, int index) {
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: index.isEven ? t5Cat3 : Colors.black87,
-                      ),
-                    );
-                  },
-                ),
-                // Text("MyMikano", style: boldTextStyle(size: 20)),
+                Spacer(),
+                Text("Powered by mauto",
+                    style: boldTextStyle(size: 10, color: Colors.grey)),
               ],
             ),
           ),

@@ -67,23 +67,23 @@ class T5MaintenanceState extends State<T5Maintenance> {
           child: Scaffold(
             appBar: AppBar(
               shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
-              backgroundColor: t5DarkNavy,
+              backgroundColor: Color(0Xfff0f0f0),
               toolbarHeight: 120,
               title: Row(
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.keyboard_arrow_left,
-                        color: t5White, size: 40.0),
+                        color: Color(0Xff464646), size: 40.0),
                     onPressed: () {
                       finish(context);
                     },
                   ),
                   SizedBox(width: 10),
                   Image.asset(t5_general_repair,
-                      width: 25, height: 25, color: t5White),
+                      width: 25, height: 25, color: Color(0Xff464646)),
                   SizedBox(width: 8),
                   text(t5_maintenance_repair,
-                      textColor: t5White,
+                      textColor: Color(0Xff464646),
                       fontSize: textSizeNormal,
                       fontFamily: fontMedium)
                 ],
@@ -93,60 +93,80 @@ class T5MaintenanceState extends State<T5Maintenance> {
                   print(index);
                 },
                 indicatorSize: TabBarIndicatorSize.label,
-                indicatorColor: Colors.white,
-                labelColor: t5White,
+                indicatorColor: Colors.red,
                 indicatorWeight: 4,
                 labelStyle: boldTextStyle(),
                 tabs: [
                   Tab(
-                    text: "Maintenance",
+                    child: Text(
+                      "Maintenance",
+                      style: TextStyle(color: Color(0Xff464646)),
+                    ),
                   ),
                   Tab(
-                    text: "My Requests",
+                    child: Text(
+                      "My Requests",
+                      style: TextStyle(color: Color(0Xff464646)),
+                    ),
                   ),
                 ],
               ),
             ),
-            body: TabBarView(
+            body: Stack(
               children: [
                 Container(
-                  color: t5DarkNavy,
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            topRight: Radius.circular(24))),
-                    child: Column(children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(24.0),
-                          child: T5GridListing(mFavouriteList, false),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24))),
+                  child: TabBarView(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(24),
+                                topRight: Radius.circular(24)),
+                            color: t5DarkNavy),
+                        // color: ,
+                        child: Container(
+                          alignment: Alignment.topLeft,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24),
+                                  topRight: Radius.circular(24))),
+                          child: Column(children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(24.0),
+                                child: T5GridListing(mFavouriteList, false),
+                              ),
+                            ),
+                          ]),
                         ),
                       ),
-                    ]),
-                  ),
-                ),
-                Container(
-                  color: t5DarkNavy,
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            topRight: Radius.circular(24))),
-                    child: Column(children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(24.0),
-                          child: MyRequestsScreen2(cardList, reqList),
+                      Container(
+                        color: t5DarkNavy,
+                        child: Container(
+                          alignment: Alignment.topLeft,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24),
+                                  topRight: Radius.circular(24))),
+                          child: Column(children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(24.0),
+                                child: MyRequestsScreen2(cardList, reqList),
+                              ),
+                            ),
+                          ]),
                         ),
                       ),
-                    ]),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ),

@@ -24,6 +24,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'MyInspectionsScreen.dart';
+import 'SignInScreen.dart';
 
 class T5Profile extends StatefulWidget {
   static var tag = "/T5Profile";
@@ -36,6 +37,7 @@ class T5ProfileState extends State<T5Profile> {
   late Directory directory;
   late File file; //
   late String fileContent;
+  late SharedPreferences prefs;
 
   double? width;
   TechnicianModel? tech =
@@ -53,6 +55,7 @@ class T5ProfileState extends State<T5Profile> {
   }
 
   init() async {
+    prefs = await SharedPreferences.getInstance();
     directory = await getApplicationDocumentsDirectory();
     file = File('${directory.path}/credentials.json');
     fileContent = await file.readAsString();
@@ -63,6 +66,7 @@ class T5ProfileState extends State<T5Profile> {
     });
     tech = new TechnicianModel(1, jwtData['given_name'], jwtData['family_name'],
         t5_profile_7, "null", jwtData['email']);
+    setState(() {});
     await lcvm.fetchAllCategories();
     int l = lcvm.allcategs!.length;
     for (int i = 0; i < l; i++) {
@@ -73,6 +77,7 @@ class T5ProfileState extends State<T5Profile> {
     for (int i = 0; i < mrqvm.maintenanceRequests!.length; i++) {
       reqst.add(mrqvm.maintenanceRequests![i].mMaintenacerequest!);
     }
+    setState(() {});
   }
 
   var currentIndex = 0;
@@ -108,13 +113,13 @@ class T5ProfileState extends State<T5Profile> {
               children: <Widget>[
                 CircleAvatar(
                   radius: 60,
-                  backgroundColor: t5Cat2,
+                  backgroundColor: Colors.transparent,
                   child: SvgPicture.asset(t13_ic_inspection2,
-                      height: 90, width: 90, color: Colors.white),
+                      height: 90, width: 90, color: t5Cat2),
                 ),
                 Flexible(
                     child: AutoSizeText("My Inspections",
-                        style: boldTextStyle(color: Colors.black, size: 20)))
+                        style: boldTextStyle(color: Colors.black, size: 20))),
               ],
             )));
   }
@@ -131,12 +136,12 @@ class T5ProfileState extends State<T5Profile> {
             Container(
               alignment: Alignment.topCenter,
               height: width,
-              color: t5DarkNavy,
+              color: Color(0xfff0f0f0),
               child: Container(
                 padding: EdgeInsets.only(top: 10),
                 alignment: Alignment.topLeft,
                 height: 60,
-                child: commonCacheImageWidget(t5_ic_light_logo, 40,
+                child: commonCacheImageWidget("images/MyMikanoLogo.png", 40,
                     width: width! * 0.33),
               ),
             ),
@@ -164,7 +169,17 @@ class T5ProfileState extends State<T5Profile> {
                             fontSize: textSizeNormal),
                         text(tech!.email, fontSize: textSizeLargeMedium),
                         SizedBox(height: 58),
-                        gridItem()
+                        gridItem(),
+                        IconButton(
+                            onPressed: () async {
+                              await prefs.setBool('IsLoggedIn', false);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => T13SignInScreen()),
+                              );
+                            },
+                            icon: Icon(Icons.logout))
                       ],
                     ),
                   ),

@@ -1,16 +1,16 @@
 import 'dart:ui';
 
-const t13_name= "Name";
-const t13_description="Description";
-const t13_provider= "Provider";
-const t13_unit_price= "Unit Price";
-const t13_status= "Status";
-const t13_cancel= "Cancel";
-const t13_save= "Save";
+const t13_name = "Name";
+const t13_description = "Description";
+const t13_provider = "Provider";
+const t13_unit_price = "Unit Price";
+const t13_status = "Status";
+const t13_cancel = "Cancel";
+const t13_save = "Save";
 const food_textColorPrimary = Color(0xFF333333);
 const food_white = Color(0xFFffffff);
 /*fonts*/
-const fontRegular = 'Regular';
+const fontRegular = 'Roboto';
 const fontMedium = 'Medium';
 const fontSemibold = 'Semibold';
 const fontBold = 'Bold';

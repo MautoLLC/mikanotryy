@@ -107,7 +107,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
             appBar: AppBar(
               leading: IconButton(
                 icon: Icon(
-                  Icons.arrow_back,
+                  Icons.keyboard_arrow_left,
                   color: Colors.black,
                 ),
                 onPressed: () {

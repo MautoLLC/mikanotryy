@@ -9,6 +9,7 @@ import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/SDDashboardScreen.dart';
 import 'package:mymikano_app/utils/T3DataGenerator.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
@@ -29,7 +30,7 @@ import 'package:mymikano_app/utils/T5DataGenerator.dart';
 import 'package:mymikano_app/utils/T5Images.dart';
 import 'package:mymikano_app/utils/T5Strings.dart';
 import 'package:mymikano_app/views/widgets/T5Slider.dart';
-
+import 'dart:math' as math;
 import 'MyInspectionsScreen.dart';
 import 'MaintenanceHome.dart';
 
@@ -82,17 +83,33 @@ class DashboardState extends State<Dashboard> {
             Container(
               margin: EdgeInsets.only(left: 16, right: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  SizedBox(width: 5),
                   SizerUtil.deviceType == DeviceType.mobile
-                      ? SvgPicture.asset(t5_menu,
-                          width: 25, height: 25, color: t5DarkNavy)
-                      : SvgPicture.asset(t5_menu,
-                          width: 40, height: 40, color: t5DarkNavy),
-                  SizedBox(width: 5),
-                  Expanded(child: searchView())
+                      ? Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(math.pi),
+                          child: SvgPicture.asset(t5_menu,
+                              width: 25, height: 25, color: Color(0Xff767676)),
+                        )
+                      : Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(math.pi),
+                          child: SvgPicture.asset(t5_menu,
+                              width: 40, height: 40, color: Color(0Xff767676)),
+                        ),
+                  Spacer(),
+                  Image.asset(
+                    'images/MyMikanoLogo.png',
+                    width: 60,
+                    height: 60,
+                  ),
+                  Spacer(),
                 ],
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [Expanded(child: searchView())],
               ),
             ),
             T5SliderWidget(mSliderList),
@@ -128,37 +145,31 @@ class DashboardState extends State<Dashboard> {
                         gradient: LinearGradient(
                             colors: [cards[0].startColor!, cards[0].endColor!]),
                       ),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: SizerUtil.deviceType == DeviceType.mobile
-                              ? <Widget>[
-                                  CircleAvatar(
+                      child: Stack(
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CircleAvatar(
                                     radius: 40,
-                                    backgroundColor: t5Cat2,
-                                    child: SvgPicture.asset(cards[0].image!,
-                                        height: 40,
-                                        width: 40,
-                                        color: Colors.white),
-                                  ),
-                                  SizedBox(height: 5),
-                                  AutoSizeText(cards[0].examName!,
-                                      style: boldTextStyle(
-                                          color: Colors.black, size: 16))
-                                ]
-                              : <Widget>[
-                                  CircleAvatar(
-                                    radius: 6.5.h,
-                                    backgroundColor: t5Cat2,
-                                    child: SvgPicture.asset(cards[0].image!,
-                                        height: 6.5.h,
-                                        width: 6.5.w,
-                                        color: Colors.white),
-                                  ),
-                                  AutoSizeText(cards[0].examName!,
-                                      style: boldTextStyle(
-                                          color: Colors.black, size: 30)),
-                                ]),
+                                    backgroundColor: Colors.transparent,
+                                    child: Image.asset(
+                                        'images/MaintenanceAndRepairRedIcon.png')),
+                                SizedBox(height: 5),
+                                AutoSizeText(cards[0].examName!,
+                                    style: boldTextStyle(
+                                        color: Colors.black, size: 16))
+                              ]),
+                          Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Color(0xffa1a1a1),
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -189,42 +200,53 @@ class DashboardState extends State<Dashboard> {
                         ),
                         margin: EdgeInsets.only(left: 10),
                         padding: EdgeInsets.all(10),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              SizerUtil.deviceType == DeviceType.mobile
-                                  ? AutoSizeText("Dashboard",
-                                      style: boldTextStyle(
-                                          color: Colors.black, size: 16))
-                                  : AutoSizeText("Dashboard",
-                                      style: boldTextStyle(
-                                          color: Colors.black, size: 30)),
-                              Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(width: 5),
-                                    Expanded(
-                                        child: Container(
+                        child: Stack(
+                          children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  SizerUtil.deviceType == DeviceType.mobile
+                                      ? AutoSizeText("Generator",
+                                          style: boldTextStyle(
+                                              color: Colors.black, size: 16))
+                                      : AutoSizeText("Generator",
+                                          style: boldTextStyle(
+                                              color: Colors.black, size: 30)),
+                                  Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        SizedBox(width: 5),
+                                        Expanded(
+                                            child: Container(
+                                                height: SizerUtil.deviceType ==
+                                                        DeviceType.mobile
+                                                    ? 100
+                                                    : 15.h,
+                                                child: t5SfRadialGauge())),
+                                        SizedBox(width: 5),
+                                        Expanded(
+                                          child: Container(
                                             height: SizerUtil.deviceType ==
                                                     DeviceType.mobile
                                                 ? 100
                                                 : 15.h,
-                                            child: t5SfRadialGauge())),
-                                    SizedBox(width: 5),
-                                    Expanded(
-                                      child: Container(
-                                        height: SizerUtil.deviceType ==
-                                                DeviceType.mobile
-                                            ? 100
-                                            : 15.h,
-                                        child: t5SfLinearGauge(),
-                                      ),
-                                    ),
-                                  ]),
-                            ]),
+                                            child: t5SfLinearGauge(),
+                                          ),
+                                        ),
+                                      ]),
+                                ]),
+                            Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Icon(Icons.keyboard_arrow_right))
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -235,114 +257,136 @@ class DashboardState extends State<Dashboard> {
                 padding: SizerUtil.deviceType == DeviceType.mobile
                     ? EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0)
                     : EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: t5Cat3,
-                      shape: BoxShape.rectangle,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 0.5,
-                            spreadRadius: 0.5),
-                      ],
-                      borderRadius: BorderRadius.circular(24.0)),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(height: 16),
-                              Padding(
-                                padding: EdgeInsets.only(left: 16, right: 16),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    SizerUtil.deviceType == DeviceType.mobile
-                                        ? Text(t5_mikano_shop,
-                                            style: boldTextStyle(
-                                                color: Colors.white, size: 16))
-                                        : Text(t5_mikano_shop,
-                                            style: boldTextStyle(
-                                                color: Colors.white, size: 30)),
-                                    GestureDetector(
-                                      child: SizerUtil.deviceType ==
-                                              DeviceType.mobile
-                                          ? Text(t5_view_all,
-                                              style: boldTextStyle(
-                                                  size: 14,
-                                                  color: Colors.white))
-                                          : Text(t5_view_all,
-                                              style: boldTextStyle(
-                                                  size: 24,
-                                                  color: Colors.white)),
-                                      onTap: () {
-                                        print("tap view all");
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => WebView()),
-                                        );
-                                      },
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                  height:
-                                      SizerUtil.deviceType == DeviceType.tablet
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("images/MikanoShopCarousel.png"),
+                              fit: BoxFit.cover),
+                          boxShadow: <BoxShadow>[],
+                          borderRadius: BorderRadius.circular(24.0)),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  SizedBox(height: 16),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 16, right: 16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        SizerUtil.deviceType ==
+                                                DeviceType.mobile
+                                            ? Text(t5_mikano_shop,
+                                                style: boldTextStyle(
+                                                    color: Colors.white,
+                                                    size: 16))
+                                            : Text(t5_mikano_shop,
+                                                style: boldTextStyle(
+                                                    color: Colors.white,
+                                                    size: 30)),
+                                        GestureDetector(
+                                          child: Icon(
+                                            Icons.keyboard_arrow_right,
+                                            color: Colors.white,
+                                          ),
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      WebView()),
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height: SizerUtil.deviceType ==
+                                              DeviceType.tablet
                                           ? 20
                                           : 0),
-                              Container(
-                                height:
-                                    SizerUtil.deviceType == DeviceType.mobile
+                                  Container(
+                                    height: SizerUtil.deviceType ==
+                                            DeviceType.mobile
                                         ? 110
                                         : 16.h,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: mSliderListings.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      child: DashboardSlider(
-                                          mSliderListings[index], index),
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => WebView()),
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: mSliderListings.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          child: DashboardSlider(
+                                              mSliderListings[index], index),
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      WebView()),
+                                            );
+                                          },
                                         );
                                       },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ]),
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )),
-            Align(
-              alignment: Alignment.topLeft,
-              child: SizerUtil.deviceType == DeviceType.mobile
-                  ? Container(
-                      padding: EdgeInsets.only(left: 16.0, top: 15.0),
-                      child: AutoSizeText(t5_services,
-                          style: boldTextStyle(color: Colors.black, size: 14)),
                     )
-                  : Container(
-                      padding: EdgeInsets.only(left: 16.0, top: 25.0),
-                      child: AutoSizeText(t5_services,
-                          style: boldTextStyle(color: Colors.black, size: 24)),
-                    ),
+                  ],
+                )),
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 10,
+                      color: Colors.black26,
+                      offset: Offset(3, 3))
+                ],
+                border: Border.all(
+                  color: Colors.white70,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                gradient: LinearGradient(colors: [Colors.white, Colors.white]),
+              ),
+              margin: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.all(10),
+              child: Padding(
+                  padding: SizerUtil.deviceType == DeviceType.mobile
+                      ? EdgeInsets.only(left: 16.0, right: 16.0)
+                      : EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Shop by Categories",
+                            style: TextStyle(
+                                color: Color(0xff484848),
+                                fontSize: 20,
+                                fontFamily: fontRegular,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      T5DashBoardListing(mFavouriteList, false),
+                    ],
+                  )),
             ),
-            Padding(
-                padding: SizerUtil.deviceType == DeviceType.mobile
-                    ? EdgeInsets.only(left: 16.0, right: 16.0, top: 15.0)
-                    : EdgeInsets.only(left: 16.0, right: 16.0, top: 25.0),
-                child: T5DashBoardListing(mFavouriteList, false)),
           ]),
         )));
   }

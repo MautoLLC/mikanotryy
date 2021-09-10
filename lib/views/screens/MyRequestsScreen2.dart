@@ -94,8 +94,14 @@ class MyRequestsScreen2 extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Image.asset(mCards![index].icon,
-                            width: width / 13, height: width / 13),
+                        Image.asset(
+                            listmrequestsViewModel
+                                .maintenanceRequests![index]
+                                .mMaintenacerequest!
+                                .maintenanceCategory!
+                                .maintenanceCategoryIcon,
+                            width: width / 13,
+                            height: width / 13),
                         SizedBox(height: 10),
                         Flexible(
                             child: AutoSizeText(

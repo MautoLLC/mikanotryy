@@ -15,93 +15,50 @@ class DashboardSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizerUtil.deviceType == DeviceType.mobile
-        ? Container(
-            margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 190,
-                  margin: EdgeInsets.only(left: 45.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: shadow_color,
-                          blurRadius: 0.5,
-                          spreadRadius: 0.5),
-                    ],
-                    borderRadius: BorderRadius.circular(40.0),
-                  ),
-                  child: Container(
-                    margin: EdgeInsets.only(left: 45.0, right: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                            child: AutoSizeText(model.dishName,
-                                style: secondaryTextStyle(size: 12),
-                                maxLines: 2)),
-                        SizedBox(height: 4),
-                        Flexible(
-                            child: AutoSizeText(model.userName,
-                                style:
-                                    primaryTextStyle(color: t3_colorPrimary)))
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                    alignment: FractionalOffset.centerLeft,
-                    child: Image.asset(model.dishImg, height: 70, width: 100))
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: 190,
+            height: 150,
+            margin: EdgeInsets.only(left: 10.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: shadow_color, blurRadius: 0.5, spreadRadius: 0.5),
               ],
+              borderRadius: BorderRadius.circular(20.0),
             ),
-          )
-        : Container(
-            margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 45.w,
-                  margin: EdgeInsets.only(left: 60.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                          color: shadow_color,
-                          blurRadius: 0.5,
-                          spreadRadius: 0.5),
+            child: Container(
+              margin: EdgeInsets.only(left: 20.0),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Flexible(
+                          child: AutoSizeText(model.dishName,
+                              style: secondaryTextStyle(
+                                  size: 12, color: Color(0xff667183)),
+                              maxLines: 2)),
+                      SizedBox(height: 4),
+                      Flexible(
+                          child: AutoSizeText(model.userName,
+                              style:
+                                  primaryTextStyle(color: Color(0xffc4171c))))
                     ],
-                    borderRadius: BorderRadius.circular(80.0),
                   ),
-                  child: Container(
-                    margin: EdgeInsets.only(left: 8.0.h, right: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                            child: AutoSizeText(model.dishName,
-                                style: secondaryTextStyle(size: 20),
-                                maxLines: 2)),
-                        SizedBox(height: 4),
-                        Flexible(
-                            child: AutoSizeText(model.userName,
-                                style: primaryTextStyle(
-                                    color: t3_colorPrimary, size: 30))),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                    alignment: FractionalOffset.centerLeft,
-                    child:
-                        Image.asset(model.dishImg, height: 13.h, width: 14.h))
-              ],
+                  Image.asset(model.dishImg, height: 150, width: 70)
+                ],
+              ),
             ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 }

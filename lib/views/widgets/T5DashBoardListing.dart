@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:html/dom.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
@@ -18,54 +19,39 @@ class T5DashBoardListing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return GridView.builder(
+    return ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         physics:
             isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
         itemCount: mFavouriteList!.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5,
-            childAspectRatio: 0.8,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8),
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {},
             child: Container(
-              alignment: Alignment.center,
-              decoration: boxDecoration(
-                  radius: 10, showShadow: true, bgColor: Colors.white),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      height: width / 7.5,
-                      width: width / 7.5,
-                      padding: EdgeInsets.all(5),
-                      decoration: boxDecoration(
-                          bgColor: mFavouriteList![index].color, radius: 10),
-                      child: Image.asset(
-                        mFavouriteList![index].icon,
-                        color: t5White,
-                      ),
+              decoration: BoxDecoration(
+                  border: Border(
+                      bottom:
+                          BorderSide(color: Color(0xffededed), width: 2.0))),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 9.0, 8.0, 9.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      mFavouriteList![index].icon,
+                      color: Color(0xff7b7b7b),
+                      width: 30,
+                      height: 30,
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Flexible(
-                      child: SizerUtil.deviceType == DeviceType.mobile
-                          ? AutoSizeText(mFavouriteList![index].name,
-                              style: TextStyle(
-                                  color: appStore.textSecondaryColor,
-                                  fontSize: 9.0),
-                              maxLines: 1)
-                          : AutoSizeText(mFavouriteList![index].name,
-                              style: TextStyle(
-                                  color: appStore.textSecondaryColor,
-                                  fontSize: 20.0),
-                              maxLines: 1))
-                ],
+                    SizedBox(
+                      width: 5,
+                    ),
+                    SelectableText(mFavouriteList![index].name,
+                        style: TextStyle(color: Color(0xff7b7b7b))),
+                    Spacer(),
+                    Icon(Icons.keyboard_arrow_right, color: Color(0xffc3c1c1))
+                  ],
+                ),
               ),
             ),
           );

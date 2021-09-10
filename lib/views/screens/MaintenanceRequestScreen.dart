@@ -166,207 +166,102 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
         backgroundColor: Colors.white,
         body: SafeArea(
             child: PageView(
-                controller: p,
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: t13_edit_text_color,
-                ),
-                child: Stack(
-                  alignment: Alignment.bottomLeft,
+          controller: p,
+          scrollDirection: Axis.vertical,
+          children: [
+            Column(
+              children: [
+                Row(
                   children: <Widget>[
-                    Container(
-                      alignment: Alignment.center,
-                      height: height * 0.5,
-                      margin: EdgeInsets.all(spacing_standard_new),
-                      child: Column(
-                        children: <Widget>[
-                          //   Expanded(
-                          //child:
-                          Container(
-                            decoration: boxDecoration(
-                                bgColor: Colors.white70, radius: 24.0),
-                            padding: EdgeInsets.all(spacing_standard_new),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                text(
-                                    this
-                                        .widget
-                                        .mainCatg
-                                        .maintenanceCategoryDescription,
-                                    maxLine: 5,
-                                    fontSize: textSizeNormal),
-                                // SizedBox(height:30),
-                              ],
-                            ),
-                          ),
-                          //),
-                          SizedBox(height: 133),
-                          T13Button(
-                            textContent: t13_lbl_proceed,
-                            onPressed: () {
-                              p.animateToPage(2,
-                                  duration: Duration(seconds: 1),
-                                  curve: Curves.linear);
-                            },
-                          ),
-                        ],
-                      ),
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_left,
+                          color: Colors.black, size: 50.0),
+                      onPressed: () {
+                        finish(context);
+                      },
                     ),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(left: 5, top: 30),
-                      child: Row(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.keyboard_arrow_left,
-                                color: Colors.black, size: 40.0),
-                            onPressed: () {
-                              finish(context);
-                            },
-                          ),
-                          SizedBox(width: 10),
-                          text(this.widget.mainCatg.maintenanceCategoryName,
-                              textColor: Colors.black,
-                              fontSize: textSizeNormal,
-                              fontFamily: fontBold)
-                        ],
-                      ),
-                    ),
+                    SizedBox(width: 10),
+                    text(this.widget.mainCatg.maintenanceCategoryName,
+                        textColor: Colors.black,
+                        fontSize: textSizeNormal,
+                        fontFamily: fontBold)
                   ],
                 ),
-              ),
-              SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 30),
-                    Row(children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.keyboard_arrow_left,
-                            color: Colors.black, size: 40.0),
-                        onPressed: () {
-                          finish(context);
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      text("Maintenance Request",
-                          textColor: Colors.black,
-                          fontSize: textSizeNormal,
-                          fontFamily: fontBold)
-                    ]),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Container(
-                        color: Colors.white,
-                        margin: EdgeInsets.all(spacing_standard_new),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(height: 20),
-                            if (this.widget.listlength > 0) ...[
-                              text("Subcategory",
-                                  fontFamily: 'Medium',
-                                  textColor: Colors.black),
-                              SizedBox(height: 8),
-                              GestureDetector(
-                                onTap: () async {
-                                  Entry rooty = await mFilter(context);
-                                  controller1.text = rooty.title;
-                                  selectedSubCategId = rooty.idEntry;
-                                  //  controller1.text = selectedSubCateg;
-                                },
-                                child: AbsorbPointer(
-                                    child: Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                              fontSize: textSizeMedium,
-                                              fontFamily: fontRegular,
-                                              color: t5Cat3),
-                                          cursorColor: black,
-                                          controller: controller1,
-                                          decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.fromLTRB(
-                                                26, 14, 4, 14),
-                                            hintStyle:
-                                                primaryTextStyle(color: t5Cat3),
-                                            filled: true,
-                                            fillColor: t13_edit_text_color,
-                                            suffixIcon: Icon(
-                                              Icons.keyboard_arrow_down_sharp,
-                                              color: t5Cat3,
-                                              size: 24,
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                              borderSide: BorderSide(
-                                                  color: t13_edit_text_color,
-                                                  width: 0.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                              borderSide: BorderSide(
-                                                  color: t13_edit_text_color,
-                                                  width: 0.0),
-                                            ),
-                                          ),
-                                        ))),
-                              ),
-                            ] else ...[
-                              text("Maincategory",
-                                  fontFamily: 'Medium',
-                                  textColor: Colors.black),
-                              AbsorbPointer(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: TextFormField(
-                                    style: TextStyle(
-                                        fontSize: textSizeMedium,
-                                        fontFamily: fontRegular,
-                                        color: t5Cat3),
-                                    cursorColor: black,
-                                    initialValue: this
-                                        .widget
-                                        .mainCatg
-                                        .maintenanceCategoryName,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.fromLTRB(26, 14, 4, 14),
-                                      hintStyle:
-                                          primaryTextStyle(color: t5Cat3),
-                                      filled: true,
-                                      fillColor: t13_edit_text_color,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(24),
-                                        borderSide: BorderSide(
-                                            color: t13_edit_text_color,
-                                            width: 0.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(24),
-                                        borderSide: BorderSide(
-                                            color: t13_edit_text_color,
-                                            width: 0.0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                            SizedBox(height: 16),
-                            text("Address",
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+                      Text(this.widget.mainCatg.maintenanceCategoryName)
+                    ],
+                  ),
+                ),
+                ClipRRect(
+                  child: Image.network(
+                      this.widget.mainCatg.maintenanceCategoryIcon),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: text(
+                      this.widget.mainCatg.maintenanceCategoryDescription,
+                      maxLine: 7,
+                      fontSize: 15.0),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 20.0),
+                  child: T13Button(
+                    textContent: t13_lbl_proceed,
+                    onPressed: () {
+                      p.animateToPage(2,
+                          duration: Duration(seconds: 1), curve: Curves.linear);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 30),
+                  Row(children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_left,
+                          color: Colors.black, size: 40.0),
+                      onPressed: () {
+                        finish(context);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    text("Maintenance Request",
+                        textColor: Color(0Xff464646),
+                        fontSize: textSizeNormal,
+                        fontFamily: fontBold)
+                  ]),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Container(
+                      color: Colors.white,
+                      margin: EdgeInsets.all(spacing_standard_new),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 20),
+                          if (this.widget.listlength > 0) ...[
+                            text("Subcategory",
                                 fontFamily: 'Medium', textColor: Colors.black),
                             SizedBox(height: 8),
                             GestureDetector(
-                              onTap: () => addressPickerBottomSheet(context),
+                              onTap: () async {
+                                Entry rooty = await mFilter(context);
+                                controller1.text = rooty.title;
+                                selectedSubCategId = rooty.idEntry;
+                              },
                               child: AbsorbPointer(
                                   child: Padding(
                                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -376,12 +271,12 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                             fontFamily: fontRegular,
                                             color: t5Cat3),
                                         cursorColor: black,
-                                        controller: controller2,
+                                        controller: controller1,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.fromLTRB(
                                               26, 14, 4, 14),
                                           hintStyle:
-                                              primaryTextStyle(color: black),
+                                              primaryTextStyle(color: t5Cat3),
                                           filled: true,
                                           fillColor: t13_edit_text_color,
                                           suffixIcon: Icon(
@@ -406,36 +301,26 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                         ),
                                       ))),
                             ),
-                            SizedBox(height: 16),
-                            text("Preferred Visit Time",
+                          ] else ...[
+                            text("Maincategory",
                                 fontFamily: 'Medium', textColor: Colors.black),
-                            SizedBox(height: 8),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: T13Button(
-                                textContent: textHolder,
-                                onPressed: () {
-                                  datetimeBottomSheet(context);
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            text("Description",
-                                fontFamily: 'Medium', textColor: Colors.black),
-                            SizedBox(height: 8),
-                            Padding(
+                            AbsorbPointer(
+                              child: Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: TextFormField(
                                   style: TextStyle(
                                       fontSize: textSizeMedium,
                                       fontFamily: fontRegular,
                                       color: t5Cat3),
-                                  cursorColor: t5Cat3,
-                                  controller: controller3,
+                                  cursorColor: black,
+                                  initialValue: this
+                                      .widget
+                                      .mainCatg
+                                      .maintenanceCategoryName,
                                   decoration: InputDecoration(
                                     contentPadding:
                                         EdgeInsets.fromLTRB(26, 14, 4, 14),
-                                    hintStyle: primaryTextStyle(color: black),
+                                    hintStyle: primaryTextStyle(color: t5Cat3),
                                     filled: true,
                                     fillColor: t13_edit_text_color,
                                     enabledBorder: OutlineInputBorder(
@@ -451,96 +336,185 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                           width: 0.0),
                                     ),
                                   ),
-                                  maxLines: 5,
-                                  keyboardType: TextInputType.multiline,
-                                )),
-                            SizedBox(height: 16),
-                            text("Voice Messages",
-                                fontFamily: 'Medium', textColor: Colors.black),
-                            SizedBox(height: 30),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: t5Cat3, width: 2),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: FloatingActionButton(
-                                  backgroundColor: Colors.white,
-                                  onPressed: () {
-                                    show(context);
-                                  },
-                                  child: Icon(Icons.mic, color: t5Cat3),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 16),
-                            Records(
-                              records: records!,
-                            ),
-                            SizedBox(height: 16),
-                            text("Images",
-                                fontFamily: 'Medium', textColor: Colors.black),
-                            SizedBox(height: 8),
-                            images.isNotEmpty
-                                ? Wrap(runSpacing: 16, spacing: 16, children: [
-                                    generate(),
-                                    images.length < 3
-                                        ? uploadImage()
-                                        : SizedBox(),
-                                  ])
-                                : SizedBox(),
-                            SizedBox(height: 8),
-                            images.length < 1 ? uploadImage() : SizedBox(),
-                            SizedBox(height: 40),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                              child: T13Button(
-                                textContent: t13_lbl_request,
-                                onPressed: () {
-                                  if (this.widget.listlength == 0)
-                                    selectedSubCategId = this
-                                        .widget
-                                        .mainCatg
-                                        .idMaintenanceCategory;
-
-                                  if (selectedSubCategId != 0 &&
-                                      controller2.text != "") {
-                                    MaintenanceRequestModel
-                                        mMaintenanceRequest =
-                                        new MaintenanceRequestModel(
-                                            maintenanceCategoryId:
-                                                selectedSubCategId,
-                                            realEstateId: selectedIndex,
-                                            requestDescription:
-                                                controller3.text,
-                                            userId: "1",
-                                            preferredVisitTime: datetime,
-                                            maintenanceRequestImagesFiles:
-                                                images,
-                                            maintenanceRequestRecordsFiles:
-                                                records);
-                                    SubmitMaintenanceRequest(
-                                        mMaintenanceRequest);
-                                  }
-
-                                  if (selectedSubCategId == 0)
-                                    toast("You should choose a subcategory !");
-                                  if (controller2.text == "")
-                                    toast("You should choose an address !");
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 10),
                           ],
-                        ),
+                          SizedBox(height: 16),
+                          text("Address",
+                              fontFamily: 'Medium', textColor: Colors.black),
+                          SizedBox(height: 8),
+                          GestureDetector(
+                            onTap: () => addressPickerBottomSheet(context),
+                            child: AbsorbPointer(
+                                child: Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                          fontSize: textSizeMedium,
+                                          fontFamily: fontRegular,
+                                          color: t5Cat3),
+                                      cursorColor: black,
+                                      controller: controller2,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(26, 14, 4, 14),
+                                        hintStyle:
+                                            primaryTextStyle(color: black),
+                                        filled: true,
+                                        fillColor: t13_edit_text_color,
+                                        suffixIcon: Icon(
+                                          Icons.keyboard_arrow_down_sharp,
+                                          color: t5Cat3,
+                                          size: 24,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          borderSide: BorderSide(
+                                              color: t13_edit_text_color,
+                                              width: 0.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          borderSide: BorderSide(
+                                              color: t13_edit_text_color,
+                                              width: 0.0),
+                                        ),
+                                      ),
+                                    ))),
+                          ),
+                          SizedBox(height: 16),
+                          text("Preferred Visit Time",
+                              fontFamily: 'Medium', textColor: Colors.black),
+                          SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: T13Button(
+                              textContent: textHolder,
+                              onPressed: () {
+                                datetimeBottomSheet(context);
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          text("Description",
+                              fontFamily: 'Medium', textColor: Colors.black),
+                          SizedBox(height: 8),
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: TextFormField(
+                                style: TextStyle(
+                                    fontSize: textSizeMedium,
+                                    fontFamily: fontRegular,
+                                    color: t5Cat3),
+                                cursorColor: t5Cat3,
+                                controller: controller3,
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.fromLTRB(26, 14, 4, 14),
+                                  hintStyle: primaryTextStyle(color: black),
+                                  filled: true,
+                                  fillColor: t13_edit_text_color,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    borderSide: BorderSide(
+                                        color: t13_edit_text_color, width: 0.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    borderSide: BorderSide(
+                                        color: t13_edit_text_color, width: 0.0),
+                                  ),
+                                ),
+                                maxLines: 5,
+                                keyboardType: TextInputType.multiline,
+                              )),
+                          SizedBox(height: 16),
+                          text("Voice Messages",
+                              fontFamily: 'Medium', textColor: Colors.black),
+                          SizedBox(height: 30),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: t5Cat3, width: 2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: FloatingActionButton(
+                                backgroundColor: Colors.white,
+                                onPressed: () {
+                                  show(context);
+                                },
+                                child: Icon(Icons.mic, color: t5Cat3),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Records(
+                            records: records!,
+                          ),
+                          SizedBox(height: 16),
+                          text("Images",
+                              fontFamily: 'Medium', textColor: Colors.black),
+                          SizedBox(height: 8),
+                          images.isNotEmpty
+                              ? Wrap(runSpacing: 16, spacing: 16, children: [
+                                  generate(),
+                                  images.length < 3
+                                      ? uploadImage()
+                                      : SizedBox(),
+                                ])
+                              : SizedBox(),
+                          SizedBox(height: 8),
+                          images.length < 1 ? uploadImage() : SizedBox(),
+                          SizedBox(height: 40),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                            child: T13Button(
+                              textContent: t13_lbl_request,
+                              onPressed: () {
+                                if (this.widget.listlength == 0)
+                                  selectedSubCategId = this
+                                      .widget
+                                      .mainCatg
+                                      .idMaintenanceCategory;
+
+                                if (selectedSubCategId != 0 &&
+                                    controller2.text != "") {
+                                  MaintenanceRequestModel mMaintenanceRequest =
+                                      new MaintenanceRequestModel(
+                                          maintenanceCategoryId:
+                                              selectedSubCategId,
+                                          realEstateId: selectedIndex,
+                                          requestDescription: controller3.text,
+                                          userId: "1",
+                                          preferredVisitTime: datetime,
+                                          maintenanceRequestImagesFiles: images,
+                                          maintenanceRequestRecordsFiles:
+                                              records);
+                                  SubmitMaintenanceRequest(mMaintenanceRequest);
+                                }
+
+                                if (selectedSubCategId == 0)
+                                  toast("You should choose a subcategory !");
+                                if (controller2.text == "")
+                                  toast("You should choose an address !");
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                        ],
                       ),
                     ),
-                    // ),
-                  ],
-                ),
+                  ),
+                  // ),
+                ],
               ),
-            ])));
+            )
+          ],
+        )));
   }
 
   mFilter<Entry>(BuildContext context) {

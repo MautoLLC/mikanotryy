@@ -24,6 +24,9 @@ class MaintenanceRequestService {
     final response =
         await http.get(Uri.parse(GetMaintenaceRequestURL), headers: headers);
     print(response.statusCode);
+    for (var item in jsonDecode(response.body)) {
+      print(item['maintenanceCategoryIcon']);
+    }
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
       final listresult =

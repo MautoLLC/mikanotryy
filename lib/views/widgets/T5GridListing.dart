@@ -67,33 +67,42 @@ class T5GridListing extends StatelessWidget {
                     onTap: () {
                       goAll(mainCategory, context);
                     },
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: boxDecoration(
-                          radius: 10, showShadow: true, bgColor: Colors.white),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            height: width / 6,
-                            width: width / 6,
-                            margin: EdgeInsets.only(bottom: 4, top: 18),
-                            padding: EdgeInsets.all(width / 30),
-                            decoration: boxDecoration(
-                                // bgColor: mFavouriteList![index].color,
-                                radius: 10),
-                            child: Image.asset(
-                              mFavouriteList![index].icon,
-                              // color: t5White,
-                            ),
+                    child: Stack(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: boxDecoration(
+                              radius: 10,
+                              showShadow: true,
+                              bgColor: Colors.white),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: width / 4.5,
+                                width: width / 4.5,
+                                margin: EdgeInsets.only(top: 18),
+                                decoration: boxDecoration(radius: 10),
+                                child: Image.asset(
+                                  mFavouriteList![index].icon,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Expanded(
+                                child: Text(
+                                  listCategViewModel.maincategs![index].mcateg!
+                                      .maintenanceCategoryName,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 20),
-                          Expanded(
-                            child: Text(listCategViewModel.maincategs![index]
-                                .mcateg!.maintenanceCategoryName),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Icon(Icons.keyboard_arrow_right))
+                      ],
                     ),
                   );
                 });
