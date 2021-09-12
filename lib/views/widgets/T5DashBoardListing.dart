@@ -5,6 +5,7 @@ import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
+import 'package:mymikano_app/views/screens/WebViewScreen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../main.dart';
@@ -27,7 +28,17 @@ class T5DashBoardListing extends StatelessWidget {
         itemCount: mFavouriteList!.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WebView(
+                          Title: mFavouriteList!.elementAt(index).name,
+                          Url:
+                              "https://mikanoshop.mauto.co/${mFavouriteList!.elementAt(index).name}",
+                        )),
+              );
+            },
             child: Container(
               decoration: BoxDecoration(
                   border: Border(

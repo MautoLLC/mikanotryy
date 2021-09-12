@@ -27,6 +27,8 @@ Login(String username, String password, BuildContext context) async {
       jwtData[key] = value;
       print("$key ===>>> $value");
     });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString("UserID", jwtData['sub']);
     Fluttertoast.showToast(
         msg: "Login Successfull",
         toastLength: Toast.LENGTH_SHORT,
@@ -35,17 +37,32 @@ Login(String username, String password, BuildContext context) async {
         backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
         fontSize: 16.0);
-    final prefs = await SharedPreferences.getInstance();
     prefs.setBool('IsLoggedIn', true);
-    // var response =
-    //     await http.post("dev.codepickles.com:8083/api/Users/Devices/");
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-    );
+    print(prefs.get("UserID"));
+    print(prefs.getString("DeviceToken"));
+    try {
+      String token = await prefs.getString("DeviceToken").toString();
+      var response = await http.post(Uri.parse(
+          "http://dev.codepickles.com:8083/api/Users/Devices/${jwtData['sub']}?deviceToken=${prefs.getString("DeviceToken")}"));
+      print(response.statusCode);
+      print(response.reasonPhrase);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+      );
+    } on Exception catch (e) {
+      Fluttertoast.showToast(
+          msg: "Login Failed" + e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: t13_edit_text_color,
+          textColor: Colors.black87,
+          fontSize: 16.0);
+      print(e.toString());
+    }
   } on Exception catch (e) {
     print(e);
-
     Fluttertoast.showToast(
         msg: "Login Failed" + e.toString(),
         toastLength: Toast.LENGTH_SHORT,
@@ -55,6 +72,4 @@ Login(String username, String password, BuildContext context) async {
         textColor: Colors.black87,
         fontSize: 16.0);
   }
-
-  //   FormatException
 }

@@ -2,33 +2,30 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
+import 'package:mymikano_app/views/screens/SignInScreen.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Register(String username, String firstname, String lastname, String email,
     String password, BuildContext context) async {
-  var client = await oauth2.clientCredentialsGrant(
-      Uri.parse(authorizationEndpoint), identifier, secret);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = await prefs.getString("DeviceToken").toString();
 
   final body = {
-    'username': username,
-    'enabled': true,
-    'firstName': firstname,
-    'lastName': lastname,
-    'email': email,
-    'credentials': [
-      {"type": "password", "value": password, "temporary": false}
-    ]
+    "firstName": firstname,
+    "lastName": lastname,
+    "email": email,
+    "password": password,
+    "deviceToken": token
   };
 
-  var response = await client
-      .post(Uri.parse(RegisterUserURL), body: json.encode(body), headers: {
-    'Content-type': 'application/json',
-  });
-
-  print(client.credentials.toJson());
+  var response = await http.post(
+      Uri.parse("http://dev.codepickles.com:8083/api/Users"),
+      body: json.encode(body),
+      headers: {
+        'Content-type': 'application/json',
+      });
 
   if (response.statusCode == 201) {
     Fluttertoast.showToast(
@@ -41,7 +38,7 @@ Register(String username, String firstname, String lastname, String email,
         fontSize: 16.0);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+      MaterialPageRoute(builder: (context) => T13SignInScreen()),
     );
     // print("created successfully");
 

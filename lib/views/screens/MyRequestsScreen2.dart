@@ -16,6 +16,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
 import 'DashboardScreen.dart';
+import 'RequestsDetailsPage.dart';
 
 class MyRequestsScreen2 extends StatelessWidget {
   static var tag = "/T5Dashboard";
@@ -86,53 +87,67 @@ class MyRequestsScreen2 extends StatelessWidget {
                       .preferredVisitTimee
                       .toString());
                   String preferredVisitTimee = DateFormat.yMMMd().format(date);
-                  return Container(
-                    padding: EdgeInsets.only(left: 16, right: 16),
-                    decoration: boxDecoration(
-                        radius: 16, showShadow: true, bgColor: Colors.white),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Image.asset(
-                            listmrequestsViewModel
-                                .maintenanceRequests![index]
-                                .mMaintenacerequest!
-                                .maintenanceCategory!
-                                .maintenanceCategoryIcon,
-                            width: width / 13,
-                            height: width / 13),
-                        SizedBox(height: 10),
-                        Flexible(
-                            child: AutoSizeText(
-                                listmrequestsViewModel
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RequestsDetailsPage(
+                                id: listmrequestsViewModel
                                     .maintenanceRequests![index]
                                     .mMaintenacerequest!
-                                    .maintenanceCategory!
-                                    .maintenanceCategoryName,
-                                style: boldTextStyle(
-                                    color: Colors.black, size: 16))),
-                        Flexible(child: AutoSizeText(preferredVisitTimee)),
-                        SizedBox(height: 10),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          decoration: boxDecoration(
-                              bgColor: switchColor(listmrequestsViewModel
-                                  .maintenanceRequests![index]
-                                  .mMaintenacerequest!
-                                  .maintenaceRequestStatus!
-                                  .maintenanceStatusDescription),
-                              radius: 16),
-                          child: text(
+                                    .idMaintenanceRequest!
+                                    .toInt())),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      decoration: boxDecoration(
+                          radius: 16, showShadow: true, bgColor: Colors.white),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Image.asset(
                               listmrequestsViewModel
                                   .maintenanceRequests![index]
                                   .mMaintenacerequest!
-                                  .maintenaceRequestStatus!
-                                  .maintenanceStatusDescription,
-                              fontSize: textSizeMedium,
-                              textColor: t5White),
-                        ),
-                      ],
+                                  .maintenanceCategory!
+                                  .maintenanceCategoryIcon,
+                              width: width / 13,
+                              height: width / 13),
+                          SizedBox(height: 10),
+                          Flexible(
+                              child: AutoSizeText(
+                                  listmrequestsViewModel
+                                      .maintenanceRequests![index]
+                                      .mMaintenacerequest!
+                                      .maintenanceCategory!
+                                      .maintenanceCategoryName,
+                                  style: boldTextStyle(
+                                      color: Colors.black, size: 16))),
+                          Flexible(child: AutoSizeText(preferredVisitTimee)),
+                          SizedBox(height: 10),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            decoration: boxDecoration(
+                                bgColor: switchColor(listmrequestsViewModel
+                                    .maintenanceRequests![index]
+                                    .mMaintenacerequest!
+                                    .maintenaceRequestStatus!
+                                    .maintenanceStatusDescription),
+                                radius: 16),
+                            child: text(
+                                listmrequestsViewModel
+                                    .maintenanceRequests![index]
+                                    .mMaintenacerequest!
+                                    .maintenaceRequestStatus!
+                                    .maintenanceStatusDescription,
+                                fontSize: textSizeMedium,
+                                textColor: t5White),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 });

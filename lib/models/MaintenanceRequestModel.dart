@@ -33,7 +33,7 @@ class MaintenanceRequestModel {
 
   factory MaintenanceRequestModel.fromJson(Map<String, dynamic> json) {
     print(json['userId']);
-    print(json['requestDescription']);
+    print(json['dtoMaintenanceRequestFiles']);
     return MaintenanceRequestModel(
       idMaintenanceRequest: json['idMaintenanceRequest'],
       maintenanceCategory: Categ.fromJson(json["maintenanceCategory"]),
@@ -44,9 +44,11 @@ class MaintenanceRequestModel {
       maintenaceRequestStatus:
           MaintenaceRequestStatus.fromJson(json['maintenanceRequestStatus']),
       userId: json['userId'],
-      // maintenanceRequestFiles: List<Categ>.from(
-      //     json["dtoMaintenanceRequestFiles"].map((x) => Categ.fromJson(x))),
-      // //json['dtoMaintenanceRequestFiles'] ,
+      // maintenanceRequestImagesFiles: json['dtoMaintenanceRequestFiles'] == null
+      //     ? []
+      //     : json['dtoMaintenanceRequestFiles']
+      //         .map((e) => e['mediaFileURL'].toString())
+      //         .toList(),
       // maintenanceRequestRecordsFiles: json['dtoMaintenanceRequestFiles'],
       // maintenanceCategoryParent:json['maintenanceCategoryParent']
     );

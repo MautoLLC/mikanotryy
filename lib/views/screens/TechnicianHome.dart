@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/SDDashboardScreen.dart';
 import 'package:mymikano_app/utils/T13Strings.dart';
 import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
@@ -109,17 +110,18 @@ class T5ProfileState extends State<T5Profile> {
             padding: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.transparent,
-                  child: SvgPicture.asset(t13_ic_inspection2,
-                      height: 90, width: 90, color: t5Cat2),
-                ),
+                Spacer(),
+                Spacer(),
+                Image.asset("images/tech.png",
+                    height: 90, width: 90, color: t5Cat2),
+                Spacer(),
                 Flexible(
                     child: AutoSizeText("My Inspections",
-                        style: boldTextStyle(color: Colors.black, size: 20))),
+                        style:
+                            boldTextStyle(color: Color(0xff464646), size: 15))),
+                Spacer(),
               ],
             )));
   }
@@ -172,12 +174,7 @@ class T5ProfileState extends State<T5Profile> {
                         gridItem(),
                         IconButton(
                             onPressed: () async {
-                              await prefs.setBool('IsLoggedIn', false);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => T13SignInScreen()),
-                              );
+                              await logout(this.context);
                             },
                             icon: Icon(Icons.logout))
                       ],

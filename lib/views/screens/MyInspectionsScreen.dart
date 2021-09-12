@@ -83,37 +83,37 @@ class T5ListingState extends State<T5Listing> {
     MaintenanceRequestModel reqq;
     return new MaterialApp(
         home: Scaffold(
-            backgroundColor: t5DarkNavy,
+            backgroundColor: Color(0xff464646),
             appBar: AppBar(
-                shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
-                backgroundColor: t5DarkNavy,
+                elevation: 0,
+                shape: Border(
+                    bottom: BorderSide(color: Colors.transparent, width: 0)),
+                backgroundColor: Color(0xfff0f0f0),
                 toolbarHeight: 120,
-                title: Column(
+                title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.keyboard_arrow_left,
-                              color: t5White, size: 40.0),
-                          onPressed: () {
-                            finish(context);
-                          },
-                        ),
-                        SizedBox(width: 10),
-                        text("My Inspections",
-                            textColor: t5White,
-                            fontSize: textSizeNormal,
-                            fontFamily: fontMedium)
-                      ]),
+                      IconButton(
+                        icon: Icon(Icons.keyboard_arrow_left,
+                            color: Color(0xff464646), size: 40.0),
+                        onPressed: () {
+                          finish(context);
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      text("My Inspections",
+                          textColor: Color(0xff464646),
+                          fontSize: textSizeNormal,
+                          fontFamily: fontMedium)
                     ])),
             key: _scaffoldKey,
             body: SafeArea(
               child: Container(
-                color: t5DarkNavy,
+                decoration: BoxDecoration(color: Color(0xfff0f0f0)),
                 child: Container(
                   alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(24),
@@ -222,8 +222,8 @@ class T5ListingState extends State<T5Listing> {
                                                                   .toString(),
                                                               fontSize:
                                                                   textSizeLargeMedium,
-                                                              textColor: appStore
-                                                                  .textSecondaryColor),
+                                                              textColor: Color(
+                                                                  0xff525252)),
                                                         ],
                                                       ),
                                                       Container(
@@ -258,11 +258,10 @@ class T5ListingState extends State<T5Listing> {
                                                                 "Inspection" +
                                                                     (index + 1)
                                                                         .toString(),
-                                                                textColor:
-                                                                    Colors
-                                                                        .black,
+                                                                textColor: Color(
+                                                                    0xff525252),
                                                                 fontSize:
-                                                                    textSizeMedium,
+                                                                    textSizeSmall,
                                                                 fontFamily:
                                                                     fontBold),
                                                             //    text(mListings[index].amount, textColor: appStore.textSecondaryColor, fontSize: textSizeMedium, fontFamily: fontSemibold)
@@ -272,8 +271,10 @@ class T5ListingState extends State<T5Listing> {
                                                             text(
                                                                 catgg
                                                                     .maintenanceCategoryName,
+                                                                textColor: Color(
+                                                                    0xff525252),
                                                                 fontSize:
-                                                                    textSizeMedium,
+                                                                    textSizeSmall,
                                                                 maxLine: 3),
                                                           ],
                                                         ),

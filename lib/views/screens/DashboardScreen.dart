@@ -274,7 +274,7 @@ class DashboardState extends State<Dashboard> {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  SizedBox(height: 16),
+                                  SizedBox(height: 15),
                                   Padding(
                                     padding:
                                         EdgeInsets.only(left: 16, right: 16),
@@ -301,23 +301,26 @@ class DashboardState extends State<Dashboard> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      WebView()),
+                                                  builder: (context) => WebView(
+                                                        Url:
+                                                            "https://mikanoshop.mauto.co/",
+                                                        Title: "codepickles",
+                                                      )),
                                             );
                                           },
                                         )
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                      height: SizerUtil.deviceType ==
-                                              DeviceType.tablet
-                                          ? 20
-                                          : 0),
+                                  // SizedBox(
+                                  //     height: SizerUtil.deviceType ==
+                                  //             DeviceType.tablet
+                                  //         ? 20
+                                  //         : 0),
                                   Container(
                                     height: SizerUtil.deviceType ==
                                             DeviceType.mobile
-                                        ? 110
+                                        ? 140
                                         : 16.h,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -328,11 +331,18 @@ class DashboardState extends State<Dashboard> {
                                           child: DashboardSlider(
                                               mSliderListings[index], index),
                                           onTap: () {
+                                            print(
+                                                "https://mikanoshop.mauto.co/${mSliderListings[index].dishName}");
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      WebView()),
+                                                  builder: (context) => WebView(
+                                                        Title: mSliderListings[
+                                                                index]
+                                                            .dishName,
+                                                        Url:
+                                                            "https://mikanoshop.mauto.co/${mSliderListings[index].dishName}",
+                                                      )),
                                             );
                                           },
                                         );
@@ -346,46 +356,54 @@ class DashboardState extends State<Dashboard> {
                     )
                   ],
                 )),
-            Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 10,
-                      color: Colors.black26,
-                      offset: Offset(3, 3))
-                ],
-                border: Border.all(
-                  color: Colors.white70,
-                  width: 1.0,
+            Padding(
+              padding: SizerUtil.deviceType == DeviceType.mobile
+                  ? EdgeInsets.only(
+                      left: 10.0, right: 10.0, top: 15.0, bottom: 15.0)
+                  : EdgeInsets.only(
+                      left: 10.0, right: 10.0, top: 25.0, bottom: 15.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 10,
+                        color: Colors.black26,
+                        offset: Offset(3, 3))
+                  ],
+                  border: Border.all(
+                    color: Colors.white70,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                  gradient:
+                      LinearGradient(colors: [Colors.white, Colors.white]),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(24.0)),
-                gradient: LinearGradient(colors: [Colors.white, Colors.white]),
+                margin: EdgeInsets.only(left: 10),
+                padding: EdgeInsets.all(10),
+                child: Padding(
+                    padding: SizerUtil.deviceType == DeviceType.mobile
+                        ? EdgeInsets.only(left: 16.0, right: 16.0)
+                        : EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Shop by Categories",
+                              style: TextStyle(
+                                  color: Color(0xff484848),
+                                  fontSize: 20,
+                                  fontFamily: fontRegular,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                        T5DashBoardListing(mFavouriteList, false),
+                      ],
+                    )),
               ),
-              margin: EdgeInsets.only(left: 10),
-              padding: EdgeInsets.all(10),
-              child: Padding(
-                  padding: SizerUtil.deviceType == DeviceType.mobile
-                      ? EdgeInsets.only(left: 16.0, right: 16.0)
-                      : EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Shop by Categories",
-                            style: TextStyle(
-                                color: Color(0xff484848),
-                                fontSize: 20,
-                                fontFamily: fontRegular,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                      T5DashBoardListing(mFavouriteList, false),
-                    ],
-                  )),
             ),
           ]),
         )));

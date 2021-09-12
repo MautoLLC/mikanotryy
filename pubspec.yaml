@@ -134,6 +134,8 @@ flutter:
     # General Repair Page Folder
     - images/GeneralRepairGreenIcon.png
     - images/GeneralRepairImage.png
+    # other
+    - images/tech.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

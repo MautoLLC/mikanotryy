@@ -37,9 +37,9 @@ class MyApp extends StatelessWidget {
     PushNotificationService(_fcm).initialise(context);
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'My Mikano',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.red,
         ),
         home: new OPSplashScreen(),
       );

@@ -38,4 +38,4 @@ const t13_ic_usa = "images/theme13/t13_ic_usa.svg";
 const t13_ic_profile = "$BaseUrl/images/Theme13/t13_ic_profile.png";
 const t13_ic_profile1 = "$BaseUrl/images/Theme13/t13_ic_profile1.png";
 const t13_ic_inspection = "images/theme5/inspection.svg";
-const t13_ic_inspection2 = "images/theme5/tech.svg";
+const t13_ic_inspection2 = "images/tech.png";
