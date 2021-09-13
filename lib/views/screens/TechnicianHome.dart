@@ -143,8 +143,6 @@ class T5ProfileState extends State<T5Profile> {
                 padding: EdgeInsets.only(top: 10),
                 alignment: Alignment.topLeft,
                 height: 60,
-                child: commonCacheImageWidget("images/MyMikanoLogo.png", 40,
-                    width: width! * 0.33),
               ),
             ),
             SingleChildScrollView(

@@ -84,7 +84,8 @@ class T5GridListing extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 18),
                                 decoration: boxDecoration(radius: 10),
                                 child: Image.asset(
-                                  mFavouriteList![index].icon,
+                                  listCategViewModel.maincategs![index].mcateg!
+                                      .maintenanceCategoryIcon,
                                 ),
                               ),
                               SizedBox(height: 20),
@@ -98,10 +99,10 @@ class T5GridListing extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Positioned(
-                            right: 0,
-                            top: 0,
-                            child: Icon(Icons.keyboard_arrow_right))
+                        // Positioned(
+                        //     right: 0,
+                        //     top: 0,
+                        //     child: Icon(Icons.keyboard_arrow_right))
                       ],
                     ),
                   );

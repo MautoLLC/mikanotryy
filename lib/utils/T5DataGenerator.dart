@@ -12,11 +12,6 @@ List<T5Category> getDItems() {
   category1.color = t5Cat1;
   category1.icon = t5_generator;
   list.add(category1);
-  /*var category2 = T5Category();
-  category2.name = "Wallet";
-  category2.color = t5Cat2;
-  category2.icon = t5_wallet;
-  list.add(category2);*/
   var category3 = T5Category();
   category3.name = "Electrical";
   category3.color = t5Cat3;
@@ -35,7 +30,7 @@ List<T5Category> getDItems() {
   list.add(category5);
 
   var category = T5Category();
-  category.name = "More";
+  category.name = "Medical";
   category.color = t5Cat6;
   category.icon = t5_circle;
   list.add(category);
@@ -77,77 +72,6 @@ List<T5Category> getCategoryItems() {
   category.color = t5Cat6;
   category.icon = t5_img_landscape;
   list.add(category);
-  return list;
-}
-
-List<T5Category> getBottomSheetItems() {
-  List<T5Category> list = [];
-  var category1 = T5Category();
-  category1.name = "Transfer";
-  category1.color = t5Cat1;
-  category1.icon = t5_paperplane;
-  list.add(category1);
-  var category2 = T5Category();
-  category2.name = "Wallet";
-  category2.color = t5Cat2;
-  category2.icon = t5_wallet;
-  list.add(category2);
-  var category3 = T5Category();
-  category3.name = "Voucher";
-  category3.color = t5Cat3;
-  category3.icon = t5_coupon;
-  list.add(category3);
-  var category4 = T5Category();
-  category4.name = "Pay Bill";
-  category4.color = t5Cat4;
-  category4.icon = t5_invoice;
-  list.add(category4);
-
-  var category5 = T5Category();
-  category5.name = "Exchange";
-  category5.color = t5Cat5;
-  category5.icon = t5_dollar_exchange;
-  list.add(category5);
-
-  var category6 = T5Category();
-  category6.name = "Services";
-  category6.color = t5Cat6;
-  category6.icon = t5_circle;
-  list.add(category6);
-
-  var category9 = T5Category();
-  category9.name = "Crypto";
-  category9.color = t5Cat3;
-  category9.icon = t5_invoice;
-  list.add(category9);
-  var category11 = T5Category();
-  category11.name = "Mobile";
-  category11.color = t5Cat5;
-  category11.icon = t5_dollar_exchange;
-  list.add(category11);
-
-  var category12 = T5Category();
-  category12.name = "Services";
-  category12.color = t5Cat6;
-  category12.icon = t5_circle;
-  list.add(category12);
-
-  var category7 = T5Category();
-  category7.name = "Pay Bill";
-  category7.color = t5Cat4;
-  category7.icon = t5_invoice;
-  list.add(category7);
-  var category8 = T5Category();
-  category8.name = "Exchange";
-  category8.color = t5Cat5;
-  category8.icon = t5_dollar_exchange;
-  list.add(category8);
-
-  var category10 = T5Category();
-  category10.name = "Services";
-  category10.color = t5Cat6;
-  category10.icon = t5_circle;
-  list.add(category10);
 
   return list;
 }

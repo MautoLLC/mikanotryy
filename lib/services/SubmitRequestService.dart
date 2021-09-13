@@ -37,7 +37,7 @@ SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
   request.fields['requestDescription'] =
       mMaintenanceRequest.requestDescription.toString();
 
-  List<Asset>? mImages = mMaintenanceRequest.maintenanceRequestImagesFiles;
+  List<dynamic>? mImages = mMaintenanceRequest.maintenanceRequestImagesFiles;
   List<String>? mRecords = mMaintenanceRequest.maintenanceRequestRecordsFiles;
   List<MultipartFile> newList = [];
 

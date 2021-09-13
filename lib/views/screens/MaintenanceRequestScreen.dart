@@ -192,7 +192,11 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                   child: Row(
                     children: [
-                      IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+                      Image.asset(
+                        this.widget.mainCatg.maintenanceCategoryIcon,
+                        width: 30,
+                        height: 30,
+                      ),
                       Text(this.widget.mainCatg.maintenanceCategoryName)
                     ],
                   ),

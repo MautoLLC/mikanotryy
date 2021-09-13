@@ -24,7 +24,6 @@ class Service {
 
     PrepareHeader();
     final response = await http.get(url, headers: headers);
-
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
       final listresult = json.map((e) => Categ.fromJson(e)).toList();
@@ -49,12 +48,26 @@ class Service {
     }
   }
 
+  Future<List<Categ>> fetchAllSubCategs() async {
+    final url = Uri.parse(GetSubCategoriesURL);
+
+    PrepareHeader();
+    final response = await http.get(url, headers: headers);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as List<dynamic>;
+      final listresult = json.map((e) => Categ.fromJson(e)).toList();
+
+      return listresult;
+    } else {
+      throw Exception('Error fetching');
+    }
+  }
+
   Future<List<Categ>> fetchAllCategs() async {
     final url = Uri.parse(GetAllCategoriesURL);
 
     PrepareHeader();
     final response = await http.get(url, headers: headers);
-    // List jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
       print(json[3]["maintenanceCategoryIcon"]);

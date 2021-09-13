@@ -159,7 +159,10 @@ class DashboardState extends State<Dashboard> {
                                 SizedBox(height: 5),
                                 AutoSizeText(cards[0].examName!,
                                     style: boldTextStyle(
-                                        color: Colors.black, size: 16))
+                                        color: Color(0xff484848),
+                                        fontFamily: fontRegular,
+                                        weight: FontWeight.bold,
+                                        size: 16))
                               ]),
                           Positioned(
                               right: 0,
@@ -210,10 +213,16 @@ class DashboardState extends State<Dashboard> {
                                   SizerUtil.deviceType == DeviceType.mobile
                                       ? AutoSizeText("Generator",
                                           style: boldTextStyle(
-                                              color: Colors.black, size: 16))
+                                              color: Color(0xff484848),
+                                              fontFamily: fontRegular,
+                                              weight: FontWeight.bold,
+                                              size: 16))
                                       : AutoSizeText("Generator",
                                           style: boldTextStyle(
-                                              color: Colors.black, size: 30)),
+                                              color: Color(0xff484848),
+                                              fontFamily: fontRegular,
+                                              weight: FontWeight.bold,
+                                              size: 30)),
                                   Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -264,7 +273,7 @@ class DashboardState extends State<Dashboard> {
                           image: DecorationImage(
                               image:
                                   AssetImage("images/MikanoShopCarousel.png"),
-                              fit: BoxFit.cover),
+                              fit: BoxFit.fill),
                           boxShadow: <BoxShadow>[],
                           borderRadius: BorderRadius.circular(24.0)),
                       child: Row(
@@ -304,7 +313,7 @@ class DashboardState extends State<Dashboard> {
                                                   builder: (context) => WebView(
                                                         Url:
                                                             "https://mikanoshop.mauto.co/",
-                                                        Title: "codepickles",
+                                                        Title: "Mauto",
                                                       )),
                                             );
                                           },
@@ -378,7 +387,6 @@ class DashboardState extends State<Dashboard> {
                   gradient:
                       LinearGradient(colors: [Colors.white, Colors.white]),
                 ),
-                margin: EdgeInsets.only(left: 10),
                 padding: EdgeInsets.all(10),
                 child: Padding(
                     padding: SizerUtil.deviceType == DeviceType.mobile
@@ -390,14 +398,17 @@ class DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              "Shop by Categories",
-                              style: TextStyle(
-                                  color: Color(0xff484848),
-                                  fontSize: 20,
-                                  fontFamily: fontRegular,
-                                  fontWeight: FontWeight.bold),
-                            )
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: Text(
+                                "Shop by Categories",
+                                style: TextStyle(
+                                    color: Color(0xff484848),
+                                    fontSize: 20,
+                                    fontFamily: fontRegular,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ],
                         ),
                         T5DashBoardListing(mFavouriteList, false),

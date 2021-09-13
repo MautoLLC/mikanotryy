@@ -12,7 +12,7 @@ class MaintenanceRequestModel {
   late final String userId;
   late final String? requestDescription;
   late final MaintenaceRequestStatus? maintenaceRequestStatus;
-  late final List<Asset>? maintenanceRequestImagesFiles;
+  late final List<dynamic>? maintenanceRequestImagesFiles;
   late final List<String>? maintenanceRequestRecordsFiles;
   List<Categ>? maintenanceRequestFiles;
 
@@ -44,11 +44,12 @@ class MaintenanceRequestModel {
       maintenaceRequestStatus:
           MaintenaceRequestStatus.fromJson(json['maintenanceRequestStatus']),
       userId: json['userId'],
-      // maintenanceRequestImagesFiles: json['dtoMaintenanceRequestFiles'] == null
-      //     ? []
-      //     : json['dtoMaintenanceRequestFiles']
-      //         .map((e) => e['mediaFileURL'].toString())
-      //         .toList(),
+      maintenanceRequestImagesFiles: json['dtoMaintenanceRequestFiles'] == null
+          ? []
+          : json['dtoMaintenanceRequestFiles']
+              .map(
+                  (e) => Asset(e['mediaFileURL'].toString(), "Image", 400, 400))
+              .toList(),
       // maintenanceRequestRecordsFiles: json['dtoMaintenanceRequestFiles'],
       // maintenanceCategoryParent:json['maintenanceCategoryParent']
     );
