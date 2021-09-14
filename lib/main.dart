@@ -4,15 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
-import 'package:mymikano_app/views/screens/InspectionScreen.dart';
-import 'package:mymikano_app/views/screens/MyInspectionsScreen.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
-import 'package:mymikano_app/views/screens/MyRequestsScreen.dart';
-import 'package:mymikano_app/views/screens/SDDashboardScreen.dart';
-import 'package:mymikano_app/views/screens/SDExamScreen.dart';
-import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
-import 'package:mymikano_app/views/screens/TechnicianHome.dart';
 import 'package:sizer/sizer.dart';
 
 AppStore appStore = AppStore();
@@ -25,7 +17,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
-
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
   runApp(MyApp());
 }

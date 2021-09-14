@@ -51,6 +51,7 @@ class t5SfRadialGauge extends StatelessWidget {
     //         )
     //       ])
     // ]);
-    return Image.asset('images/RPMHomepageIcon.png');
+    // return Image.asset('images/RPMHomepageIcon.png');
+    return Image.asset('images/gaugeImage.jpeg');
   }
 }

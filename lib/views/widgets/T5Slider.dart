@@ -22,6 +22,7 @@ class T5SliderWidget extends StatelessWidget {
       items: mSliderList!.map((slider) {
         return Builder(
           builder: (BuildContext context) {
+            print(slider.image);
             return Container(
               width: MediaQuery.of(context).size.width,
               height: cardSize.height,
@@ -29,10 +30,8 @@ class T5SliderWidget extends StatelessWidget {
                 children: <Widget>[
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: CachedNetworkImage(
-                      placeholder: placeholderWidgetFn() as Widget Function(
-                          BuildContext, String)?,
-                      imageUrl: slider.image,
+                    child: Image.asset(
+                      slider.image,
                       fit: BoxFit.fill,
                     ),
                   ),

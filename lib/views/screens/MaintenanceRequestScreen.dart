@@ -498,7 +498,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                           maintenanceRequestImagesFiles: images,
                                           maintenanceRequestRecordsFiles:
                                               records);
-                                  SubmitMaintenanceRequest(mMaintenanceRequest);
+                                  SubmitMaintenanceRequest(
+                                      mMaintenanceRequest, context);
                                 }
 
                                 if (selectedSubCategId == 0)

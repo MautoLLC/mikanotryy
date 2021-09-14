@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InspectionService {
   var headers;
@@ -22,9 +23,14 @@ class InspectionService {
 
   Future<List<InspectionModel>> fetchInspections() async {
     PrepareHeader();
-    final response =
-        await http.get(Uri.parse(GetInspectionURL), headers: headers);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    final response = await http.get(
+        Uri.parse(
+            GetTechnicianInspectionURL + prefs.getString('UserID').toString()),
+        headers: headers);
+    print(response.statusCode);
+    print(response.reasonPhrase);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
       final listresult = json.map((e) => InspectionModel.fromJson(e)).toList();

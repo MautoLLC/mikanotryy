@@ -5,6 +5,7 @@ import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MaintenanceRequestService {
   var headers;
@@ -14,7 +15,7 @@ class MaintenanceRequestService {
     File file = File('${directory.path}/credentials.json');
     String fileContent = await file.readAsString();
     headers = {
-      "Accept": "application/json",
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer $fileContent',
       "Connection": "keep-alive"
     };
@@ -22,28 +23,32 @@ class MaintenanceRequestService {
 
   Future<List<MaintenanceRequestModel>> fetchMaintenanceRequest() async {
     await PrepareHeader();
-    late final response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    print(headers);
+    final response;
+    late final listresult;
     try {
-      response =
-          await http.get(Uri.parse(GetMaintenaceRequestURL), headers: headers);
+      response = await http.get(Uri.parse(GetMaintenaceRequestURL +
+          '/UserRequests/' +
+          prefs.getString('UserID').toString()));
+      print(response.statusCode);
+      for (var item in jsonDecode(response.body)) {
+        print(item);
+      }
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as List<dynamic>;
+        listresult =
+            json.map((e) => MaintenanceRequestModel.fromJson(e)).toList();
+      } else {
+        print(Uri.parse(GetMaintenaceRequestURL).toString());
+        print(response.body.toString());
+        throw Exception('Error fetching');
+      }
     } on Exception catch (e) {
       print(e.toString());
     }
-
-    print(response.statusCode);
-    for (var item in jsonDecode(response.body)) {
-      print(item['maintenanceCategoryIcon']);
-    }
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as List<dynamic>;
-      final listresult =
-          json.map((e) => MaintenanceRequestModel.fromJson(e)).toList();
-      return listresult;
-    } else {
-      print(Uri.parse(GetMaintenaceRequestURL).toString());
-      print(response.body.toString());
-      throw Exception('Error fetching');
-    }
+    return listresult;
   }
 
   Future<MaintenanceRequestModel> fetchMaintenanceRequestByID(int id) async {

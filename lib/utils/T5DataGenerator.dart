@@ -81,15 +81,15 @@ List<T5Slider> getSliders() {
   T5Slider model1 = T5Slider();
   model1.balance = "\$150000";
   model1.accountNo = "145 250 230 120 150";
-  model1.image = t5_card1;
+  model1.image = "images/HomepageSlider/CircuitBreaker.png";
   T5Slider model2 = T5Slider();
   model2.balance = "\$150000";
   model2.accountNo = "145 250 230 120 150";
-  model2.image = t5_card1;
+  model2.image = "images/HomepageSlider/GeelyVolvo.png";
   T5Slider model3 = T5Slider();
   model3.balance = "\$150000";
   model3.accountNo = "145 250 230 120 150";
-  model3.image = t5_card1;
+  model3.image = "images/HomepageSlider/Hyundaitruck.png";
 
   list.add(model1);
   list.add(model2);

@@ -12,6 +12,7 @@ import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> ReturnToken() async {
   Directory directory = await getApplicationDocumentsDirectory();
@@ -20,10 +21,12 @@ Future<String> ReturnToken() async {
   return fileContent;
 }
 
-SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
+SubmitMaintenanceRequest(
+    MaintenanceRequestModel mMaintenanceRequest, BuildContext context) async {
   final url = Uri.parse(PostMaintenaceRequestURL);
 
   Future<String> token = ReturnToken();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 
   var request = new http.MultipartRequest("POST", url);
   request.headers['Authorization'] = 'Bearer $token';
@@ -33,7 +36,7 @@ SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
   request.fields['preferredVisitTime'] =
       mMaintenanceRequest.preferredVisitTime.toString();
   request.fields['realEstateId'] = mMaintenanceRequest.realEstateId.toString();
-  request.fields['userId'] = 1.toString();
+  request.fields['userId'] = prefs.getString('UserID').toString();
   request.fields['requestDescription'] =
       mMaintenanceRequest.requestDescription.toString();
 
@@ -74,6 +77,7 @@ SubmitMaintenanceRequest(MaintenanceRequestModel mMaintenanceRequest) async {
           backgroundColor: t13_edit_text_color,
           textColor: Colors.black87,
           fontSize: 16.0);
+      Navigator.pop(context);
     } else {
       print("Failed to submit !" + response.toString());
       Fluttertoast.showToast(

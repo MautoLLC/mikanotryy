@@ -20,6 +20,7 @@ class PushNotificationService {
     String? token = await _fcm.getToken();
     prefs = await SharedPreferences.getInstance();
     await prefs.setString("DeviceToken", token.toString());
+    print("DeviceToken ===>>> ${token.toString()}");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       print("message recieved");
