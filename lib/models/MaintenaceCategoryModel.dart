@@ -3,6 +3,7 @@ class Categ {
   final String maintenanceCategoryName;
   final String maintenanceCategoryDescription;
   final String maintenanceCategoryIcon;
+  final String maintenanceCategoryImage;
   final int? maintenanceCategoryParentId;
 
   Categ({
@@ -10,6 +11,7 @@ class Categ {
     required this.maintenanceCategoryName,
     required this.maintenanceCategoryDescription,
     required this.maintenanceCategoryIcon,
+    required this.maintenanceCategoryImage,
     this.maintenanceCategoryParentId,
   });
 
@@ -21,6 +23,9 @@ class Categ {
       maintenanceCategoryIcon: json['maintenanceCategoryIcon'] == null
           ? "null"
           : json['maintenanceCategoryIcon'],
+      maintenanceCategoryImage: json['maintenanceCategoryImage'] == null
+          ? "null"
+          : json['maintenanceCategoryImage'],
       maintenanceCategoryParentId: json['maintenanceCategoryParentId'],
     );
   }

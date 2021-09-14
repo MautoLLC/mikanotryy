@@ -50,7 +50,36 @@ class MaintenanceRequestModel {
               .map(
                   (e) => Asset(e['mediaFileURL'].toString(), "Image", 400, 400))
               .toList(),
-      // maintenanceRequestRecordsFiles: json['dtoMaintenanceRequestFiles'],
+      // maintenanceRequestRecordsFiles: json['dtoMaintenanceRequestFiles'] == null
+      //     ? []
+      //     : json['dtoMaintenanceRequestFiles']
+      //         .map((e) => {
+      //               print(e['mediaFileURL']
+      //                   .toString()
+      //                   .split("?")[0]
+      //                   .substring(
+      //                       e['mediaFileURL'].toString().split("?")[0].length -
+      //                           5,
+      //                       e['mediaFileURL'].toString().split("?")[0].length)
+      //                   .contains("wav")),
+      //               e['mediaFileURL']
+      //                       .toString()
+      //                       .split("?")[0]
+      //                       .substring(
+      //                           e['mediaFileURL']
+      //                                   .toString()
+      //                                   .split("?")[0]
+      //                                   .length -
+      //                               5,
+      //                           e['mediaFileURL']
+      //                               .toString()
+      //                               .split("?")[0]
+      //                               .length)
+      //                       .contains("wav")
+      //                   ? e['mediaFileURL'].toString()
+      //                   : null
+      //             })
+      //         .toList(),
       // maintenanceCategoryParent:json['maintenanceCategoryParent']
     );
   }

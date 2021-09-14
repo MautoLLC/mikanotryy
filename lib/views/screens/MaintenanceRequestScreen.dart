@@ -175,7 +175,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   children: <Widget>[
                     IconButton(
                       icon: Icon(Icons.keyboard_arrow_left,
-                          color: Colors.black, size: 50.0),
+                          color: Colors.black, size: 38.0),
                       onPressed: () {
                         finish(context);
                       },
@@ -197,13 +197,20 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         width: 30,
                         height: 30,
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(this.widget.mainCatg.maintenanceCategoryName)
                     ],
                   ),
                 ),
                 ClipRRect(
-                  child: Image.network(
-                      this.widget.mainCatg.maintenanceCategoryIcon),
+                  child: Image.asset(this
+                      .widget
+                      .mainCatg
+                      .maintenanceCategoryImage
+                      .trim()
+                      .toString()),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 Padding(

@@ -63,6 +63,7 @@ dependencies:
   flutter_webview_plugin: ^0.4.0
   localstorage: ^4.0.0+1
   shared_preferences:
+  flutter_downloader: ^1.7.0
 
 #  flutter_absolute_path:
 #    git:
@@ -142,6 +143,12 @@ flutter:
     - images/HomepageSlider/CircuitBreaker.png
     - images/HomepageSlider/GeelyVolvo.png
     - images/HomepageSlider/Hyundaitruck.png
+    - images/CleaningCarousel.png
+    - images/SecurityCarousel.png
+    - images/LandscapeCarousel.png
+    - images/MechanicalRepairCarousel.png
+    - images/ElectricalRepairCarousel.png
+    - images/GeneralRepairCarousel.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

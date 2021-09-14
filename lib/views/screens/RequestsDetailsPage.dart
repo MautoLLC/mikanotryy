@@ -4,7 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/T2Colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 // late MaintenanceRequestsViewModel item;
 
@@ -222,18 +222,85 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                         )
                       ],
                     ),
-                    Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 1,
-                                  crossAxisSpacing: 8,
-                                  mainAxisSpacing: 2),
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Text("ENSA");
-                          }),
-                    ),
+                    // FutureBuilder(
+                    //     future: ListMaintenanceRequestsViewModel()
+                    //         .fetchMaintenanceRequestsByID(this.widget.id),
+                    //     builder: (context,
+                    //         AsyncSnapshot<MaintenanceRequestsViewModel?>
+                    //             snapshot) {
+                    //       if (snapshot.connectionState ==
+                    //           ConnectionState.waiting) {
+                    //         return Column(
+                    //           mainAxisAlignment: MainAxisAlignment.center,
+                    //           crossAxisAlignment: CrossAxisAlignment.center,
+                    //           children: [
+                    //             SpinKitChasingDots(
+                    //               itemBuilder:
+                    //                   (BuildContext context, int index) {
+                    //                 return DecoratedBox(
+                    //                   decoration: BoxDecoration(
+                    //                     shape: BoxShape.circle,
+                    //                     color: index.isEven
+                    //                         ? t5Cat3
+                    //                         : Colors.black87,
+                    //                   ),
+                    //                 );
+                    //               },
+                    //             )
+                    //           ],
+                    //         );
+                    //       }
+
+                    //       if (snapshot.hasError) {
+                    //         return Center(
+                    //             child: Text(
+                    //                 "Please check you internet connection and try again !",
+                    //                 textAlign: TextAlign.center,
+                    //                 style: TextStyle(
+                    //                     fontWeight: FontWeight.bold,
+                    //                     fontSize: 20.0,
+                    //                     color: Colors.black)));
+                    //       } else {
+                    //         print(snapshot.data!.mMaintenacerequest!
+                    //             .maintenanceRequestRecordsFiles);
+                    //         return snapshot.data!.mMaintenacerequest!
+                    //                         .maintenanceRequestRecordsFiles !=
+                    //                     null ||
+                    //                 snapshot.data!.mMaintenacerequest!
+                    //                         .maintenanceRequestRecordsFiles !=
+                    //                     []
+                    //             ? Expanded(
+                    //                 child: GridView.builder(
+                    //                     gridDelegate:
+                    //                         SliverGridDelegateWithFixedCrossAxisCount(
+                    //                             crossAxisCount: 2,
+                    //                             crossAxisSpacing: 8,
+                    //                             mainAxisSpacing: 2),
+                    //                     itemCount: snapshot
+                    //                         .data!
+                    //                         .mMaintenacerequest!
+                    //                         .maintenanceRequestRecordsFiles!
+                    //                         .length,
+                    //                     itemBuilder:
+                    //                         (BuildContext context, int index) {
+                    //                       print(snapshot
+                    //                               .data!
+                    //                               .mMaintenacerequest!
+                    //                               .maintenanceRequestRecordsFiles![
+                    //                           index]);
+                    //                       Widget temp = Text(snapshot
+                    //                               .data!
+                    //                               .mMaintenacerequest!
+                    //                               .maintenanceRequestRecordsFiles![
+                    //                           index]);
+                    //                       return temp;
+                    //                     }),
+                    //               )
+                    //             : Center(
+                    //                 child: Text("No Images"),
+                    //               );
+                    //       }
+                    //     }),
                   ],
                 ),
               ),
