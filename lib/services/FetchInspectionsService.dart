@@ -24,13 +24,14 @@ class InspectionService {
   Future<List<InspectionModel>> fetchInspections() async {
     PrepareHeader();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    print(GetTechnicianInspectionURL + prefs.getString('UserID').toString());
     final response = await http.get(
         Uri.parse(
             GetTechnicianInspectionURL + prefs.getString('UserID').toString()),
         headers: headers);
     print(response.statusCode);
     print(response.reasonPhrase);
+    print(response.body);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List<dynamic>;
       final listresult = json.map((e) => InspectionModel.fromJson(e)).toList();

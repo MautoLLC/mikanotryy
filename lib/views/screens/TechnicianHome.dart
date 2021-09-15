@@ -95,11 +95,7 @@ class T5ProfileState extends State<T5Profile> {
           await init();
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => T5Listing(
-                      cnames: catnames,
-                      reqs: reqst,
-                    )),
+            MaterialPageRoute(builder: (context) => T5Listing()),
           );
         },
         child: Container(

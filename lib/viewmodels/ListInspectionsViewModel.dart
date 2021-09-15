@@ -7,9 +7,11 @@ import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
 class ListInspectionsViewModel {
   List<InspectionsViewModel>? inspections;
 
-  Future<void> fetchInspections() async {
+  Future<List<InspectionsViewModel>?> fetchInspections() async {
     final apiresult = await InspectionService().fetchInspections();
+    print(apiresult.length);
     this.inspections = apiresult.map((e) => InspectionsViewModel(e)).toList();
+    return inspections;
   }
 
   Future<void> fetchTechnicianInspections(int idTechnician) async {

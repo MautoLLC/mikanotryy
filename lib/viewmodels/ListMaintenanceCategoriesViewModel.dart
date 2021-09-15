@@ -2,7 +2,6 @@ import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/services/FetchMaintenaceCategoriesService.dart';
 
 class ListCategViewModel {
-
   List<CategViewModel>? maincategs;
   List<CategViewModel>? subcategs;
   List<CategViewModel>? allcategs;
@@ -21,18 +20,14 @@ class ListCategViewModel {
     final apiresult = await Service().fetchSubCategs(i);
     this.subcategs = apiresult.map((e) => CategViewModel(e)).toList();
   }
-
-
 }
 
 class CategViewModel {
-
-  late final Categ? mcateg ;
+  late final Categ? mcateg;
   CategViewModel(this.mcateg);
 
-@override
+  @override
   String toString() {
-    return 'Categ: { ${mcateg!.maintenanceCategoryName.toString() }';
+    return 'Categ: { ${mcateg!.maintenanceCategoryName.toString()}';
   }
 }
-

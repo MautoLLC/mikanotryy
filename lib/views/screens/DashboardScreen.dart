@@ -313,7 +313,7 @@ class DashboardState extends State<Dashboard> {
                                                   builder: (context) => WebView(
                                                         Url:
                                                             "https://mikanoshop.mauto.co/",
-                                                        Title: "Mauto",
+                                                        Title: "Mikano Shop",
                                                       )),
                                             );
                                           },

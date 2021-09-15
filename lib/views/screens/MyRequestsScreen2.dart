@@ -117,16 +117,15 @@ class MyRequestsScreen2 extends StatelessWidget {
                               width: width / 13,
                               height: width / 13),
                           SizedBox(height: 10),
-                          Flexible(
-                              child: AutoSizeText(
-                                  listmrequestsViewModel
-                                      .maintenanceRequests![index]
-                                      .mMaintenacerequest!
-                                      .maintenanceCategory!
-                                      .maintenanceCategoryName,
-                                  style: boldTextStyle(
-                                      color: Colors.black, size: 16))),
-                          Flexible(child: AutoSizeText(preferredVisitTimee)),
+                          AutoSizeText(
+                              listmrequestsViewModel
+                                  .maintenanceRequests![index]
+                                  .mMaintenacerequest!
+                                  .maintenanceCategory!
+                                  .maintenanceCategoryName,
+                              style:
+                                  boldTextStyle(color: Colors.black, size: 16)),
+                          AutoSizeText(preferredVisitTimee),
                           SizedBox(height: 10),
                           Container(
                             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

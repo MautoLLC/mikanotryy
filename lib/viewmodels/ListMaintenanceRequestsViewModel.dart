@@ -12,6 +12,13 @@ class ListMaintenanceRequestsViewModel {
         apiresult.map((e) => MaintenanceRequestsViewModel(e)).toList();
   }
 
+  Future<void> fetchAllMaintenanceRequests() async {
+    final apiresult =
+        await MaintenanceRequestService().fetchAllMaintenanceRequest();
+    this.maintenanceRequests =
+        apiresult.map((e) => MaintenanceRequestsViewModel(e)).toList();
+  }
+
   Future<MaintenanceRequestsViewModel> fetchMaintenanceRequestsByID(
       int id) async {
     final apiresult =
