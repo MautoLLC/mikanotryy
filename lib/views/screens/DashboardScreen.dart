@@ -349,8 +349,10 @@ class DashboardState extends State<Dashboard> {
                                                         Title: mSliderListings[
                                                                 index]
                                                             .dishName,
+                                                        // Url:
+                                                        //     "https://mikanoshop.mauto.co/${mSliderListings[index].dishName}",
                                                         Url:
-                                                            "https://mikanoshop.mauto.co/${mSliderListings[index].dishName}",
+                                                            "https://mikanoshop.mauto.co/electrical",
                                                       )),
                                             );
                                           },
