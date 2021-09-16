@@ -48,17 +48,10 @@ class MyRequestsScreen2 extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: SpinKitChasingDots(
-                itemBuilder: (BuildContext context, int index) {
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: index.isEven ? t5Cat3 : Colors.black87,
-                    ),
-                  );
-                },
-              ),
-            );
+                child: SpinKitCircle(
+              color: Colors.black,
+              size: 65,
+            ));
           }
 
           if (snapshot.hasError) {

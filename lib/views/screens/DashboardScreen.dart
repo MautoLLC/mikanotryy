@@ -329,7 +329,7 @@ class DashboardState extends State<Dashboard> {
                                   Container(
                                     height: SizerUtil.deviceType ==
                                             DeviceType.mobile
-                                        ? 140
+                                        ? 160
                                         : 16.h,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,

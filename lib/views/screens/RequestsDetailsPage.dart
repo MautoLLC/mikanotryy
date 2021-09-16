@@ -5,6 +5,8 @@ import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/T2Colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:mymikano_app/views/widgets/audio_recorder.dart';
+import 'package:mymikano_app/views/widgets/list.dart';
 
 // late MaintenanceRequestsViewModel item;
 
@@ -64,19 +66,11 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SpinKitChasingDots(
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: index.isEven
-                                            ? t5Cat3
-                                            : Colors.black87,
-                                      ),
-                                    );
-                                  },
-                                )
+                                Center(
+                                    child: SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 65,
+                                )),
                               ],
                             );
                           }
@@ -129,19 +123,10 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SpinKitChasingDots(
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: index.isEven
-                                            ? t5Cat3
-                                            : Colors.black87,
-                                      ),
-                                    );
-                                  },
-                                )
+                                SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 65,
+                                ),
                               ],
                             );
                           }
@@ -186,11 +171,10 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                                                   as Widget Function(
                                                       BuildContext, String)?,
                                               imageUrl: snapshot
-                                                  .data!
-                                                  .mMaintenacerequest!
-                                                  .maintenanceRequestImagesFiles![
-                                                      index]
-                                                  .identifier,
+                                                      .data!
+                                                      .mMaintenacerequest!
+                                                      .maintenanceRequestImagesFiles![
+                                                  index],
                                               fit: BoxFit.fill,
                                             ),
                                           );
@@ -199,7 +183,6 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                                               .mMaintenacerequest!
                                               .maintenanceRequestImagesFiles![
                                                   index]
-                                              .identifier
                                               .toString());
                                           return temp;
                                         }),
@@ -222,85 +205,81 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                         )
                       ],
                     ),
-                    // FutureBuilder(
-                    //     future: ListMaintenanceRequestsViewModel()
-                    //         .fetchMaintenanceRequestsByID(this.widget.id),
-                    //     builder: (context,
-                    //         AsyncSnapshot<MaintenanceRequestsViewModel?>
-                    //             snapshot) {
-                    //       if (snapshot.connectionState ==
-                    //           ConnectionState.waiting) {
-                    //         return Column(
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           crossAxisAlignment: CrossAxisAlignment.center,
-                    //           children: [
-                    //             SpinKitChasingDots(
-                    //               itemBuilder:
-                    //                   (BuildContext context, int index) {
-                    //                 return DecoratedBox(
-                    //                   decoration: BoxDecoration(
-                    //                     shape: BoxShape.circle,
-                    //                     color: index.isEven
-                    //                         ? t5Cat3
-                    //                         : Colors.black87,
-                    //                   ),
-                    //                 );
-                    //               },
-                    //             )
-                    //           ],
-                    //         );
-                    //       }
+                    FutureBuilder(
+                        future: ListMaintenanceRequestsViewModel()
+                            .fetchMaintenanceRequestsByID(this.widget.id),
+                        builder: (context,
+                            AsyncSnapshot<MaintenanceRequestsViewModel?>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 65,
+                                ),
+                              ],
+                            );
+                          }
 
-                    //       if (snapshot.hasError) {
-                    //         return Center(
-                    //             child: Text(
-                    //                 "Please check you internet connection and try again !",
-                    //                 textAlign: TextAlign.center,
-                    //                 style: TextStyle(
-                    //                     fontWeight: FontWeight.bold,
-                    //                     fontSize: 20.0,
-                    //                     color: Colors.black)));
-                    //       } else {
-                    //         print(snapshot.data!.mMaintenacerequest!
-                    //             .maintenanceRequestRecordsFiles);
-                    //         return snapshot.data!.mMaintenacerequest!
-                    //                         .maintenanceRequestRecordsFiles !=
-                    //                     null ||
-                    //                 snapshot.data!.mMaintenacerequest!
-                    //                         .maintenanceRequestRecordsFiles !=
-                    //                     []
-                    //             ? Expanded(
-                    //                 child: GridView.builder(
-                    //                     gridDelegate:
-                    //                         SliverGridDelegateWithFixedCrossAxisCount(
-                    //                             crossAxisCount: 2,
-                    //                             crossAxisSpacing: 8,
-                    //                             mainAxisSpacing: 2),
-                    //                     itemCount: snapshot
-                    //                         .data!
-                    //                         .mMaintenacerequest!
-                    //                         .maintenanceRequestRecordsFiles!
-                    //                         .length,
-                    //                     itemBuilder:
-                    //                         (BuildContext context, int index) {
-                    //                       print(snapshot
-                    //                               .data!
-                    //                               .mMaintenacerequest!
-                    //                               .maintenanceRequestRecordsFiles![
-                    //                           index]);
-                    //                       Widget temp = Text(snapshot
-                    //                               .data!
-                    //                               .mMaintenacerequest!
-                    //                               .maintenanceRequestRecordsFiles![
-                    //                           index]);
-                    //                       return temp;
-                    //                     }),
-                    //               )
-                    //             : Center(
-                    //                 child: Text("No Images"),
-                    //               );
-                    //       }
-                    //     }),
+                          if (snapshot.hasError) {
+                            return Center(
+                                child: Text(
+                                    "Please check you internet connection and try again !",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0,
+                                        color: Colors.black)));
+                          } else {
+                            print(snapshot.data!.mMaintenacerequest!
+                                .maintenanceRequestRecordsFiles);
+                            return snapshot.data!.mMaintenacerequest!
+                                            .maintenanceRequestRecordsFiles !=
+                                        null ||
+                                    snapshot.data!.mMaintenacerequest!
+                                            .maintenanceRequestRecordsFiles !=
+                                        []
+                                ? Expanded(
+                                    child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 1,
+                                                crossAxisSpacing: 8,
+                                                mainAxisSpacing: 2),
+                                        itemCount: snapshot
+                                            .data!
+                                            .mMaintenacerequest!
+                                            .maintenanceRequestRecordsFiles!
+                                            .length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          print(snapshot
+                                                  .data!
+                                                  .mMaintenacerequest!
+                                                  .maintenanceRequestRecordsFiles![
+                                              index]);
+                                          Widget temp = Records(
+                                            records: [
+                                              snapshot
+                                                  .data!
+                                                  .mMaintenacerequest!
+                                                  .maintenanceRequestRecordsFiles![
+                                                      index]
+                                                  .toString()
+                                            ],
+                                          );
+                                          return temp;
+                                        }),
+                                  )
+                                : Center(
+                                    child: Text("No Images"),
+                                  );
+                          }
+                        }),
                   ],
                 ),
               ),

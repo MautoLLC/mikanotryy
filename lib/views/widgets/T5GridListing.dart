@@ -1,12 +1,8 @@
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/models/EntryModel.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
-import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/views/screens/MaintenanceRequestScreen.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
@@ -26,15 +22,9 @@ class T5GridListing extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: SpinKitChasingDots(
-                itemBuilder: (BuildContext context, int index) {
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: index.isEven ? t5Cat3 : Colors.black87,
-                    ),
-                  );
-                },
+              child: SpinKitCircle(
+                color: Colors.black,
+                size: 65,
               ),
             );
           }
