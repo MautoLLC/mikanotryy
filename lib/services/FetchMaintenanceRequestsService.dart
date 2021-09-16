@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart';
+import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'AuthorizationInterceptor.dart';
 
 class MaintenanceRequestService {
   var headers;
@@ -52,8 +56,11 @@ class MaintenanceRequestService {
     print(headers);
     final response;
     late final listresult;
+    Client client = InterceptedClient.build(interceptors: [
+      AuthorizationInterceptor(),
+    ]);
     try {
-      response = await http.get(Uri.parse(GetMaintenaceRequestURL +
+      response = await client.get(Uri.parse(GetMaintenaceRequestURL +
           '/UserRequests/' +
           prefs.getString('UserID').toString()));
       print(response.statusCode);

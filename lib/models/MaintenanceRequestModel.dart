@@ -13,7 +13,7 @@ class MaintenanceRequestModel {
   late final String? requestDescription;
   late final MaintenaceRequestStatus? maintenaceRequestStatus;
   late final List<dynamic>? maintenanceRequestImagesFiles;
-  late final List<String>? maintenanceRequestRecordsFiles;
+  late final List<dynamic>? maintenanceRequestRecordsFiles;
   List<Categ>? maintenanceRequestFiles;
 
   MaintenanceRequestModel({
@@ -34,6 +34,23 @@ class MaintenanceRequestModel {
   factory MaintenanceRequestModel.fromJson(Map<String, dynamic> json) {
     print(json['userId']);
     print(json['dtoMaintenanceRequestFiles']);
+    List audioList = [];
+    List imageList = [];
+    if (json['dtoMaintenanceRequestFiles'] != null) {
+      for (dynamic item in json['dtoMaintenanceRequestFiles']) {
+        if (item['mediaFileURL']
+            .toString()
+            .split("?")[0]
+            .substring(item['mediaFileURL'].toString().split("?")[0].length - 5,
+                item['mediaFileURL'].toString().split("?")[0].length)
+            .contains("wav")) {
+          audioList.add(item['mediaFileURL'].toString());
+        } else {
+          imageList.add(item['mediaFileURL'].toString());
+        }
+      }
+    }
+
     return MaintenanceRequestModel(
       idMaintenanceRequest: json['idMaintenanceRequest'],
       maintenanceCategory: Categ.fromJson(json["maintenanceCategory"]),
@@ -44,42 +61,8 @@ class MaintenanceRequestModel {
       maintenaceRequestStatus:
           MaintenaceRequestStatus.fromJson(json['maintenanceRequestStatus']),
       userId: json['userId'],
-      maintenanceRequestImagesFiles: json['dtoMaintenanceRequestFiles'] == null
-          ? []
-          : json['dtoMaintenanceRequestFiles']
-              .map(
-                  (e) => Asset(e['mediaFileURL'].toString(), "Image", 400, 400))
-              .toList(),
-      // maintenanceRequestRecordsFiles: json['dtoMaintenanceRequestFiles'] == null
-      //     ? []
-      //     : json['dtoMaintenanceRequestFiles']
-      //         .map((e) => {
-      //               print(e['mediaFileURL']
-      //                   .toString()
-      //                   .split("?")[0]
-      //                   .substring(
-      //                       e['mediaFileURL'].toString().split("?")[0].length -
-      //                           5,
-      //                       e['mediaFileURL'].toString().split("?")[0].length)
-      //                   .contains("wav")),
-      //               e['mediaFileURL']
-      //                       .toString()
-      //                       .split("?")[0]
-      //                       .substring(
-      //                           e['mediaFileURL']
-      //                                   .toString()
-      //                                   .split("?")[0]
-      //                                   .length -
-      //                               5,
-      //                           e['mediaFileURL']
-      //                               .toString()
-      //                               .split("?")[0]
-      //                               .length)
-      //                       .contains("wav")
-      //                   ? e['mediaFileURL'].toString()
-      //                   : null
-      //             })
-      //         .toList(),
+      maintenanceRequestImagesFiles: imageList,
+      maintenanceRequestRecordsFiles: audioList,
       // maintenanceCategoryParent:json['maintenanceCategoryParent']
     );
   }

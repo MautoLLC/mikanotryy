@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -248,29 +249,24 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: 1,
-                                                crossAxisSpacing: 8,
+                                                // crossAxisSpacing: 8,
                                                 mainAxisSpacing: 2),
-                                        itemCount: snapshot
-                                            .data!
-                                            .mMaintenacerequest!
-                                            .maintenanceRequestRecordsFiles!
-                                            .length,
+                                        itemCount: 1,
                                         itemBuilder:
                                             (BuildContext context, int index) {
+                                          List<String> tempList = snapshot
+                                              .data!
+                                              .mMaintenacerequest!
+                                              .maintenanceRequestRecordsFiles!
+                                              .map((e) => e.toString())
+                                              .toList();
                                           print(snapshot
                                                   .data!
                                                   .mMaintenacerequest!
                                                   .maintenanceRequestRecordsFiles![
                                               index]);
-                                          Widget temp = Records(
-                                            records: [
-                                              snapshot
-                                                  .data!
-                                                  .mMaintenacerequest!
-                                                  .maintenanceRequestRecordsFiles![
-                                                      index]
-                                                  .toString()
-                                            ],
+                                          Widget temp = RecordsUrl(
+                                            records: tempList,
                                           );
                                           return temp;
                                         }),

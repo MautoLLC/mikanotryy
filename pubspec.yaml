@@ -41,6 +41,7 @@ dependencies:
   fluttertoast: ^8.0.7
   sizer: ^2.0.13
   http: ^0.13.3
+  http_interceptor: ^1.0.1
   transparent_image: ^2.0.0
   multi_image_picker: ^4.8.00
   # graphql_flutter: ^5.0.0

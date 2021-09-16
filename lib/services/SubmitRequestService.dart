@@ -41,7 +41,7 @@ SubmitMaintenanceRequest(
       mMaintenanceRequest.requestDescription.toString();
 
   List<dynamic>? mImages = mMaintenanceRequest.maintenanceRequestImagesFiles;
-  List<String>? mRecords = mMaintenanceRequest.maintenanceRequestRecordsFiles;
+  List<dynamic>? mRecords = mMaintenanceRequest.maintenanceRequestRecordsFiles;
   List<MultipartFile> newList = [];
 
   for (int i = 0; i < mImages!.length; i++) {
