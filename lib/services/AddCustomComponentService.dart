@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart';
+import 'package:http_interceptor/http_interceptor.dart';
+import 'package:mymikano_app/services/DioClass.dart';
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -11,36 +15,27 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-var headers;
+late Dio dio;
+late var headers;
 
 Future<void> PrepareHeader() async {
   Directory directory = await getApplicationDocumentsDirectory();
   File file = File('${directory.path}/credentials.json');
   String fileContent = await file.readAsString();
   headers = {
-    "content-type": "application/json",
-    'Authorization': 'Bearer $fileContent'
+    "Authorization": "Bearer $fileContent",
   };
 }
 
 AddCustomComponentService(ComponentModel comp, int idInspection) async {
   try {
-    final url = Uri.parse(
-        "$PostInspectionCustomChecklistItemURL${idInspection.toString()}");
+    final url =
+        ("$PostInspectionCustomChecklistItemURL${idInspection.toString()}");
     print(url);
     await PrepareHeader();
     print(
         "comp.componentDescription.toString() ====>>>> ${comp.componentDescription.toString()}");
-    var response = await http.post(url,
-        headers: headers,
-        body: json.encode({
-          "customComponentName": comp.componentName.toString(),
-          "customComponentDescription": comp.componentDescription.toString(),
-          "customComponentProvider": comp.componentProvider.toString() == ""
-              ? "No Provider"
-              : comp.componentProvider.toString(),
-          "customComponentUnitPrice": comp.componentUnitPrice
-        }));
+    var response = await http.post(Uri.parse(url), headers: headers);
     if (response.statusCode == 200) {
       print("Component created!");
       Fluttertoast.showToast(

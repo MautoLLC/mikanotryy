@@ -9,6 +9,8 @@ import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:sizer/sizer.dart';
 
 AppStore appStore = AppStore();
+final GlobalKey<NavigatorState> navigator =
+    GlobalKey<NavigatorState>(); //Create a key for navigator
 
 Future<void> _messageHandler(RemoteMessage message) async {
   print('background message ${message.notification!.body}');
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
     PushNotificationService(_fcm).initialise(context);
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
+        navigatorKey: navigator,
         title: 'My Mikano',
         theme: ThemeData(
           primarySwatch: Colors.red,

@@ -99,7 +99,7 @@ class DashboardState extends State<Dashboard> {
                         ),
                   Spacer(),
                   Image.asset(
-                    'images/MyMikanoLogo.png',
+                    'images/MyMikanoLogo2.png',
                     width: 60,
                     height: 60,
                   ),

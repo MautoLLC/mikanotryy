@@ -1,40 +1,29 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart';
+import 'package:http_interceptor/http_interceptor.dart';
+import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/models/InspectionChecklistItem.dart';
 import 'package:mymikano_app/models/PredefinedChecklistModel.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ChecklistItemsService {
-  var headers;
+  late Dio dio;
 
-  void PrepareHeader() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/credentials.json');
-    String fileContent = await file.readAsString();
-    print(fileContent);
-    headers = {
-      "Accept": "application/json",
-      // 'Authorization': 'Bearer $fileContent'
-    };
+  Future<void> PrepareCall() async {
+    dio = await DioClass.getDio();
   }
 
   Future<List<PredefinedChecklistModel>> fetchItems(int idMainCat) async {
-    final url =
-        Uri.parse(GetPredefinedCheckListByCategURL + idMainCat.toString());
+    final url = (GetPredefinedCheckListByCategURL + idMainCat.toString());
 
-    PrepareHeader();
-    final response = await http.get(url, headers: headers);
-    // print(response.body);
+    await PrepareCall();
+    final response = await dio.get(url);
 
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as List<dynamic>;
+      final json = jsonDecode(response.data) as List<dynamic>;
       final listresult =
           json.map((e) => PredefinedChecklistModel.fromJson(e)).toList();
 
@@ -45,19 +34,16 @@ class ChecklistItemsService {
   }
 
   Future<List<InspectionChecklistItem>> fetchAllItems(int inspId) async {
-    final url =
-        Uri.parse(GetCustomCheckListByInspectionURL + inspId.toString());
+    final url = (GetCustomCheckListByInspectionURL + inspId.toString());
 
-    PrepareHeader();
-    dynamic response = await http.get(url, headers: headers);
-    // print(response.body);
+    await PrepareCall();
+    dynamic response = await dio.get(url);
+    // print(response.data);
 
     if (response.statusCode == 200) {
       List<InspectionChecklistItem> listresult = [];
-      final json = await jsonDecode(response.body);
 
-      for (var item in json) {
-        print(item);
+      for (var item in response.data) {
         InspectionChecklistItem temp = InspectionChecklistItem.fromJson(item);
 
         listresult.add(temp);

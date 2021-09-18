@@ -12,9 +12,6 @@ class ListInspectionChecklistItemsViewModel {
     final apiresult = await ChecklistItemsService().fetchAllItems(inspId);
     inpectionItems = [];
     for (int i = 0; i < apiresult.length; i++) {
-      print(apiresult[i].customComponent.toString() != "null"
-          ? apiresult[i].customComponent!.componentName
-          : apiresult[i].predefinedChecklistItem!.component!.componentName);
       InspectionChecklistItemsViewModel temp =
           InspectionChecklistItemsViewModel(apiresult[i]);
       this.inpectionItems.add(temp);

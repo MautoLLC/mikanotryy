@@ -168,7 +168,7 @@ class T5ProfileState extends State<T5Profile> {
                         gridItem(),
                         IconButton(
                             onPressed: () async {
-                              await logout(this.context);
+                              await logout();
                             },
                             icon: Icon(Icons.logout))
                       ],

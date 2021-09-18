@@ -1,24 +1,20 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
+import 'package:http_interceptor/http_interceptor.dart';
+import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-var headers;
+late Dio dio;
 
-void PrepareHeader() async {
-  Directory directory = await getApplicationDocumentsDirectory();
-  File file = File('${directory.path}/credentials.json');
-  String fileContent = await file.readAsString();
-  headers = {
-    "Accept": "application/json",
-    'Authorization': 'Bearer $fileContent'
-  };
+Future<void> PrepareCall() async {
+  dio = await DioClass.getDio();
 }
 
 changeChecklistItemStatus(int? itemId, int? StatusId) async {
@@ -30,9 +26,9 @@ changeChecklistItemStatus(int? itemId, int? StatusId) async {
     final url = Uri.http("dev.codepickles.com:8087",
         ChangeStatusCustomCheckListURL, queryParameters);
     print(url);
-    PrepareHeader();
-    final response = await http.put(url, headers: headers);
-    print(response.body);
+    await PrepareCall();
+    final response = await dio.put(url.toString());
+    print(response.data);
     // print(url);
     print(response.statusCode);
     if (response.statusCode == 204) {
@@ -46,7 +42,7 @@ changeChecklistItemStatus(int? itemId, int? StatusId) async {
           textColor: Colors.black87,
           fontSize: 16.0);
     } else {
-      print("Failed to update component status!" + response.body.toString());
+      print("Failed to update component status!" + response.data.toString());
       Fluttertoast.showToast(
           msg: "Failed to update component status!",
           toastLength: Toast.LENGTH_SHORT,
