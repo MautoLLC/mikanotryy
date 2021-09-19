@@ -7,6 +7,7 @@ import 'package:mymikano_app/models/Sensors_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';
 import 'package:mymikano_app/models/Unit_Model.dart';
 import 'package:mymikano_app/models/Units_Model.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class DashBorad_Service {
   final String UserName = dotenv.env['UserName'].toString();
@@ -17,6 +18,8 @@ class DashBorad_Service {
       dotenv.env['AuthenticateEndPoint'].toString();
   late Token AppToken;
   late String UnitGuid;
+  List<String> listUnitGuids = [];
+
   Future<Token> FetchTokenForUser() async {
     http.Response response = await http.post(Uri.parse(AuthenticateEndPoint),
         headers: <String, String>{
@@ -29,6 +32,57 @@ class DashBorad_Service {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       return Token.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to Fetch Token.');
+    }
+  }
+
+  Future<void> authenticateUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    http.Response response = await http.get(
+      Uri.parse(
+          'http://dev.codepickles.com:8091/api/UserGenerators/User/${prefs.getString('UserID')}'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Comap-Key': Comap_Key,
+        "Authorization": "Bearer ${prefs.getString("accessToken")}",
+      },
+    );
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      UnitGuid = jsonDecode(response.body)['unitGuid'];
+      print(response.body);
+      print(UnitGuid);
+      // return Token.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to Fetch Token.');
+    }
+  }
+
+  Future<void> getListGuids() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    http.Response response = await http.get(
+      Uri.parse(
+          'http://dev.codepickles.com:8091/api/UserAllowedValues/$UnitGuid'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer ${prefs.getString("accessToken")}",
+      },
+    );
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      for (var item in jsonDecode(response.body)) {
+        listUnitGuids.add(item);
+      }
+      print(response.body);
+      print(listUnitGuids);
+      // return Token.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.

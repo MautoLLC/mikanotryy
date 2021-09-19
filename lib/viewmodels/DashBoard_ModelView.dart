@@ -14,6 +14,11 @@ class DashBoard_ModelView {
 
   Future<void> GetUserToken() async {
     DashBoardService.AppToken = await DashBoardService.FetchTokenForUser();
+    await DashBoardService.authenticateUser();
+  }
+
+  Future<void> getListGuid() async {
+    await DashBoardService.getListGuids();
   }
 
   Future<void> GetUnits() async {
@@ -95,6 +100,8 @@ class DashBoard_ModelView {
   }
 
   Sensor GetSensor(String SensorGuid) {
+    print(_SensorsList.singleWhere((element) => element.valueGuid == SensorGuid)
+        .name);
     return _SensorsList.singleWhere(
         (element) => element.valueGuid == SensorGuid);
   }
