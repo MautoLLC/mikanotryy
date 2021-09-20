@@ -81,6 +81,7 @@ class DashboardState extends State<Dashboard> {
             child: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Container(
+              transform: Matrix4.translationValues(0.0, 8.0, 0.0),
               margin: EdgeInsets.only(left: 16, right: 16),
               child: Row(
                 children: <Widget>[
@@ -321,12 +322,9 @@ class DashboardState extends State<Dashboard> {
                                       ],
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //     height: SizerUtil.deviceType ==
-                                  //             DeviceType.tablet
-                                  //         ? 20
-                                  //         : 0),
                                   Container(
+                                    transform: Matrix4.translationValues(
+                                        0.0, -10.0, 0.0),
                                     height: SizerUtil.deviceType ==
                                             DeviceType.mobile
                                         ? 160
@@ -340,8 +338,6 @@ class DashboardState extends State<Dashboard> {
                                           child: DashboardSlider(
                                               mSliderListings[index], index),
                                           onTap: () {
-                                            print(
-                                                "https://mikanoshop.mauto.co/${mSliderListings[index].dishName}");
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(

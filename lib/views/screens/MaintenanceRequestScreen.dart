@@ -187,32 +187,36 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         fontFamily: fontBold)
                   ],
                 ),
-                Spacer(),
+                // Spacer(),
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                //   child: Row(
+                //     children: [
+                //       Image.asset(
+                //         this.widget.mainCatg.maintenanceCategoryIcon,
+                //         width: 30,
+                //         height: 30,
+                //       ),
+                //       SizedBox(
+                //         width: 10,
+                //       ),
+                //       Text(this.widget.mainCatg.maintenanceCategoryName)
+                //     ],
+                //   ),
+                // ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        this.widget.mainCatg.maintenanceCategoryIcon,
-                        width: 30,
-                        height: 30,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(this.widget.mainCatg.maintenanceCategoryName)
-                    ],
+                  padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
+                  child: ClipRRect(
+                    child: Image.asset(this
+                        .widget
+                        .mainCatg
+                        .maintenanceCategoryImage
+                        .trim()
+                        .toString()),
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                ClipRRect(
-                  child: Image.asset(this
-                      .widget
-                      .mainCatg
-                      .maintenanceCategoryImage
-                      .trim()
-                      .toString()),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
+                Spacer(),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: text(
