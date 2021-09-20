@@ -950,9 +950,18 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Start Recording',
-                          style:
-                              primaryTextStyle(size: 18, color: Colors.white))
+                      Text('Cancel',
+                              style: primaryTextStyle(
+                                  size: 18, color: Colors.white))
+                          .onTap(() {
+                        finish(context);
+                      }),
+                      Text('Done',
+                              style: primaryTextStyle(
+                                  size: 18, color: Colors.white))
+                          .onTap(() {
+                        finish(context);
+                      })
                     ],
                   ).paddingAll(15.0),
                 ),

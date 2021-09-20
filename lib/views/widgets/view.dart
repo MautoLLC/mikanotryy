@@ -21,18 +21,18 @@ class _RecorderState extends State<Recorder> {
   RecordingStatus _currentStatus = RecordingStatus.Unset;
   bool stop = false;
   Recording? _current;
-   String duration ="0.0.0.0";
+  String duration = "0.0.0.0";
   // Recorder properties
   late FlutterAudioRecorder? audioRecorder;
 
   @override
   void initState() {
     super.initState();
-   // duration =checkDuration();
+    // duration =checkDuration();
     checkPermission();
   }
-  checkPermission()async{
 
+  checkPermission() async {
     if (await Permission.contacts.request().isGranted) {
       // Either the permission was already granted before or the user just granted it.
     }
@@ -45,13 +45,10 @@ class _RecorderState extends State<Recorder> {
     print(statuses[Permission.microphone]);
     print(statuses[Permission.storage]);
     //bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
-    if (statuses[Permission.microphone]==PermissionStatus.granted) {
+    if (statuses[Permission.microphone] == PermissionStatus.granted) {
       _currentStatus = RecordingStatus.Initialized;
       _recordIcon = Icons.mic;
-    }else
-    {
-
-    }
+    } else {}
   }
   // checkDuration<String>() {
   //     if (_current == null) {
@@ -68,7 +65,7 @@ class _RecorderState extends State<Recorder> {
   void dispose() {
     _currentStatus = RecordingStatus.Unset;
     audioRecorder = null;
-    duration="0.0.0.0";
+    duration = "0.0.0.0";
     super.dispose();
   }
 
@@ -79,50 +76,22 @@ class _RecorderState extends State<Recorder> {
       children: [
         Column(
           children: [
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               // duration,
               // ?? "0:0:0:0"
-            duration,
-            // (_current == null)? "0:0:0:0":_current!.duration.toString(),
+              duration,
+              // (_current == null)? "0:0:0:0":_current!.duration.toString(),
               style: TextStyle(color: Colors.black, fontSize: 20),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             stop == false
                 ? RaisedButton(
-              color: Colors.black,
-              onPressed: () async {
-                await _onRecordButtonPressed();
-                setState(() {});
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    child: Icon(
-                      _recordIcon,
-                      color: Colors.white,
-                      size: 80,
-                    ),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Text("Start Recording",style: TextStyle(color: Colors.white),),
-                  // )
-                ],
-              ),
-            )
-                : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RaisedButton(
-                    color: colo,
+                    color: Colors.black,
                     onPressed: () async {
                       await _onRecordButtonPressed();
                       setState(() {});
@@ -130,38 +99,69 @@ class _RecorderState extends State<Recorder> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      child: Icon(
-                        _recordIcon,
-                        color: Colors.white,
-                        size: 50,
-                      ),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          child: Icon(
+                            _recordIcon,
+                            color: Colors.white,
+                            size: 80,
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Text("Start Recording",style: TextStyle(color: Colors.white),),
+                        // )
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RaisedButton(
+                          color: colo,
+                          onPressed: () async {
+                            await _onRecordButtonPressed();
+                            setState(() {});
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            child: Icon(
+                              _recordIcon,
+                              color: Colors.white,
+                              size: 50,
+                            ),
+                          ),
+                        ),
+                        RaisedButton(
+                          color: Colors.black12,
+                          onPressed: _currentStatus != RecordingStatus.Unset
+                              ? _stop
+                              : null,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            child: Icon(
+                              Icons.stop,
+                              color: Colors.white,
+                              size: 50,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  RaisedButton(
-                    color: Colors.black12,
-                    onPressed: _currentStatus != RecordingStatus.Unset
-                        ? _stop
-                        : null,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      child: Icon(
-                        Icons.stop,
-                        color: Colors.white,
-                        size: 50,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
           ],
         ),
       ],
@@ -202,8 +202,7 @@ class _RecorderState extends State<Recorder> {
     String dato = "${DateTime.now().millisecondsSinceEpoch.toString()}.wav";
     // DateTime.now()!
     // millisecondsSinceEpoch?
-    Directory appDirec =
-    Directory("${appDir.path}/$jrecord/");
+    Directory appDirec = Directory("${appDir.path}/$jrecord/");
     if (await appDirec.exists()) {
       String patho = "${appDirec.path}$dato";
       print("path for file11 ${patho}");
@@ -224,7 +223,7 @@ class _RecorderState extends State<Recorder> {
     var recording = await audioRecorder!.current(channel: 0);
     setState(() {
       _current = recording!;
-      duration=_current!.duration.toString();
+      duration = _current!.duration.toString();
     });
 
     const tick = const Duration(milliseconds: 50);
@@ -238,7 +237,7 @@ class _RecorderState extends State<Recorder> {
       setState(() {
         _current = current!;
         _currentStatus = _current!.status!;
-        duration=_current!.duration.toString();
+        duration = _current!.duration.toString();
       });
     });
   }
@@ -259,7 +258,7 @@ class _RecorderState extends State<Recorder> {
     setState(() {
       _recordIcon = Icons.mic;
       colo = Colors.green;
-      duration="0:0:0:0";
+      duration = "0:0:0:0";
     });
   }
 
@@ -267,20 +266,17 @@ class _RecorderState extends State<Recorder> {
     var result = await audioRecorder!.stop();
     Fluttertoast.showToast(msg: "Stop Recording , File Saved");
     widget.save();
-    setState(() {
-      _current = result!;
+    _current = result!;
 
-      _currentStatus = _current!.status!;
-      _current!.duration = null;
-      _recordIcon = Icons.mic;
-      stop = false;
-      duration="0:0:0:0";
-      // duration=checkDuration();
-    });
+    _currentStatus = _current!.status!;
+    _current!.duration = Duration(seconds: 0);
+    _recordIcon = Icons.mic;
+    stop = false;
+    duration = "0:0:0:0";
+    setState(() {});
   }
 
   Future<void> _recordo() async {
-
     Map<Permission, PermissionStatus> statuses = await [
       Permission.microphone,
       Permission.storage,
@@ -288,8 +284,7 @@ class _RecorderState extends State<Recorder> {
     print(statuses[Permission.microphone]);
     print(statuses[Permission.storage]);
     //bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
-    if (statuses[Permission.microphone]==PermissionStatus.granted) {
-
+    if (statuses[Permission.microphone] == PermissionStatus.granted) {
       /* }
     bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
 

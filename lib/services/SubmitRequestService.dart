@@ -14,22 +14,14 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<String> ReturnToken() async {
-  Directory directory = await getApplicationDocumentsDirectory();
-  File file = File('${directory.path}/credentials.json');
-  String fileContent = await file.readAsString();
-  return fileContent;
-}
-
 SubmitMaintenanceRequest(
     MaintenanceRequestModel mMaintenanceRequest, BuildContext context) async {
   final url = Uri.parse(PostMaintenaceRequestURL);
 
-  Future<String> token = ReturnToken();
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   var request = new http.MultipartRequest("POST", url);
-  request.headers['Authorization'] = 'Bearer $token';
+  request.headers['Authorization'] = 'Bearer ${prefs.getString("accessToken")}';
   //request.fields['idMaintenanceRequest'] = 1.toString();
   request.fields['maintenanceCategoryId'] =
       mMaintenanceRequest.maintenanceCategoryId.toString();
@@ -66,6 +58,14 @@ SubmitMaintenanceRequest(
 
   request.files.addAll(newList);
 
+  Fluttertoast.showToast(
+      msg: "Request is being processed, please wait! ",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 2,
+      backgroundColor: t13_edit_text_color,
+      textColor: Colors.black87,
+      fontSize: 16.0);
   request.send().then((response) {
     if (response.statusCode == 201) {
       print("Uploaded!");
