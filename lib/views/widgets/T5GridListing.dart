@@ -31,8 +31,7 @@ class T5GridListing extends StatelessWidget {
 
           if (snapshot.hasError) {
             return Center(
-                child: Text(
-                    "Please check you internet connection and try again !",
+                child: Text(snapshot.error.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,

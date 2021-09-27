@@ -23,15 +23,12 @@ class DioClass {
     Dio dio = Dio();
     dio.interceptors.add(
         InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
-      options.headers["Authorization"] =
-          "Bearer ${prefs.getString("accessToken")}";
-      options.headers["Content-Type"] = "application/json";
-      return handler.next(options);
-    }, onResponse: (response, handler) async {
       DateTime now = new DateTime.now();
       int current = now.millisecondsSinceEpoch ~/ 1000;
-      if ((current - prefs.getInt('tokenStartTime')!.toInt()) >
-          prefs.getInt('refreshDuration')!.toInt()) {
+      int ellapsedTime = (current - prefs.getInt('tokenStartTime')!.toInt());
+      int refreshDuration = prefs.getInt('refreshDuration')!.toInt();
+      int tokenDuration = prefs.getInt('tokenDuration')!.toInt();
+      if (ellapsedTime > refreshDuration) {
         Fluttertoast.showToast(
             msg: "Session Expired",
             toastLength: Toast.LENGTH_SHORT,
@@ -41,14 +38,21 @@ class DioClass {
             textColor: Colors.black87,
             fontSize: 16.0);
         await logout();
-      } else if ((current - prefs.getInt('tokenStartTime')!.toInt()) >
-          prefs.getInt('tokenDuration')!.toInt()) {
+      } else if (ellapsedTime > tokenDuration) {
         if (await RefreshToken(prefs.getString("refreshToken").toString())) {
-          return handler.next(response);
+          options.headers["Authorization"] =
+              "Bearer ${prefs.getString("accessToken")}";
+          options.headers["Content-Type"] = "application/json";
+          return handler.next(options);
         }
       } else {
-        return handler.next(response);
+        options.headers["Authorization"] =
+            "Bearer ${prefs.getString("accessToken")}";
+        options.headers["Content-Type"] = "application/json";
+        return handler.next(options);
       }
+    }, onResponse: (response, handler) async {
+      return handler.next(response);
     }, onError: (error, handler) {
       print(error.response!.statusCode.toString());
       return handler.next(error);
