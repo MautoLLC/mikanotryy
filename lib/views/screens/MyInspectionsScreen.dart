@@ -275,7 +275,7 @@ class T5ListingState extends State<T5Listing> {
                                                                               .connectionState ==
                                                                           ConnectionState
                                                                               .done) {
-                                                                        return Image.asset(snapshot
+                                                                        return Image.network(snapshot
                                                                             .data!
                                                                             .mMaintenacerequest!
                                                                             .maintenanceCategory!
