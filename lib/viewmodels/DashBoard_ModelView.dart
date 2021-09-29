@@ -10,15 +10,30 @@ class DashBoard_ModelView {
   DashBorad_Service DashBoardService = new DashBorad_Service();
   late Token AppToken;
   late Unit _UserUnit;
-  late List<Sensor> _SensorsList;
+  late List<Sensor> _SensorsList = [];
+  // List<String> AllowedGUIDs = [
+  //   dotenv.env['EngineState_Guid'].toString(),
+  //   dotenv.env['BreakerState_Guid'].toString(),
+  //   dotenv.env['RunningHours_Guid'].toString(),
+  //   dotenv.env['Rpm_Guid'].toString(),
+  //   dotenv.env['OilPressure_Guid'].toString(),
+  //   dotenv.env['BatteryVoltage_Guid'].toString(),
+  //   dotenv.env['GeneratorFrequency_Guid'].toString(),
+  //   dotenv.env['FuelLevel_Guid'].toString(),
+  //   dotenv.env['CoolantTemp_Guid'].toString(),
+  //   dotenv.env['GeneratorVoltage_Guid'].toString(),
+  //   dotenv.env['GeneratorLoad_Guid'].toString(),
+  //   dotenv.env['Controller_Mode'].toString()
+  // ];
+  List<String> AllowedGUID = [];
 
   Future<void> GetUserToken() async {
-    DashBoardService.AppToken = await DashBoardService.FetchTokenForUser();
+    await DashBoardService.FetchTokenForUser();
     await DashBoardService.authenticateUser();
   }
 
   Future<void> getListGuid() async {
-    await DashBoardService.getListGuids();
+    AllowedGUID = await DashBoardService.getListGuids();
   }
 
   Future<void> GetUnits() async {
@@ -100,9 +115,34 @@ class DashBoard_ModelView {
   }
 
   Sensor GetSensor(String SensorGuid) {
-    print(_SensorsList.singleWhere((element) => element.valueGuid == SensorGuid)
-        .name);
+    String temp = _SensorsList.singleWhere(
+        (element) =>
+            AllowedGUID.contains(element.valueGuid) &&
+            element.valueGuid == SensorGuid, orElse: () {
+      return Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: "Restricted",
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+    }).name;
+    print("$temp");
     return _SensorsList.singleWhere(
-        (element) => element.valueGuid == SensorGuid);
+        (element) =>
+            AllowedGUID.contains(element.valueGuid) &&
+            element.valueGuid == SensorGuid, orElse: () {
+      return Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: "Restricted",
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+    });
   }
 }

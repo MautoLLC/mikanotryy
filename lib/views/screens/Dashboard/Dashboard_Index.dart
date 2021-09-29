@@ -53,12 +53,13 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
     EngineState = DashModelView.GetEngineState();
     BreakState = DashModelView.GetBreakerState();
     RunningHours = DashModelView.GetRunningHours();
-    Hours = RunningHours.value.toString().split(".")[0];
-    Minutes =
-        ((double.parse(RunningHours.value.toString()) - double.parse(Hours)) *
+    Hours = RunningHours.value.toString();
+    Minutes = RunningHours.value.toString() != "Restricted"
+        ? ((double.parse(RunningHours.value.toString()) - double.parse(Hours)) *
                 60)
             .round()
-            .toString();
+            .toString()
+        : "Restricted";
     Rpm = DashModelView.GetRPM();
     BatteryVoltage = DashModelView.GetBattryVoltage();
     OilPressure = DashModelView.GetOilPressure();
@@ -167,66 +168,74 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             ),
                             Row(
                               children: [
-                                Expanded(
-                                  child: Card_ImageTitleDescription(
-                                    ImagePath: "assets/EngineState.png",
-                                    Title: "Engine State",
-                                    Description: EngineState.value,
+                                if (EngineState.value != "Restricted")
+                                  Expanded(
+                                    child: Card_ImageTitleDescription(
+                                      ImagePath: "assets/EngineState.png",
+                                      Title: "Engine State",
+                                      Description: EngineState.value,
+                                    ),
+                                    flex: 1,
                                   ),
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                  child: Card_ImageTitleDescription(
-                                    ImagePath: "assets/Breaker.png",
-                                    Title: "Breaker State",
-                                    Description: BreakState.value,
+                                if (BreakState.value != "Restricted")
+                                  Expanded(
+                                    child: Card_ImageTitleDescription(
+                                      ImagePath: "assets/Breaker.png",
+                                      Title: "Breaker State",
+                                      Description: BreakState.value,
+                                    ),
+                                    flex: 1,
                                   ),
-                                  flex: 1,
-                                ),
                               ],
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Card_ImageTitleTime(
-                              ImagePath: "assets/RunningHours.png",
-                              Title: "Running Hours",
-                              Hours: Hours,
-                              Minutes: Minutes,
-                              Headerh: "Hours",
-                              Headerm: "Minutes",
-                            ),
+                            if (Hours != "Restricted")
+                              Card_ImageTitleTime(
+                                ImagePath: "assets/RunningHours.png",
+                                Title: "Running Hours",
+                                Hours: Hours,
+                                Minutes: Minutes,
+                                Headerh: "Hours",
+                                Headerm: "Minutes",
+                              ),
                             SizedBox(
                               height: 10,
                             ),
-                            Custom_Card_CircularGuage(
-                                Title: 'RPM',
-                                Unit: Rpm.unit + "*100",
-                                Value: ((Rpm.value) / 100).toString()),
+                            if (Rpm.value != "Restricted")
+                              Custom_Card_CircularGuage(
+                                  Title: 'RPM',
+                                  Unit: Rpm.unit + "*100",
+                                  Value: ((Rpm.value) / 100).toString()),
                             SizedBox(
                               height: 10,
                             ),
                             Row(
                               children: [
-                                Expanded(
-                                  child: Card_ImageTitleDescription(
-                                    ImagePath: "assets/Battery.png",
-                                    Title: "Battery",
-                                    Description:
-                                        BatteryVoltage.value.toString() +
+                                if (BatteryVoltage.value.toString() !=
+                                    "Restricted")
+                                  Expanded(
+                                    child: Card_ImageTitleDescription(
+                                      ImagePath: "assets/Battery.png",
+                                      Title: "Battery",
+                                      Description:
+                                          BatteryVoltage.value.toString() +
+                                              " " +
+                                              BatteryVoltage.unit.toString(),
+                                    ),
+                                    flex: 1,
+                                  ),
+                                if (OilPressure.value.toString() !=
+                                    "Restricted")
+                                  Expanded(
+                                    child: Card_ImageValue(
+                                        ImagePath: 'assets/OilPressure.png',
+                                        Value: OilPressure.value.toString() +
                                             " " +
-                                            BatteryVoltage.unit.toString(),
+                                            OilPressure.unit.toString()),
+                                    flex: 1,
                                   ),
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                  child: Card_ImageValue(
-                                      ImagePath: 'assets/OilPressure.png',
-                                      Value: OilPressure.value.toString() +
-                                          " " +
-                                          OilPressure.unit.toString()),
-                                  flex: 1,
-                                ),
                               ],
                             ),
                             SizedBox(
@@ -234,38 +243,44 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             ),
                             Row(
                               children: [
-                                Expanded(
-                                  child: Card_ImageValue(
-                                    ImagePath: "assets/Temperature.png",
-                                    Value: CoolantTemp.value.toString() +
-                                        " " +
-                                        CoolantTemp.unit.toString(),
-                                  ),
-                                  flex: 1,
-                                ),
-                                Expanded(
-                                  child: Card_ImageValue(
-                                      ImagePath: 'assets/Fuel.png',
-                                      Value: FuelLevel.value.toString() +
+                                if (CoolantTemp.value.toString() !=
+                                    "Restricted")
+                                  Expanded(
+                                    child: Card_ImageValue(
+                                      ImagePath: "assets/Temperature.png",
+                                      Value: CoolantTemp.value.toString() +
                                           " " +
-                                          FuelLevel.unit.toString()),
-                                  flex: 1,
-                                ),
+                                          CoolantTemp.unit.toString(),
+                                    ),
+                                    flex: 1,
+                                  ),
+                                if (FuelLevel.value.toString() != "Restricted")
+                                  Expanded(
+                                    child: Card_ImageValue(
+                                        ImagePath: 'assets/Fuel.png',
+                                        Value: FuelLevel.value.toString() +
+                                            " " +
+                                            FuelLevel.unit.toString()),
+                                    flex: 1,
+                                  ),
                               ],
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Row_TitleValueUnit(
-                              Title: "Ph-N",
-                              Value: GeneratorVoltage.value.toString(),
-                              Unit: GeneratorVoltage.unit.toString(),
-                            ),
-                            Row_TitleValueUnit(
-                              Title: "Load",
-                              Value: GeneratorLoad.value.toString(),
-                              Unit: GeneratorLoad.unit.toString(),
-                            ),
+                            if (GeneratorVoltage.value.toString() !=
+                                "Restricted")
+                              Row_TitleValueUnit(
+                                Title: "Ph-N",
+                                Value: GeneratorVoltage.value.toString(),
+                                Unit: GeneratorVoltage.unit.toString(),
+                              ),
+                            if (GeneratorLoad.value.toString() != "Restricted")
+                              Row_TitleValueUnit(
+                                Title: "Load",
+                                Value: GeneratorLoad.value.toString(),
+                                Unit: GeneratorLoad.unit.toString(),
+                              ),
 
                             ///////////////// commented by youssef k and corresponds to the old design////////
                             //Buttons_Row(PowerOffImage:"assets/poweroff.jpg" ,PowerOnImage:"assets/Poweron.png"),
