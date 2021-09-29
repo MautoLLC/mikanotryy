@@ -263,9 +263,33 @@ class T5ListingState extends State<T5Listing> {
                                                                     right: 16),
                                                             width: width / 7.2,
                                                             height: width / 7.2,
-                                                            child: Image.asset(
-                                                                mListings[index]
-                                                                    .icon),
+                                                            child:
+                                                                FutureBuilder(
+                                                                    future: ListMaintenanceRequestsViewModel().fetchMaintenanceRequestsByID(reqq
+                                                                        .idMaintenanceRequest!
+                                                                        .toInt()),
+                                                                    builder: (context,
+                                                                        AsyncSnapshot<MaintenanceRequestsViewModel>
+                                                                            snapshot) {
+                                                                      if (snapshot
+                                                                              .connectionState ==
+                                                                          ConnectionState
+                                                                              .done) {
+                                                                        return Image.asset(snapshot
+                                                                            .data!
+                                                                            .mMaintenacerequest!
+                                                                            .maintenanceCategory!
+                                                                            .maintenanceCategoryIcon);
+                                                                      } else {
+                                                                        return Center(
+                                                                          child:
+                                                                              const CircularProgressIndicator(),
+                                                                        );
+                                                                      }
+                                                                    }),
+                                                            // child: Image.asset(
+                                                            //     mListings[index]
+                                                            //         .icon),
                                                             padding:
                                                                 EdgeInsets.all(
                                                                     width / 30),

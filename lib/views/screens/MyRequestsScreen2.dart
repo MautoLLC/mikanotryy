@@ -101,7 +101,7 @@ class MyRequestsScreen2 extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Image.asset(
+                          Image.network(
                               listmrequestsViewModel
                                   .maintenanceRequests![index]
                                   .mMaintenacerequest!

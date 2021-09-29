@@ -72,7 +72,7 @@ class T5GridListing extends StatelessWidget {
                                 width: width / 4.5,
                                 margin: EdgeInsets.only(top: 18),
                                 decoration: boxDecoration(radius: 10),
-                                child: Image.asset(
+                                child: Image.network(
                                   listCategViewModel.maincategs![index].mcateg!
                                       .maintenanceCategoryIcon,
                                 ),

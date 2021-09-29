@@ -190,7 +190,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
                   child: ClipRRect(
-                    child: Image.asset(this
+                    child: Image.network(this
                         .widget
                         .mainCatg
                         .maintenanceCategoryImage
