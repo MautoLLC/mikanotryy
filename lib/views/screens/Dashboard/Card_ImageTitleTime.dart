@@ -30,12 +30,15 @@ class Card_ImageTitleTime extends StatelessWidget {
               SizedBox(
                 width: 15,
               ),
-              Text(
-                Title,
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0),
+              FittedBox(
+                        fit: BoxFit.fitWidth, 
+                child: Text(
+                  Title,
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0),
+                ),
               ),
               Spacer(),
               Column(
@@ -45,11 +48,11 @@ class Card_ImageTitleTime extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
+                        fontSize: 14.0),
                   ),
                   Text(
                     Headerh,
-                    style: TextStyle(fontFamily: 'Roboto', fontSize: 12.0),
+                    style: TextStyle(fontFamily: 'Roboto', fontSize: 10.0),
                   )
                 ],
               ),
@@ -61,11 +64,11 @@ class Card_ImageTitleTime extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
-                        fontSize: 16.0),
+                        fontSize: 14.0),
                   ),
                   Text(
                     Headerm,
-                    style: TextStyle(fontFamily: 'Roboto', fontSize: 12.0),
+                    style: TextStyle(fontFamily: 'Roboto', fontSize: 10.0),
                   )
                 ],
               )

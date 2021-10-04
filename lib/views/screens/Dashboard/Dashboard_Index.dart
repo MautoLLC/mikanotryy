@@ -230,7 +230,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                     "Restricted")
                                   Expanded(
                                     child: Card_ImageValue(
-                                        ImagePath: 'assets/OilPressure.png',
+                                        ImagePath: 'assets/oilpressure.png',
                                         Value: OilPressure.value.toString() +
                                             " " +
                                             OilPressure.unit.toString()),
