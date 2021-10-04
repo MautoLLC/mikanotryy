@@ -5,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/utils/T2Colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:mymikano_app/views/widgets/audio_recorder.dart';
 import 'package:mymikano_app/views/widgets/list.dart';
 
