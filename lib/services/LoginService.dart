@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
@@ -9,17 +11,25 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 Login(String username, String password, BuildContext context) async {
+      Dio dio = new Dio();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (HttpClient client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+    };
+    Response response;
   try {
-    final response =
-        await http.post(Uri.parse(authorizationEndpoint), headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    }, body: {
-      "username": username,
+    Response response = await dio.post((authorizationEndpoint),
+          options: Options(headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          }),
+          data: {
+            "username": username,
       "password": password,
       "grant_type": "password",
       "client_id": "MymikanoAppLogin",
-    });
-    var temp = jsonDecode(response.body);
+          });
+    var temp = (response.data);
 
     final directory = await getApplicationDocumentsDirectory();
     String appDocPath = directory.path;
