@@ -252,13 +252,13 @@ class _RecordsUrlState extends State<RecordsUrl> {
                 'Record ${widget.records.length - i}',
                 style: TextStyle(color: Colors.black),
               ),
-              onExpansionChanged: ((newState) {
-                if (newState) {
-                  setState(() {
-                    _selected = i;
-                  });
-                }
-              }),
+              // onExpansionChanged: ((newState) {
+              //   if (newState) {
+              //     setState(() {
+              //       _selected = i;
+              //     });
+              //   }
+              // }),
               children: [
                 Container(
                   height: 100,
@@ -274,7 +274,7 @@ class _RecordsUrlState extends State<RecordsUrl> {
                       ),
                       Row(
                         children: [
-                          (isPlay)
+                          (isPlay && _selected == i)
                               ? _Presso(
                                   color: Colors.orange,
                                   ico: Icons.pause,
@@ -289,6 +289,7 @@ class _RecordsUrlState extends State<RecordsUrl> {
                                   ico: Icons.play_arrow,
                                   onPressed: () {
                                     setState(() {
+                                      _selected = i;
                                       isPlay = true;
                                     });
                                     advancedPlayer.play(
