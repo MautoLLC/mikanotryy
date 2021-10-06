@@ -51,10 +51,12 @@ path += extension;
 }
 }
 File file = fs.file(path);
-if (await file.exists()) {
-throw new Exception("A file already exists at the path :" + path);
-} else if (!await file.parent.exists()) {
-throw new Exception("The specified parent directory does not exist ${file.parent}");
+if (!await file.parent.exists()) {
+  await file.parent.create();
+// throw new Exception("The specified parent directory does not exist ${file.parent}");
+}else if (await file.exists()) {
+  await file.create();
+// throw new Exception("A file already exists at the path :" + path);
 }
 } else {
 extension = DEFAULT_EXTENSION; // default value
