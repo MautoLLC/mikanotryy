@@ -15,27 +15,27 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-late Dio dio;
-late var headers;
+  late Dio dio;
 
-Future<void> PrepareHeader() async {
-  Directory directory = await getApplicationDocumentsDirectory();
-  File file = File('${directory.path}/credentials.json');
-  String fileContent = await file.readAsString();
-  headers = {
-    "Authorization": "Bearer $fileContent",
-  };
-}
+  Future<void> PrepareCall() async {
+    dio = await DioClass.getDio();
+  }
 
 AddCustomComponentService(ComponentModel comp, int idInspection) async {
   try {
     final url =
         ("$PostInspectionCustomChecklistItemURL${idInspection.toString()}");
     print(url);
-    await PrepareHeader();
+    await PrepareCall();
     print(
         "comp.componentDescription.toString() ====>>>> ${comp.componentDescription.toString()}");
-    var response = await http.post(Uri.parse(url), headers: headers);
+    var response = await dio.post((url), data: 
+    {
+  "customComponentName": comp.componentName.toString(),
+  "customComponentDescription": comp.componentDescription.toString(),
+  "customComponentProvider": comp.componentProvider.toString(),
+  "customComponentUnitPrice": comp.componentUnitPrice
+});
     if (response.statusCode == 200) {
       print("Component created!");
       Fluttertoast.showToast(
@@ -47,7 +47,7 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
           textColor: Colors.black87,
           fontSize: 16.0);
     } else {
-      print("Failed to create component !" + response.body.toString());
+      print("Failed to create component !" + response.data.toString());
       Fluttertoast.showToast(
           msg: "Error in  creating component ! ",
           toastLength: Toast.LENGTH_SHORT,

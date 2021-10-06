@@ -26,16 +26,19 @@ class Card_ImageTitleDescription extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  Title,
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0),
+                FittedBox(
+                          fit: BoxFit.fitWidth, 
+                  child: Text(
+                    Title,
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0),
+                  ),
                 ),
                 Text(
                   Description,
-                  style: TextStyle(fontFamily: 'Roboto', fontSize: 12.0),
+                  style: TextStyle(fontFamily: 'Roboto', fontSize: 10.0),
                 )
               ],
             )
