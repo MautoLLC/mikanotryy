@@ -52,6 +52,7 @@ dependencies:
   shared_preferences:
   http: ^0.13.3
   dio: ^4.0.0-prev3
+  flutter_audio_recorder2:
 
 #  flutter_absolute_path:
 #    git:
