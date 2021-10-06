@@ -144,11 +144,8 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                             print(snapshot.data!.mMaintenacerequest!
                                 .maintenanceRequestImagesFiles);
                             return snapshot.data!.mMaintenacerequest!
-                                            .maintenanceRequestImagesFiles !=
-                                        null ||
-                                    snapshot.data!.mMaintenacerequest!
-                                            .maintenanceRequestImagesFiles !=
-                                        []
+                                            .maintenanceRequestImagesFiles!.length !=
+                                        0
                                 ? Expanded(
                                     child: GridView.builder(
                                         gridDelegate:
@@ -238,11 +235,7 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                             print(snapshot.data!.mMaintenacerequest!
                                 .maintenanceRequestRecordsFiles);
                             return snapshot.data!.mMaintenacerequest!
-                                            .maintenanceRequestRecordsFiles !=
-                                        null ||
-                                    snapshot.data!.mMaintenacerequest!
-                                            .maintenanceRequestRecordsFiles !=
-                                        []
+                                            .maintenanceRequestRecordsFiles!.length != 0
                                 ? Expanded(
                                     child: GridView.builder(
                                         gridDelegate:
@@ -271,7 +264,7 @@ class _RequestsDetailsPageState extends State<RequestsDetailsPage> {
                                         }),
                                   )
                                 : Center(
-                                    child: Text("No Images"),
+                                    child: Text("No Audio"),
                                   );
                           }
                         }),
