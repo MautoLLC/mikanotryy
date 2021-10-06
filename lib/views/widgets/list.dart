@@ -329,30 +329,6 @@ class _RecordsUrlState extends State<RecordsUrl> {
                                   _percent = 0.0;
                                 });
                               }),
-                          _Presso(
-                              color: Colors.red,
-                              ico: Icons.delete,
-                              onPressed: () {
-                                Directory appDirec =
-                                    Directory(widget.records.elementAt(i));
-                                appDirec.delete(recursive: true);
-                                advancedPlayer.stop();
-                                Fluttertoast.showToast(msg: "File Deleted");
-                                setState(() {
-                                  widget.records
-                                      .remove(widget.records.elementAt(i));
-                                });
-                              }),
-                          _Presso(
-                              color: Colors.grey,
-                              ico: Icons.share,
-                              onPressed: () {
-                                Directory appDirec =
-                                    Directory(widget.records.elementAt(i));
-                                List<String> list = List.empty(growable: true);
-                                list.add(appDirec.path);
-                                Share.shareFiles(list);
-                              }),
                         ],
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       ),

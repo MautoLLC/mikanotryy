@@ -24,6 +24,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>this app use camera to let users take photos for inspections issues</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>app uses microphone to allow users send voice messages to inspectors and request a repair service</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>this app uses photos to let users send photo for their issues and request a service</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -43,7 +49,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>app uses microphone to allow users send voice messages to inspectors and request a repair service</string>
 </dict>
 </plist>

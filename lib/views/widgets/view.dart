@@ -22,6 +22,7 @@ class _RecorderState extends State<Recorder> {
   bool stop = false;
   Recording? _current;
   String duration = "0.0.0.0";
+  bool canRecord = false;
   // Recorder properties
   late FlutterAudioRecorder? audioRecorder;
 
@@ -33,15 +34,28 @@ class _RecorderState extends State<Recorder> {
   }
 
   checkPermission() async {
-    if (await Permission.contacts.request().isGranted) {
-      // Either the permission was already granted before or the user just granted it.
-    }
-
-// You can request multiple permissions at once.
     Map<Permission, PermissionStatus> statuses = await [
       Permission.microphone,
       Permission.storage,
     ].request();
+    if (statuses[Permission.microphone] == PermissionStatus.granted) {
+      // Either the permission was already granted before or the user just granted it.
+    } else {
+      statuses[Permission.microphone] =
+          (await FlutterAudioRecorder.hasPermissions)
+                      .toString()
+                      .toLowerCase() ==
+                  'true'
+              ? PermissionStatus.granted
+              : PermissionStatus.denied;
+    }
+    if (statuses[Permission.microphone] == PermissionStatus.granted) {
+      canRecord = true;
+    }
+    print(
+        "permission ===>>> ${(await FlutterAudioRecorder.hasPermissions).toString().toLowerCase()}");
+// You can request multiple permissions at once.
+
     print(statuses[Permission.microphone]);
     print(statuses[Permission.storage]);
     //bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
@@ -284,7 +298,8 @@ class _RecorderState extends State<Recorder> {
     print(statuses[Permission.microphone]);
     print(statuses[Permission.storage]);
     //bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
-    if (statuses[Permission.microphone] == PermissionStatus.granted) {
+    if (statuses[Permission.microphone] == PermissionStatus.granted ||
+        canRecord) {
       /* }
     bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
 
