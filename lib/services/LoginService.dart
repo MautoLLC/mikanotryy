@@ -70,7 +70,7 @@ Login(String username, String password, BuildContext context) async {
       );
     } on Exception catch (e) {
       Fluttertoast.showToast(
-          msg: "Login Failed" + e.toString(),
+          msg: "Login Failed",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -82,7 +82,7 @@ Login(String username, String password, BuildContext context) async {
   } on Exception catch (e) {
     print(e);
     Fluttertoast.showToast(
-        msg: "Login Failed" + e.toString(),
+        msg: "Login Failed",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,

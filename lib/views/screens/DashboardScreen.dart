@@ -291,6 +291,7 @@ class DashboardState extends State<Dashboard> {
                                 children: <Widget>[
                                   SizedBox(height: 15),
                                   GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
                                     onTap: () {
                                       Navigator.push(
                                         context,
@@ -306,8 +307,7 @@ class DashboardState extends State<Dashboard> {
                                       padding:
                                           EdgeInsets.only(left: 16, right: 16),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+
                                         children: <Widget>[
                                           SizerUtil.deviceType ==
                                                   DeviceType.mobile
@@ -319,6 +319,7 @@ class DashboardState extends State<Dashboard> {
                                                   style: boldTextStyle(
                                                       color: Colors.white,
                                                       size: 30)),
+                                                      Spacer(),
                                           Icon(
                                             Icons.keyboard_arrow_right,
                                             color: Colors.white,
