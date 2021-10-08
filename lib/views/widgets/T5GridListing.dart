@@ -52,47 +52,50 @@ class T5GridListing extends StatelessWidget {
                   Categ mainCategory =
                       listCategViewModel.maincategs![index].mcateg!;
 
-                  return GestureDetector(
-                    onTap: () {
-                      goAll(mainCategory, context);
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: boxDecoration(
-                              radius: 10,
-                              showShadow: true,
-                              bgColor: Colors.white),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: width / 4.5,
-                                width: width / 4.5,
-                                margin: EdgeInsets.only(top: 18),
-                                decoration: boxDecoration(radius: 10),
-                                child: Image.network(
-                                  listCategViewModel.maincategs![index].mcateg!
-                                      .maintenanceCategoryIcon,
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        goAll(mainCategory, context);
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            decoration: boxDecoration(
+                                radius: 10,
+                                showShadow: true,
+                                bgColor: Colors.white),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  height: width / 4.5,
+                                  width: width / 4.5,
+                                  margin: EdgeInsets.only(top: 18),
+                                  decoration: boxDecoration(radius: 10),
+                                  child: Image.network(
+                                    listCategViewModel.maincategs![index].mcateg!
+                                        .maintenanceCategoryIcon,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              Expanded(
-                                child: Text(
-                                  listCategViewModel.maincategs![index].mcateg!
-                                      .maintenanceCategoryName,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                SizedBox(height: 20),
+                                Expanded(
+                                  child: Text(
+                                    listCategViewModel.maincategs![index].mcateg!
+                                        .maintenanceCategoryName,
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        // Positioned(
-                        //     right: 0,
-                        //     top: 0,
-                        //     child: Icon(Icons.keyboard_arrow_right))
-                      ],
+                          // Positioned(
+                          //     right: 0,
+                          //     top: 0,
+                          //     child: Icon(Icons.keyboard_arrow_right))
+                        ],
+                      ),
                     ),
                   );
                 });

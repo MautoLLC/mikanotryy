@@ -109,8 +109,8 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return Scaffold(
+        body: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               leading: IconButton(
@@ -161,6 +161,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
                   } else if (snapshot.hasData) {
                     //print(UserToken);
+                    if(snapshot.data!){
                     return Padding(
                         padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
                         child: SingleChildScrollView(
@@ -302,7 +303,13 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             //Custom_CardWithFrequency(Icon:'assets/generator.png',Description:"Ph-N [V]" ,Frequency:GeneratorFrequency.value.toString(),Unit: GeneratorVoltage.unit,Value: GeneratorVoltage.value.toString(),),
                             //Custom_Card(Icon:'assets/generator.png',Description: "Load [Kw]",Value:GeneratorLoad.value.toString(),Unit: GeneratorLoad.unit.toString()),
                           ],
-                        )));
+                        )));}
+                        else{
+                                              return Custom_Alert(
+                        Title: 'Error Has Occured',
+                        Description:
+                            "Something Went Wrong! it seems that no generator is assigned.");
+                        };
                   } else {
                     return Custom_Alert(
                         Title: 'Empty Data',

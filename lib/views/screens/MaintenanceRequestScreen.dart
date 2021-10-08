@@ -212,7 +212,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
               child: T13Button(
                 textContent: t13_lbl_proceed,
                 onPressed: () {
-                  p.animateToPage(2,
+                  p.nextPage(
                       duration: Duration(seconds: 1), curve: Curves.linear);
                 },
               ),

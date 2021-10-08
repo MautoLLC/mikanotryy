@@ -80,65 +80,68 @@ class MyRequestsScreen2 extends StatelessWidget {
                       .preferredVisitTimee
                       .toString());
                   String preferredVisitTimee = DateFormat.yMMMd().format(date);
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RequestsDetailsPage(
-                                id: listmrequestsViewModel
-                                    .maintenanceRequests![index]
-                                    .mMaintenacerequest!
-                                    .idMaintenanceRequest!
-                                    .toInt())),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      decoration: boxDecoration(
-                          radius: 16, showShadow: true, bgColor: Colors.white),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Image.network(
-                              listmrequestsViewModel
-                                  .maintenanceRequests![index]
-                                  .mMaintenacerequest!
-                                  .maintenanceCategory!
-                                  .maintenanceCategoryIcon,
-                              width: width / 13,
-                              height: width / 13),
-                          SizedBox(height: 10),
-                          AutoSizeText(
-                              listmrequestsViewModel
-                                  .maintenanceRequests![index]
-                                  .mMaintenacerequest!
-                                  .maintenanceCategory!
-                                  .maintenanceCategoryName,
-                              style:
-                                  boldTextStyle(color: Colors.black, size: 16)),
-                          AutoSizeText(preferredVisitTimee),
-                          SizedBox(height: 10),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            decoration: boxDecoration(
-                                bgColor: switchColor(listmrequestsViewModel
-                                    .maintenanceRequests![index]
-                                    .mMaintenacerequest!
-                                    .maintenaceRequestStatus!
-                                    .maintenanceStatusDescription),
-                                radius: 16),
-                            child: text(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RequestsDetailsPage(
+                                  id: listmrequestsViewModel
+                                      .maintenanceRequests![index]
+                                      .mMaintenacerequest!
+                                      .idMaintenanceRequest!
+                                      .toInt())),
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(left: 16, right: 16),
+                        decoration: boxDecoration(
+                            radius: 16, showShadow: true, bgColor: Colors.white),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Image.network(
                                 listmrequestsViewModel
                                     .maintenanceRequests![index]
                                     .mMaintenacerequest!
-                                    .maintenaceRequestStatus!
-                                    .maintenanceStatusDescription,
-                                fontSize: textSizeMedium,
-                                textColor: t5White),
-                          ),
-                        ],
+                                    .maintenanceCategory!
+                                    .maintenanceCategoryIcon,
+                                width: width / 13,
+                                height: width / 13),
+                            SizedBox(height: 10),
+                            AutoSizeText(
+                                listmrequestsViewModel
+                                    .maintenanceRequests![index]
+                                    .mMaintenacerequest!
+                                    .maintenanceCategory!
+                                    .maintenanceCategoryName,
+                                style:
+                                    boldTextStyle(color: Colors.black, size: 16)),
+                            AutoSizeText(preferredVisitTimee),
+                            SizedBox(height: 10),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              decoration: boxDecoration(
+                                  bgColor: switchColor(listmrequestsViewModel
+                                      .maintenanceRequests![index]
+                                      .mMaintenacerequest!
+                                      .maintenaceRequestStatus!
+                                      .maintenanceStatusDescription),
+                                  radius: 16),
+                              child: text(
+                                  listmrequestsViewModel
+                                      .maintenanceRequests![index]
+                                      .mMaintenacerequest!
+                                      .maintenaceRequestStatus!
+                                      .maintenanceStatusDescription,
+                                  fontSize: textSizeMedium,
+                                  textColor: t5White),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

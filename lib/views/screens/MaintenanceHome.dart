@@ -57,8 +57,9 @@ class T5MaintenanceState extends State<T5Maintenance> {
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
 
-    return new MaterialApp(
-        home: Scaffold(
+    return  Scaffold(
+      appBar: null,
+        body: Scaffold(
       backgroundColor: t5DarkNavy,
       key: _scaffoldKey,
       body: DefaultTabController(
@@ -136,10 +137,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
                                 topRight: Radius.circular(24))),
                         child: Column(children: <Widget>[
                           Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(24.0),
-                              child: T5GridListing(mFavouriteList, false),
-                            ),
+                            child: T5GridListing(mFavouriteList, false),
                           ),
                         ]),
                       ),
@@ -155,10 +153,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
                                 topRight: Radius.circular(24))),
                         child: Column(children: <Widget>[
                           Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(24.0),
-                              child: MyRequestsScreen2(cardList, reqList),
-                            ),
+                            child: MyRequestsScreen2(cardList, reqList),
                           ),
                         ]),
                       ),
