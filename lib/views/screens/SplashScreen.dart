@@ -29,9 +29,15 @@ class _OPSplashScreenState extends State<OPSplashScreen>
     startTime();
   }
 
-  void navigationPage() {
+  void navigationPage() async {
     finish(context);
-    Navigator.pushReplacement(
+        final prefs = await SharedPreferences.getInstance();
+    await prefs.getBool('IsLoggedIn') == true
+        ? Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+          )
+        :     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => T13SignInScreen(),

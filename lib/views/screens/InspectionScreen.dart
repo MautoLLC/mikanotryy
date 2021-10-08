@@ -95,243 +95,241 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 30),
-                  Row(children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.keyboard_arrow_left,
-                          color: Colors.black, size: 40.0),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    text("Inspection",
-                        textColor: Colors.black,
-                        fontSize: textSizeNormal,
-                        fontFamily: fontBold)
-                  ]),
-                  Container(
-                    margin: EdgeInsets.all(spacing_standard_new),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Booking(
-                              mList,
-                              this
-                                  .widget
-                                  .category
-                                  .maintenanceCategoryName
-                                  .toString()),
-                        ),
-                        SizedBox(height: 20),
-                        text("Inspection Checklist",
-                                fontFamily: fontBold, textColor: Colors.black)
-                            .paddingAll(8),
-                        SizedBox(height: 8),
-                        FutureBuilder(
-                            future: fetchchecklist,
-                            builder: (BuildContext context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return ListView.builder(
-                                    itemCount: icvm.inpectionItems.length,
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Container(
-                                          child: Card(
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 5),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24),
-                                              ),
-                                              child: new ListTile(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            24),
-                                                  ),
-                                                  title: new Text(icvm
-                                                              .inpectionItems[
-                                                                  index]
-                                                              .inspectionchecklistItem!
-                                                              .customComponent
-                                                              .toString() ==
-                                                          "null"
-                                                      ? icvm
-                                                          .inpectionItems[index]
-                                                          .inspectionchecklistItem!
-                                                          .predefinedChecklistItem!
-                                                          .component!
-                                                          .componentName
-                                                          .toString()
-                                                      : icvm
-                                                          .inpectionItems[index]
-                                                          .inspectionchecklistItem!
-                                                          .customComponent!
-                                                          .componentName
-                                                          .toString()),
-                                                  leading: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: <Widget>[
-                                                        icvm
-                                                                    .inpectionItems[
-                                                                        index]
-                                                                    .inspectionchecklistItem!
-                                                                    .componentStatus!
-                                                                    .componentStatusDescription
-                                                                    .toString() ==
-                                                                "satisfactory"
-                                                            ? Icon(
-                                                                Icons
-                                                                    .check_box_rounded,
-                                                                color: Colors
-                                                                    .green,
-                                                                size: 24,
-                                                              )
-                                                            : Icon(
-                                                                Icons
-                                                                    .check_box_outline_blank_rounded,
-                                                                size: 24,
-                                                              ),
-                                                      ]),
-                                                  trailing:
-                                                      Icon(Icons.keyboard_arrow_right),
-                                                  subtitle: Row(
-                                                    children: <Widget>[
-                                                      Expanded(
-                                                          flex: 1,
-                                                          child: Container(
-                                                            child: LinearProgressIndicator(
-                                                                backgroundColor:
-                                                                    Color.fromRGBO(
-                                                                        209,
-                                                                        224,
-                                                                        224,
-                                                                        0.2),
-                                                                value: 2,
-                                                                valueColor: AlwaysStoppedAnimation(switchColor(icvm
-                                                                            .inpectionItems[
-                                                                                index]
-                                                                            .inspectionchecklistItem!
-                                                                            .componentStatus!
-                                                                            .componentStatusDescription
-                                                                            .toString() ==
-                                                                        "null"
-                                                                    ? "null"
-                                                                    : icvm
-                                                                        .inpectionItems[
-                                                                            index]
-                                                                        .inspectionchecklistItem!
-                                                                        .componentStatus!
-                                                                        .componentStatusDescription
-                                                                        .toString()))),
-                                                          )),
-                                                      Expanded(
-                                                        flex: 4,
-                                                        child: Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 10.0),
-                                                            child: Text(icvm
-                                                                        .inpectionItems[
-                                                                            index]
-                                                                        .inspectionchecklistItem!
-                                                                        .componentStatus!
-                                                                        .componentStatusDescription
-                                                                        .toString() ==
-                                                                    "null"
-                                                                ? "null"
-                                                                : icvm
-                                                                    .inpectionItems[
-                                                                        index]
-                                                                    .inspectionchecklistItem!
-                                                                    .componentStatus!
-                                                                    .componentStatusDescription
-                                                                    .toString())),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  onTap: () => {
-                                                        Navigator.pop(context),
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) => BankingShareInformation(
-                                                                checklistItem: icvm
-                                                                    .inpectionItems[
-                                                                        index]
-                                                                    .inspectionchecklistItem,
-                                                                mInspection: this
-                                                                    .widget
-                                                                    .mInspection,
-                                                                statusList: this
-                                                                    .widget
-                                                                    .statusList,
-                                                                category: this
-                                                                    .widget
-                                                                    .category),
-                                                          ),
-                                                        )
-                                                      })),
-                                          decoration: new BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(24.0),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 7,
-                                                  color: Colors.black12,
-                                                  offset: Offset(3, 3))
-                                            ],
-                                          ));
-                                    });
-                              } else
-                                return Center(
-                                  child: const CircularProgressIndicator(),
-                                );
-                            }),
-                        SizedBox(height: 20),
-                        SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: RaisedButton.icon(
-                              onPressed: () {
-                                mFormBottomSheet(context);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(24.0))),
-                              label: Text(
-                                'Add new custom component',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              icon: Icon(Icons.add, color: Colors.white),
-                              textColor: Colors.white,
-                              splashColor: t5Cat3.withOpacity(0.7),
-                              color: t5Cat3,
-                            )),
-                        SizedBox(height: 40),
-                      ],
-                    ),
+      body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 30),
+                Row(children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.keyboard_arrow_left,
+                        color: Colors.black, size: 40.0),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ])),
-      ),
+                  SizedBox(width: 10),
+                  text("Inspection",
+                      textColor: Colors.black,
+                      fontSize: textSizeNormal,
+                      fontFamily: fontBold)
+                ]),
+                Container(
+                  margin: EdgeInsets.all(spacing_standard_new),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Booking(
+                            mList,
+                            this
+                                .widget
+                                .category
+                                .maintenanceCategoryName
+                                .toString()),
+                      ),
+                      SizedBox(height: 20),
+                      text("Inspection Checklist",
+                              fontFamily: fontBold, textColor: Colors.black)
+                          .paddingAll(8),
+                      SizedBox(height: 8),
+                      FutureBuilder(
+                          future: fetchchecklist,
+                          builder: (BuildContext context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              }
+                              return ListView.builder(
+                                  itemCount: icvm.inpectionItems.length,
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                        child: Card(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 5),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(24),
+                                            ),
+                                            child: new ListTile(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          24),
+                                                ),
+                                                title: new Text(icvm
+                                                            .inpectionItems[
+                                                                index]
+                                                            .inspectionchecklistItem!
+                                                            .customComponent
+                                                            .toString() ==
+                                                        "null"
+                                                    ? icvm
+                                                        .inpectionItems[index]
+                                                        .inspectionchecklistItem!
+                                                        .predefinedChecklistItem!
+                                                        .component!
+                                                        .componentName
+                                                        .toString()
+                                                    : icvm
+                                                        .inpectionItems[index]
+                                                        .inspectionchecklistItem!
+                                                        .customComponent!
+                                                        .componentName
+                                                        .toString()),
+                                                leading: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      icvm
+                                                                  .inpectionItems[
+                                                                      index]
+                                                                  .inspectionchecklistItem!
+                                                                  .componentStatus!
+                                                                  .componentStatusDescription
+                                                                  .toString() ==
+                                                              "satisfactory"
+                                                          ? Icon(
+                                                              Icons
+                                                                  .check_box_rounded,
+                                                              color: Colors
+                                                                  .green,
+                                                              size: 24,
+                                                            )
+                                                          : Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank_rounded,
+                                                              size: 24,
+                                                            ),
+                                                    ]),
+                                                trailing:
+                                                    Icon(Icons.keyboard_arrow_right),
+                                                subtitle: Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: Container(
+                                                          child: LinearProgressIndicator(
+                                                              backgroundColor:
+                                                                  Color.fromRGBO(
+                                                                      209,
+                                                                      224,
+                                                                      224,
+                                                                      0.2),
+                                                              value: 2,
+                                                              valueColor: AlwaysStoppedAnimation(switchColor(icvm
+                                                                          .inpectionItems[
+                                                                              index]
+                                                                          .inspectionchecklistItem!
+                                                                          .componentStatus!
+                                                                          .componentStatusDescription
+                                                                          .toString() ==
+                                                                      "null"
+                                                                  ? "null"
+                                                                  : icvm
+                                                                      .inpectionItems[
+                                                                          index]
+                                                                      .inspectionchecklistItem!
+                                                                      .componentStatus!
+                                                                      .componentStatusDescription
+                                                                      .toString()))),
+                                                        )),
+                                                    Expanded(
+                                                      flex: 4,
+                                                      child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 10.0),
+                                                          child: Text(icvm
+                                                                      .inpectionItems[
+                                                                          index]
+                                                                      .inspectionchecklistItem!
+                                                                      .componentStatus!
+                                                                      .componentStatusDescription
+                                                                      .toString() ==
+                                                                  "null"
+                                                              ? "null"
+                                                              : icvm
+                                                                  .inpectionItems[
+                                                                      index]
+                                                                  .inspectionchecklistItem!
+                                                                  .componentStatus!
+                                                                  .componentStatusDescription
+                                                                  .toString())),
+                                                    )
+                                                  ],
+                                                ),
+                                                onTap: () => {
+                                                      Navigator.pop(context),
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) => BankingShareInformation(
+                                                              checklistItem: icvm
+                                                                  .inpectionItems[
+                                                                      index]
+                                                                  .inspectionchecklistItem,
+                                                              mInspection: this
+                                                                  .widget
+                                                                  .mInspection,
+                                                              statusList: this
+                                                                  .widget
+                                                                  .statusList,
+                                                              category: this
+                                                                  .widget
+                                                                  .category),
+                                                        ),
+                                                      )
+                                                    })),
+                                        decoration: new BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 7,
+                                                color: Colors.black12,
+                                                offset: Offset(3, 3))
+                                          ],
+                                        ));
+                                  });
+                            } else
+                              return Center(
+                                child: const CircularProgressIndicator(),
+                              );
+                          }),
+                      SizedBox(height: 20),
+                      SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: RaisedButton.icon(
+                            onPressed: () {
+                              mFormBottomSheet(context);
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(24.0))),
+                            label: Text(
+                              'Add new custom component',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            icon: Icon(Icons.add, color: Colors.white),
+                            textColor: Colors.white,
+                            splashColor: t5Cat3.withOpacity(0.7),
+                            color: t5Cat3,
+                          )),
+                      SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+              ])),
     );
   }
 

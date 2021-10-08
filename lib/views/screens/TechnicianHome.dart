@@ -128,60 +128,58 @@ class T5ProfileState extends State<T5Profile> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.topCenter,
+            height: width,
+            color: Color(0xfff0f0f0),
+            child: Container(
+              padding: EdgeInsets.only(top: 10),
+              alignment: Alignment.topLeft,
+              height: 60,
+            ),
+          ),
+          SingleChildScrollView(
+            padding: EdgeInsets.only(top: 70),
+            child: Stack(
               alignment: Alignment.topCenter,
-              height: width,
-              color: Color(0xfff0f0f0),
-              child: Container(
-                padding: EdgeInsets.only(top: 10),
-                alignment: Alignment.topLeft,
-                height: 60,
-              ),
-            ),
-            SingleChildScrollView(
-              padding: EdgeInsets.only(top: 70),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: 50),
-                    padding: EdgeInsets.only(top: 60),
-                    alignment: Alignment.topCenter,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            topRight: Radius.circular(24))),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        text(tech!.firstname + " " + tech!.lastname,
-                            textColor: t5TextColorPrimary,
-                            fontFamily: fontBold,
-                            fontSize: textSizeNormal),
-                        text(tech!.email, fontSize: textSizeLargeMedium),
-                        SizedBox(height: 58),
-                        gridItem(),
-                        IconButton(
-                            onPressed: () async {
-                              await logout();
-                            },
-                            icon: Icon(Icons.logout))
-                      ],
-                    ),
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  padding: EdgeInsets.only(top: 60),
+                  alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24))),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      text(tech!.firstname + " " + tech!.lastname,
+                          textColor: t5TextColorPrimary,
+                          fontFamily: fontBold,
+                          fontSize: textSizeNormal),
+                      text(tech!.email, fontSize: textSizeLargeMedium),
+                      SizedBox(height: 58),
+                      gridItem(),
+                      IconButton(
+                          onPressed: () async {
+                            await logout();
+                          },
+                          icon: Icon(Icons.logout))
+                    ],
                   ),
-                  CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(tech!.image),
-                      radius: 50)
-                ],
-              ),
+                ),
+                CircleAvatar(
+                    backgroundImage: CachedNetworkImageProvider(tech!.image),
+                    radius: 50)
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

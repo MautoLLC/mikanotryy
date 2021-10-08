@@ -128,26 +128,24 @@ class TopBar extends StatefulWidget {
 class TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 60,
-        color: appStore.appBarColor,
-        child: Stack(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.keyboard_arrow_left, size: 45),
-              onPressed: () {
-                finish(context);
-              },
-            ),
-            Center(
-                child: text(widget.titleName,
-                    textColor: appStore.textPrimaryColor,
-                    fontSize: textSizeNormal,
-                    fontFamily: fontBold))
-          ],
-        ),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 60,
+      color: appStore.appBarColor,
+      child: Stack(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.keyboard_arrow_left, size: 45),
+            onPressed: () {
+              finish(context);
+            },
+          ),
+          Center(
+              child: text(widget.titleName,
+                  textColor: appStore.textPrimaryColor,
+                  fontSize: textSizeNormal,
+                  fontFamily: fontBold))
+        ],
       ),
     );
   }

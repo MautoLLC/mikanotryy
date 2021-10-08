@@ -43,7 +43,9 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
   late bool PowerStatus;
   late DashBoard_ModelView DashModelView;
   //This function is to fetch the data and await rest apis //
-  Future<String> FetchData() async {
+  Future<bool> FetchData() async {
+    try{
+
     DashModelView = new DashBoard_ModelView();
     //UserToken=await DashModelView.GetUserToken();
     await DashModelView.GetUserToken();
@@ -78,21 +80,25 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
       PowerStatus = true;
     else
       PowerStatus = false;
-
-    return ("We have Managed to pull all the data");
+      
+      return true;
+    } on Exception{
+      return false;
+    }
+    // return ("We have Managed to pull all the data");
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    FetchData();
-    timer = Timer.periodic(
-        Duration(
-            seconds: int.parse(dotenv.env['RefreshRate_Seconds'].toString())),
-        (Timer t) => setState(() {
-              // change state according to result of request
-            }));
+    // FetchData();
+    // timer = Timer.periodic(
+    //     Duration(
+    //         seconds: int.parse(dotenv.env['RefreshRate_Seconds'].toString())),
+    //     (Timer t) => setState(() {
+    //           // change state according to result of request
+    //         }));
   }
 
   @override
@@ -133,11 +139,11 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                   ),
                   preferredSize: Size.fromHeight(0.0)),
             ),
-            body: FutureBuilder<String>(
+            body: FutureBuilder<bool>(
               future: FetchData(),
               builder: (
                 BuildContext context,
-                AsyncSnapshot<String> snapshot,
+                AsyncSnapshot<bool> snapshot,
               ) {
                 print(snapshot.connectionState);
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -148,6 +154,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                   ));
                 } else if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
+                    
                     return Custom_Alert(
                         Title: 'Error Has Occured',
                         Description:
@@ -230,7 +237,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                     "Restricted")
                                   Expanded(
                                     child: Card_ImageValue(
-                                        ImagePath: 'assets/oilpressure.png',
+                                        ImagePath: 'assets/oilIcon.png',
                                         Value: OilPressure.value.toString() +
                                             " " +
                                             OilPressure.unit.toString()),

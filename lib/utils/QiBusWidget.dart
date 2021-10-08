@@ -106,85 +106,83 @@ class TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     changeStatusColor(qIBus_colorPrimary);
-    return SafeArea(
-      child: Stack(
-        children: <Widget>[
-          Container(color: qIBus_colorPrimary, height: 70),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.width * 0.15,
-                alignment: Alignment.topLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    widget.isVisible!
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              IconButton(
-                                icon: Icon(Icons.arrow_back, color: qIBus_white),
-                                onPressed: () {
-                                  finish(context);
-                                },
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(spacing_standard, 0, 0, 0),
-                                child: text(widget.titleName, textColor: qIBus_white, fontSize: textSizeNormal, fontFamily: fontBold),
-                              ),
-                            ],
-                          )
-                        : Padding(
-                            padding: EdgeInsets.fromLTRB(spacing_standard_new, spacing_standard, 0, 0),
-                            child: text(widget.titleName, textColor: qIBus_white, fontSize: textSizeNormal, fontFamily: fontBold),
+    return Stack(
+      children: <Widget>[
+        Container(color: qIBus_colorPrimary, height: 70),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.width * 0.15,
+              alignment: Alignment.topLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  widget.isVisible!
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.arrow_back, color: qIBus_white),
+                              onPressed: () {
+                                finish(context);
+                              },
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(spacing_standard, 0, 0, 0),
+                              child: text(widget.titleName, textColor: qIBus_white, fontSize: textSizeNormal, fontFamily: fontBold),
+                            ),
+                          ],
+                        )
+                      : Padding(
+                          padding: EdgeInsets.fromLTRB(spacing_standard_new, spacing_standard, 0, 0),
+                          child: text(widget.titleName, textColor: qIBus_white, fontSize: textSizeNormal, fontFamily: fontBold),
+                        ),
+                  widget.isVisible!
+                      ? GestureDetector(
+                          onTap: () {
+                        //    QIBusNotification().launch(context);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              right: spacing_standard_new,
+                            ),
+                            child: Image(
+                              image: AssetImage(widget.icon),
+                              height: 25,
+                              width: 25,
+                              color: qIBus_white,
+                            ),
                           ),
-                    widget.isVisible!
-                        ? GestureDetector(
-                            onTap: () {
-                          //    QIBusNotification().launch(context);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                right: spacing_standard_new,
-                              ),
-                              child: Image(
-                                image: AssetImage(widget.icon),
-                                height: 25,
-                                width: 25,
-                                color: qIBus_white,
-                              ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                          //  QIBusNotification().launch(context);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              top: spacing_standard,
+                              right: spacing_standard_new,
                             ),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                            //  QIBusNotification().launch(context);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: spacing_standard,
-                                right: spacing_standard_new,
-                              ),
-                              child: Image(
-                                image: AssetImage(widget.icon),
-                                height: 25,
-                                width: 25,
-                                color: qIBus_white,
-                              ),
+                            child: Image(
+                              image: AssetImage(widget.icon),
+                              height: 25,
+                              width: 25,
+                              color: qIBus_white,
                             ),
-                          )
-                  ],
-                ),
+                          ),
+                        )
+                ],
               ),
-              Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.05),
-                decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), color: qIBus_app_background),
-              ),
-            ],
-          )
-        ],
-      ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.05),
+              decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)), color: qIBus_app_background),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

@@ -26,20 +26,8 @@ class T13SignInScreenState extends State<T13SignInScreen> {
 
   @override
   void initState() {
-    init();
-    super.initState();
-  }
 
-  init() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.getBool('IsLoggedIn') == true
-        ? Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-          )
-        : null;
-    print(
-        "prefs.getBool('IsLoggedIn') ====>>>> ${prefs.getBool('IsLoggedIn')}");
+    super.initState();
   }
 
   @override

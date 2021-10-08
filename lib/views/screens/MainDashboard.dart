@@ -56,9 +56,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
         onTap: _onItemTapped,
         type: BankingBottomNavigationBarType.fixed,
       ),
-      body: SafeArea(
-        child: pages[selectedIndex],
-      ),
+      body: pages[selectedIndex],
     );
   }
 }

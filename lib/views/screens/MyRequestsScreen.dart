@@ -130,62 +130,60 @@ class MyRequestsState extends State<MyRequests> {
     return Scaffold(
       backgroundColor: t5DarkNavy,
       key: _scaffoldKey,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 70,
-              margin: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_rounded,
-                          color: t5White,
-                          size: 30.0,
-                        ),
-                        onPressed: () {
-                          finish(context);
-                        },
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: 70,
+            margin: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        color: t5White,
+                        size: 30.0,
                       ),
-                      SizedBox(width: 10),
-                      Image.asset(t5_general_repair,
-                          width: 25, height: 25, color: t5White),
-                      SizedBox(width: 8),
-                      text(t5_maintenance_repair,
-                          textColor: t5White,
-                          fontSize: textSizeNormal,
-                          fontFamily: fontMedium)
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24))),
-                  child: Column(children: <Widget>[
-                    SizedBox(height: 20),
-                    Expanded(
-                      child:
-                          Padding(padding: EdgeInsets.all(24.0), child: child),
-                    )
-                  ]),
+                      onPressed: () {
+                        finish(context);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    Image.asset(t5_general_repair,
+                        width: 25, height: 25, color: t5White),
+                    SizedBox(width: 8),
+                    text(t5_maintenance_repair,
+                        textColor: t5White,
+                        fontSize: textSizeNormal,
+                        fontFamily: fontMedium)
+                  ],
                 ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                alignment: Alignment.topLeft,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24))),
+                child: Column(children: <Widget>[
+                  SizedBox(height: 20),
+                  Expanded(
+                    child:
+                        Padding(padding: EdgeInsets.all(24.0), child: child),
+                  )
+                ]),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

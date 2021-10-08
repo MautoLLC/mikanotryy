@@ -122,288 +122,286 @@ class T5ListingState extends State<T5Listing> {
                           fontFamily: fontMedium)
                     ])),
             key: _scaffoldKey,
-            body: SafeArea(
+            body: Container(
+              decoration: BoxDecoration(color: Color(0xfff0f0f0)),
               child: Container(
-                decoration: BoxDecoration(color: Color(0xfff0f0f0)),
-                child: Container(
-                  alignment: Alignment.topLeft,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.transparent),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
-                          child: Container(
-                            padding: EdgeInsets.only(left: 20.0, right: 20),
-                            child: reqs.length == 0 || cnames.length == 0
-                                ? Center(
-                                    child: Text(
-                                      "No items",
-                                      style: TextStyle(fontFamily: "Roboto"),
-                                    ),
-                                  )
-                                : FutureBuilder(
-                                    future: inspViewModel.fetchInspections(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<
-                                                List<InspectionsViewModel>?>
-                                            snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
-                                        if (snapshot.hasError) {
-                                          return Text('${snapshot.error}' +
-                                              "CHECK YOUR INTERNET");
-                                        }
-                                        return ListView.builder(
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: inspViewModel
-                                                .inspections!.length,
-                                            shrinkWrap: true,
-                                            physics: BouncingScrollPhysics(),
-                                            itemBuilder: (context, index) {
-                                              reqq = reqs.firstWhere(
-                                                  (element) =>
-                                                      element
-                                                          .idMaintenanceRequest ==
-                                                      inspViewModel
-                                                          .inspections![index]
-                                                          .mInspection!
-                                                          .maintenanceRequestID,
-                                                  orElse: () => reqs.first);
-                                              catgg = cnames.firstWhere(
-                                                  (element) =>
-                                                      element
-                                                          .idMaintenanceCategory ==
-                                                      reqq.maintenanceCategoryId,
-                                                  orElse: () => cnames.first);
+                alignment: Alignment.topLeft,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.transparent),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 20.0, right: 20),
+                          child: reqs.length == 0 || cnames.length == 0
+                              ? Center(
+                                  child: Text(
+                                    "No items",
+                                    style: TextStyle(fontFamily: "Roboto"),
+                                  ),
+                                )
+                              : FutureBuilder(
+                                  future: inspViewModel.fetchInspections(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<
+                                              List<InspectionsViewModel>?>
+                                          snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasError) {
+                                        return Text('${snapshot.error}' +
+                                            "CHECK YOUR INTERNET");
+                                      }
+                                      return ListView.builder(
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: inspViewModel
+                                              .inspections!.length,
+                                          shrinkWrap: true,
+                                          physics: BouncingScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            reqq = reqs.firstWhere(
+                                                (element) =>
+                                                    element
+                                                        .idMaintenanceRequest ==
+                                                    inspViewModel
+                                                        .inspections![index]
+                                                        .mInspection!
+                                                        .maintenanceRequestID,
+                                                orElse: () => reqs.first);
+                                            catgg = cnames.firstWhere(
+                                                (element) =>
+                                                    element
+                                                        .idMaintenanceCategory ==
+                                                    reqq.maintenanceCategoryId,
+                                                orElse: () => cnames.first);
 
-                                              DateTime startTime =
-                                                  DateTime.parse(inspViewModel
-                                                      .inspections![index]
-                                                      .mInspection!
-                                                      .inspectionStartTime);
-                                              String month = DateFormat.MMM()
-                                                  .format(startTime);
-                                              return Column(
-                                                children: <Widget>[
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      reqq = reqs.firstWhere(
-                                                          (element) =>
-                                                              element
-                                                                  .idMaintenanceRequest ==
-                                                              inspViewModel
-                                                                  .inspections![
-                                                                      index]
-                                                                  .mInspection!
-                                                                  .maintenanceRequestID,
-                                                          orElse: () =>
-                                                              reqs.first);
-                                                      catgg = cnames.firstWhere(
-                                                          (element) =>
-                                                              element
-                                                                  .idMaintenanceCategory ==
-                                                              reqq
-                                                                  .maintenanceCategoryId,
-                                                          orElse: () =>
-                                                              cnames.first);
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                T13InspectionScreen(
-                                                                  mInspection: inspViewModel
-                                                                      .inspections![
-                                                                          index]
-                                                                      .mInspection!,
-                                                                  statusList:
-                                                                      statusList,
-                                                                  category:
-                                                                      catgg,
-                                                                )),
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          top: 18, bottom: 18),
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Column(
-                                                            children: <Widget>[
-                                                              text(month,
-                                                                  fontSize:
-                                                                      textSizeSMedium),
+                                            DateTime startTime =
+                                                DateTime.parse(inspViewModel
+                                                    .inspections![index]
+                                                    .mInspection!
+                                                    .inspectionStartTime);
+                                            String month = DateFormat.MMM()
+                                                .format(startTime);
+                                            return Column(
+                                              children: <Widget>[
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    reqq = reqs.firstWhere(
+                                                        (element) =>
+                                                            element
+                                                                .idMaintenanceRequest ==
+                                                            inspViewModel
+                                                                .inspections![
+                                                                    index]
+                                                                .mInspection!
+                                                                .maintenanceRequestID,
+                                                        orElse: () =>
+                                                            reqs.first);
+                                                    catgg = cnames.firstWhere(
+                                                        (element) =>
+                                                            element
+                                                                .idMaintenanceCategory ==
+                                                            reqq
+                                                                .maintenanceCategoryId,
+                                                        orElse: () =>
+                                                            cnames.first);
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              T13InspectionScreen(
+                                                                mInspection: inspViewModel
+                                                                    .inspections![
+                                                                        index]
+                                                                    .mInspection!,
+                                                                statusList:
+                                                                    statusList,
+                                                                category:
+                                                                    catgg,
+                                                              )),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 18, bottom: 18),
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Column(
+                                                          children: <Widget>[
+                                                            text(month,
+                                                                fontSize:
+                                                                    textSizeSMedium),
+                                                            text(
+                                                                startTime.day
+                                                                    .toString(),
+                                                                fontSize:
+                                                                    textSizeLargeMedium,
+                                                                textColor: Color(
+                                                                    0xff525252)),
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          decoration:
+                                                              boxDecoration(
+                                                                  radius: 8,
+                                                                  showShadow:
+                                                                      true,
+                                                                  bgColor: Colors
+                                                                      .white),
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 16,
+                                                                  right: 16),
+                                                          width: width / 7.2,
+                                                          height: width / 7.2,
+                                                          child:
+                                                              FutureBuilder(
+                                                                  future: ListMaintenanceRequestsViewModel().fetchMaintenanceRequestsByID(reqq
+                                                                      .idMaintenanceRequest!
+                                                                      .toInt()),
+                                                                  builder: (context,
+                                                                      AsyncSnapshot<MaintenanceRequestsViewModel>
+                                                                          snapshot) {
+                                                                    if (snapshot
+                                                                            .connectionState ==
+                                                                        ConnectionState
+                                                                            .done) {
+                                                                      return Image.network(snapshot
+                                                                          .data!
+                                                                          .mMaintenacerequest!
+                                                                          .maintenanceCategory!
+                                                                          .maintenanceCategoryIcon);
+                                                                    } else {
+                                                                      return Center(
+                                                                        child:
+                                                                            const CircularProgressIndicator(),
+                                                                      );
+                                                                    }
+                                                                  }),
+                                                          // child: Image.asset(
+                                                          //     mListings[index]
+                                                          //         .icon),
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  width / 30),
+                                                        ),
+                                                        Expanded(
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: <
+                                                                Widget>[
                                                               text(
-                                                                  startTime.day
-                                                                      .toString(),
+                                                                  "Inspection" +
+                                                                      (index +
+                                                                              1)
+                                                                          .toString(),
+                                                                  textColor:
+                                                                      Color(
+                                                                          0xff525252),
                                                                   fontSize:
-                                                                      textSizeLargeMedium,
-                                                                  textColor: Color(
-                                                                      0xff525252)),
+                                                                      textSizeSmall,
+                                                                  fontFamily:
+                                                                      fontBold),
+                                                              text(
+                                                                  catgg
+                                                                      .maintenanceCategoryName,
+                                                                  textColor:
+                                                                      Color(
+                                                                          0xff525252),
+                                                                  fontSize:
+                                                                      textSizeSmall,
+                                                                  maxLine: 3),
                                                             ],
                                                           ),
-                                                          Container(
-                                                            decoration:
-                                                                boxDecoration(
-                                                                    radius: 8,
-                                                                    showShadow:
-                                                                        true,
-                                                                    bgColor: Colors
-                                                                        .white),
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    left: 16,
-                                                                    right: 16),
-                                                            width: width / 7.2,
-                                                            height: width / 7.2,
-                                                            child:
-                                                                FutureBuilder(
-                                                                    future: ListMaintenanceRequestsViewModel().fetchMaintenanceRequestsByID(reqq
-                                                                        .idMaintenanceRequest!
-                                                                        .toInt()),
-                                                                    builder: (context,
-                                                                        AsyncSnapshot<MaintenanceRequestsViewModel>
-                                                                            snapshot) {
-                                                                      if (snapshot
-                                                                              .connectionState ==
-                                                                          ConnectionState
-                                                                              .done) {
-                                                                        return Image.network(snapshot
-                                                                            .data!
-                                                                            .mMaintenacerequest!
-                                                                            .maintenanceCategory!
-                                                                            .maintenanceCategoryIcon);
-                                                                      } else {
-                                                                        return Center(
-                                                                          child:
-                                                                              const CircularProgressIndicator(),
-                                                                        );
-                                                                      }
-                                                                    }),
-                                                            // child: Image.asset(
-                                                            //     mListings[index]
-                                                            //         .icon),
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    width / 30),
-                                                          ),
-                                                          Expanded(
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: <
-                                                                  Widget>[
-                                                                text(
-                                                                    "Inspection" +
-                                                                        (index +
-                                                                                1)
-                                                                            .toString(),
-                                                                    textColor:
-                                                                        Color(
-                                                                            0xff525252),
-                                                                    fontSize:
-                                                                        textSizeSmall,
-                                                                    fontFamily:
-                                                                        fontBold),
-                                                                text(
-                                                                    catgg
-                                                                        .maintenanceCategoryName,
-                                                                    textColor:
-                                                                        Color(
-                                                                            0xff525252),
-                                                                    fontSize:
-                                                                        textSizeSmall,
-                                                                    maxLine: 3),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 0),
-                                                            child: Row(
-                                                              children: <
-                                                                  Widget>[
-                                                                RichText(
-                                                                    text:
-                                                                        TextSpan(
-                                                                  children: [
-                                                                    // boxDecoration(bgColor: t5Cat3, radius: 16) : boxDecoration(bgColor: t5Cat4, radius: 16)
-                                                                    TextSpan(
-                                                                        text: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
-                                                                                "false"
-                                                                            ? "pending"
-                                                                            : "repaired",
-                                                                        style: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
-                                                                                "false"
-                                                                            ? TextStyle(
-                                                                                fontSize: textSizeMedium,
-                                                                                color: Colors.redAccent)
-                                                                            : TextStyle(fontSize: textSizeMedium, color: Colors.green)),
-                                                                    WidgetSpan(
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.only(left: 4),
-                                                                        child: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
-                                                                                "false"
-                                                                            ? Icon(
-                                                                                Icons.cancel,
-                                                                                color: Colors.redAccent,
-                                                                                size: 16,
-                                                                              )
-                                                                            : Icon(
-                                                                                Icons.check_circle_outline,
-                                                                                color: Colors.green,
-                                                                                size: 16,
-                                                                              ),
-                                                                      ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 0),
+                                                          child: Row(
+                                                            children: <
+                                                                Widget>[
+                                                              RichText(
+                                                                  text:
+                                                                      TextSpan(
+                                                                children: [
+                                                                  // boxDecoration(bgColor: t5Cat3, radius: 16) : boxDecoration(bgColor: t5Cat4, radius: 16)
+                                                                  TextSpan(
+                                                                      text: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
+                                                                              "false"
+                                                                          ? "pending"
+                                                                          : "repaired",
+                                                                      style: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
+                                                                              "false"
+                                                                          ? TextStyle(
+                                                                              fontSize: textSizeMedium,
+                                                                              color: Colors.redAccent)
+                                                                          : TextStyle(fontSize: textSizeMedium, color: Colors.green)),
+                                                                  WidgetSpan(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.only(left: 4),
+                                                                      child: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
+                                                                              "false"
+                                                                          ? Icon(
+                                                                              Icons.cancel,
+                                                                              color: Colors.redAccent,
+                                                                              size: 16,
+                                                                            )
+                                                                          : Icon(
+                                                                              Icons.check_circle_outline,
+                                                                              color: Colors.green,
+                                                                              size: 16,
+                                                                            ),
                                                                     ),
-                                                                  ],
-                                                                )),
-                                                              ],
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceAround,
-                                                            ),
+                                                                  ),
+                                                                ],
+                                                              )),
+                                                            ],
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
                                                           ),
-                                                          Icon(Icons
-                                                              .keyboard_arrow_right),
-                                                        ],
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                      ),
+                                                        ),
+                                                        Icon(Icons
+                                                            .keyboard_arrow_right),
+                                                      ],
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
                                                     ),
                                                   ),
-                                                  Divider(
-                                                      height: 0.5,
-                                                      color: t5ViewColor)
-                                                ],
-                                              );
-                                            });
-                                      } else
-                                        return Center(
-                                          child:
-                                              const CircularProgressIndicator(),
-                                        );
-                                    }),
-                          ),
+                                                ),
+                                                Divider(
+                                                    height: 0.5,
+                                                    color: t5ViewColor)
+                                              ],
+                                            );
+                                          });
+                                    } else
+                                      return Center(
+                                        child:
+                                            const CircularProgressIndicator(),
+                                      );
+                                  }),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             )));
