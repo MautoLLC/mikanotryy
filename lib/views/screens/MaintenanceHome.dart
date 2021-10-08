@@ -57,115 +57,115 @@ class T5MaintenanceState extends State<T5Maintenance> {
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
 
-    return  Scaffold(
-      appBar: null,
+    return Scaffold(
+        appBar: null,
         body: Scaffold(
-      backgroundColor: t5DarkNavy,
-      key: _scaffoldKey,
-      body: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
-            backgroundColor: Color(0Xfff0f0f0),
-            toolbarHeight: 120,
-            title: Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left,
-                      color: Color(0Xff464646), size: 40.0),
-                  onPressed: () {
-                    finish(context);
+          backgroundColor: t5DarkNavy,
+          key: _scaffoldKey,
+          body: DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
+                backgroundColor: Color(0Xfff0f0f0),
+                toolbarHeight: 80,
+                title: Row(
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.keyboard_arrow_left,
+                          color: Color(0Xff464646), size: 40.0),
+                      onPressed: () {
+                        finish(context);
+                      },
+                    ),
+                    SizedBox(width: 10),
+                    Image.asset(t5_general_repair,
+                        width: 25, height: 25, color: Color(0Xff464646)),
+                    SizedBox(width: 8),
+                    text(t5_maintenance_repair,
+                        textColor: Color(0Xff464646),
+                        fontSize: textSizeNormal,
+                        fontFamily: fontMedium)
+                  ],
+                ),
+                bottom: TabBar(
+                  onTap: (index) {
+                    print(index);
                   },
-                ),
-                SizedBox(width: 10),
-                Image.asset(t5_general_repair,
-                    width: 25, height: 25, color: Color(0Xff464646)),
-                SizedBox(width: 8),
-                text(t5_maintenance_repair,
-                    textColor: Color(0Xff464646),
-                    fontSize: textSizeNormal,
-                    fontFamily: fontMedium)
-              ],
-            ),
-            bottom: TabBar(
-              onTap: (index) {
-                print(index);
-              },
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorColor: Colors.red,
-              indicatorWeight: 4,
-              labelStyle: boldTextStyle(),
-              tabs: [
-                Tab(
-                  child: Text(
-                    "Maintenance",
-                    style: TextStyle(color: Color(0Xff464646)),
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    "My Requests",
-                    style: TextStyle(color: Color(0Xff464646)),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24))),
-                child: TabBarView(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24),
-                              topRight: Radius.circular(24)),
-                          color: t5DarkNavy),
-                      // color: ,
-                      child: Container(
-                        alignment: Alignment.topLeft,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(24),
-                                topRight: Radius.circular(24))),
-                        child: Column(children: <Widget>[
-                          Expanded(
-                            child: T5GridListing(mFavouriteList, false),
-                          ),
-                        ]),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor: Colors.red,
+                  indicatorWeight: 4,
+                  labelStyle: boldTextStyle(),
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        "Maintenance",
+                        style: TextStyle(color: Color(0Xff464646)),
                       ),
                     ),
-                    Container(
-                      color: t5DarkNavy,
-                      child: Container(
-                        alignment: Alignment.topLeft,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(24),
-                                topRight: Radius.circular(24))),
-                        child: Column(children: <Widget>[
-                          Expanded(
-                            child: MyRequestsScreen2(cardList, reqList),
-                          ),
-                        ]),
+                    Tab(
+                      child: Text(
+                        "My Requests",
+                        style: TextStyle(color: Color(0Xff464646)),
                       ),
                     ),
                   ],
                 ),
-              )
-            ],
+              ),
+              body: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24))),
+                    child: TabBarView(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24),
+                                  topRight: Radius.circular(24)),
+                              color: t5DarkNavy),
+                          // color: ,
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(24),
+                                    topRight: Radius.circular(24))),
+                            child: Column(children: <Widget>[
+                              Expanded(
+                                child: T5GridListing(mFavouriteList, false),
+                              ),
+                            ]),
+                          ),
+                        ),
+                        Container(
+                          color: t5DarkNavy,
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(24),
+                                    topRight: Radius.circular(24))),
+                            child: Column(children: <Widget>[
+                              Expanded(
+                                child: MyRequestsScreen2(cardList, reqList),
+                              ),
+                            ]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 }

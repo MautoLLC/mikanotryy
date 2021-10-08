@@ -97,16 +97,16 @@ class T5ListingState extends State<T5Listing> {
 
     Categ catgg;
     MaintenanceRequestModel reqq;
-    return  Scaffold(
+    return Scaffold(
         body: Scaffold(
             backgroundColor: Color(0xff464646),
             appBar: AppBar(
-              automaticallyImplyLeading: false,
+                automaticallyImplyLeading: false,
                 elevation: 0,
                 shape: Border(
                     bottom: BorderSide(color: Colors.transparent, width: 0)),
                 backgroundColor: Color(0xfff0f0f0),
-                toolbarHeight: 120,
+                toolbarHeight: 80,
                 title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -145,16 +145,15 @@ class T5ListingState extends State<T5Listing> {
                           padding: EdgeInsets.only(left: 20.0, right: 20),
                           child: reqs.length == 0 || cnames.length == 0
                               ? Center(
-              child: SpinKitCircle(
-                color: Colors.black,
-                size: 65,
-              ),
-            )
+                                  child: SpinKitCircle(
+                                    color: Colors.black,
+                                    size: 65,
+                                  ),
+                                )
                               : FutureBuilder(
                                   future: inspViewModel.fetchInspections(),
                                   builder: (BuildContext context,
-                                      AsyncSnapshot<
-                                              List<InspectionsViewModel>?>
+                                      AsyncSnapshot<List<InspectionsViewModel>?>
                                           snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.done) {
@@ -164,8 +163,8 @@ class T5ListingState extends State<T5Listing> {
                                       }
                                       return ListView.builder(
                                           scrollDirection: Axis.vertical,
-                                          itemCount: inspViewModel
-                                              .inspections!.length,
+                                          itemCount:
+                                              inspViewModel.inspections!.length,
                                           shrinkWrap: true,
                                           physics: BouncingScrollPhysics(),
                                           itemBuilder: (context, index) {
@@ -185,8 +184,8 @@ class T5ListingState extends State<T5Listing> {
                                                     reqq.maintenanceCategoryId,
                                                 orElse: () => cnames.first);
 
-                                            DateTime startTime =
-                                                DateTime.parse(inspViewModel
+                                            DateTime startTime = DateTime.parse(
+                                                inspViewModel
                                                     .inspections![index]
                                                     .mInspection!
                                                     .inspectionStartTime);
@@ -226,8 +225,7 @@ class T5ListingState extends State<T5Listing> {
                                                                     .mInspection!,
                                                                 statusList:
                                                                     statusList,
-                                                                category:
-                                                                    catgg,
+                                                                category: catgg,
                                                               )),
                                                     );
                                                   },
@@ -264,32 +262,35 @@ class T5ListingState extends State<T5Listing> {
                                                                   right: 16),
                                                           width: width / 7.2,
                                                           height: width / 7.2,
-                                                          child:
-                                                              FutureBuilder(
-                                                                  future: ListMaintenanceRequestsViewModel().fetchMaintenanceRequestsByID(reqq
+                                                          child: FutureBuilder(
+                                                              future: ListMaintenanceRequestsViewModel()
+                                                                  .fetchMaintenanceRequestsByID(reqq
                                                                       .idMaintenanceRequest!
                                                                       .toInt()),
-                                                                  builder: (context,
-                                                                      AsyncSnapshot<MaintenanceRequestsViewModel>
-                                                                          snapshot) {
-                                                                    if (snapshot
-                                                                            .connectionState ==
-                                                                        ConnectionState
-                                                                            .done) {
-                                                                      return Image.network(snapshot
-                                                                          .data!
-                                                                          .mMaintenacerequest!
-                                                                          .maintenanceCategory!
-                                                                          .maintenanceCategoryIcon);
-                                                                    } else {
-                                                                      return Center(
-              child: SpinKitCircle(
-                color: Colors.black,
-                size: 65,
-              ),
-            );
-                                                                    }
-                                                                  }),
+                                                              builder: (context,
+                                                                  AsyncSnapshot<
+                                                                          MaintenanceRequestsViewModel>
+                                                                      snapshot) {
+                                                                if (snapshot
+                                                                        .connectionState ==
+                                                                    ConnectionState
+                                                                        .done) {
+                                                                  return Image.network(snapshot
+                                                                      .data!
+                                                                      .mMaintenacerequest!
+                                                                      .maintenanceCategory!
+                                                                      .maintenanceCategoryIcon);
+                                                                } else {
+                                                                  return Center(
+                                                                    child:
+                                                                        SpinKitCircle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      size: 65,
+                                                                    ),
+                                                                  );
+                                                                }
+                                                              }),
                                                           // child: Image.asset(
                                                           //     mListings[index]
                                                           //         .icon),
@@ -305,16 +306,14 @@ class T5ListingState extends State<T5Listing> {
                                                             crossAxisAlignment:
                                                                 CrossAxisAlignment
                                                                     .start,
-                                                            children: <
-                                                                Widget>[
+                                                            children: <Widget>[
                                                               text(
                                                                   "Inspection" +
                                                                       (index +
                                                                               1)
                                                                           .toString(),
-                                                                  textColor:
-                                                                      Color(
-                                                                          0xff525252),
+                                                                  textColor: Color(
+                                                                      0xff525252),
                                                                   fontSize:
                                                                       textSizeSmall,
                                                                   fontFamily:
@@ -322,9 +321,8 @@ class T5ListingState extends State<T5Listing> {
                                                               text(
                                                                   catgg
                                                                       .maintenanceCategoryName,
-                                                                  textColor:
-                                                                      Color(
-                                                                          0xff525252),
+                                                                  textColor: Color(
+                                                                      0xff525252),
                                                                   fontSize:
                                                                       textSizeSmall,
                                                                   maxLine: 3),
@@ -336,8 +334,7 @@ class T5ListingState extends State<T5Listing> {
                                                               EdgeInsets.only(
                                                                   top: 0),
                                                           child: Row(
-                                                            children: <
-                                                                Widget>[
+                                                            children: <Widget>[
                                                               RichText(
                                                                   text:
                                                                       TextSpan(
@@ -351,14 +348,20 @@ class T5ListingState extends State<T5Listing> {
                                                                       style: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
                                                                               "false"
                                                                           ? TextStyle(
+                                                                              fontSize:
+                                                                                  textSizeMedium,
+                                                                              color: Colors
+                                                                                  .redAccent)
+                                                                          : TextStyle(
                                                                               fontSize: textSizeMedium,
-                                                                              color: Colors.redAccent)
-                                                                          : TextStyle(fontSize: textSizeMedium, color: Colors.green)),
+                                                                              color: Colors.green)),
                                                                   WidgetSpan(
                                                                     child:
                                                                         Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.only(left: 4),
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              4),
                                                                       child: inspViewModel.inspections![index].mInspection!.isRepaired.toString() ==
                                                                               "false"
                                                                           ? Icon(
@@ -398,11 +401,11 @@ class T5ListingState extends State<T5Listing> {
                                           });
                                     } else
                                       return Center(
-              child: SpinKitCircle(
-                color: Colors.black,
-                size: 65,
-              ),
-            );
+                                        child: SpinKitCircle(
+                                          color: Colors.black,
+                                          size: 65,
+                                        ),
+                                      );
                                   }),
                         ),
                       ),
