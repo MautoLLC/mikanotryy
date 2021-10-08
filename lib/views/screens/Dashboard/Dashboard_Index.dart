@@ -113,6 +113,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
         body: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               leading: IconButton(
                 icon: Icon(
                   Icons.keyboard_arrow_left,

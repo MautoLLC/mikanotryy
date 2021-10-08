@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
@@ -268,7 +269,6 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
                                                   ],
                                                 ),
                                                 onTap: () => {
-                                                      Navigator.pop(context),
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -302,8 +302,11 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
                                   });
                             } else
                               return Center(
-                                child: const CircularProgressIndicator(),
-                              );
+              child: SpinKitCircle(
+                color: Colors.black,
+                size: 65,
+              ),
+            );
                           }),
                       SizedBox(height: 20),
                       SizedBox(

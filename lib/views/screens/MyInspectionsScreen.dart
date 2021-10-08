@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/models/ComponentStatusModel.dart';
@@ -100,6 +101,7 @@ class T5ListingState extends State<T5Listing> {
         body: Scaffold(
             backgroundColor: Color(0xff464646),
             appBar: AppBar(
+              automaticallyImplyLeading: false,
                 elevation: 0,
                 shape: Border(
                     bottom: BorderSide(color: Colors.transparent, width: 0)),
@@ -143,11 +145,11 @@ class T5ListingState extends State<T5Listing> {
                           padding: EdgeInsets.only(left: 20.0, right: 20),
                           child: reqs.length == 0 || cnames.length == 0
                               ? Center(
-                                  child: Text(
-                                    "No items",
-                                    style: TextStyle(fontFamily: "Roboto"),
-                                  ),
-                                )
+              child: SpinKitCircle(
+                color: Colors.black,
+                size: 65,
+              ),
+            )
                               : FutureBuilder(
                                   future: inspViewModel.fetchInspections(),
                                   builder: (BuildContext context,
@@ -281,9 +283,11 @@ class T5ListingState extends State<T5Listing> {
                                                                           .maintenanceCategoryIcon);
                                                                     } else {
                                                                       return Center(
-                                                                        child:
-                                                                            const CircularProgressIndicator(),
-                                                                      );
+              child: SpinKitCircle(
+                color: Colors.black,
+                size: 65,
+              ),
+            );
                                                                     }
                                                                   }),
                                                           // child: Image.asset(
@@ -394,9 +398,11 @@ class T5ListingState extends State<T5Listing> {
                                           });
                                     } else
                                       return Center(
-                                        child:
-                                            const CircularProgressIndicator(),
-                                      );
+              child: SpinKitCircle(
+                color: Colors.black,
+                size: 65,
+              ),
+            );
                                   }),
                         ),
                       ),

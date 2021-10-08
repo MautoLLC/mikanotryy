@@ -66,6 +66,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
             backgroundColor: Color(0Xfff0f0f0),
             toolbarHeight: 120,
