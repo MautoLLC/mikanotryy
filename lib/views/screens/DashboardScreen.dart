@@ -216,19 +216,12 @@ class DashboardState extends State<Dashboard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  SizerUtil.deviceType == DeviceType.mobile
-                                      ? AutoSizeText("Generator",
+                                  AutoSizeText("Generator",
                                           style: boldTextStyle(
                                               color: Color(0xff484848),
                                               fontFamily: fontRegular,
                                               weight: FontWeight.bold,
-                                              size: 16))
-                                      : AutoSizeText("Generator",
-                                          style: boldTextStyle(
-                                              color: Color(0xff484848),
-                                              fontFamily: fontRegular,
-                                              weight: FontWeight.bold,
-                                              size: 30)),
+                                              size: 16)),
                                   Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -269,9 +262,7 @@ class DashboardState extends State<Dashboard> {
               ),
             ),
             Padding(
-                padding: SizerUtil.deviceType == DeviceType.mobile
-                    ? EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0)
-                    : EdgeInsets.only(left: 10.0, right: 10.0, top: 25.0),
+                padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0),
                 child: Stack(
                   children: [
                     Container(
@@ -309,17 +300,10 @@ class DashboardState extends State<Dashboard> {
                                       child: Row(
 
                                         children: <Widget>[
-                                          SizerUtil.deviceType ==
-                                                  DeviceType.mobile
-                                              ? Text(t5_mikano_shop,
+                                          Text(t5_mikano_shop,
                                                   style: boldTextStyle(
                                                       color: Colors.white,
-                                                      size: 16))
-                                              : Text(t5_mikano_shop,
-                                                  style: boldTextStyle(
-                                                      color: Colors.white,
-                                                      size: 30)),
-                                                      Spacer(),
+                                                      size: 16)),
                                           Icon(
                                             Icons.keyboard_arrow_right,
                                             color: Colors.white,

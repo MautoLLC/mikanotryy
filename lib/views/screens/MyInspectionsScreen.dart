@@ -102,10 +102,8 @@ class T5ListingState extends State<T5Listing> {
             backgroundColor: Color(0xff464646),
             appBar: AppBar(
                 automaticallyImplyLeading: false,
-                elevation: 0,
-                shape: Border(
-                    bottom: BorderSide(color: Colors.transparent, width: 0)),
-                backgroundColor: Color(0xfff0f0f0),
+                shape: Border(bottom: BorderSide(color: Colors.transparent, width: 0)),
+                backgroundColor: Color(0Xfff0f0f0),
                 toolbarHeight: 80,
                 title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -131,9 +129,10 @@ class T5ListingState extends State<T5Listing> {
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.transparent),
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24))),
+                    // borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(24),
+                    //     topRight: Radius.circular(24))
+                        ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -127,73 +127,74 @@ class T5ProfileState extends State<T5Profile> {
   Widget build(BuildContext context) {
     changeStatusColor(Colors.black);
     width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.topCenter,
-            height: width,
-            color: Color(0xfff0f0f0),
-            child: Container(
-              padding: EdgeInsets.only(top: 10),
-              alignment: Alignment.topLeft,
-              height: 60,
-            ),
+    double height = MediaQuery.of(context).size.height;
+    return Stack(
+      children: [Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          toolbarHeight: height*0.15,
+          actions: [
+                                    Transform.translate(
+                                      offset: Offset(0,height*0.04),
+                                      child: GestureDetector(
+                                                              onTap: () async{
+                                                                await logout();
+                                                              },
+                                                              onDoubleTap: (){},
+                                                              child: Column(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  Icon(
+                                                                      Icons.logout,
+                                                                      color: Colors.black,
+                                                                      ),
+                                                                      Text("Sign Out", style: TextStyle(fontSize: 12, color: Colors.black,))
+                                                                ],
+                                                              ),
+                                                            ),
+                                    )
+          ],
+          backgroundColor: Color(0xfff0f0f0),
+        
+        ),
+        backgroundColor: Color(0xfff0f0f0),
+        body:             Container(
+          padding: EdgeInsets.only(top: 60),
+          alignment: Alignment.topCenter,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24))),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              
+              text(tech!.firstname + " " + tech!.lastname,
+                  textColor: t5TextColorPrimary,
+                  fontFamily: fontBold,
+                  fontSize: textSizeNormal),
+              text(tech!.email, fontSize: textSizeLargeMedium),
+              SizedBox(height: 58),
+              gridItem(),
+            ],
           ),
-          SingleChildScrollView(
-            padding: EdgeInsets.only(top: 70),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 50),
-                  padding: EdgeInsets.only(top: 60),
-                  alignment: Alignment.topCenter,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24))),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      text(tech!.firstname + " " + tech!.lastname,
-                          textColor: t5TextColorPrimary,
-                          fontFamily: fontBold,
-                          fontSize: textSizeNormal),
-                      text(tech!.email, fontSize: textSizeLargeMedium),
-                      SizedBox(height: 58),
-                      gridItem(),
-                      SizedBox(height: 20,),
-                      GestureDetector(
-                        onTap: () async{
-                          await logout();
-                        },
-                        onDoubleTap: (){},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                                (Icons.logout),
-                                ),
-                                Text("Logout")
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50.0),
-                  child: CachedNetworkImage(imageUrl: tech!.image, placeholder: (context, url) => CircularProgressIndicator(), height: 100, width: 100,fit: BoxFit.cover,),
-                )
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Transform.translate(
+                            offset: Offset(0,height*0.125),
+                            child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(50.0),
+                                            child: CachedNetworkImage(imageUrl: tech!.image, placeholder: (context, url) => CircularProgressIndicator(), height: 100, width: 100,fit: BoxFit.cover,),
+                                          ),
+                          ),
+                Spacer(),
+                        ],
+                      )],
     );
   }
 }
