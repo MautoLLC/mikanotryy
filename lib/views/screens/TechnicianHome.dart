@@ -91,6 +91,7 @@ class T5ProfileState extends State<T5Profile> {
 
   Widget gridItem() {
     return GestureDetector(
+      onDoubleTap: (){},
         onTap: () async {
           await init();
           Navigator.push(
@@ -165,17 +166,29 @@ class T5ProfileState extends State<T5Profile> {
                       text(tech!.email, fontSize: textSizeLargeMedium),
                       SizedBox(height: 58),
                       gridItem(),
-                      IconButton(
-                          onPressed: () async {
-                            await logout();
-                          },
-                          icon: Icon(Icons.logout))
+                      SizedBox(height: 20,),
+                      GestureDetector(
+                        onTap: () async{
+                          await logout();
+                        },
+                        onDoubleTap: (){},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                                (Icons.logout),
+                                ),
+                                Text("Logout")
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
-                CircleAvatar(
-                    backgroundImage: CachedNetworkImageProvider(tech!.image),
-                    radius: 50)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: CachedNetworkImage(imageUrl: tech!.image, placeholder: (context, url) => CircularProgressIndicator(), height: 100, width: 100,fit: BoxFit.cover,),
+                )
               ],
             ),
           ),

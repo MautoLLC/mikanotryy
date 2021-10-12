@@ -24,32 +24,31 @@ class _WebViewState extends State<WebView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: Text(
-              widget.Title,
-              style: TextStyle(
-                  fontSize: 20.0,
-                  fontFamily: 'Roboto',
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            bottom: PreferredSize(
-                child: Container(
-                  color: Colors.orange,
-                  height: 0.0,
-                ),
-                preferredSize: Size.fromHeight(0.0)),
+    return Scaffold(
+      backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          // extendBodyBehindAppBar: true,
-          body: WebviewScaffold(url: widget.Url)),
-    );
+          title: Text(
+            widget.Title,
+            style: TextStyle(
+                fontSize: 20.0,
+                fontFamily: 'Roboto',
+                color: Colors.black,
+                fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          bottom: PreferredSize(
+              child: Container(
+                color: Colors.orange,
+                height: 0.0,
+              ),
+              preferredSize: Size.fromHeight(0.0)),
+        ),
+        // extendBodyBehindAppBar: true,
+        body: WebviewScaffold(url: widget.Url));
   }
 }

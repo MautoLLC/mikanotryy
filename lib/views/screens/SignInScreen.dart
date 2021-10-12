@@ -1,3 +1,4 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/services/LoginService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,8 @@ class T13SignInScreen extends StatefulWidget {
 class T13SignInScreenState extends State<T13SignInScreen> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  bool loading = false;
+  bool pressed = false;
 
   @override
   void initState() {
@@ -69,12 +72,29 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                   children: <Widget>[
                     Expanded(
                       child: T13Button(
+                        // onPressed: (){},
                         textContent: t13_lbl_login,
                         onPressed: () async {
-                          await Login(emailController.text.toString(),
+                          if(!pressed){
+                            pressed = true;
+                          FocusScope.of(context).unfocus();
+                          loading = true;
+                          setState(() {
+                            
+                          });
+                          bool response = await Login(emailController.text.toString(),
                               passController.text.toString(), this.context);
                           emailController.text = "";
                           passController.text = "";
+                          if(!response){
+                            loading = false;
+                            
+                          }
+                          pressed = false;
+                                                    setState(() {
+                            
+                          });
+                          }
                         },
                       ),
                       flex: 2,
@@ -104,6 +124,12 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     ),
                   ],
                 ),
+                loading?Center(
+                                  child: SpinKitCircle(
+                                    color: Colors.black,
+                                    size: 65,
+                                  ),
+                                ):Center(child:Text(""))
               ],
             ),
           ),

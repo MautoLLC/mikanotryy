@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'WebViewScreen.dart';
+
 class PlaceHolder extends StatelessWidget {
   const PlaceHolder({Key? key}) : super(key: key);
 
@@ -12,8 +14,35 @@ class PlaceHolder extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text('Coming Soon!')],
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Spacer(),
+            GestureDetector(
+              onTap: (){
+                                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => WebView(
+                                                        Title: 'mauto.co',
+                                                        Url:
+                                                            "https://mauto.co/",
+                                                      )),
+                                            );
+              },
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset('images/MikanoLogo.png', width: 200, height: 250,),
+                  Transform.translate(offset: Offset(0, 15),child: Image.asset('images/MautoGreyLogo.png', width: 100, height: 100,)),
+            
+                ],
+              ),
+            ),
+            Text('This Feature will be available soon'),
+                                    Spacer(),
+],
+
         ),
       ),
     );

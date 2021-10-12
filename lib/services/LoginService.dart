@@ -68,6 +68,7 @@ Login(String username, String password, BuildContext context) async {
         context,
         MaterialPageRoute(builder: (context) => Theme5Dashboard()),
       );
+          return true;
     } on Exception catch (e) {
       Fluttertoast.showToast(
           msg: "Login Failed",
@@ -78,6 +79,7 @@ Login(String username, String password, BuildContext context) async {
           textColor: Colors.black87,
           fontSize: 16.0);
       print(e.toString());
+          return false;
     }
   } on Exception catch (e) {
     print(e);
@@ -89,5 +91,6 @@ Login(String username, String password, BuildContext context) async {
         backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
         fontSize: 16.0);
+            return false;
   }
 }

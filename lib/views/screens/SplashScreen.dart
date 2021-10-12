@@ -60,18 +60,21 @@ class _OPSplashScreenState extends State<OPSplashScreen>
                 Image.asset('images/MyMikanoLogo.png',
                     height: 85, fit: BoxFit.fill),
                 Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Powered by ",
-                        style: boldTextStyle(size: 10, color: Colors.grey)),
-                    Image.asset(
-                      "images/MautoGreyLogo.png",
-                      width: 30,
-                      height: 30,
-                      color: Colors.grey,
-                    )
-                  ],
+                Transform.translate(
+                  offset: Offset(0, -10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Powered by ",
+                          style: boldTextStyle(size: 12, color: Colors.grey)),
+                      Image.asset(
+                        "images/MautoGreyLogo.png",
+                        width: 32,
+                        height: 32,
+                        color: Colors.grey,
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

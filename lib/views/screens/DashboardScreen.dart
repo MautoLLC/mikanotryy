@@ -402,8 +402,8 @@ class DashboardState extends State<Dashboard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
+                            Transform.translate(
+                              offset: Offset(0,10),
                               child: Text(
                                 "Shop by Categories",
                                 style: TextStyle(
