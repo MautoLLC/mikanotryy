@@ -34,8 +34,8 @@ class PlaceHolder extends StatelessWidget {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Spacer(),
-                  Image.asset('images/MikanoLogo.png', width: 200, height: 250,),
-                  Transform.translate(offset: Offset(0, 15),child: Image.asset('images/MautoGreyLogo.png', width: 100, height: 100,)),
+                  Image.asset('images/MikanoLogo.png', width: 150, height: 250,),
+                  Transform.translate(offset: Offset(0, 15),child: Image.asset('images/MautoGreyLogo.png', width: 150, height: 250,)),
             Spacer(),
                 ],
               ),
