@@ -68,6 +68,7 @@ class DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     changeStatusColor(t5DarkNavy);
     var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     final Size cardSize = SizerUtil.deviceType == DeviceType.mobile
         ? Size(width, width / 2.2)
         : Size(width, width / 5);
@@ -168,7 +169,7 @@ class DashboardState extends State<Dashboard> {
                                         color: Color(0xff484848),
                                         fontFamily: fontRegular,
                                         weight: FontWeight.bold,
-                                        size: 16))
+                                        size: (width*0.05).toInt()))
                               ]),
                           Positioned(
                               right: 0,
@@ -221,7 +222,7 @@ class DashboardState extends State<Dashboard> {
                                               color: Color(0xff484848),
                                               fontFamily: fontRegular,
                                               weight: FontWeight.bold,
-                                              size: 16)),
+                                              size: (width*0.05).toInt())),
                                   Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -300,10 +301,10 @@ class DashboardState extends State<Dashboard> {
                                       child: Row(
 
                                         children: <Widget>[
-                                          Text(t5_mikano_shop,
+                                          AutoSizeText(t5_mikano_shop,
                                                   style: boldTextStyle(
-                                                      color: Colors.white,
-                                                      size: 16)),
+                                                      color: Colors.white, size: (width*0.05).toInt())),
+                                                      Spacer(),
                                           Icon(
                                             Icons.keyboard_arrow_right,
                                             color: Colors.white,
