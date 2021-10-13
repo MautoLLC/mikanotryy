@@ -162,14 +162,24 @@ class DashboardState extends State<Dashboard> {
                                     radius: 40,
                                     backgroundColor: Colors.transparent,
                                     child: Image.asset(
-                                        'images/MaintenanceAndRepairRedIcon.png')),
+                                        'images/MaintenanceAndRepairRedIcon.png', width: SizerUtil.deviceType ==
+                                                    DeviceType.mobile?160:240, height: SizerUtil.deviceType ==
+                                                    DeviceType.mobile?160:240,)),
                                 SizedBox(height: 5),
+                                SizerUtil.deviceType ==
+                                                    DeviceType.mobile?
                                 AutoSizeText(cards[0].examName!,
                                     style: boldTextStyle(
                                         color: Color(0xff484848),
                                         fontFamily: fontRegular,
                                         weight: FontWeight.bold,
-                                        size: (width*0.05).toInt()))
+                                        size: 16)):
+                                AutoSizeText(cards[0].examName!,
+                                    style: boldTextStyle(
+                                        color: Color(0xff484848),
+                                        fontFamily: fontRegular,
+                                        weight: FontWeight.bold,
+                                        size: 24))
                               ]),
                           Positioned(
                               right: 0,
@@ -217,12 +227,20 @@ class DashboardState extends State<Dashboard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
+                                  SizerUtil.deviceType ==
+                                                    DeviceType.mobile?
                                   AutoSizeText("Generator",
                                           style: boldTextStyle(
                                               color: Color(0xff484848),
                                               fontFamily: fontRegular,
                                               weight: FontWeight.bold,
-                                              size: (width*0.05).toInt())),
+                                              size: 16)):
+                                  AutoSizeText("Generator",
+                                          style: boldTextStyle(
+                                              color: Color(0xff484848),
+                                              fontFamily: fontRegular,
+                                              weight: FontWeight.bold,
+                                              size: 24)),
                                   Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -301,9 +319,14 @@ class DashboardState extends State<Dashboard> {
                                       child: Row(
 
                                         children: <Widget>[
+                                          SizerUtil.deviceType ==
+                                                    DeviceType.mobile?
                                           AutoSizeText(t5_mikano_shop,
                                                   style: boldTextStyle(
-                                                      color: Colors.white, size: (width*0.05).toInt())),
+                                                      color: Colors.white, size: 16)):
+                                          AutoSizeText(t5_mikano_shop,
+                                                  style: boldTextStyle(
+                                                      color: Colors.white, size: 24)),
                                                       Spacer(),
                                           Icon(
                                             Icons.keyboard_arrow_right,

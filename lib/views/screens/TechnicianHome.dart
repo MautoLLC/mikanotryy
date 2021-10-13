@@ -90,14 +90,24 @@ class T5ProfileState extends State<T5Profile> {
   }
 
   Widget gridItem() {
+    bool pressed = false;
     return GestureDetector(
-      onDoubleTap: (){},
+      // onDoubleTap: (){},
         onTap: () async {
-          await init();
+          // await init();
+          if(!pressed){
+            pressed = true;
+                      Future.delayed(
+                        Duration(seconds: 2), 
+                      (){
+                        pressed = false;
+                        });
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => T5Listing()),
           );
+
+          }
         },
         child: Container(
             width: width! * 0.5,
@@ -112,12 +122,15 @@ class T5ProfileState extends State<T5Profile> {
                 Spacer(),
                 Spacer(),
                 Image.asset("images/tech.png",
-                    height: 90, width: 90, color: t5Cat2),
+                    height: SizerUtil.deviceType ==
+                                                    DeviceType.mobile?90:160, width: SizerUtil.deviceType ==
+                                                    DeviceType.mobile?90:160, color: t5Cat2),
                 Spacer(),
                 Flexible(
                     child: AutoSizeText("My Inspections",
                         style:
-                            boldTextStyle(color: Color(0xff464646), size: 15))),
+                            boldTextStyle(color: Color(0xff464646), size: SizerUtil.deviceType ==
+                                                    DeviceType.mobile?16:24))),
                 Spacer(),
               ],
             )));
@@ -135,7 +148,7 @@ class T5ProfileState extends State<T5Profile> {
           toolbarHeight: height*0.15,
           actions: [
                                     Transform.translate(
-                                      offset: Offset(0,height*0.04),
+                                      offset: Offset(-5,height*0.04),
                                       child: GestureDetector(
                                                               onTap: () async{
                                                                 await logout();
