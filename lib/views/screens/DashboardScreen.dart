@@ -158,13 +158,10 @@ class DashboardState extends State<Dashboard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                CircleAvatar(
-                                    radius: 40,
-                                    backgroundColor: Colors.transparent,
-                                    child: Image.asset(
-                                        'images/MaintenanceAndRepairRedIcon.png', width: SizerUtil.deviceType ==
-                                                    DeviceType.mobile?160:240, height: SizerUtil.deviceType ==
-                                                    DeviceType.mobile?160:240,)),
+                                Image.asset(
+                                    'images/MaintenanceAndRepairRedIcon.png', width: SizerUtil.deviceType ==
+                                                DeviceType.mobile?80:160, height: SizerUtil.deviceType ==
+                                                DeviceType.mobile?80:160,),
                                 SizedBox(height: 5),
                                 SizerUtil.deviceType ==
                                                     DeviceType.mobile?
