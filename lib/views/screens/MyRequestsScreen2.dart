@@ -13,6 +13,7 @@ import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../main.dart';
 import 'DashboardScreen.dart';
@@ -109,8 +110,10 @@ class MyRequestsScreen2 extends StatelessWidget {
                                     .mMaintenacerequest!
                                     .maintenanceCategory!
                                     .maintenanceCategoryIcon,
-                                width: width / 13,
-                                height: width / 13),
+                                width: SizerUtil.deviceType ==
+                                                DeviceType.mobile?30:50,
+                                height: SizerUtil.deviceType ==
+                                                DeviceType.mobile?30:50),
                             SizedBox(height: 10),
                             AutoSizeText(
                                 listmrequestsViewModel
@@ -119,7 +122,8 @@ class MyRequestsScreen2 extends StatelessWidget {
                                     .maintenanceCategory!
                                     .maintenanceCategoryName,
                                 style:
-                                    boldTextStyle(color: Colors.black, size: 16)),
+                                    boldTextStyle(color: Colors.black, size: SizerUtil.deviceType ==
+                                                DeviceType.mobile?16:24)),
                             AutoSizeText(preferredVisitTimee),
                             SizedBox(height: 10),
                             Container(
@@ -137,7 +141,8 @@ class MyRequestsScreen2 extends StatelessWidget {
                                       .mMaintenacerequest!
                                       .maintenaceRequestStatus!
                                       .maintenanceStatusDescription,
-                                  fontSize: textSizeMedium,
+                                  fontSize: SizerUtil.deviceType ==
+                                                DeviceType.mobile?16.0:24.0,
                                   textColor: t5White),
                             ),
                           ],

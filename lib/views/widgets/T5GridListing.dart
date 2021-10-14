@@ -6,6 +6,7 @@ import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/views/screens/MaintenanceRequestScreen.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
+import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class T5GridListing extends StatelessWidget {
@@ -77,6 +78,8 @@ class T5GridListing extends StatelessWidget {
                                   child: Image.network(
                                     listCategViewModel.maincategs![index].mcateg!
                                         .maintenanceCategoryIcon,
+                                        width: SizerUtil.deviceType ==
+                                                DeviceType.mobile?70:140,
                                   ),
                                 ),
                                 SizedBox(height: 20),
@@ -84,7 +87,8 @@ class T5GridListing extends StatelessWidget {
                                   child: Text(
                                     listCategViewModel.maincategs![index].mcateg!
                                         .maintenanceCategoryName,
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: SizerUtil.deviceType ==
+                                                DeviceType.mobile?16:24),
                                   ),
                                 ),
                               ],

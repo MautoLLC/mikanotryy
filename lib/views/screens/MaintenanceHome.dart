@@ -54,20 +54,17 @@ class T5MaintenanceState extends State<T5Maintenance> {
     changeStatusColor(t5DarkNavy);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
-    final GlobalKey<ScaffoldState> _scaffoldKey =
-        new GlobalKey<ScaffoldState>();
 
     return Scaffold(
-        appBar: null,
-        body: Scaffold(
-          backgroundColor: t5DarkNavy,
-          key: _scaffoldKey,
+                    backgroundColor: Colors.white,
+
           body: DefaultTabController(
             length: 2,
             child: Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
                 automaticallyImplyLeading: false,
-                shape: Border(bottom: BorderSide(color: t5DarkNavy, width: 0)),
+                shape: Border(bottom: BorderSide(color: Colors.white, width: 0)),
                 backgroundColor: Color(0Xfff0f0f0),
                 toolbarHeight: 80,
                 title: Row(
@@ -166,6 +163,6 @@ class T5MaintenanceState extends State<T5Maintenance> {
               ),
             ),
           ),
-        ));
+        );
   }
 }
