@@ -70,10 +70,11 @@ class T5GridListing extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
+                                                                                            Spacer(),
                                 Container(
                                   height: width / 4.5,
                                   width: width / 4.5,
-                                  margin: EdgeInsets.only(top: 18),
+                                  // margin: EdgeInsets.only(top: 18),
                                   decoration: boxDecoration(radius: 10),
                                   child: SizedBox(
                                                                   width: MediaQuery.of(context).size.width*0.5,
@@ -85,7 +86,7 @@ class T5GridListing extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 20),
+                                                            Spacer(),
                                 Expanded(
                                   child: Text(
                                     listCategViewModel.maincategs![index].mcateg!
@@ -94,6 +95,7 @@ class T5GridListing extends StatelessWidget {
                                                 DeviceType.mobile?16:24),
                                   ),
                                 ),
+                                                            Spacer(),
                               ],
                             ),
                           ),
