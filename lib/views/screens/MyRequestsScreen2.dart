@@ -72,8 +72,9 @@ class MyRequestsScreen2 extends StatelessWidget {
                 itemCount: listmrequestsViewModel.maintenanceRequests!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16),
+                    // crossAxisSpacing: 16,
+                    // mainAxisSpacing: 16
+                    ),
                 itemBuilder: (BuildContext context, int index) {
                   DateTime date = DateTime.parse(listmrequestsViewModel
                       .maintenanceRequests![index]
@@ -104,16 +105,20 @@ class MyRequestsScreen2 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Image.network(
-                                listmrequestsViewModel
-                                    .maintenanceRequests![index]
-                                    .mMaintenacerequest!
-                                    .maintenanceCategory!
-                                    .maintenanceCategoryIcon,
-                                width: SizerUtil.deviceType ==
-                                                DeviceType.mobile?30:50,
-                                height: SizerUtil.deviceType ==
-                                                DeviceType.mobile?30:50),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width*0.08,
+                              height: MediaQuery.of(context).size.height*0.08,
+                              child: Image.network(
+                                  listmrequestsViewModel
+                                      .maintenanceRequests![index]
+                                      .mMaintenacerequest!
+                                      .maintenanceCategory!
+                                      .maintenanceCategoryIcon,
+                                  width: SizerUtil.deviceType ==
+                                                  DeviceType.mobile?30:50,
+                                  height: SizerUtil.deviceType ==
+                                                  DeviceType.mobile?30:50),
+                            ),
                             SizedBox(height: 10),
                             AutoSizeText(
                                 listmrequestsViewModel
@@ -124,7 +129,8 @@ class MyRequestsScreen2 extends StatelessWidget {
                                 style:
                                     boldTextStyle(color: Colors.black, size: SizerUtil.deviceType ==
                                                 DeviceType.mobile?16:24)),
-                            AutoSizeText(preferredVisitTimee),
+                            AutoSizeText(preferredVisitTimee, style: TextStyle(fontSize: SizerUtil.deviceType ==
+                                                DeviceType.mobile?16:24),),
                             SizedBox(height: 10),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

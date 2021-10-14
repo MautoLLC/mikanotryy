@@ -75,11 +75,14 @@ class T5GridListing extends StatelessWidget {
                                   width: width / 4.5,
                                   margin: EdgeInsets.only(top: 18),
                                   decoration: boxDecoration(radius: 10),
-                                  child: Image.network(
-                                    listCategViewModel.maincategs![index].mcateg!
-                                        .maintenanceCategoryIcon,
-                                        width: SizerUtil.deviceType ==
-                                                DeviceType.mobile?70:140,
+                                  child: SizedBox(
+                                                                  width: MediaQuery.of(context).size.width*0.5,
+                              height: MediaQuery.of(context).size.height*0.5,
+                                    child: Image.network(
+                                      listCategViewModel.maincategs![index].mcateg!
+                                          .maintenanceCategoryIcon,
+                                          
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 20),
