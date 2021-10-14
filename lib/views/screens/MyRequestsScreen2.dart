@@ -105,6 +105,7 @@ class MyRequestsScreen2 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Spacer(),
                             SizedBox(
                               width: MediaQuery.of(context).size.width*0.08,
                               height: MediaQuery.of(context).size.height*0.08,
@@ -119,7 +120,7 @@ class MyRequestsScreen2 extends StatelessWidget {
                                   height: SizerUtil.deviceType ==
                                                   DeviceType.mobile?30:50),
                             ),
-                            SizedBox(height: 10),
+                            // SizedBox(height: 10),
                             AutoSizeText(
                                 listmrequestsViewModel
                                     .maintenanceRequests![index]
@@ -131,7 +132,7 @@ class MyRequestsScreen2 extends StatelessWidget {
                                                 DeviceType.mobile?16:24)),
                             AutoSizeText(preferredVisitTimee, style: TextStyle(fontSize: SizerUtil.deviceType ==
                                                 DeviceType.mobile?16:24),),
-                            SizedBox(height: 10),
+                            Spacer(),
                             Container(
                               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                               decoration: boxDecoration(
@@ -151,6 +152,7 @@ class MyRequestsScreen2 extends StatelessWidget {
                                                 DeviceType.mobile?16.0:24.0,
                                   textColor: t5White),
                             ),
+                            Spacer(),
                           ],
                         ),
                       ),
