@@ -160,8 +160,8 @@ class DashboardState extends State<Dashboard> {
                               children: [
                                 Image.asset(
                                     'images/MaintenanceAndRepairRedIcon.png', width: SizerUtil.deviceType ==
-                                                DeviceType.mobile?80:160, height: SizerUtil.deviceType ==
-                                                DeviceType.mobile?80:160,),
+                                                DeviceType.mobile?80:140, height: SizerUtil.deviceType ==
+                                                DeviceType.mobile?80:140,),
                                 SizedBox(height: 5),
                                 SizerUtil.deviceType ==
                                                     DeviceType.mobile?

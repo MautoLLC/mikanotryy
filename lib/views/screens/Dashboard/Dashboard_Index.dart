@@ -50,7 +50,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
     //UserToken=await DashModelView.GetUserToken();
     await DashModelView.GetUserToken();
     await DashModelView.getListGuid();
-    await DashModelView.GetUnits();
+    // await DashModelView.GetUnits();
     await DashModelView.GetUnitValues();
     EngineState = DashModelView.GetEngineState();
     BreakState = DashModelView.GetBreakerState();
