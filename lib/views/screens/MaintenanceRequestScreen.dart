@@ -158,7 +158,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.black);
+    changeStatusColor(Colors.transparent);
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(

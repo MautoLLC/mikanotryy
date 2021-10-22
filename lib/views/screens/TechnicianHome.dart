@@ -113,7 +113,16 @@ class T5ProfileState extends State<T5Profile> {
             width: width! * 0.5,
             height: width! * 0.5,
             decoration:
-                boxDecoration(radius: 24, showShadow: true, bgColor: t5White),
+            BoxDecoration(boxShadow: [
+                          BoxShadow(
+                              blurRadius: 10,
+                              color: Colors.black26,
+                              offset: Offset(3, 3))
+                        ],
+                        color: t5White,
+                        borderRadius: BorderRadius.circular(24.0)
+                        ),
+                
             padding: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,7 +147,7 @@ class T5ProfileState extends State<T5Profile> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.black);
+    changeStatusColor(Colors.transparent);
     width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Stack(

@@ -66,7 +66,7 @@ class DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(t5DarkNavy);
+    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     final Size cardSize = SizerUtil.deviceType == DeviceType.mobile
@@ -78,40 +78,39 @@ class DashboardState extends State<Dashboard> {
     return Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldKey,
+        
         body: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            SafeArea(
-              child: Container(
-                transform: Matrix4.translationValues(0.0, 8.0, 0.0),
-                margin: EdgeInsets.only(left: 16, right: 16),
-                child: Row(
-                  children: <Widget>[
-                    SizerUtil.deviceType == DeviceType.mobile
-                        ? Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.rotationY(math.pi),
-                            child: SvgPicture.asset(t5_menu,
-                                width: 25,
-                                height: 25,
-                                color: Color(0Xff767676)),
-                          )
-                        : Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.rotationY(math.pi),
-                            child: SvgPicture.asset(t5_menu,
-                                width: 40,
-                                height: 40,
-                                color: Color(0Xff767676)),
-                          ),
-                    Spacer(),
-                    Image.asset(
-                      'images/MyMikanoLogo2.png',
-                      width: 60,
-                      height: 60,
-                    ),
-                    Spacer(),
-                  ],
-                ),
+            Container(
+              transform: Matrix4.translationValues(0.0, 8.0, 0.0),
+              margin: EdgeInsets.only(left: 16, right: 16),
+              child: Row(
+                children: <Widget>[
+                  SizerUtil.deviceType == DeviceType.mobile
+                      ? Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(math.pi),
+                          child: SvgPicture.asset(t5_menu,
+                              width: 25,
+                              height: 25,
+                              color: Color(0Xff767676)),
+                        )
+                      : Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(math.pi),
+                          child: SvgPicture.asset(t5_menu,
+                              width: 40,
+                              height: 40,
+                              color: Color(0Xff767676)),
+                        ),
+                  Spacer(),
+                  Image.asset(
+                    'images/MyMikanoLogo2.png',
+                    width: 60,
+                    height: 60,
+                  ),
+                  Spacer(),
+                ],
               ),
             ),
             Container(

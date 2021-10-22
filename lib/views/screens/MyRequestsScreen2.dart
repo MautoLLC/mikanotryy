@@ -37,7 +37,7 @@ class MyRequestsScreen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(t5DarkNavy);
+    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
 

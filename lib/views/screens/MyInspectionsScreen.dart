@@ -89,7 +89,7 @@ class T5ListingState extends State<T5Listing> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.black);
+    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -98,13 +98,12 @@ class T5ListingState extends State<T5Listing> {
     Categ catgg;
     MaintenanceRequestModel reqq;
     return Scaffold(
-        body: Scaffold(
             backgroundColor: Color(0xff464646),
             appBar: AppBar(
                 automaticallyImplyLeading: false,
                 shape: Border(bottom: BorderSide(color: Colors.transparent, width: 0)),
                 backgroundColor: Color(0Xfff0f0f0),
-                toolbarHeight: 80,
+                toolbarHeight: 100,
                 title: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
@@ -412,6 +411,6 @@ class T5ListingState extends State<T5Listing> {
                   ],
                 ),
               ),
-            )));
+            ));
   }
 }

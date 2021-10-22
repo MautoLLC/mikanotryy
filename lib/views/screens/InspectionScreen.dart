@@ -92,7 +92,7 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.black);
+    changeStatusColor(Colors.transparent);
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,

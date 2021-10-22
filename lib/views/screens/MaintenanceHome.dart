@@ -51,7 +51,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(t5DarkNavy);
+    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
 
@@ -66,7 +66,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
                 automaticallyImplyLeading: false,
                 shape: Border(bottom: BorderSide(color: Colors.white, width: 0)),
                 backgroundColor: Color(0Xfff0f0f0),
-                toolbarHeight: 80,
+                toolbarHeight: 100,
                 title: Row(
                   children: <Widget>[
                     IconButton(

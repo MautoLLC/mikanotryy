@@ -54,7 +54,7 @@ class MyRequestsState extends State<MyRequests> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(t5DarkNavy);
+    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey =

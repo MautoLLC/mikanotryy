@@ -51,7 +51,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.black);
+    changeStatusColor(Colors.transparent);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import 'WebViewScreen.dart';
 
@@ -8,42 +9,41 @@ class PlaceHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Container(
+        color: Colors.white,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Spacer(),
-            GestureDetector(
-              onTap: (){
-                                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => WebView(
-                                                        Title: 'mauto.co',
-                                                        Url:
-                                                            "https://mauto.co/",
-                                                      )),
-                                            );
-              },
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Spacer(),
-                  Image.asset('images/MikanoLogo.png', width: 150, height: 250,),
-                  Transform.translate(offset: Offset(0, 15),child: Image.asset('images/MautoGreyLogo.png', width: 150, height: 250,)),
-            Spacer(),
-                ],
-              ),
+        child: Center(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Spacer(),
+                Image.asset('images/MyMikanoLogo.png',
+                    height: 85, fit: BoxFit.fill),
+                    Text("This feature will be available soon"),
+                    
+                Spacer(),
+                Transform.translate(
+                  offset: Offset(0, -10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Powered by ",
+                          style: boldTextStyle(size: 12, color: Colors.grey)),
+                      Image.asset(
+                        "images/MautoGreyLogo.png",
+                        width: 32,
+                        height: 32,
+                        color: Colors.grey,
+                      ),
+                      
+                    ],
+                  ),
+                )
+              ],
             ),
-            Text('This Feature will be available soon'),
-                                    Spacer(),
-],
-
+          ),
         ),
       ),
     );
