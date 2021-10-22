@@ -81,36 +81,38 @@ class DashboardState extends State<Dashboard> {
         
         body: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Container(
-              transform: Matrix4.translationValues(0.0, 8.0, 0.0),
-              margin: EdgeInsets.only(left: 16, right: 16),
-              child: Row(
-                children: <Widget>[
-                  SizerUtil.deviceType == DeviceType.mobile
-                      ? Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.rotationY(math.pi),
-                          child: SvgPicture.asset(t5_menu,
-                              width: 25,
-                              height: 25,
-                              color: Color(0Xff767676)),
-                        )
-                      : Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.rotationY(math.pi),
-                          child: SvgPicture.asset(t5_menu,
-                              width: 40,
-                              height: 40,
-                              color: Color(0Xff767676)),
-                        ),
-                  Spacer(),
-                  Image.asset(
-                    'images/MyMikanoLogo2.png',
-                    width: 60,
-                    height: 60,
-                  ),
-                  Spacer(),
-                ],
+            SafeArea(
+              child: Container(
+                transform: Matrix4.translationValues(0.0, 8.0, 0.0),
+                margin: EdgeInsets.only(left: 16, right: 16),
+                child: Row(
+                  children: <Widget>[
+                    SizerUtil.deviceType == DeviceType.mobile
+                        ? Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(math.pi),
+                            child: SvgPicture.asset(t5_menu,
+                                width: 25,
+                                height: 25,
+                                color: Color(0Xff767676)),
+                          )
+                        : Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(math.pi),
+                            child: SvgPicture.asset(t5_menu,
+                                width: 40,
+                                height: 40,
+                                color: Color(0Xff767676)),
+                          ),
+                    Spacer(),
+                    Image.asset(
+                      'images/MyMikanoLogo2.png',
+                      width: 60,
+                      height: 60,
+                    ),
+                    Spacer(),
+                  ],
+                ),
               ),
             ),
             Container(
