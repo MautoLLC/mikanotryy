@@ -1,6 +1,6 @@
-const KeyCloakBaseUrl = 'https://dev.codepickles.com:8443';
+const KeyCloakBaseUrl = 'https://dev.mauto.co';
 const identifier = 'MymikanoApp';
-const secret = '9abafef9-82fe-4360-8283-ee7d2e8b3879';
+const secret = '45475923-b3ef-46c5-aa70-79475824d3f9';
 const authorizationEndpoint =
     '$KeyCloakBaseUrl/auth/realms/master/protocol/openid-connect/token';
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
