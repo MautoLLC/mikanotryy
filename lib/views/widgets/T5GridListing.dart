@@ -15,6 +15,7 @@ class T5GridListing extends StatelessWidget {
 
   T5GridListing(this.mFavouriteList, this.isScrollable);
   ListCategViewModel listCategViewModel = new ListCategViewModel();
+  bool pressed = false;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -57,7 +58,13 @@ class T5GridListing extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
-                        goAll(mainCategory, context);
+                        if(!pressed){
+                          pressed = true;
+                          goAll(mainCategory, context);
+                          Future.delayed(Duration(seconds: 2), () {
+                            pressed = false;
+                          });
+                        }
                       },
                       child: Stack(
                         children: [
@@ -86,7 +93,7 @@ class T5GridListing extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                                            Spacer(),
+                                Spacer(),
                                 Expanded(
                                   child: Text(
                                     listCategViewModel.maincategs![index].mcateg!
@@ -178,65 +185,5 @@ class T5GridListing extends StatelessWidget {
     }
 
     return listsubs;
-  }
-
-  Future go4(Categ mainCategory, BuildContext context) async {
-    ListCategViewModel listCategViewModel2 = new ListCategViewModel();
-    ListCategViewModel listCategViewModel3 = new ListCategViewModel();
-    ListCategViewModel listCategViewModel4 = new ListCategViewModel();
-    final List<Entry> data3 = <Entry>[];
-    List<Entry> data3sub = <Entry>[];
-    List<Entry> data4sub = <Entry>[];
-    await listCategViewModel2
-        .fetchSubCategories(mainCategory.idMaintenanceCategory);
-    var l = listCategViewModel2.subcategs!.length;
-    print("sub1 list length :");
-    print(l);
-    for (var i = l - 1; i >= 0; i--) {
-      listCategViewModel3
-          .fetchSubCategories(
-              listCategViewModel2.subcategs![i].mcateg!.idMaintenanceCategory)
-          .then((result) async {
-        data3sub = [];
-        for (var j = 0; j < listCategViewModel3.subcategs!.length; j++) {
-          data4sub = [];
-          listCategViewModel4
-              .fetchSubCategories(listCategViewModel3
-                  .subcategs![j].mcateg!.idMaintenanceCategory)
-              .then((result) async {
-            for (var k = 0; k < listCategViewModel4.subcategs!.length; k++) {
-              Entry en = Entry(
-                  listCategViewModel4
-                      .subcategs![k].mcateg!.idMaintenanceCategory,
-                  listCategViewModel4
-                      .subcategs![k].mcateg!.maintenanceCategoryName
-                      .toString());
-              data4sub.add(en);
-            }
-          });
-          Entry e = Entry(
-              listCategViewModel3.subcategs![j].mcateg!.idMaintenanceCategory,
-              listCategViewModel3.subcategs![j].mcateg!.maintenanceCategoryName
-                  .toString(),
-              data4sub);
-          data3sub.add(e);
-        }
-        data3.add(Entry(
-            listCategViewModel2.subcategs![i].mcateg!.idMaintenanceCategory,
-            listCategViewModel2.subcategs![i].mcateg!.maintenanceCategoryName
-                .toString(),
-            data3sub));
-      });
-    }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MaintenanceRequestScreen(
-                mainCatg: mainCategory,
-                mydata: data3,
-                listlength: l,
-              )),
-    );
   }
 }
