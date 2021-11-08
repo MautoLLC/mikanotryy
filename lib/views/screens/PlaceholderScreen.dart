@@ -19,26 +19,48 @@ class PlaceHolder extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Spacer(),
-                Image.asset('images/MyMikanoLogo.png',
-                    height: 85, fit: BoxFit.fill),
+                GestureDetector(
+                                      onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => WebView(
+                          Title: "Mauto",
+                          Url:
+                              "https://Mauto.co",
+                        )),);
+                    },
+                  child: Image.asset('images/MyMikanoLogo.png',
+                      height: 85, fit: BoxFit.fill),
+                ),
                     Text("This feature will be available soon"),
                     
                 Spacer(),
-                Transform.translate(
-                  offset: Offset(0, -10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Powered by ",
-                          style: boldTextStyle(size: 12, color: Colors.grey)),
-                      Image.asset(
-                        "images/MautoGreyLogo.png",
-                        width: 32,
-                        height: 32,
-                        color: Colors.grey,
-                      ),
-                      
-                    ],
+                GestureDetector(
+                                                        onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => WebView(
+                          Title: "Mauto",
+                          Url:
+                              "https://Mauto.co",
+                        )),);
+                    },
+                  child: Transform.translate(
+                    offset: Offset(0, -10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Powered by ",
+                            style: boldTextStyle(size: 12, color: Colors.grey)),
+                        Image.asset(
+                          "images/MautoGreyLogo.png",
+                          width: 32,
+                          height: 32,
+                          color: Colors.grey,
+                        ),
+                        
+                      ],
+                    ),
                   ),
                 )
               ],
