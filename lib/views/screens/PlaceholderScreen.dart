@@ -19,19 +19,8 @@ class PlaceHolder extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Spacer(),
-                GestureDetector(
-                                      onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WebView(
-                          Title: "Mauto",
-                          Url:
-                              "https://Mauto.co",
-                        )),);
-                    },
-                  child: Image.asset('images/MyMikanoLogo.png',
+                Image.asset('images/MyMikanoLogo.png',
                       height: 85, fit: BoxFit.fill),
-                ),
                     Text("This feature will be available soon"),
                     
                 Spacer(),
