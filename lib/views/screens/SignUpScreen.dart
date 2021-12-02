@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/services/RegisterService.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/T13Images.dart';
-import 'package:mymikano_app/utils/T13Strings.dart';
-import 'package:mymikano_app/utils/T13Widget.dart';
-
+import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'SignInScreen.dart';
 
 class T13SignUpScreen extends StatefulWidget {

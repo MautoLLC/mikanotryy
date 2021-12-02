@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/models/EntryModel.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/views/screens/MaintenanceRequestScreen.dart';

@@ -5,27 +5,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
-import 'package:mymikano_app/utils/SDDashboardScreen.dart';
-import 'package:mymikano_app/utils/T13Strings.dart';
-import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
+import 'package:mymikano_app/views/widgets/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/models/TechnicianModel.dart';
-import 'package:mymikano_app/utils/T13Images.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/QiBusConstant.dart';
-import 'package:mymikano_app/utils/T5Images.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/images.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
-
 import 'MyInspectionsScreen.dart';
-import 'SignInScreen.dart';
 
 class T5Profile extends StatefulWidget {
   static var tag = "/T5Profile";

@@ -6,9 +6,9 @@ import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/main.dart';
-import 'AppColors.dart';
-import 'appsettings.dart';
-import 'main/model/ListModels.dart';
+import '../../utils/AppColors.dart';
+import '../../utils/appsettings.dart';
+import '../../utils/main/model/ListModels.dart';
 
 Widget text(
   String? text, {
@@ -237,61 +237,6 @@ double dynamicWidth(BuildContext context) {
   return isMobile ? context.width() : applicationMaxWidth;
 }
 
-/*class ContainerX extends StatelessWidget {
-  static String tag = '/ContainerX';
-  final BuildContext context;
-  final double maxWidth;
-  final Widget child;
-
-  ContainerX({@required this.context, this.maxWidth, @required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: context.width(),
-      height: context.height(),
-      child: ConstrainedBox(
-        constraints: dynamicBoxConstraints(maxWidth: maxWidth),
-        child: child,
-      ),
-      alignment: Alignment.topCenter,
-    );
-  }
-}*/
-
-String? getBannerAdUnitId() {
-  if (kReleaseMode) {
-    if (Platform.isIOS) {
-      return bannerAdIdForIos;
-    } else if (Platform.isAndroid) {
-      return bannerAdIdForAndroidRelease;
-    }
-  } else {
-    if (Platform.isIOS) {
-      return bannerAdIdForIos;
-    } else if (Platform.isAndroid) {
-      return bannerAdIdForAndroid;
-    }
-  }
-  return null;
-}
-
-String? getInterstitialAdUnitId() {
-  if (kReleaseMode) {
-    if (Platform.isIOS) {
-      return interstitialAdIdForIos;
-    } else if (Platform.isAndroid) {
-      return InterstitialAdIdForAndroidRelease;
-    }
-  } else {
-    if (Platform.isIOS) {
-      return interstitialAdIdForIos;
-    } else if (Platform.isAndroid) {
-      return InterstitialAdIdForAndroid;
-    }
-  }
-  return null;
-}
 
 String parseHtmlString(String? htmlString) {
   return parse(parse(htmlString).body!.text).documentElement!.text;

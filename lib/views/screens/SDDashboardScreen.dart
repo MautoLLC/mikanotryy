@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'SDExamScreen.dart';

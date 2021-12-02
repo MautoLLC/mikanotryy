@@ -3,12 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/models/QiBusModel.dart';
-import 'package:mymikano_app/utils/QiBusColors.dart';
-import 'package:mymikano_app/utils/QiBusConstant.dart';
-import 'package:mymikano_app/utils/QiBusImages.dart';
-import 'package:mymikano_app/utils/QiBusStrings.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 
 
 class Booking extends StatefulWidget {
@@ -51,18 +49,7 @@ class BookingState extends State<Booking> {
             Radius.circular(24.0) //                 <--- border radius here
         ),
         color: Colors.white,
-        // gradient: LinearGradient(  begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,colors: [Colors.white,Colors.white]),
-        // image:DecorationImage(
-        //     image: NetworkImage(
-        //         t5_bg_card_3
-        //     ),
-        //     fit: BoxFit.cover
-        // )
       ),
-      // decoration: boxDecoration(
-      //     boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black26 ,offset: Offset(3,3))],
-      //     bgColor: Colors.white,radius: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -78,17 +65,10 @@ class BookingState extends State<Booking> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // ticketInfo(QIBus_text_technician, model.technician,Colors.white70),
-                          // ticketInfo(QIBus_text_start_time, model.duration,Colors.white70),
-                          // ticketInfo(QIBus_text_duration, model.comments,Colors.white70),
-                          // ticketInfo(QIBus_text_Comments, model.startTime,Colors.white70),
                           ticketInfo("Category :", widget.categoryName,Colors.black87,col:t5Cat3),
-                          // Divider(height: 24),
-                          ticketInfo(QIBus_text_start_time + " :", model.duration,Colors.black87,col:t5Cat3),
-                          // Divider(height: 24),
-                          ticketInfo(QIBus_text_duration+ " :", model.comments,Colors.black87,col:t5Cat3),
-                          // Divider(height: 24),
-                          ticketInfo(QIBus_text_Comments+ " :", model.startTime,Colors.black87,col:t5Cat3),
+                          ticketInfo(text_start_time + " :", model.duration,Colors.black87,col:t5Cat3),
+                          ticketInfo(text_duration+ " :", model.comments,Colors.black87,col:t5Cat3),
+                          ticketInfo(text_Comments+ " :", model.startTime,Colors.black87,col:t5Cat3),
                         ],
                       ),
                     ),

@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:html/dom.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
-import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/views/screens/WebViewScreen.dart';
-import 'package:sizer/sizer.dart';
-
-import '../../../main.dart';
 
 // ignore: must_be_immutable
 class T5DashBoardListing extends StatelessWidget {

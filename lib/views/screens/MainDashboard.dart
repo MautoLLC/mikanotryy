@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/views/screens/SignInScreen.dart';
-import 'package:mymikano_app/utils/BankingBottomNavigationBar.dart';
+import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/T5Images.dart';
+import 'package:mymikano_app/utils/images.dart';
 import 'DashboardScreen.dart';
 import 'PlaceholderScreen.dart';
 import 'SignUpScreen.dart';

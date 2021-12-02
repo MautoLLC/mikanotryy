@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/utils/T13Strings.dart';
+import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
 import '../../../main.dart';

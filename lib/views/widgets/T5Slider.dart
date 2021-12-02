@@ -1,6 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/views/widgets/T5SliderWidget.dart';
 

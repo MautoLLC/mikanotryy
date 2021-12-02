@@ -3,11 +3,11 @@ import 'package:mymikano_app/models/InspectionChecklistItem.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/services/ChangeComponentStatusService.dart';
-import 'package:mymikano_app/utils/QiBusConstant.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'Booking.dart';
 import 'InspectionScreen.dart';
 

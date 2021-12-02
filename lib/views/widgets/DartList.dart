@@ -18,7 +18,6 @@ Future fetchreq(BuildContext context) async {
     for (int i = 0; i < listCategViewModel.maintenanceRequests!.length; i++) {
       MaintenanceRequestModel m = listCategViewModel.maintenanceRequests![i]
           .mMaintenacerequest!;
-      //print(m!.maintenanceCategory!.maintenanceCategoryName);
       mRequest.add(m);
     }
   }
@@ -34,124 +33,7 @@ Future fetchreq(BuildContext context) async {
         builder: (context) => MyRequests(mRequestt: mRequest)),
   );
 }
-// Future fetchinspections(BuildContext context) async {
-//   List<InspectionModel> mInspection = [];
-//   try {
-//     ListInspectionsViewModel listCategViewModel = new ListInspectionsViewModel();
-//     await listCategViewModel.fetchInspections();
-//     for (int i = 0; i < listCategViewModel.inspections!.length; i++) {
-//       InspectionModel m = listCategViewModel.inspections![i]
-//           .mInspection!;
-//       //print(m!.maintenanceCategory!.maintenanceCategoryName);
-//       mInspection.add(m);
-//     }
-//   }
-//   on Exception catch (e) {
-//
-//     print(e.toString()+"failed to fetch");
-//   }
-//
-//
-//   Navigator.push(
-//     context,
-//     MaterialPageRoute(
-//         builder: (context) => T5Listing()),
-//   );
-// }
 
-// Future goAll(int id) async
-// {
-// //   ListCategViewModel listCategViewModel=new ListCategViewModel();
-//   final List<Entry> data = <Entry>[];
-//    List<Entry> subdata =<Entry>[];
-// //   await  listCategViewModel.fetchAllCategories();
-// //   var l=listCategViewModel.allcategs!.length;
-// //   print("list length :");
-// //   print(l);
-// // ListCategViewModel parentcat;
-// //   int parentcategid;
-// //
-// //   String parentcategname;
-//  List<Categ> listsubs=[];
-// //
-// //   for (var i = 0; i <l ; i++)
-// //   {
-//
-//   //  parentcategid=listCategViewModel.allcategs![i].mcateg!.idMaintenanceCategory;
-//
-// //    parentcategname=listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName;
-// int idcurr=id;
-//     listsubs= await checksub(idcurr);
-//
-//    //print("length of sbs list "+listsubs.length.toString());
-//
-// //  while(listsubs.length!=0) {
-//   //  for(var i=0;i<listsubs.length;i++)
-//   for (var v in listsubs) {
-//     idcurr = v.idMaintenanceCategory;
-//     listsubs = await checksub(idcurr);
-//     print("length of" + v.maintenanceCategoryName.toString() + " sbs list " +
-//         listsubs.length.toString());
-//     subdata=[];
-//     for (var k in listsubs) {
-//       idcurr = k.idMaintenanceCategory;
-//       listsubs = await checksub(idcurr);
-//       print("length of" + k.maintenanceCategoryName.toString() + " sbs list " +
-//           listsubs.length.toString());
-//       subdata=[];
-//       for (var j in listsubs) {
-//         idcurr = j.idMaintenanceCategory;
-//         listsubs = await checksub(idcurr);
-//         print("length of" + j.maintenanceCategoryName.toString() + " sbs list " +
-//             listsubs.length.toString());
-//         Entry s= Entry(j.idMaintenanceCategory!,j.maintenanceCategoryName!);
-//         subdata.add(s);
-//     }
-//       Entry p= Entry(k.idMaintenanceCategory!,v.maintenanceCategoryName!,subdata);
-//       subdata.add(p);
-//     }
-//     Entry p= Entry(v.idMaintenanceCategory!,v.maintenanceCategoryName!,subdata);
-//
-//     data.add(p);
-// }
-//
-//
-//   }
-  //  for (var v in listCategViewModel.allcategs!) {
- //    if (v.mcateg!.maintenanceCategoryParentId == parentcategid) {
- //      print("Category " + parentcategname.toString()
- //      //    listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName
- //      //        .toString()
- //          + " subs : " + v.mcateg!.maintenanceCategoryName);
- //    parentcategid = v.mcateg!.idMaintenanceCategory;
- //      //Entry s= Entry(v.mcateg!.idMaintenanceCategory!,v.mcateg!.maintenanceCategoryName!);
- //      //   subdata.add(s);
- //    }
- //    //  Entry p= Entry(listCategViewModel.allcategs![i].mcateg!.idMaintenanceCategory,listCategViewModel.allcategs![i].mcateg!.maintenanceCategoryName.toString(),subdata);
- //    // data.add(p);
- // }
-
-//}
-
-// Future<List<Categ>> checksub(int idParentCat) async {
-//   List<Categ> listsubs=[];
-//   ListCategViewModel listCategViewModel=new ListCategViewModel();
-//   await  listCategViewModel.fetchAllCategories();
-//
-//   int parentcategid;
-//   String parentcategname;
-//
-//     for (var v in listCategViewModel.allcategs!) {
-//       if (v.mcateg!.maintenanceCategoryParentId == idParentCat) {
-//         // print("Category " + idParentCat.toString()
-//         //
-//         //   + " subs : " + v.mcateg!.maintenanceCategoryName);
-//         listsubs.add(v.mcateg!);
-//       }
-//     }
-//
-//   return listsubs;
-// }
 
 class CategsList extends StatelessWidget {
   final ScrollController controller;
@@ -160,69 +42,6 @@ class CategsList extends StatelessWidget {
       {Key ? key, required this.controller, required this.data, required this.listlength})
       : super(key: key);
 
-  // final List<Entry> data = <Entry>[
-  //   Entry(
-  //     1,
-  //     'Heading 1',
-  //     <Entry>[
-  //       Entry(
-  //         2,
-  //         'Sub Heading 1',
-  //         <Entry>[
-  //           Entry(3,'Row 1'),
-  //           Entry(4,'Row 2'),
-  //           Entry(5,'Row 3'),
-  //         ],
-  //       ),
-  //       Entry(1,'Sub Heading 2',
-  //         <Entry>[
-  //           Entry(2,'Row 1'),
-  //           Entry(3,'Row 2'),
-  //           Entry(4,'Row 3'),
-  //         ],
-  //       ),
-  //       Entry(4,'Sub Heading 3',
-  //         <Entry>[
-  //           Entry(5,'Row 1'),
-  //           Entry(6,'Row 2'),
-  //           Entry(7,'Row 3'),
-  //         ],),
-  //     ],
-  //   ),
-  //   Entry(
-  //     1,'Heading 2',
-  //     <Entry>[
-  //       Entry(2,'Sub Heading 1'),
-  //       Entry(3,'Sub Heading 2'),
-  //     ],
-  //   ),
-  //   Entry(
-  //     4,'Heading 3',
-  //     <Entry>[
-  //       Entry(5,'Sub Heading 1',
-  //         <Entry>[
-  //           Entry(6,'Row 1'),
-  //           Entry(7,'Row 2'),
-  //           Entry(8,'Row 3'),
-  //         ],),
-  //       Entry(2,'Sub Heading 2',
-  //         <Entry>[
-  //           Entry(3,'Row 1'),
-  //           Entry(4,'Row 2'),
-  //           Entry(5,'Row 3'),
-  //         ],),
-  //       Entry(
-  //         6,'Sub Heading 3',
-  //         <Entry>[
-  //           Entry(2,'Row 1'),
-  //           Entry(3,'Row 2'),
-  //           Entry(4,'Row 3'),
-  //           Entry(5,'Row 4'),
-  //         ],
-  //       ),
-  //     ],
-  //   ),
-  // ];
   List<Entry> data = <Entry>[];
   int listlength;
   @override

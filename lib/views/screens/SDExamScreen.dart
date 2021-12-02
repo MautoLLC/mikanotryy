@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mymikano_app/utils/AppWidget.dart';
-import 'package:mymikano_app/utils/QiBusConstant.dart';
-import 'package:mymikano_app/utils/T13Strings.dart';
-import 'package:mymikano_app/utils/T13Widget.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/utils/colors.dart';
 // import 'package:prokit_flutter/main/utils/Lipsum.dart' as lipsum;
 import 'package:nb_utils/nb_utils.dart';
