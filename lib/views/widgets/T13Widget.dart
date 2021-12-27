@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
@@ -51,7 +52,7 @@ class T13ButtonState extends State<T13Button> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(color: t13_white),
+        textStyle: TextStyle(color: Colors.white),
         elevation: 4,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
@@ -60,9 +61,7 @@ class T13ButtonState extends State<T13Button> {
       onPressed: widget.onPressed,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[t5Cat3, t5Cat3],
-          ),
+          color: mainColorTheme,
           borderRadius: BorderRadius.all(Radius.circular(24.0)),
         ),
         child: Center(

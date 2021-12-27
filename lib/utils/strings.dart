@@ -20,6 +20,7 @@ const t13_lbl_login = "Login";
 const t13_lbl_need_an_account = "Don\'t have an account?";
 const t13_lbl_forgot_your_password = "Forgot Password?";
 const t13_lbl_change_password = "Change Password";
+const lbl_Create_Account = "Create Account";
 const t13_lbl_logout = "Logout";
 const t13_lbl_request = "Request";
 const t13_lbl_for_sale = "For Sale";

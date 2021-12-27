@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/services/RegisterService.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
+import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'SignInScreen.dart';
 
@@ -30,6 +32,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
     final emailController = TextEditingController();
     final passController = TextEditingController();
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
       child: Container(
@@ -48,7 +51,8 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
             }, icon: Icon(Icons.arrow_back_ios), color: Colors.black,),
             ],
           ),
-          commonCacheImageWidget(t13_ic_logo, 85, width: width * 0.8),
+          // commonCacheImageWidget(t13_ic_logo, 85, width: width * 0.8),
+          TitleText(title: 'Sign Up here',),
           SizedBox(height: spacing_middle),
           SizedBox(height: spacing_standard_new),
           t13EditTextStyle("Username", usernameController,
@@ -63,12 +67,9 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
           SizedBox(height: spacing_standard_new),
           t13EditTextStyle(t13_hint_password, passwController,
               isPassword: true),
-          SizedBox(height: spacing_standard_new),
-          t13EditTextStyle(t13_hint_confirm_password, confpasswController,
-              isPassword: true),
           SizedBox(height: spacing_large),
           T13Button(
-              textContent: t13_lbl_sign_up,
+              textContent: lbl_Create_Account,
               onPressed: () {
                 Register(
                     usernameController.text.toString(),
@@ -78,6 +79,60 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                     passwController.text.toString(),
                     this.context);
               }),
+          SizedBox(height: spacing_large),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    thickness: 1.0,
+                    color: mainGreyColorTheme,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  child: Text('or continue with', style: TextStyle(fontSize: 15, fontFamily: 'Poppins', color: mainGreyColorTheme),),
+                ),
+                Expanded(
+                  child: Divider(
+                    thickness: 1.0,
+                    color: mainGreyColorTheme,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          GridView(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3.0,
+                crossAxisSpacing: spacing_standard_new,
+                mainAxisSpacing: spacing_standard_new
+                ),
+                physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFFF1F1F1)),
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white
+                  ),
+                child: commonCacheImageWidget(ic_google, 80,
+                    width: width * 0.4),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xFFF1F1F1)),
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.white
+                  ),
+                child: commonCacheImageWidget(ic_facebook, 80,
+                    width: width * 0.4),
+              )
+            ],
+          ),
           SizedBox(height: spacing_large),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -92,8 +147,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                         builder: (context) => T13SignInScreen())),
                 child: Container(
                   child: text(t13_lbl_login,
-                      fontSize: 14.0, fontFamily: fontMedium),
-                  //alignment: Alignment.bottomLeft,
+                      fontSize: 14.0, fontFamily: fontMedium, textColor: mainColorTheme),
                 ),
               ),
             ],
