@@ -150,7 +150,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
                     child: Row(
                       children: [
-                        commonCacheImageWidget(MenuListIcons[index], 25),
+                        commonCacheImageWidget(MenuListIcons[index], 25, width: 25),
                         SizedBox(width: spacing_standard_new,),
                         Text(MenuListNames[index], style: TextStyle(color: Colors.white, fontFamily: PoppinsFamily, fontSize: 18,),)
                       ],
@@ -183,9 +183,9 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Text('Sign Out', style: TextStyle(color: Colors.white, fontFamily: PoppinsFamily, fontSize: 18,),))
               ],),
             ),
-            SizedBox(height: spacing_standard_new,),
+            Spacer(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
