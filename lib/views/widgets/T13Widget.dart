@@ -10,7 +10,7 @@ import '../../utils/appsettings.dart';
 Padding t13EditTextStyle(var hintText, var contt,
     {isPassword = true, TextInputType keyboardType = TextInputType.name}) {
   return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
       child: TextFormField(
         style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular),
         obscureText: isPassword,

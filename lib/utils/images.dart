@@ -50,8 +50,11 @@ const t13_ic_logo = "images/MyMikanoLogo.png";
 
 // Auth Pages
 const login_Page_PNG = "assets/Login.jpg";
+const Splash_Screen_Mikano_Logo = "assets/SplashScreenMikanoLogo.png";
+const ForgotPassword_Screen_PNG = "assets/ForgotPassword.png";
 
 
 // Social Media Icons
 const ic_facebook = "assets/SocialMediaIcons/FacebookIcon.png";
 const ic_google = "assets/SocialMediaIcons/GoogleIcon.png";
+

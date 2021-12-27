@@ -12,6 +12,7 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'ForgotPasswordScreen.dart';
 import 'SignUpScreen.dart';
 
 class T13SignInScreen extends StatefulWidget {
@@ -94,11 +95,16 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(t13_lbl_forgot_your_password,
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: "Poppins",
-                              color: Color(0xFF111111))),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                        },
+                        child: Text(t13_lbl_forgot_your_password,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: "Poppins",
+                                color: Color(0xFF111111))),
+                      ),
                     ],
                   ),
                 ),

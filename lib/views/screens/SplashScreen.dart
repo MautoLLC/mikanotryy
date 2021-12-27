@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/colors.dart';
+import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
@@ -20,11 +22,7 @@ class OPSplashScreen extends StatefulWidget {
 
 class _OPSplashScreenState extends State<OPSplashScreen>
     with SingleTickerProviderStateMixin {
-  // startTime() async {
-  //   var _duration = Duration(seconds: 2);
-  //   // return Timer(_duration, navigationPage);
-  //   return Timer(_duration, (){});
-  // }
+
 
   void checkIfLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
@@ -41,23 +39,7 @@ class _OPSplashScreenState extends State<OPSplashScreen>
   void initState() {
     checkIfLoggedIn();
     super.initState();
-    // startTime();
   }
-
-  // void navigationPage() async {
-  //   finish(context);
-  //   await prefs.getBool('IsLoggedIn') == true
-  //       ? Navigator.pushReplacement(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-  //         )
-  //       :     Navigator.pushReplacement(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => T13SignInScreen(),
-  //     ),
-  //   );
-  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +54,7 @@ class _OPSplashScreenState extends State<OPSplashScreen>
               children: <Widget>[
                 Spacer(),
                 Spacer(),
-                Image.asset('images/MyMikanoLogo.png',
-                    height: 125, fit: BoxFit.fill),
+                commonCacheImageWidget(Splash_Screen_Mikano_Logo, 205, fit: BoxFit.fill),
                 Spacer(),
 
                 GestureDetector(
