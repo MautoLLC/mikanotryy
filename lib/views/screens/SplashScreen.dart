@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -83,7 +84,7 @@ class _OPSplashScreenState extends State<OPSplashScreen>
                         );
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.red),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: mainColorTheme),
                     height: 45,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
@@ -109,7 +110,7 @@ class _OPSplashScreenState extends State<OPSplashScreen>
                     child: Center(
                       child: Text(
                         "Login",
-                        style: TextStyle(color: Colors.red, fontFamily: "Poppins", fontSize: 18),
+                        style: TextStyle(color: mainColorTheme, fontFamily: "Poppins", fontSize: 18),
                       ),
                     ),
                   ),

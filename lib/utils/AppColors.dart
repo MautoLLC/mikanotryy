@@ -41,3 +41,5 @@ const appColorPrimaryDarkLight = Color(0xFFF9FAFF);
 const iconColorPrimaryDark = Color(0xFF212121);
 const iconColorSecondaryDark = Color(0xFFA8ABAD);
 const appShadowColorDark = Color(0x1A3E3942);
+
+const mainColorTheme = Color(0xFFDE1D39);

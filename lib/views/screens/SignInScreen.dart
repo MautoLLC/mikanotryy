@@ -1,8 +1,10 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/services/LoginService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -60,19 +62,47 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-                            IconButton(onPressed: (){
-              finish(context);
-            }, icon: Icon(Icons.arrow_back_ios), color: Colors.black,),
+                  IconButton(onPressed: (){
+                  finish(context);
+                }, icon: Icon(Icons.arrow_back_ios), color: Colors.black,),
             ],
-          ),
-                commonCacheImageWidget(t13_ic_logo, 85, width: width * 0.8),
+            ),
+                commonCacheImageWidget(login_Page_PNG, 155, width: width * 0.8),
                 SizedBox(height: spacing_xlarge),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 8.0),
+                  child: Text("Login Now",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: fontMedium,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                ),
+                Text("Please enter the details below to continue",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: "Poppins",
+                        color: Color(0xFFBFBFBF))),
+                SizedBox(height: spacing_large),
                 t13EditTextStyle(t13_hint_Email, emailController,
                     isPassword: false),
                 SizedBox(height: spacing_standard_new),
                 t13EditTextStyle(t13_hint_password, passController,
                     isPassword: true),
-                SizedBox(height: spacing_large),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 0.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(t13_lbl_forgot_your_password,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Poppins",
+                              color: Color(0xFF111111))),
+                    ],
+                  ),
+                ),
+                SizedBox(height: spacing_xxLarge),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -125,7 +155,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                               builder: (context) => T13SignUpScreen())),
                       child: Container(
                         child: text(t13_lbl_sign_up,
-                            fontSize: 14.0, fontFamily: fontMedium),
+                            fontSize: 14.0, fontFamily: fontMedium, textColor: mainColorTheme),
                       ),
                     ),
                   ],
