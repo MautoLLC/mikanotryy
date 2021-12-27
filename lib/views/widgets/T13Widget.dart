@@ -23,11 +23,11 @@ Padding t13EditTextStyle(var hintText, var contt,
           filled: true,
           fillColor: t13_edit_text_color,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
+            // borderRadius: BorderRadius.circular(6),
             borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
+            // borderRadius: BorderRadius.circular(24),
             borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
           ),
         ),
