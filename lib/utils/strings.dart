@@ -1,3 +1,5 @@
+import 'package:mymikano_app/models/MaintenanceRequestStatus.dart';
+
 const technician = "Technician 1";
 const text_technician ="Technician";
 const start_time = "27-August-2021";
@@ -25,3 +27,6 @@ const t13_lbl_logout = "Logout";
 const t13_lbl_request = "Request";
 const t13_lbl_for_sale = "For Sale";
 const t13_lbl_search = "Search";
+
+
+const lbl_Maintenace_And_Repair = "Maintenance & Repair";

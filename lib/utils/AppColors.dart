@@ -47,3 +47,11 @@ const mainGreyColorTheme = Color(0xFFBFBFBF);
 const menuScreenColor = Color(0xFF515151);
 const bottomNavigationBarColor = Color(0xFF111111);
 const bottomNavigationBarSelectedItemColor = Color(0xFFDE1D39);
+const backArrowColor = Color(0xFF111111);
+const mainBlackColorTheme = Color(0xFF111111);
+const lightBorderColor = Color(0xFFF1F1F1);
+
+// status colors
+const PendingColor = Color(0xFFF39C12);
+const AssignedColor = Color(0xFF014FF2);
+const DoneColor = Color(0xFF30CB83);
