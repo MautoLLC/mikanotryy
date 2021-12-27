@@ -30,3 +30,4 @@ const t13_lbl_search = "Search";
 
 
 const lbl_Maintenace_And_Repair = "Maintenance & Repair";
+const lbl_Request_Form = "Request Form";

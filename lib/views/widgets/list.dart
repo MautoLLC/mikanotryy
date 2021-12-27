@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:share/share.dart';
 import 'package:mymikano_app/utils/colors.dart';
 
@@ -199,14 +201,21 @@ class _Presso extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ButtonTheme(
-      buttonColor: color,
+      buttonColor: Colors.transparent,
       minWidth: 48.0,
-      child: RaisedButton(
-          child: Icon(
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Icon(
             ico,
-            color: Colors.white,
+            color: color,
           ),
-          onPressed: onPressed),
+      ),
+      // child: ElevatedButton(
+      //     child: Icon(
+      //       ico,
+      //       color: color,
+      //     ),
+      //     onPressed: onPressed),
     );
   }
 }
@@ -223,7 +232,8 @@ class RecordsUrl extends StatefulWidget {
 }
 
 class _RecordsUrlState extends State<RecordsUrl> {
-  late int _totalTime;
+  int _totalTime = 0;
+  String voiceLength = "0:00:00";
   late int _currentTime;
   double _percent = 0.0;
   int _selected = -1;
@@ -234,110 +244,77 @@ class _RecordsUrlState extends State<RecordsUrl> {
     return ListView.builder(
       itemCount: widget.records.length,
       shrinkWrap: true,
-      // reverse: true,
-      physics: BouncingScrollPhysics(),
       itemBuilder: (BuildContext context, int i) {
-        return Card(
-          shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
-          ),
-          elevation: 5,
-          child: Theme(
-            data: ThemeData().copyWith(dividerColor: Colors.transparent),
-            child: ExpansionTile(
-              iconColor: t5Cat3,
-              collapsedIconColor: t5Cat3,
-              title: Text(
-                'Record ${widget.records.length - i}',
-                style: TextStyle(color: Colors.black),
+        return Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: lightBorderColor,
+                width: 1,
               ),
-              // onExpansionChanged: ((newState) {
-              //   if (newState) {
-              //     setState(() {
-              //       _selected = i;
-              //     });
-              //   }
-              // }),
-              children: [
-                Container(
-                  height: 100,
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      LinearProgressIndicator(
-                        minHeight: 5,
-                        backgroundColor: Colors.black,
-                        valueColor: AlwaysStoppedAnimation<Color>(t5Cat3),
-                        value: _selected == i ? _percent : 0,
-                      ),
-                      Row(
-                        children: [
-                          (isPlay && _selected == i)
-                              ? _Presso(
-                                  color: Colors.orange,
-                                  ico: Icons.pause,
-                                  onPressed: () {
-                                    setState(() {
-                                      isPlay = false;
-                                    });
-                                    advancedPlayer.pause();
-                                  })
-                              : _Presso(
-                                  color: Colors.green,
-                                  ico: Icons.play_arrow,
-                                  onPressed: () {
-                                    setState(() {
-                                      _selected = i;
-                                      isPlay = true;
-                                    });
-                                    advancedPlayer.play(
-                                        widget.records.elementAt(i),
-                                        isLocal: false);
-                                    setState(() {});
-                                    setState(() {
-                                      _selected = i;
-                                      _percent = 0.0;
-                                    });
-                                    advancedPlayer.onPlayerCompletion
-                                        .listen((_) {
-                                      setState(() {
-                                        _percent = 0.0;
-                                      });
-                                    });
-                                    advancedPlayer.onDurationChanged
-                                        .listen((duration) {
-                                      setState(() {
-                                        _totalTime = duration.inMicroseconds;
-                                      });
-                                    });
-                                    advancedPlayer.onAudioPositionChanged
-                                        .listen((duration) {
-                                      setState(() {
-                                        _currentTime = duration.inMicroseconds;
-                                        _percent = _currentTime.toDouble() /
-                                            _totalTime.toDouble();
-                                      });
-                                    });
-                                  }),
-                          _Presso(
-                              color: Colors.blue,
-                              ico: Icons.stop,
-                              onPressed: () {
-                                advancedPlayer.stop();
-                                setState(() {
-                                  _percent = 0.0;
-                                });
-                              }),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
             ),
+          ),
+          padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _Presso(
+                      color: mainColorTheme,
+                      ico: (isPlay && _selected == i)?Icons.pause:Icons.play_arrow,
+                      onPressed: (isPlay && _selected == i)?(){
+                        _selected = -1;
+                        advancedPlayer.pause();
+
+                        setState(() {
+                          
+                        });
+                      }:() {
+                          _selected = i;
+                          isPlay = true;
+                          advancedPlayer.onDurationChanged.listen((event) {
+                            setState(() {
+                              voiceLength = Duration(microseconds: event.inMicroseconds).toString();
+                            });
+                          });
+                        advancedPlayer.play(
+                            widget.records.elementAt(i),
+                            isLocal: false);
+                        advancedPlayer.onPlayerCompletion
+                            .listen((_) {
+                            _percent = 0.0;
+                            _selected = -1;
+                            setState(() {
+                              
+                            });
+                        });
+                        advancedPlayer.onDurationChanged
+                            .listen((duration) {
+                          setState(() {
+                            _totalTime = duration.inMicroseconds;
+                          });
+                        });
+                        advancedPlayer.onAudioPositionChanged
+                            .listen((duration) {
+                          setState(() {
+                            _currentTime = duration.inMicroseconds;
+                            _percent = _currentTime.toDouble() /
+                                _totalTime.toDouble();
+                          });
+                        });
+                      }),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          child: LinearProgressIndicator(
+                                    minHeight: 5,
+                                    backgroundColor: Colors.black,
+                                    valueColor: AlwaysStoppedAnimation<Color>(mainColorTheme),
+                                    value: _selected == i ? _percent : 0,
+                                  ),
+                        ),
+                      ),
+                      Text("${voiceLength.substring(2,7)}min", style: TextStyle(fontSize: 12, fontFamily: PoppinsFamily, color: mainColorTheme),),
+            ],
           ),
         );
       },

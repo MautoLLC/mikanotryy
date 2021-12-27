@@ -14,7 +14,7 @@ import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sizer/sizer.dart';
-import 'RequestsDetailsPage.dart';
+import 'RepairDetailsPage.dart';
 
 class MyRepairsScreen extends StatelessWidget {
   static var tag = "/T5Dashboard";
@@ -81,7 +81,7 @@ class MyRepairsScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RequestsDetailsPage(
+                                builder: (context) => RepairDetailsPage(
                                     id: listmrequestsViewModel
                                         .maintenanceRequests![index]
                                         .mMaintenacerequest!
@@ -187,7 +187,7 @@ class MyRepairsScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RequestsDetailsPage(
+                              builder: (context) => RepairDetailsPage(
                                   id: listmrequestsViewModel
                                       .maintenanceRequests![index]
                                       .mMaintenacerequest!
