@@ -9,6 +9,7 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'SignUpScreen.dart';
 
 class T13SignInScreen extends StatefulWidget {
@@ -56,6 +57,14 @@ class T13SignInScreenState extends State<T13SignInScreen> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+                            IconButton(onPressed: (){
+              finish(context);
+            }, icon: Icon(Icons.arrow_back_ios), color: Colors.black,),
+            ],
+          ),
                 commonCacheImageWidget(t13_ic_logo, 85, width: width * 0.8),
                 SizedBox(height: spacing_xlarge),
                 t13EditTextStyle(t13_hint_Email, emailController,

@@ -8,6 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 
 import 'SignInScreen.dart';
+import 'SignUpScreen.dart';
 
 class OPSplashScreen extends StatefulWidget {
   static String tag = '/OPSplashScreen';
@@ -18,32 +19,44 @@ class OPSplashScreen extends StatefulWidget {
 
 class _OPSplashScreenState extends State<OPSplashScreen>
     with SingleTickerProviderStateMixin {
-  startTime() async {
-    var _duration = Duration(seconds: 2);
-    return Timer(_duration, navigationPage);
+  // startTime() async {
+  //   var _duration = Duration(seconds: 2);
+  //   // return Timer(_duration, navigationPage);
+  //   return Timer(_duration, (){});
+  // }
+
+  void checkIfLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (await prefs.getBool('IsLoggedIn') == true){
+      finish(context);
+      Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+          );
+    }
   }
 
   @override
   void initState() {
+    checkIfLoggedIn();
     super.initState();
-    startTime();
+    // startTime();
   }
 
-  void navigationPage() async {
-    finish(context);
-        final prefs = await SharedPreferences.getInstance();
-    await prefs.getBool('IsLoggedIn') == true
-        ? Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-          )
-        :     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => T13SignInScreen(),
-      ),
-    );
-  }
+  // void navigationPage() async {
+  //   finish(context);
+  //   await prefs.getBool('IsLoggedIn') == true
+  //       ? Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+  //         )
+  //       :     Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => T13SignInScreen(),
+  //     ),
+  //   );
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,25 +70,51 @@ class _OPSplashScreenState extends State<OPSplashScreen>
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Spacer(),
-                Image.asset('images/MyMikanoLogo.png',
-                    height: 85, fit: BoxFit.fill),
                 Spacer(),
-                Transform.translate(
-                  offset: Offset(0, -10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Powered by ",
-                          style: boldTextStyle(size: 12, color: Colors.grey)),
-                      Image.asset(
-                        "images/MautoGreyLogo.png",
-                        width: 32,
-                        height: 32,
-                        color: Colors.grey,
-                      )
-                    ],
+                Image.asset('images/MyMikanoLogo.png',
+                    height: 125, fit: BoxFit.fill),
+                Spacer(),
+
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => T13SignUpScreen()),
+                        );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Colors.red),
+                    height: 45,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Center(
+                      child: Text(
+                        "Create Account",
+                        style: TextStyle(color: Colors.white, fontFamily: "Poppins", fontSize: 18),
+                      ),
+                    ),
                   ),
-                )
+                ),
+                SizedBox(height: 10,),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => T13SignInScreen()),
+                        );
+                  },
+                  child: Container(
+                    height: 45,
+                    color: Colors.transparent,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Center(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: Colors.red, fontFamily: "Poppins", fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer()
               ],
             ),
           ),
