@@ -42,6 +42,8 @@ const fontMedium = 'Medium';
 const fontSemibold = 'Semibold';
 const fontBold = 'Bold';
 
+const PoppinsFamily = 'Poppins';
+
 /* font sizes*/
 const textSizeSmall = 12.0;
 const textSizeSMedium = 14.0;

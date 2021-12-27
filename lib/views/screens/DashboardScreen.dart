@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/utils/SDDashboardScreen.dart';
 import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/widgets/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/WebViewScreen.dart';
@@ -77,23 +78,29 @@ class DashboardState extends State<Dashboard> {
                 margin: EdgeInsets.only(left: 16, right: 16),
                 child: Row(
                   children: <Widget>[
-                    SizerUtil.deviceType == DeviceType.mobile
-                        ? Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.rotationY(math.pi),
-                            child: SvgPicture.asset(t5_menu,
-                                width: 25,
-                                height: 25,
-                                color: Color(0Xff767676)),
-                          )
-                        : Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.rotationY(math.pi),
-                            child: SvgPicture.asset(t5_menu,
-                                width: 40,
-                                height: 40,
-                                color: Color(0Xff767676)),
-                          ),
+
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MenuScreen()));
+                      },
+                      child: SizerUtil.deviceType == DeviceType.mobile
+                          ? Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationY(math.pi),
+                              child: SvgPicture.asset(t5_menu,
+                                  width: 25,
+                                  height: 25,
+                                  color: Color(0Xff767676)),
+                            )
+                          : Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationY(math.pi),
+                              child: SvgPicture.asset(t5_menu,
+                                  width: 40,
+                                  height: 40,
+                                  color: Color(0Xff767676)),
+                            ),
+                    ),
                     Spacer(),
                     Image.asset(
                       'images/MyMikanoLogo2.png',

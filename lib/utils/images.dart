@@ -58,3 +58,11 @@ const ForgotPassword_Screen_PNG = "assets/ForgotPassword.png";
 const ic_facebook = "assets/SocialMediaIcons/FacebookIcon.png";
 const ic_google = "assets/SocialMediaIcons/GoogleIcon.png";
 
+// Menu Icons
+const ic_Mainteance_and_Repair = "assets/MenuIcons/icons8-maintenance.png";
+const ic_Generator_Info = "assets/MenuIcons/icons8-sync_settings.png";
+const ic_Favorites = "assets/MenuIcons/icons8-favorite.png";
+const ic_Address = "assets/MenuIcons/icons8-location.png";
+const ic_Cards = "assets/MenuIcons/icons8-credit_card.png";
+const ic_About_Us = "assets/MenuIcons/icons8-about.png";
+const ic_Contact_Us = "assets/MenuIcons/icons8-phone_contact.png";
