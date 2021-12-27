@@ -84,6 +84,7 @@ flutter:
   assets:
     - assets/
     - assets/MenuIcons/
+    - assets/NavigationBarItemsIcons/
     - assets/oilIcon.png
     - images/theme5/
     - images/LikeButton/image/grey.jpg

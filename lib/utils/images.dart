@@ -66,3 +66,10 @@ const ic_Address = "assets/MenuIcons/icons8-location.png";
 const ic_Cards = "assets/MenuIcons/icons8-credit_card.png";
 const ic_About_Us = "assets/MenuIcons/icons8-about.png";
 const ic_Contact_Us = "assets/MenuIcons/icons8-phone_contact.png";
+
+// Navigation Bar Icons
+const ic_dog_house = "assets/NavigationBarItemsIcons/icons8-dog_house.svg";
+const ic_customer = "assets/NavigationBarItemsIcons/icons8-customer.svg";
+const ic_menu = "assets/NavigationBarItemsIcons/icons8-menu.svg";
+const ic_handcart = "assets/NavigationBarItemsIcons/icons8-handcart.svg";
+const ic_search = "assets/NavigationBarItemsIcons/icons8-search.svg";

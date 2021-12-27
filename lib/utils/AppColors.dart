@@ -45,3 +45,5 @@ const appShadowColorDark = Color(0x1A3E3942);
 const mainColorTheme = Color(0xFFDE1D39);
 const mainGreyColorTheme = Color(0xFFBFBFBF);
 const menuScreenColor = Color(0xFF515151);
+const bottomNavigationBarColor = Color(0xFF111111);
+const bottomNavigationBarSelectedItemColor = Color(0xFFDE1D39);

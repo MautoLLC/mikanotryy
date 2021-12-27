@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/colors.dart';
@@ -16,7 +18,7 @@ class Theme5Dashboard extends StatefulWidget {
 class _Theme5DashboardState extends State<Theme5Dashboard> {
   var selectedIndex = 0;
   var pages = [
-    PlaceHolder(),
+    MenuScreen(),
     PlaceHolder(),
     Dashboard(),
     PlaceHolder(),
@@ -30,33 +32,36 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
+    selectedIndex = index;
+    selectedIndex == 0 ? Navigator.push(context, MaterialPageRoute(builder: (context) => MenuScreen())) :     setState(() {
     });
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return selectedIndex!=0?Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BankingBottomNavigationBar(
-        selectedItemColor: t5Cat3,
-        unselectedItemColor: Banking_TextColorPrimary,
+        backgroundColor: bottomNavigationBarColor,
+        selectedItemColor: bottomNavigationBarSelectedItemColor,
+        unselectedItemColor: mainGreyColorTheme,
         items: <BankingBottomNavigationBarItem>[
-          BankingBottomNavigationBarItem(icon: t5_img_settings),
-          BankingBottomNavigationBarItem(icon: t5_notification_2),
-          BankingBottomNavigationBarItem(icon: t5_img_home),
-          BankingBottomNavigationBarItem(icon: t5_shopping_cart),
-          BankingBottomNavigationBarItem(icon: t5_user),
+          BankingBottomNavigationBarItem(icon: ic_menu),
+          BankingBottomNavigationBarItem(icon: ic_search),
+          BankingBottomNavigationBarItem(icon: ic_dog_house),
+          BankingBottomNavigationBarItem(icon: ic_handcart),
+          BankingBottomNavigationBarItem(icon: ic_customer),
         ],
         currentIndex: selectedIndex,
         unselectedIconTheme:
-            IconThemeData(color: Banking_TextColorPrimary, size: 20),
-        selectedIconTheme: IconThemeData(color: t5Cat3, size: 20),
+            IconThemeData(color: mainGreyColorTheme, size: 20),
+        selectedIconTheme: IconThemeData(color: bottomNavigationBarSelectedItemColor, size: 20),
         onTap: _onItemTapped,
         type: BankingBottomNavigationBarType.fixed,
       ),
       body: pages[selectedIndex],
-    );
+    ):
+    pages[selectedIndex];
   }
 }
