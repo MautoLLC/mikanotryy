@@ -40,7 +40,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return selectedIndex!=0?Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BankingBottomNavigationBar(
         backgroundColor: bottomNavigationBarColor,
@@ -61,7 +61,6 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
         type: BankingBottomNavigationBarType.fixed,
       ),
       body: pages[selectedIndex],
-    ):
-    pages[selectedIndex];
+    );
   }
 }
