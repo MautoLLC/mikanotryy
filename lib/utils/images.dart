@@ -73,3 +73,7 @@ const ic_customer = "assets/NavigationBarItemsIcons/icons8-customer.svg";
 const ic_menu = "assets/NavigationBarItemsIcons/icons8-menu.svg";
 const ic_handcart = "assets/NavigationBarItemsIcons/icons8-handcart.svg";
 const ic_search = "assets/NavigationBarItemsIcons/icons8-search.svg";
+
+// Contact Us Icons
+const ic_Mail = "assets/ContactUsIcons/icons8-mail.png";
+const ic_Location = "assets/ContactUsIcons/icons8-location.png";

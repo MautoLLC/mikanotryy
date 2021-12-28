@@ -16,6 +16,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'AboutUsScreen.dart';
+import 'ContactUsScreen.dart';
 import 'Dashboard/Dashboard_Index.dart';
 import 'MaintenanceHome.dart';
 import 'MyInspectionsScreen.dart';
@@ -80,7 +81,7 @@ class _MenuScreenState extends State<MenuScreen> {
       PlaceHolder(),
       PlaceHolder(),
       AboutUsScreen(),
-      PlaceHolder(),
+      ContactUsScreen(),
     ];
 
     List<String> MenuListIcons = [

@@ -31,3 +31,8 @@ const t13_lbl_search = "Search";
 
 const lbl_Maintenace_And_Repair = "Maintenance & Repair";
 const lbl_Request_Form = "Request Form";
+
+const lbl_Company_Address = 'Estate bldg st 9 apt 30/4';
+const lbl_Company_Email = 'hello@gmail.com';
+
+const lbl_Full_Name = 'Full name';
