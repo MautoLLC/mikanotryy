@@ -36,3 +36,13 @@ const lbl_Company_Address = 'Estate bldg st 9 apt 30/4';
 const lbl_Company_Email = 'hello@gmail.com';
 
 const lbl_Full_Name = 'Full name';
+const lbl_Personal_Info = 'Personal Info';
+const lbl_Notifications = 'Notifications';
+const lbl_Language = 'Language';
+const lbl_Purchases = 'lbl_Purchases';
+const lbl_Privacy = 'Privacy';
+
+const lbl_Terms = 'Terms';
+const txt_Terms = 'By accessing our app, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.';
+const lbl_Use_License = 'Use License';
+const txt_Use_License = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';

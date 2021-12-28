@@ -21,6 +21,7 @@ import 'Dashboard/Dashboard_Index.dart';
 import 'MaintenanceHome.dart';
 import 'MyInspectionsScreen.dart';
 import 'PlaceholderScreen.dart';
+import 'ProfileScreen.dart';
 
 
 class MenuScreen extends StatefulWidget {
@@ -191,12 +192,25 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                    child: Text(tech!.firstname + tech!.lastname, style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: PoppinsFamily),),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProfileScreen(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                      backgroundColor: Colors.white,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
+                      child: Text(tech!.firstname + tech!.lastname, style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: PoppinsFamily),),
+                    ),
+                      ]
+                    ),
                   ),
                   Spacer(),
                   Padding(
