@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'PrivacyPolicyScreen.dart';
+import 'PurchasesScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({ Key? key }) : super(key: key);
@@ -171,7 +172,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: SubTitleText(title: lbl_Purchases,),
                         ),
                         GestureDetector(
-                          onTap: (){},
+                          onTap: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => PurchasesScreen())
+                            );
+                          },
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
                             child: Container(

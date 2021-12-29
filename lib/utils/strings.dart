@@ -39,7 +39,7 @@ const lbl_Full_Name = 'Full name';
 const lbl_Personal_Info = 'Personal Info';
 const lbl_Notifications = 'Notifications';
 const lbl_Language = 'Language';
-const lbl_Purchases = 'lbl_Purchases';
+const lbl_Purchases = 'Purchases';
 const lbl_Privacy = 'Privacy';
 
 const lbl_Terms = 'Terms';
@@ -60,3 +60,4 @@ const lbl_Minute = 'Minute';
 const lbl_Voice_Messages = 'Voice Messages';
 const txt_Placeholder = 'Description Text here,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const lbl_Images = 'Images';
+

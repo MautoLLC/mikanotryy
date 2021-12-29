@@ -77,3 +77,5 @@ const ic_search = "assets/NavigationBarItemsIcons/icons8-search.svg";
 // Contact Us Icons
 const ic_Mail = "assets/ContactUsIcons/icons8-mail.png";
 const ic_Location = "assets/ContactUsIcons/icons8-location.png";
+
+const ic_heart = "assets/icons8-love_circled.png";
