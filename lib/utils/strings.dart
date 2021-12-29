@@ -46,3 +46,17 @@ const lbl_Terms = 'Terms';
 const txt_Terms = 'By accessing our app, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.';
 const lbl_Use_License = 'Use License';
 const txt_Use_License = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+const lbl_SubCategory = 'Sub Category';
+const lbl_Address = 'Address';
+const lbl_Pick_Date = 'Pick Date';
+const lbl_Pick_Time = 'Pick Time';
+const lbl_Month = 'Month';
+const lbl_Time = 'Time';
+const lbl_Day = 'Day';
+const lbl_Year = 'Year';
+const lbl_Hour = 'Hour';
+const lbl_Minute = 'Minute';
+const lbl_Voice_Messages = 'Voice Messages';
+const txt_Placeholder = 'Description Text here,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+const lbl_Images = 'Images';

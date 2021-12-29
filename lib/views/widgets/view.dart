@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'audio_recorder.dart';
@@ -21,7 +22,7 @@ class _RecorderState extends State<Recorder> {
   RecordingStatus _currentStatus = RecordingStatus.Unset;
   bool stop = false;
   Recording? _current;
-  String duration = "0.0.0.0";
+  String duration = "0:00:00";
   bool canRecord = false;
   // Recorder properties
   late FlutterAudioRecorder? audioRecorder;
@@ -29,7 +30,6 @@ class _RecorderState extends State<Recorder> {
   @override
   void initState() {
     super.initState();
-    // duration =checkDuration();
     checkPermission();
   }
 
@@ -52,132 +52,75 @@ class _RecorderState extends State<Recorder> {
     if (statuses[Permission.microphone] == PermissionStatus.granted) {
       canRecord = true;
     }
-    print(
-        "permission ===>>> ${(await FlutterAudioRecorder.hasPermissions).toString().toLowerCase()}");
-// You can request multiple permissions at once.
 
-    print(statuses[Permission.microphone]);
-    print(statuses[Permission.storage]);
-    //bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
     if (statuses[Permission.microphone] == PermissionStatus.granted) {
       _currentStatus = RecordingStatus.Initialized;
       _recordIcon = Icons.mic;
-    } else {}
+    }
   }
-  // checkDuration<String>() {
-  //     if (_current == null) {
-  //       return "0:0:0:0";
-  //     }
-  //    else{
-  //       _current!.duration.toString();
-  //     }
-  //
-  //
-  //     }
 
   @override
   void dispose() {
     _currentStatus = RecordingStatus.Unset;
     audioRecorder = null;
-    duration = "0.0.0.0";
+    duration = "0:00:00";
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              // duration,
-              // ?? "0:0:0:0"
-              duration,
-              // (_current == null)? "0:0:0:0":_current!.duration.toString(),
-              style: TextStyle(color: Colors.black, fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            stop == false
-                ? RaisedButton(
-                    color: Colors.black,
-                    onPressed: () async {
-                      await _onRecordButtonPressed();
-                      setState(() {});
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          child: Icon(
-                            _recordIcon,
-                            color: Colors.white,
-                            size: 80,
-                          ),
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text("Start Recording",style: TextStyle(color: Colors.white),),
-                        // )
-                      ],
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RaisedButton(
-                          color: colo,
-                          onPressed: () async {
-                            await _onRecordButtonPressed();
-                            setState(() {});
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            child: Icon(
-                              _recordIcon,
-                              color: Colors.white,
-                              size: 50,
+        stop == false
+            ? GestureDetector(
+              onTap: () async {
+                  await _onRecordButtonPressed();
+                  setState(() {});
+                },
+              child: Container(
+                    decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red, width: 2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(Icons.mic, color: Colors.red),
                             ),
-                          ),
-                        ),
-                        RaisedButton(
-                          color: Colors.black12,
-                          onPressed: _currentStatus != RecordingStatus.Unset
-                              ? _stop
-                              : null,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            child: Icon(
-                              Icons.stop,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                          ),
-                        ),
-                      ],
+            )
+            : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    await _onRecordButtonPressed();
+                    setState(() {});
+                  },
+                  child: Container(
+                    child: Icon(
+                      _recordIcon,
+                      color: Colors.grey,
                     ),
                   ),
-          ],
-        ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: _currentStatus != RecordingStatus.Unset
+                      ? (){
+                        _stop();
+                        }
+                      : null,
+                  child: Container(
+                    child: Icon(
+                      Icons.stop,
+                      color: mainColorTheme,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+              Text(
+                duration.substring(2,7),
+                style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
       ],
     );
   }
@@ -297,13 +240,9 @@ class _RecorderState extends State<Recorder> {
     ].request();
     print(statuses[Permission.microphone]);
     print(statuses[Permission.storage]);
-    //bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
     if (statuses[Permission.microphone] == PermissionStatus.granted ||
         canRecord) {
-      /* }
-    bool hasPermission = await FlutterAudioRecorder.hasPermissions ?? false;
 
-    if (hasPermission) {*/
       await _initial();
       await _start();
       Fluttertoast.showToast(msg: "Start Recording");
