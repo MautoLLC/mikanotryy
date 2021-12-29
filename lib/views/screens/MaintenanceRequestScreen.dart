@@ -173,7 +173,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   int selectedMinute = -1;
   String selectedAmPm = "";
 
-
   @override
   void initState() {
     init();
@@ -191,8 +190,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#fe4364",
-          actionBarTitle: "My Mikano App",
+          actionBarColor: "#DE1D39",
+          actionBarTitle: "Select Images",
           allViewTitle: "All Photos",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
@@ -654,6 +653,7 @@ int daysInMonth(int monthNum, int year) {
                                   children: [
                                     Expanded(
                                       child: TextFormField(
+                                        controller: controller3,
                                         decoration: InputDecoration(
                                           hintMaxLines: 5,
                                           hintText: txt_Placeholder,
@@ -691,104 +691,41 @@ int daysInMonth(int monthNum, int year) {
                         SizedBox(height: 8),
                         images.length < 1 ? uploadImage() : SizedBox(),
                         SizedBox(height: 40),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                          child: T13Button(
-                            textContent: t13_lbl_request,
-                            onPressed: () {
-                              if (this.widget.listlength == 0)
-                                selectedSubCategId = this
-                                    .widget
-                                    .mainCatg
-                                    .idMaintenanceCategory;
+
+                        T13Button(
+                          textContent: t13_lbl_request,
+                          onPressed: () {
+                            if (selectedSubCategId != 0) {
+                              datetime = new DateTime(SelectedYear, months.indexOf(SelectedMonth) + 1, SelectedDay, selectedAmPm=="PM"? selectedHour+12:selectedHour, selectedMinute, 0);
+                              MaintenanceRequestModel mMaintenanceRequest =
+                                  new MaintenanceRequestModel(
+                                      maintenanceCategoryId:
+                                          selectedSubCategId,
+                                      realEstateId: address2.realEstates!.where((element) => element.mrealEstate!.realEstateAddress == selectedAddressValue).first.mrealEstate!.idRealEstate,
+                                      requestDescription: controller3.text,
+                                      userId: "1",
+                                      preferredVisitTime: datetime,
+                                      maintenanceRequestImagesFiles: images,
+                                      maintenanceRequestRecordsFiles:
+                                          records);
+                              SubmitMaintenanceRequest(
+                                  mMaintenanceRequest, context);
+                            }
                   
-                              if (selectedSubCategId != 0 &&
-                                  controller2.text != "") {
-                                MaintenanceRequestModel mMaintenanceRequest =
-                                    new MaintenanceRequestModel(
-                                        maintenanceCategoryId:
-                                            selectedSubCategId,
-                                        realEstateId: selectedIndex,
-                                        requestDescription: controller3.text,
-                                        userId: "1",
-                                        preferredVisitTime: datetime,
-                                        maintenanceRequestImagesFiles: images,
-                                        maintenanceRequestRecordsFiles:
-                                            records);
-                                SubmitMaintenanceRequest(
-                                    mMaintenanceRequest, context);
-                              }
-                  
-                              if (selectedSubCategId == 0)
-                                toast("You should choose a subcategory !");
-                              if (controller2.text == "")
-                                toast("You should choose an address !");
-                            },
-                          ),
+                            if (selectedSubCategId == 0)
+                              toast("You should choose a subcategory !");
+                          },
                         ),
                         SizedBox(height: 10),
                       ],
                     ),
                   ),
-                  // ),
                 ],
               ),
               ],
             ),
           ),
         ));
-  }
-
-  mFilter<Entry>(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0))),
-      builder: (BuildContext context) {
-        return DraggableScrollableSheet(
-            initialChildSize: 0.4,
-            expand: false,
-            builder: (context, scrollController) {
-              return Column(
-                children: <Widget>[
-                  // Put all heading in column.
-                  column,
-                  SizedBox(height: 30),
-
-                  /// if(listlength>0)
-
-                  Expanded(
-                      child: CategsList(
-                    controller: scrollController,
-                    data: this.widget.mydata,
-                    listlength: this.widget.listlength,
-                  )),
-                ],
-              );
-            }
-            // }
-            );
-      },
-    );
-  }
-
-  Widget get column {
-    return Container(
-      height: 57,
-      decoration: BoxDecoration(
-          color: t5Cat3, // or some other color
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('Select Subcategory',
-              style: primaryTextStyle(size: 18, color: Colors.white))
-        ],
-      ).paddingAll(15.0),
-    );
   }
 
   generate() {
@@ -854,60 +791,5 @@ int daysInMonth(int monthNum, int year) {
       records = records!.reversed.toList();
       setState(() {});
     });
-  }
-
-  void show(BuildContext context) {
-    showModalBottomSheet<void>(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0))),
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24.0),
-                  topRight: Radius.circular(24.0))),
-          height: 255,
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: t5Cat3, // or some other color
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24.0),
-                          topRight: Radius.circular(24.0))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Cancel',
-                              style: primaryTextStyle(
-                                  size: 18, color: Colors.white))
-                          .onTap(() {
-                        finish(context);
-                      }),
-                      Text('Done',
-                              style: primaryTextStyle(
-                                  size: 18, color: Colors.white))
-                          .onTap(() {
-                        finish(context);
-                      })
-                    ],
-                  ).paddingAll(15.0),
-                ),
-              ),
-              Container(
-                height: 200,
-                child: Recorder(
-                  save: _onFinish,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 }
