@@ -62,3 +62,5 @@ const txt_Placeholder = 'Description Text here,  Lorem ipsum dolor sit amet, con
 const lbl_Images = 'Images';
 const lbl_Favorites = 'Favorites';
 const lbl_Add_To_Cart = 'Add To Cart';
+const lbl_Contact_Us = 'Contact Us';
+const lbl_Add_Address = 'Add Address';

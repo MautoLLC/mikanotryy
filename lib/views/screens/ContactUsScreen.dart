@@ -7,6 +7,7 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
+import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ContactUsScreen extends StatefulWidget {
@@ -39,25 +40,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios, color: backArrowColor,),
-                    onPressed: () {
-                      finish(context);
-                    },
-                  ),
-                  Spacer(),
-                  TitleText(
-                    title: 'Contact Us',
-                  ),
-                  Spacer(),
-                  Spacer(),
-                ],
-              ),
-            ),
+            TopRowBar(title: lbl_Contact_Us),
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
               child: ListView.builder(

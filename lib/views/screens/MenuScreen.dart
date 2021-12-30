@@ -16,6 +16,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'AboutUsScreen.dart';
+import 'AddressScreen.dart';
 import 'ContactUsScreen.dart';
 import 'Dashboard/Dashboard_Index.dart';
 import 'FavoritesScreen.dart';
@@ -80,7 +81,7 @@ class _MenuScreenState extends State<MenuScreen> {
       T5Maintenance(),
       Dashboard_Index(),
       FavoritesScreen(),
-      PlaceHolder(),
+      AddressScreen(),
       PlaceHolder(),
       AboutUsScreen(),
       ContactUsScreen(),
