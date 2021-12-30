@@ -126,8 +126,11 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ),
             SizedBox(height: spacing_xlarge,),
-            t13EditTextStyle("Search", searchController,
-                  isPassword: false),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: t13EditTextStyle("Search", searchController,
+                    isPassword: false),
+            ),
             SizedBox(height: spacing_standard_new,),
 
             ListView.builder(

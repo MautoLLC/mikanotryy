@@ -83,68 +83,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - images/
+    - images/theme5/
+    - images/LikeButton/
+    - images/HomepageSlider/
     - assets/
     - assets/MenuIcons/
     - assets/NavigationBarItemsIcons/
     - assets/ContactUsIcons/
-    - assets/oilIcon.png
-    - images/theme5/
-    - images/LikeButton/image/grey.jpg
     - .env
-    - images/MikanoLogo.png
-    # Splash Screen
-    - images/MyMikanoLogo.png
-    # My Requests Page Folder
-    - images/Bulb_Icon.png
-    - images/MaintenanceAndRepair.png
-    - images/MyRequestsCarousel.png
-    - images/TelephoneIcon.png
-    - images/WaterDroplet.png
-    - images/WIFIIcon.png
-    - images/Heating_Icon.png
-    - images/RefrigiratorRepairIcon.png
-    # Mechanical Repaire Page
-    - images/MechanicalRepairImg.png
-    - images/MechanicalRepairPurpleIcon.png
-    # Maintenance Page Folder
-    - images/SecurityIcon.png
-    - images/Carousel.png
-    - images/CleaningIcon.png
-    - images/ElectricalRepairIcon.png
-    - images/GeneralRepairIcon.png
-    - images/LandscapeIcon.png
-    - images/MechaniclRepairPageIcon.png
-    - images/MechanicalRepairIcon.png
-    # Home Page Folder
-    - images/ElectricalIcon.png
-    - images/GeneratorIcon.png
-    - images/HeavyIndrustriesIcon.png
-    - images/MaintenanceAndRepairRedIcon.png
-    - images/MedicalIcon.png
-    - images/MikanoShopBreaker.png
-    - images/MikanoShopCarousel.png
-    - images/MotorsIcon.png
-    - images/MyMikanoHomePageLogo.png
-    - images/PhilipsBulb.png
-    - images/RPMHomepageIcon.png
-    - images/gaugeImage.jpeg
-    - images/ThermometerHomepageIcon.png
-    # General Repair Page Folder
-    - images/GeneralRepairGreenIcon.png
-    - images/GeneralRepairImg.png
-    # other
-    - images/tech.png
-    - images/MautoGreyLogo.png
-    - images/HomepageSlider/CircuitBreaker.png
-    - images/HomepageSlider/GeelyVolvo.png
-    - images/HomepageSlider/Hyundaitruck.png
-    - images/CleaningCarousel.png
-    - images/SecurityCarousel.png
-    - images/LandscapeCarousel.png
-    - images/MechanicalRepairCarousel.png
-    - images/ElectricalRepairCarousel.png
-    - images/GeneralRepairCarousel.png
-    - images/MyMikanoLogo2.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
