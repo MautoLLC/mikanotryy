@@ -79,3 +79,4 @@ const ic_Mail = "assets/ContactUsIcons/icons8-mail.png";
 const ic_Location = "assets/ContactUsIcons/icons8-location.png";
 
 const ic_heart = "assets/icons8-love_circled.png";
+const ic_favorite = "assets/icons8-favorite.png";

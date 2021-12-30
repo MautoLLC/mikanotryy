@@ -60,4 +60,5 @@ const lbl_Minute = 'Minute';
 const lbl_Voice_Messages = 'Voice Messages';
 const txt_Placeholder = 'Description Text here,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const lbl_Images = 'Images';
-
+const lbl_Favorites = 'Favorites';
+const lbl_Add_To_Cart = 'Add To Cart';

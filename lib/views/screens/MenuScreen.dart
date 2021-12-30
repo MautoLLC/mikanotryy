@@ -18,6 +18,7 @@ import 'package:path_provider/path_provider.dart';
 import 'AboutUsScreen.dart';
 import 'ContactUsScreen.dart';
 import 'Dashboard/Dashboard_Index.dart';
+import 'FavoritesScreen.dart';
 import 'MaintenanceHome.dart';
 import 'MyInspectionsScreen.dart';
 import 'PlaceholderScreen.dart';
@@ -33,7 +34,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
     late Directory directory;
-  late File file; //
+  late File file;
   late String fileContent;
   late SharedPreferences prefs;
 
@@ -78,7 +79,7 @@ class _MenuScreenState extends State<MenuScreen> {
     List<Widget> MenuListScreens = [
       T5Maintenance(),
       Dashboard_Index(),
-      PlaceHolder(),
+      FavoritesScreen(),
       PlaceHolder(),
       PlaceHolder(),
       AboutUsScreen(),
