@@ -17,6 +17,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'AboutUsScreen.dart';
 import 'AddressScreen.dart';
+import 'CardsScreen.dart';
 import 'ContactUsScreen.dart';
 import 'Dashboard/Dashboard_Index.dart';
 import 'FavoritesScreen.dart';
@@ -82,7 +83,7 @@ class _MenuScreenState extends State<MenuScreen> {
       Dashboard_Index(),
       FavoritesScreen(),
       AddressScreen(),
-      PlaceHolder(),
+      CardsScreen(),
       AboutUsScreen(),
       ContactUsScreen(),
     ];

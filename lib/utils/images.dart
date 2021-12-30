@@ -80,3 +80,5 @@ const ic_Location = "assets/ContactUsIcons/icons8-location.png";
 
 const ic_heart = "assets/icons8-love_circled.png";
 const ic_favorite = "assets/icons8-favorite.png";
+const ic_mastercard = "assets/icons8-mastercard_logo.png";
+const ic_visa = "assets/icons8-visa.png";

@@ -35,7 +35,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     init();
     super.initState();
   }
