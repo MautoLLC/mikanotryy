@@ -64,3 +64,6 @@ const lbl_Favorites = 'Favorites';
 const lbl_Add_To_Cart = 'Add To Cart';
 const lbl_Contact_Us = 'Contact Us';
 const lbl_Add_Address = 'Add Address';
+const lbl_New_Address = 'New Address';
+const lbl_City = 'City';
+const lbl_State = 'State';

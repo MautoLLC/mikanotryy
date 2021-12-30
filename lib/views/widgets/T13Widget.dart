@@ -7,11 +7,9 @@ import '../../../main.dart';
 import '../../utils/strings.dart';
 import '../../utils/appsettings.dart';
 
-Padding t13EditTextStyle(var hintText, var contt,
+Widget t13EditTextStyle(var hintText, var contt,
     {isPassword = true, TextInputType keyboardType = TextInputType.name}) {
-  return Padding(
-      padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-      child: TextFormField(
+  return TextFormField(
         style: TextStyle(fontSize: textSizeMedium, fontFamily: fontRegular),
         obscureText: isPassword,
         cursorColor: black,
@@ -31,7 +29,7 @@ Padding t13EditTextStyle(var hintText, var contt,
             borderSide: BorderSide(color: t13_edit_text_color, width: 0.0),
           ),
         ),
-      ));
+      );
 }
 
 // ignore: must_be_immutable
@@ -50,30 +48,27 @@ class T13Button extends StatefulWidget {
 class T13ButtonState extends State<T13Button> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(color: Colors.white),
-          elevation: 4,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          padding: EdgeInsets.all(0.0),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        textStyle: TextStyle(color: Colors.white),
+        elevation: 4,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+        padding: EdgeInsets.all(0.0),
+      ),
+      onPressed: widget.onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          color: mainColorTheme,
+          borderRadius: BorderRadius.all(Radius.circular(24.0)),
         ),
-        onPressed: widget.onPressed,
-        child: Container(
-          decoration: BoxDecoration(
-            color: mainColorTheme,
-            borderRadius: BorderRadius.all(Radius.circular(24.0)),
-          ),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(14.0),
-              child: Text(
-                widget.textContent,
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(14.0),
+            child: Text(
+              widget.textContent,
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
