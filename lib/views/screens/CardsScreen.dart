@@ -103,6 +103,7 @@ class _CardsScreenState extends State<CardsScreen> {
                   Expanded(child: Divider(color: lightBorderColor, thickness: 1,),),
                 ],
               ),
+              SizedBox(height: 15),
               SubTitleText(title: lbl_Add_Card_Info),
               SizedBox(height: 10),
               t13EditTextStyle(lbl_Card_Number, cardNumberController, isPassword: false),

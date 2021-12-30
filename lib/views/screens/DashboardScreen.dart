@@ -12,7 +12,7 @@ import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/WebViewScreen.dart';
 import 'package:mymikano_app/views/widgets/DashboardSlider.dart';
 import 'package:mymikano_app/views/widgets/SfLinearGauge.dart';
-import 'package:mymikano_app/views/widgets/SfRadialGauge.dart';
+import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/searchView.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:sizer/sizer.dart';
@@ -250,7 +250,7 @@ class DashboardState extends State<Dashboard> {
                                                         DeviceType.mobile
                                                     ? 100
                                                     : 15.h,
-                                                child: t5SfRadialGauge())),
+                                                child: GaugeWidget(title: 'RPM', value: 60,))),
                                         SizedBox(width: 5),
                                         Expanded(
                                           child: Container(

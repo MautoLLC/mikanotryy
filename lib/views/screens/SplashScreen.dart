@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:mymikano_app/views/widgets/DartList.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 
