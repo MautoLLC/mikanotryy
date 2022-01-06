@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/models/Sensor_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/DashBoard_ModelView.dart';
-import 'Card_ImageTitleDescription.dart';
-import 'Card_ImageTitleTime.dart';
-import 'Card_ImageValue.dart';
-import 'Custom_Alert.dart';
-import 'Custom_Card_CircularGauge.dart';
-import 'Row_TitleValueUnit.dart';
-import 'ToggleButton_Row.dart';
+import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
+import 'package:mymikano_app/views/widgets/SubTitleText.dart';
+import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 
 class Dashboard_Index extends StatefulWidget {
   @override
@@ -93,208 +92,305 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
     super.dispose();
   }
 
+  late bool isManual = ControllerModeStatus;
+  late bool isIO = false;
+  late bool isMCB = false;
+  late bool isGCB = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              title: Text(
-                'Generator',
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: 'Roboto',
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              bottom: PreferredSize(
-                  child: Container(
-                    color: Colors.orange,
-                    height: 0.0,
-                  ),
-                  preferredSize: Size.fromHeight(0.0)),
-            ),
-            body: FutureBuilder<bool>(
-              future: FetchData(),
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<bool> snapshot,
-              ) {
-                print(snapshot.connectionState);
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                      child: SpinKitCircle(
-                    color: Colors.black,
-                    size: 65,
-                  ));
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    
-                    return Custom_Alert(
-                        Title: 'Error Has Occured',
-                        Description:
-                            "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
-                  } else if (snapshot.hasData) {
-                    if(snapshot.data!){
-                    return Padding(
-                        padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
-                        child: SingleChildScrollView(
-                            child: Column(
+            body: SafeArea(
+              child: Padding(
+                // padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.only(left: 16.0),
+                child: SingleChildScrollView(
+                  child: FutureBuilder(
+                        future: FetchData(),
+                            builder: (
+                              BuildContext context,
+                              AsyncSnapshot<bool> snapshot,
+                            ) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                            child: SpinKitCircle(
+                          color: Colors.black,
+                          size: 65,
+                        ));
+                      } else if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
+                        } else {
+                          return Column(
+                    children: [
+                      TopRowBar(title: lbl_Generator),
+                      SizedBox(height: 40,),
+                      Container(
+                        decoration: BoxDecoration(
+                              color: mainGreyColorTheme2,
+                              borderRadius: BorderRadius.circular(30)
+                        ),
+                        child: Padding(
+                                padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+                                child: DropdownButton(
+                                  underline: Divider(thickness: 0.0, color: Colors.transparent,),
+                                  isExpanded: true,
+                                  hint: lbl_Generator == ""?
+                                  Text(lbl_Generator, style: TextStyle(fontSize: 15, fontFamily: PoppinsFamily, color: DropDownHintTextColor),):
+                                  Text(lbl_Generator, style: TextStyle(fontSize: 15, fontFamily: PoppinsFamily, color: DropDownHintTextColor),)
+                                  ,
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  iconEnabledColor: mainGreyColorTheme,
+                                  iconDisabledColor: mainGreyColorTheme,
+                                  items: [
+                                    DropdownMenuItem(value: lbl_Generator, child: new Text(lbl_Generator)),
+                                    DropdownMenuItem(value: lbl_Generator, child: new Text(lbl_Generator))
+
+                                  ],
+                                  // onChanged: (Entry? value) {
+                                  //   setState(() {
+                                  //     selectedSubCateg = value!.title;
+                                  //     selectedSubCategId = value.idEntry;
+                                  //   });
+                                  // },
+                                ),
+                        ),
+                      ),
+                      SizedBox(height: 30,),
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                            height: 160,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              color: mainGreyColorTheme2,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: GaugeWidget(title: lbl_RPM, value: ((Rpm.value) / 100))
+                            ),
+                          SizedBox(height: 10),
+                          Container(
+                            height: 160,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              color: mainGreyColorTheme2,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: GaugeWidget(title: lbl_Actual_Power, value: ((Rpm.value) / 100), needleColor: mainColorTheme)
+                            ),
+                            ],
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            children: [
+                              Container(
+                                width: 167,
+                                height: 89,
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                                decoration: BoxDecoration(
+                                  color: mainGreyColorTheme2,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SubTitleText(title: lbl_Mode),
+                                    Row(
+                                    children: [
+                                      Text(isManual?lbl_Manual:lbl_Auto, style: TextStyle(fontFamily: PoppinsFamily, fontSize: 14, color: mainGreyColorTheme),),
+                                      Spacer(),
+                                      Switch(value: isManual, onChanged: (result){
+                                        // TODO logic
+                                          isManual = result;
+                                        setState(() {
+
+                                        });
+                                      })
+                                    ],
+                                  )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: 167,
+                                height: 89,
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                                decoration: BoxDecoration(
+                                  color: mainGreyColorTheme2,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SubTitleText(title: lbl_IO),
+                                    Row(
+                                      children: [
+                                        Text(isIO?lbl_ON:lbl_OFF, style: TextStyle(fontFamily: PoppinsFamily, fontSize: 14, color: mainGreyColorTheme),),
+                                        Spacer(),
+                                        Switch(value: isIO, onChanged: (result){
+                                          // TODO logic
+                                            isIO = result;
+                                          setState(() {
+
+                                          });
+                                        })
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.only(top: 15),
+                                    decoration: BoxDecoration(
+                                      color: mainGreyColorTheme2,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    height: 129,
+                                    width: 79,
+                                    child: Column(
+                                      children: [
+                                        SubTitleText(title: lbl_MCB),
+                                        Spacer(),
+                                        Switch(value: isMCB, onChanged: (result){
+                                          // TODO logic
+                                            isMCB = result;
+                                          setState(() {
+
+                                          });
+                                        })
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 15),
+                                    decoration: BoxDecoration(
+                                      color: mainGreyColorTheme2,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    height: 129,
+                                    width: 79,
+                                    child: Column(
+                                      children: [
+                                        SubTitleText(title: lbl_GCB),
+                                        Spacer(),
+                                        Switch(value: isGCB, onChanged: (result){
+                                          // TODO logic
+                                            isGCB = result;
+                                          setState(() {
+
+                                          });
+                                        })
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+                      Column(
                           children: [
-                            ToggleButton_Row(
-                                status: ControllerModeStatus,
-                                power: PowerStatus,
-                                DashBoardModelView: DashModelView),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                if (EngineState.value != "Restricted")
-                                  Expanded(
-                                    child: Card_ImageTitleDescription(
-                                      ImagePath: "assets/EngineState.png",
-                                      Title: "Engine State",
-                                      Description: EngineState.value,
-                                    ),
-                                    flex: 1,
-                                  ),
-                                if (BreakState.value != "Restricted")
-                                  Expanded(
-                                    child: Card_ImageTitleDescription(
-                                      ImagePath: "assets/Breaker.png",
-                                      Title: "Breaker State",
-                                      Description: BreakState.value,
-                                    ),
-                                    flex: 1,
-                                  ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            if (Hours != "Restricted")
-                              Card_ImageTitleTime(
-                                ImagePath: "assets/RunningHours.png",
-                                Title: "Running Hours",
-                                Hours: Hours,
-                                Minutes: Minutes,
-                                Headerh: "Hours",
-                                Headerm: "Minutes",
-                              ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            if (Rpm.value != "Restricted")
-                              Custom_Card_CircularGuage(
-                                  Title: 'RPM',
-                                  Unit: Rpm.unit + "*100",
-                                  Value: ((Rpm.value) / 100).toString()),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                if (BatteryVoltage.value.toString() !=
-                                    "Restricted")
-                                  Expanded(
-                                    child: Card_ImageTitleDescription(
-                                      ImagePath: "assets/Battery.png",
-                                      Title: "Battery",
-                                      Description:
-                                          BatteryVoltage.value.toString() +
-                                              " " +
-                                              BatteryVoltage.unit.toString(),
-                                    ),
-                                    flex: 1,
-                                  ),
-                                if (OilPressure.value.toString() !=
-                                    "Restricted")
-                                  Expanded(
-                                    child: Card_ImageValue(
-                                        ImagePath: 'assets/oilIcon.png',
-                                        Value: OilPressure.value.toString() +
-                                            " " +
-                                            OilPressure.unit.toString()),
-                                    flex: 1,
-                                  ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                if (CoolantTemp.value.toString() !=
-                                    "Restricted")
-                                  Expanded(
-                                    child: Card_ImageValue(
-                                      ImagePath: "assets/Temperature.png",
-                                      Value: CoolantTemp.value.toString() +
-                                          " " +
-                                          CoolantTemp.unit.toString(),
-                                    ),
-                                    flex: 1,
-                                  ),
-                                if (FuelLevel.value.toString() != "Restricted")
-                                  Expanded(
-                                    child: Card_ImageValue(
-                                        ImagePath: 'assets/Fuel.png',
-                                        Value: FuelLevel.value.toString() +
-                                            " " +
-                                            FuelLevel.unit.toString()),
-                                    flex: 1,
-                                  ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            if (GeneratorVoltage.value.toString() !=
-                                "Restricted")
-                              Row_TitleValueUnit(
-                                Title: "Ph-N",
-                                Value: GeneratorVoltage.value.toString(),
-                                Unit: GeneratorVoltage.unit.toString(),
-                              ),
-                            if (GeneratorLoad.value.toString() != "Restricted")
-                              Row_TitleValueUnit(
-                                Title: "Load",
-                                Value: GeneratorLoad.value.toString(),
-                                Unit: GeneratorLoad.unit.toString(),
-                              ),                          ],
-                        )));}
-                        else{
-                                              return Custom_Alert(
-                        Title: 'Error Has Occured',
-                        Description:
-                            "Something Went Wrong! it seems that no generator is assigned.");
+                            infotile(title: lbl_Engine, value: EngineState.value.toString(),),
+                            infotile(title: lbl_Breaker, value: BreakState.value.toString(),),
+                            infotile(title: lbl_Running_Hours, value: RunningHours.value.toString(),),
+                            infotile(title: lbl_Battery, value: BatteryVoltage.value.toString(),),
+                            infotile(title: lbl_Pressure, value: OilPressure.value.toString(),),
+                            infotile(title: lbl_Temperature, value: CoolantTemp.value.toString(),),
+                            infotile(title: lbl_Gas, value: EngineState.value.toString(),),
+                            infotile(title: lbl_Load, value: GeneratorLoad.value.toString(),),
+                          ],
+                      )
+                    ]
+                  );
                         }
-                  } else {
-                    return Custom_Alert(
-                        Title: 'Empty Data',
-                        Description:
-                            "The Request To Get Data Was Successful But It Seems That The Data Is Empty");
-                  }
-                } else {
-                  return Custom_Alert(
-                      Title: 'Error Has Occured',
-                      Description:
-                          "Something Went Wrong!, ${snapshot.connectionState}");
-                }
-              },
-            )));
+                      } else{
+                        return Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong! it seems that no generator is assigned.");
+                        }
+                      }
+                      ),
+
+                  ),
+                ),
+              )
+    );
+  }
+}
+
+class infotile extends StatelessWidget {
+  String title, value;
+  infotile({
+    Key? key,
+    required this.title,
+    required this.value
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: lightBorderColor,
+            width: 1,
+            style: BorderStyle.solid,
+          ),
+        ),
+      ),
+      child: ListTile(
+        title: Text(title, style: TextStyle(fontFamily: PoppinsFamily, fontSize: 14, color: mainBlackColorTheme),),
+        trailing: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: GestureDetector(
+            onTap: (){},
+            child: Container(
+              padding: EdgeInsets.only(bottom: 6, top: 6, left: 16, right: 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: mainColorTheme, width: 1),
+                color: Colors.transparent,
+              ),
+              child: Text(value, style: TextStyle(color: mainColorTheme, fontSize: 14, fontFamily: PoppinsFamily)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Custom_Alert extends StatelessWidget {
+  String Title;
+  String Description;
+  Custom_Alert({required this.Title, required this.Description});
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        new Text(
+          Title,
+          style: TextStyle(color: Color(0XFF130925)),
+        ),
+      ]),
+      content: new Text(
+        Description,
+        style: TextStyle(color: Colors.purple),
+      ),
+      actions: <Widget>[
+      ],
+    );
   }
 }

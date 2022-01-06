@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
         ),
         home: new OPSplashScreen(),
-        // home: AudioPlayer(),
       );
     });
   }
