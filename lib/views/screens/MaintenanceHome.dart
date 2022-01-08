@@ -13,6 +13,7 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/MaintenanceGridListScreen.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
+import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'MyRepairsScreen.dart';
 
@@ -66,18 +67,7 @@ class T5MaintenanceState extends State<T5Maintenance> {
                   elevation: 0.0,
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.white,
-                  title: Row(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios,
-                            color: backArrowColor, size: 24.0),
-                        onPressed: () {
-                          finish(context);
-                        },
-                      ),
-                    TitleText(title: lbl_Maintenace_And_Repair)
-                    ],
-                  ),
+                  title: TopRowBar(title: lbl_Maintenace_And_Repair,),
                   bottom: TabBar(
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: mainColorTheme,

@@ -15,14 +15,13 @@ children: [
                   IconButton(
                     icon: Icon(Icons.arrow_back_ios, color: backArrowColor,),
                     onPressed: () {
-                      finish(context);
+                      finish(context); 
                     },
                   ),
                   Spacer(),
                   TitleText(
                     title: title,
                   ),
-                  Spacer(),
                   Spacer(),
                 ],
               );
