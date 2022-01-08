@@ -74,53 +74,53 @@ class _RecorderState extends State<Recorder> {
       children: [
         stop == false
             ? GestureDetector(
-              onTap: () async {
+                onTap: () async {
                   await _onRecordButtonPressed();
                   setState(() {});
                 },
-              child: Container(
-                    decoration: BoxDecoration(
-                                border: Border.all(color: Colors.red, width: 2),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(Icons.mic, color: Colors.red),
-                            ),
-            )
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red, width: 2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(Icons.mic, color: Colors.red),
+                ),
+              )
             : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    await _onRecordButtonPressed();
-                    setState(() {});
-                  },
-                  child: Container(
-                    child: Icon(
-                      _recordIcon,
-                      color: Colors.grey,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      await _onRecordButtonPressed();
+                      setState(() {});
+                    },
+                    child: Container(
+                      child: Icon(
+                        _recordIcon,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                GestureDetector(
-                  onTap: _currentStatus != RecordingStatus.Unset
-                      ? (){
-                        _stop();
-                        }
-                      : null,
-                  child: Container(
-                    child: Icon(
-                      Icons.stop,
-                      color: mainColorTheme,
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: _currentStatus != RecordingStatus.Unset
+                        ? () {
+                            _stop();
+                          }
+                        : null,
+                    child: Container(
+                      child: Icon(
+                        Icons.stop,
+                        color: mainColorTheme,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-              Text(
-                duration.substring(2,7),
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                ],
               ),
+        Text(
+          duration.substring(2, 7),
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        ),
       ],
     );
   }
@@ -242,7 +242,6 @@ class _RecorderState extends State<Recorder> {
     print(statuses[Permission.storage]);
     if (statuses[Permission.microphone] == PermissionStatus.granted ||
         canRecord) {
-
       await _initial();
       await _start();
       Fluttertoast.showToast(msg: "Start Recording");

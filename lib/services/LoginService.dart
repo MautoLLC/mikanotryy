@@ -11,24 +11,24 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 Login(String username, String password, BuildContext context) async {
-      Dio dio = new Dio();
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    };
-    Response response;
+  Dio dio = new Dio();
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (HttpClient client) {
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  };
+  Response response;
   try {
     Response response = await dio.post((authorizationEndpoint),
-          options: Options(headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          }),
-          data: {
-            "username": username,
-      "password": password,
-      "grant_type": "password",
-      "client_id": "MymikanoAppLogin",
-          });
+        options: Options(headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        }),
+        data: {
+          "username": username,
+          "password": password,
+          "grant_type": "password",
+          "client_id": "MymikanoAppLogin",
+        });
     var temp = (response.data);
 
     final directory = await getApplicationDocumentsDirectory();
@@ -68,7 +68,7 @@ Login(String username, String password, BuildContext context) async {
         context,
         MaterialPageRoute(builder: (context) => Theme5Dashboard()),
       );
-          return true;
+      return true;
     } on Exception catch (e) {
       Fluttertoast.showToast(
           msg: "Login Failed",
@@ -79,7 +79,7 @@ Login(String username, String password, BuildContext context) async {
           textColor: Colors.black87,
           fontSize: 16.0);
       print(e.toString());
-          return false;
+      return false;
     }
   } on Exception catch (e) {
     print(e);
@@ -91,6 +91,6 @@ Login(String username, String password, BuildContext context) async {
         backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
         fontSize: 16.0);
-            return false;
+    return false;
   }
 }

@@ -237,7 +237,6 @@ double dynamicWidth(BuildContext context) {
   return isMobile ? context.width() : applicationMaxWidth;
 }
 
-
 String parseHtmlString(String? htmlString) {
   return parse(parse(htmlString).body!.text).documentElement!.text;
 }

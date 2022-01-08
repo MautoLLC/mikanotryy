@@ -27,15 +27,14 @@ const t5_shopping_cart = "images/theme5/shopping-cart.svg";
 const t5_card1 =
     "https://www.mikano-intl.com/intl/images/services/large/rich6.jpg";
 const t5_technician_profile = "images/theme5/technician-profile.jpg";
-const t3_led =  "images/theme5/LED.png";
-const t3_mcb =  "images/theme5/mcb.png";
+const t3_led = "images/theme5/LED.png";
+const t3_mcb = "images/theme5/mcb.png";
 const t13_ic_logo = "images/MyMikanoLogo.png";
 
 // Auth Pages
 const login_Page_PNG = "assets/Login.jpg";
 const Splash_Screen_Mikano_Logo = "assets/SplashScreenMikanoLogo.png";
 const ForgotPassword_Screen_PNG = "assets/ForgotPassword.png";
-
 
 // Social Media Icons
 const ic_facebook = "assets/SocialMediaIcons/FacebookIcon.png";

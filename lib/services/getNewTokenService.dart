@@ -13,23 +13,22 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 RefreshToken(String refreshToken) async {
-        Dio dio = new Dio();
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    };
+  Dio dio = new Dio();
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (HttpClient client) {
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  };
   try {
-    Response response =
-        await dio.post((authorizationEndpoint), 
-        options: Options( headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    }),
+    Response response = await dio.post((authorizationEndpoint),
+        options: Options(headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        }),
         data: {
-      "refresh_token": refreshToken,
-      "grant_type": "refresh_token",
-      "client_id": "MymikanoAppLogin",
-    });
+          "refresh_token": refreshToken,
+          "grant_type": "refresh_token",
+          "client_id": "MymikanoAppLogin",
+        });
     if (response.statusCode == 200) {
       var temp = (response.data);
       final directory = await getApplicationDocumentsDirectory();

@@ -33,9 +33,10 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
 
   void _onItemTapped(int index) {
     selectedIndex = index;
-    selectedIndex == 0 ? Navigator.push(context, MaterialPageRoute(builder: (context) => MenuScreen())) :     setState(() {
-    });
-
+    selectedIndex == 0
+        ? Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MenuScreen()))
+        : setState(() {});
   }
 
   @override
@@ -54,9 +55,9 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
           BankingBottomNavigationBarItem(icon: ic_customer),
         ],
         currentIndex: selectedIndex,
-        unselectedIconTheme:
-            IconThemeData(color: mainGreyColorTheme, size: 20),
-        selectedIconTheme: IconThemeData(color: bottomNavigationBarSelectedItemColor, size: 20),
+        unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),
+        selectedIconTheme: IconThemeData(
+            color: bottomNavigationBarSelectedItemColor, size: 20),
         onTap: _onItemTapped,
         type: BankingBottomNavigationBarType.fixed,
       ),

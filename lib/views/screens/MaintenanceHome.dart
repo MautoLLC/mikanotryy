@@ -57,50 +57,52 @@ class T5MaintenanceState extends State<T5Maintenance> {
     width = width - 50;
 
     return Scaffold(
-          backgroundColor: Colors.white,
-          body: DefaultTabController(
-            length: 2,
-            child: SafeArea(
-              child: Scaffold(
-                backgroundColor: Colors.white,
-                appBar: AppBar(
-                  elevation: 0.0,
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.white,
-                  title: TopRowBar(title: lbl_Maintenace_And_Repair,),
-                  bottom: TabBar(
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: mainColorTheme,
-                    indicatorWeight: 4,
-                    labelStyle: boldTextStyle(color: mainBlackColorTheme),
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          "Maintenance",
-                          style: TextStyle(color: mainBlackColorTheme),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "My Repairs",
-                          style: TextStyle(color: mainBlackColorTheme),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                body: TabBarView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-                      child: MaintenanceGridListScreen(mFavouriteList, false),
+      backgroundColor: Colors.white,
+      body: DefaultTabController(
+        length: 2,
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              elevation: 0.0,
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+              title: TopRowBar(
+                title: lbl_Maintenace_And_Repair,
+              ),
+              bottom: TabBar(
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorColor: mainColorTheme,
+                indicatorWeight: 4,
+                labelStyle: boldTextStyle(color: mainBlackColorTheme),
+                tabs: [
+                  Tab(
+                    child: Text(
+                      "Maintenance",
+                      style: TextStyle(color: mainBlackColorTheme),
                     ),
-                    MyRepairsScreen(cardList, reqList),
-                  ],
-                ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "My Repairs",
+                      style: TextStyle(color: mainBlackColorTheme),
+                    ),
+                  ),
+                ],
               ),
             ),
+            body: TabBarView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+                  child: MaintenanceGridListScreen(mFavouriteList, false),
+                ),
+                MyRepairsScreen(cardList, reqList),
+              ],
+            ),
           ),
-        );
+        ),
+      ),
+    );
   }
 }

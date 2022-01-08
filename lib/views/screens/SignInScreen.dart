@@ -30,7 +30,6 @@ class T13SignInScreenState extends State<T13SignInScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -60,14 +59,18 @@ class T13SignInScreenState extends State<T13SignInScreen> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-                  IconButton(onPressed: (){
-                  finish(context);
-                }, icon: Icon(Icons.arrow_back_ios), color: Colors.black,),
-            ],
-            ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        finish(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios),
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
                 commonCacheImageWidget(login_Page_PNG, 155, width: width * 0.8),
                 SizedBox(height: spacing_xlarge),
                 Padding(
@@ -96,8 +99,12 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ForgotPasswordScreen()));
                         },
                         child: Text(t13_lbl_forgot_your_password,
                             style: TextStyle(
@@ -117,25 +124,22 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                         // onPressed: (){},
                         textContent: t13_lbl_login,
                         onPressed: () async {
-                          if(!pressed){
+                          if (!pressed) {
                             pressed = true;
-                          FocusScope.of(context).unfocus();
-                          loading = true;
-                          setState(() {
-                            
-                          });
-                          bool response = await Login(emailController.text.toString(),
-                              passController.text.toString(), this.context);
-                          emailController.text = "";
-                          passController.text = "";
-                          if(!response){
-                            loading = false;
-                            
-                          }
-                          pressed = false;
-                                                    setState(() {
-                            
-                          });
+                            FocusScope.of(context).unfocus();
+                            loading = true;
+                            setState(() {});
+                            bool response = await Login(
+                                emailController.text.toString(),
+                                passController.text.toString(),
+                                this.context);
+                            emailController.text = "";
+                            passController.text = "";
+                            if (!response) {
+                              loading = false;
+                            }
+                            pressed = false;
+                            setState(() {});
                           }
                         },
                       ),
@@ -161,17 +165,21 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                               builder: (context) => T13SignUpScreen())),
                       child: Container(
                         child: text(t13_lbl_sign_up,
-                            fontSize: 14.0, fontFamily: fontMedium, textColor: mainColorTheme),
+                            fontSize: 14.0,
+                            fontFamily: fontMedium,
+                            textColor: mainColorTheme),
                       ),
                     ),
                   ],
                 ),
-                loading?Center(
-                                  child: SpinKitCircle(
-                                    color: Colors.black,
-                                    size: 65,
-                                  ),
-                                ):Center(child:Text(""))
+                loading
+                    ? Center(
+                        child: SpinKitCircle(
+                          color: Colors.black,
+                          size: 65,
+                        ),
+                      )
+                    : Center(child: Text(""))
               ],
             ),
           ),

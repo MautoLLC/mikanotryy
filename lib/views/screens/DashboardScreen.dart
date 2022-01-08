@@ -69,7 +69,6 @@ class DashboardState extends State<Dashboard> {
     return Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldKey,
-        
         body: SingleChildScrollView(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             SafeArea(
@@ -78,10 +77,12 @@ class DashboardState extends State<Dashboard> {
                 margin: EdgeInsets.only(left: 16, right: 16),
                 child: Row(
                   children: <Widget>[
-
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MenuScreen()));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MenuScreen()));
                       },
                       child: SizerUtil.deviceType == DeviceType.mobile
                           ? Transform(
@@ -157,24 +158,30 @@ class DashboardState extends State<Dashboard> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Image.asset(
-                                    'images/MaintenanceAndRepairRedIcon.png', width: SizerUtil.deviceType ==
-                                                DeviceType.mobile?80:140, height: SizerUtil.deviceType ==
-                                                DeviceType.mobile?80:140,),
+                                  'images/MaintenanceAndRepairRedIcon.png',
+                                  width:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? 80
+                                          : 140,
+                                  height:
+                                      SizerUtil.deviceType == DeviceType.mobile
+                                          ? 80
+                                          : 140,
+                                ),
                                 SizedBox(height: 5),
-                                SizerUtil.deviceType ==
-                                                    DeviceType.mobile?
-                                AutoSizeText(cards[0].examName!,
-                                    style: boldTextStyle(
-                                        color: Color(0xff484848),
-                                        fontFamily: fontRegular,
-                                        weight: FontWeight.bold,
-                                        size: 16)):
-                                AutoSizeText(cards[0].examName!,
-                                    style: boldTextStyle(
-                                        color: Color(0xff484848),
-                                        fontFamily: fontRegular,
-                                        weight: FontWeight.bold,
-                                        size: 24))
+                                SizerUtil.deviceType == DeviceType.mobile
+                                    ? AutoSizeText(cards[0].examName!,
+                                        style: boldTextStyle(
+                                            color: Color(0xff484848),
+                                            fontFamily: fontRegular,
+                                            weight: FontWeight.bold,
+                                            size: 16))
+                                    : AutoSizeText(cards[0].examName!,
+                                        style: boldTextStyle(
+                                            color: Color(0xff484848),
+                                            fontFamily: fontRegular,
+                                            weight: FontWeight.bold,
+                                            size: 24))
                               ]),
                           Positioned(
                               right: 0,
@@ -222,15 +229,14 @@ class DashboardState extends State<Dashboard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  SizerUtil.deviceType ==
-                                                    DeviceType.mobile?
-                                  AutoSizeText("Generator",
+                                  SizerUtil.deviceType == DeviceType.mobile
+                                      ? AutoSizeText("Generator",
                                           style: boldTextStyle(
                                               color: Color(0xff484848),
                                               fontFamily: fontRegular,
                                               weight: FontWeight.bold,
-                                              size: 16)):
-                                  AutoSizeText("Generator",
+                                              size: 16))
+                                      : AutoSizeText("Generator",
                                           style: boldTextStyle(
                                               color: Color(0xff484848),
                                               fontFamily: fontRegular,
@@ -250,7 +256,10 @@ class DashboardState extends State<Dashboard> {
                                                         DeviceType.mobile
                                                     ? 100
                                                     : 15.h,
-                                                child: GaugeWidget(title: 'RPM', value: 60,))),
+                                                child: GaugeWidget(
+                                                  title: 'RPM',
+                                                  value: 60,
+                                                ))),
                                         SizedBox(width: 5),
                                         Expanded(
                                           child: Container(
@@ -312,17 +321,18 @@ class DashboardState extends State<Dashboard> {
                                       padding:
                                           EdgeInsets.only(left: 16, right: 16),
                                       child: Row(
-
                                         children: <Widget>[
                                           SizerUtil.deviceType ==
-                                                    DeviceType.mobile?
-                                          AutoSizeText(t5_mikano_shop,
+                                                  DeviceType.mobile
+                                              ? AutoSizeText(t5_mikano_shop,
                                                   style: boldTextStyle(
-                                                      color: Colors.white, size: 16)):
-                                          AutoSizeText(t5_mikano_shop,
+                                                      color: Colors.white,
+                                                      size: 16))
+                                              : AutoSizeText(t5_mikano_shop,
                                                   style: boldTextStyle(
-                                                      color: Colors.white, size: 24)),
-                                                      Spacer(),
+                                                      color: Colors.white,
+                                                      size: 24)),
+                                          Spacer(),
                                           Icon(
                                             Icons.keyboard_arrow_right,
                                             color: Colors.white,
@@ -406,7 +416,7 @@ class DashboardState extends State<Dashboard> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Transform.translate(
-                              offset: Offset(0,10),
+                              offset: Offset(0, 10),
                               child: Text(
                                 "Shop by Categories",
                                 style: TextStyle(

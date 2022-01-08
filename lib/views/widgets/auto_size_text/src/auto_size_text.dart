@@ -275,25 +275,35 @@ class _AutoSizeTextState extends State<AutoSizeText> {
   }
 
   void _sanityCheck(TextStyle? style, int? maxLines) {
-    assert(widget.overflow == null || widget.overflowReplacement == null, 'Either overflow or overflowReplacement have to be null.');
-    assert(maxLines == null || maxLines > 0, 'MaxLines has to be grater than or equal to 1.');
-    assert(widget.key == null || widget.key != widget.textKey, 'Key and textKey cannot be the same.');
+    assert(widget.overflow == null || widget.overflowReplacement == null,
+        'Either overflow or overflowReplacement have to be null.');
+    assert(maxLines == null || maxLines > 0,
+        'MaxLines has to be grater than or equal to 1.');
+    assert(widget.key == null || widget.key != widget.textKey,
+        'Key and textKey cannot be the same.');
 
     if (widget.presetFontSizes == null) {
-      assert(widget.stepGranularity >= 0.1, 'StepGranularity has to be greater than or equal to 0.1. It is not a good idea to resize the font with a higher accuracy.');
-      assert(widget.minFontSize >= 0, 'MinFontSize has to be greater than or equal to 0.');
+      assert(widget.stepGranularity >= 0.1,
+          'StepGranularity has to be greater than or equal to 0.1. It is not a good idea to resize the font with a higher accuracy.');
+      assert(widget.minFontSize >= 0,
+          'MinFontSize has to be greater than or equal to 0.');
       assert(widget.maxFontSize > 0, 'MaxFontSize has to be greater than 0.');
-      assert(widget.minFontSize <= widget.maxFontSize, 'MinFontSize has to be smaller or equal than maxFontSize.');
-      assert(widget.minFontSize / widget.stepGranularity % 1 == 0, 'MinFontSize has to be multiples of stepGranularity.');
+      assert(widget.minFontSize <= widget.maxFontSize,
+          'MinFontSize has to be smaller or equal than maxFontSize.');
+      assert(widget.minFontSize / widget.stepGranularity % 1 == 0,
+          'MinFontSize has to be multiples of stepGranularity.');
       if (widget.maxFontSize != double.infinity) {
-        assert(widget.maxFontSize / widget.stepGranularity % 1 == 0, 'MaxFontSize has to be multiples of stepGranularity.');
+        assert(widget.maxFontSize / widget.stepGranularity % 1 == 0,
+            'MaxFontSize has to be multiples of stepGranularity.');
       }
     } else {
-      assert(widget.presetFontSizes!.isNotEmpty, 'PresetFontSizes has to be nonempty.');
+      assert(widget.presetFontSizes!.isNotEmpty,
+          'PresetFontSizes has to be nonempty.');
     }
   }
 
-  List _calculateFontSize(BoxConstraints size, TextStyle? style, int? maxLines) {
+  List _calculateFontSize(
+      BoxConstraints size, TextStyle? style, int? maxLines) {
     var span = TextSpan(
       style: widget.textSpan?.style ?? style,
       text: widget.textSpan?.text ?? widget.data,
@@ -301,14 +311,16 @@ class _AutoSizeTextState extends State<AutoSizeText> {
       recognizer: widget.textSpan?.recognizer,
     );
 
-    var userScale = widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
+    var userScale =
+        widget.textScaleFactor ?? MediaQuery.textScaleFactorOf(context);
 
     int left;
     int right;
 
     var presetFontSizes = widget.presetFontSizes?.reversed.toList();
     if (presetFontSizes == null) {
-      num defaultFontSize = style!.fontSize!.clamp(widget.minFontSize, widget.maxFontSize);
+      num defaultFontSize =
+          style!.fontSize!.clamp(widget.minFontSize, widget.maxFontSize);
       var defaultScale = defaultFontSize * userScale / style.fontSize!;
       if (_checkTextFits(span, defaultScale, maxLines, size)) {
         return [defaultFontSize * userScale, true];
@@ -352,7 +364,8 @@ class _AutoSizeTextState extends State<AutoSizeText> {
     return [fontSize, lastValueFits];
   }
 
-  bool _checkTextFits(TextSpan text, double scale, int? maxLines, BoxConstraints constraints) {
+  bool _checkTextFits(
+      TextSpan text, double scale, int? maxLines, BoxConstraints constraints) {
     if (!widget.wrapWords) {
       var words = text.toPlainText().split(RegExp('\\s+'));
 
@@ -371,7 +384,8 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
       wordWrapTp.layout(maxWidth: constraints.maxWidth);
 
-      if (wordWrapTp.didExceedMaxLines || wordWrapTp.width > constraints.maxWidth) {
+      if (wordWrapTp.didExceedMaxLines ||
+          wordWrapTp.width > constraints.maxWidth) {
         return false;
       }
     }
@@ -388,7 +402,9 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
     tp.layout(maxWidth: constraints.maxWidth);
 
-    return !(tp.didExceedMaxLines || tp.height > constraints.maxHeight || tp.width > constraints.maxWidth);
+    return !(tp.didExceedMaxLines ||
+        tp.height > constraints.maxHeight ||
+        tp.width > constraints.maxWidth);
   }
 
   Widget _buildText(double fontSize, TextStyle? style, int? maxLines) {

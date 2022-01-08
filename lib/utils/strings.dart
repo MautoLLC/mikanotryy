@@ -1,5 +1,4 @@
-
-const text_start_time ="Start Time";
+const text_start_time = "Start Time";
 const text_Comments = "Comments";
 const text_duration = "Duration";
 const t5_mikano_shop = "Mikano Shop";
@@ -15,7 +14,6 @@ const t13_lbl_forgot_your_password = "Forgot Password?";
 const lbl_Create_Account = "Create Account";
 const t13_lbl_request = "Request";
 
-
 const lbl_Maintenace_And_Repair = "Maintenance & Repair";
 const lbl_Request_Form = "Request Form";
 
@@ -30,9 +28,11 @@ const lbl_Purchases = 'Purchases';
 const lbl_Privacy = 'Privacy';
 
 const lbl_Terms = 'Terms';
-const txt_Terms = 'By accessing our app, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.';
+const txt_Terms =
+    'By accessing our app, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.';
 const lbl_Use_License = 'Use License';
-const txt_Use_License = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+const txt_Use_License =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
 const lbl_SubCategory = 'Sub Category';
 const lbl_Address = 'Address';
@@ -45,7 +45,8 @@ const lbl_Year = 'Year';
 const lbl_Hour = 'Hour';
 const lbl_Minute = 'Minute';
 const lbl_Voice_Messages = 'Voice Messages';
-const txt_Placeholder = 'Description Text here,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+const txt_Placeholder =
+    'Description Text here,  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 const lbl_Images = 'Images';
 const lbl_Favorites = 'Favorites';
 const lbl_Add_To_Cart = 'Add To Cart';

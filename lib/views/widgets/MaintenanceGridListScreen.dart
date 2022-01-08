@@ -47,8 +47,7 @@ class MaintenanceGridListScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: listCategViewModel.maincategs!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1),
+                    crossAxisCount: 3, childAspectRatio: 1),
                 itemBuilder: (BuildContext context, int index) {
                   Categ mainCategory =
                       listCategViewModel.maincategs![index].mcateg!;
@@ -59,7 +58,7 @@ class MaintenanceGridListScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            if(!pressed){
+                            if (!pressed) {
                               pressed = true;
                               goAll(mainCategory, context);
                               Future.delayed(Duration(seconds: 2), () {
@@ -72,21 +71,28 @@ class MaintenanceGridListScreen extends StatelessWidget {
                             decoration: boxDecoration(
                                 radius: 33,
                                 showShadow: true,
-                                bgColor: Color.fromRGBO(mainGreyColorTheme.red, mainGreyColorTheme.green, mainGreyColorTheme.blue, 0.3)),
+                                bgColor: Color.fromRGBO(
+                                    mainGreyColorTheme.red,
+                                    mainGreyColorTheme.green,
+                                    mainGreyColorTheme.blue,
+                                    0.3)),
                             child: commonCacheImageWidget(
-                              listCategViewModel.maincategs![index].mcateg!
-                                  .maintenanceCategoryIcon,
-                                  60,
-                                  width: 80
-                            ),
+                                listCategViewModel.maincategs![index].mcateg!
+                                    .maintenanceCategoryIcon,
+                                60,
+                                width: 80),
                           ),
                         ),
                       ),
                       Text(
-                        listCategViewModel.maincategs![index].mcateg!
-                        .maintenanceCategoryName,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, fontFamily: PoppinsFamily, ),
-                      ),          
+                        listCategViewModel
+                            .maincategs![index].mcateg!.maintenanceCategoryName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          fontFamily: PoppinsFamily,
+                        ),
+                      ),
                     ],
                   );
                 });

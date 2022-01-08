@@ -65,84 +65,108 @@ class MyRepairsScreen extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: listmrequestsViewModel.maintenanceRequests!.length,
-                itemBuilder: (BuildContext context, int index){
-                  DateTime date = DateTime.parse(listmrequestsViewModel
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: listmrequestsViewModel.maintenanceRequests!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    DateTime date = DateTime.parse(listmrequestsViewModel
                         .maintenanceRequests![index]
                         .mMaintenacerequest!
                         .preferredVisitTimee
                         .toString());
-                  String preferredVisitTimee = DateFormat.yMMMd().format(date);
-                  return GestureDetector(
-                          onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RepairDetailsPage(
-                                    id: listmrequestsViewModel
-                                        .maintenanceRequests![index]
-                                        .mMaintenacerequest!
-                                        .idMaintenanceRequest!
-                                        .toInt())),
-                          );
-                        },
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: lightBorderColor,
-                              width: 1.0,
+                    String preferredVisitTimee =
+                        DateFormat.yMMMd().format(date);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RepairDetailsPage(
+                                  id: listmrequestsViewModel
+                                      .maintenanceRequests![index]
+                                      .mMaintenacerequest!
+                                      .idMaintenanceRequest!
+                                      .toInt())),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: lightBorderColor,
+                                width: 1.0,
+                              ),
                             ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 80,
-                                height: 60,
-                                child: commonCacheImageWidget(listmrequestsViewModel
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 80,
+                                  height: 60,
+                                  child: commonCacheImageWidget(
+                                      listmrequestsViewModel
+                                          .maintenanceRequests![index]
+                                          .mMaintenacerequest!
+                                          .maintenanceCategory!
+                                          .maintenanceCategoryIcon,
+                                      25),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(
+                                          mainGreyColorTheme.red,
+                                          mainGreyColorTheme.green,
+                                          mainGreyColorTheme.blue,
+                                          0.3),
+                                      borderRadius: BorderRadius.circular(24)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      14.3, 0.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        listmrequestsViewModel
                                             .maintenanceRequests![index]
                                             .mMaintenacerequest!
                                             .maintenanceCategory!
-                                            .maintenanceCategoryIcon, 25),
-                                decoration: BoxDecoration(color: Color.fromRGBO(mainGreyColorTheme.red, mainGreyColorTheme.green, mainGreyColorTheme.blue, 0.3),
-                                borderRadius: BorderRadius.circular(24)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(14.3, 0.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(listmrequestsViewModel
-                                        .maintenanceRequests![index]
-                                        .mMaintenacerequest!
-                                        .maintenanceCategory!
-                                        .maintenanceCategoryName, style: TextStyle(fontSize: 14, fontFamily: PoppinsFamily),),
-                                    Text(preferredVisitTimee, style: TextStyle(fontSize: 14, fontFamily: PoppinsFamily, color: mainGreyColorTheme),),
-                                  ],
+                                            .maintenanceCategoryName,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: PoppinsFamily),
+                                      ),
+                                      Text(
+                                        preferredVisitTimee,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: PoppinsFamily,
+                                            color: mainGreyColorTheme),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                Spacer(),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      padding:
+                                          EdgeInsets.fromLTRB(10, 0, 10, 0),
                                       decoration: boxDecoration(
-                                          bgColor: switchColor(listmrequestsViewModel
-                                              .maintenanceRequests![index]
-                                              .mMaintenacerequest!
-                                              .maintenaceRequestStatus!
-                                              .maintenanceStatusDescription),
+                                          bgColor: switchColor(
+                                              listmrequestsViewModel
+                                                  .maintenanceRequests![index]
+                                                  .mMaintenacerequest!
+                                                  .maintenaceRequestStatus!
+                                                  .maintenanceStatusDescription),
                                           radius: 16),
                                       child: text(
                                           listmrequestsViewModel
@@ -151,19 +175,20 @@ class MyRepairsScreen extends StatelessWidget {
                                               .maintenaceRequestStatus!
                                               .maintenanceStatusDescription,
                                           fontSize: SizerUtil.deviceType ==
-                                                        DeviceType.mobile?16.0:24.0,
+                                                  DeviceType.mobile
+                                              ? 16.0
+                                              : 24.0,
                                           textColor: t5White),
                                     ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }
-              ),
+                    );
+                  }),
             );
           }
         });

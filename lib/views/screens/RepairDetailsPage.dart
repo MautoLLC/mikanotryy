@@ -37,20 +37,25 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
           child: Column(
             children: [
               Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios, color: backArrowColor,),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Spacer(),
-                TitleText(title: lbl_Request_Form),
-                Spacer(),
-                Spacer(),
-              ],
-            ),
-            SizedBox(height: 40,),
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: backArrowColor,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Spacer(),
+                  TitleText(title: lbl_Request_Form),
+                  Spacer(),
+                  Spacer(),
+                ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -58,7 +63,10 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Description",
-                      style: TextStyle(fontFamily: PoppinsFamily, fontSize: 18, color: mainBlackColorTheme),
+                      style: TextStyle(
+                          fontFamily: PoppinsFamily,
+                          fontSize: 18,
+                          color: mainBlackColorTheme),
                     ),
                   )
                 ],
@@ -67,10 +75,8 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                   future: ListMaintenanceRequestsViewModel()
                       .fetchMaintenanceRequestsByID(this.widget.id),
                   builder: (context,
-                      AsyncSnapshot<MaintenanceRequestsViewModel?>
-                          snapshot) {
-                    if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
+                      AsyncSnapshot<MaintenanceRequestsViewModel?> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,16 +105,22 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(snapshot.data!.mMaintenacerequest!
-                                .requestDescription
-                                .toString(),
-                                style: TextStyle(fontFamily: PoppinsFamily, fontSize: 12, color: mainGreyColorTheme)),
+                            child: Text(
+                                snapshot.data!.mMaintenacerequest!
+                                    .requestDescription
+                                    .toString(),
+                                style: TextStyle(
+                                    fontFamily: PoppinsFamily,
+                                    fontSize: 12,
+                                    color: mainGreyColorTheme)),
                           ),
                         ],
                       );
                     }
                   }),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -116,7 +128,10 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Images",
-                      style: TextStyle(fontFamily: PoppinsFamily, fontSize: 18, color: mainBlackColorTheme),
+                      style: TextStyle(
+                          fontFamily: PoppinsFamily,
+                          fontSize: 18,
+                          color: mainBlackColorTheme),
                     ),
                   )
                 ],
@@ -125,10 +140,8 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                   future: ListMaintenanceRequestsViewModel()
                       .fetchMaintenanceRequestsByID(this.widget.id),
                   builder: (context,
-                      AsyncSnapshot<MaintenanceRequestsViewModel?>
-                          snapshot) {
-                    if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
+                      AsyncSnapshot<MaintenanceRequestsViewModel?> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,45 +164,41 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                                   fontSize: 20.0,
                                   color: Colors.black)));
                     } else {
-                      return snapshot
-                                  .data!
-                                  .mMaintenacerequest!
-                                  .maintenanceRequestImagesFiles!
-                                  .length !=
+                      return snapshot.data!.mMaintenacerequest!
+                                  .maintenanceRequestImagesFiles!.length !=
                               0
                           ? Expanded(
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: snapshot
-                                      .data!
-                                      .mMaintenacerequest!
-                                      .maintenanceRequestImagesFiles!
-                                      .length,
+                                  itemCount: snapshot.data!.mMaintenacerequest!
+                                      .maintenanceRequestImagesFiles!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    Widget temp = 
-                                    SizedBox(
-                                      height: 100,
-                                      width: MediaQuery.of(context).size.width * 0.6,
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          child: CachedNetworkImage(
-                                            placeholder: placeholderWidgetFn()
-                                                as Widget Function(
-                                                    BuildContext, String)?,
-                                            imageUrl: snapshot
-                                                    .data!
-                                                    .mMaintenacerequest!
-                                                    .maintenanceRequestImagesFiles![
-                                                index],
-                                            fit: BoxFit.fill,
-                                          ),
-                                        )
-                                      )
-                                    );
+                                    Widget temp = SizedBox(
+                                        height: 100,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                8.0, 0.0, 8.0, 0.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: CachedNetworkImage(
+                                                placeholder:
+                                                    placeholderWidgetFn()
+                                                        as Widget Function(
+                                                            BuildContext,
+                                                            String)?,
+                                                imageUrl: snapshot
+                                                        .data!
+                                                        .mMaintenacerequest!
+                                                        .maintenanceRequestImagesFiles![
+                                                    index],
+                                                fit: BoxFit.fill,
+                                              ),
+                                            )));
                                     return temp;
                                   }),
                             )
@@ -198,7 +207,9 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                             );
                     }
                   }),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -206,7 +217,10 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "Audio",
-                      style: TextStyle(fontFamily: PoppinsFamily, fontSize: 18, color: mainBlackColorTheme),
+                      style: TextStyle(
+                          fontFamily: PoppinsFamily,
+                          fontSize: 18,
+                          color: mainBlackColorTheme),
                     ),
                   )
                 ],
@@ -215,10 +229,8 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                   future: ListMaintenanceRequestsViewModel()
                       .fetchMaintenanceRequestsByID(this.widget.id),
                   builder: (context,
-                      AsyncSnapshot<MaintenanceRequestsViewModel?>
-                          snapshot) {
-                    if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
+                      AsyncSnapshot<MaintenanceRequestsViewModel?> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -243,15 +255,13 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                     } else {
                       print(snapshot.data!.mMaintenacerequest!
                           .maintenanceRequestRecordsFiles);
-                      return snapshot
-                                  .data!
-                                  .mMaintenacerequest!
-                                  .maintenanceRequestRecordsFiles!
-                                  .length !=
+                      return snapshot.data!.mMaintenacerequest!
+                                  .maintenanceRequestRecordsFiles!.length !=
                               0
                           ? Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 0.0, 8.0, 0.0),
                                 child: GridView.builder(
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(

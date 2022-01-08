@@ -13,7 +13,6 @@ class T5Slider {
   var accountNo = "";
 }
 
-
 class SDExamCardModel {
   String? image;
   String? examName;
@@ -22,7 +21,7 @@ class SDExamCardModel {
   Color? startColor;
   Color? endColor;
 
-  SDExamCardModel({this.image, this.examName,  this.startColor, this.endColor});
+  SDExamCardModel({this.image, this.examName, this.startColor, this.endColor});
 }
 
 class T3DashboardSliderModel {
@@ -33,7 +32,8 @@ class T3DashboardSliderModel {
   String dishImg;
   String userImg;
 
-  T3DashboardSliderModel(this.dishName, this.dishType, this.type, this.userName, this.dishImg, this.userImg);
+  T3DashboardSliderModel(this.dishName, this.dishType, this.type, this.userName,
+      this.dishImg, this.userImg);
 }
 
 class T5Bill {

@@ -15,11 +15,11 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-  late Dio dio;
+late Dio dio;
 
-  Future<void> PrepareCall() async {
-    dio = await DioClass.getDio();
-  }
+Future<void> PrepareCall() async {
+  dio = await DioClass.getDio();
+}
 
 AddCustomComponentService(ComponentModel comp, int idInspection) async {
   try {
@@ -29,13 +29,12 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
     await PrepareCall();
     print(
         "comp.componentDescription.toString() ====>>>> ${comp.componentDescription.toString()}");
-    var response = await dio.post((url), data: 
-    {
-  "customComponentName": comp.componentName.toString(),
-  "customComponentDescription": comp.componentDescription.toString(),
-  "customComponentProvider": comp.componentProvider.toString(),
-  "customComponentUnitPrice": comp.componentUnitPrice
-});
+    var response = await dio.post((url), data: {
+      "customComponentName": comp.componentName.toString(),
+      "customComponentDescription": comp.componentDescription.toString(),
+      "customComponentProvider": comp.componentProvider.toString(),
+      "customComponentUnitPrice": comp.componentUnitPrice
+    });
     if (response.statusCode == 200) {
       print("Component created!");
       Fluttertoast.showToast(

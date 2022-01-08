@@ -73,8 +73,8 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                   (widget.checklistItem!.customComponent == null
                           ? widget.checklistItem!.predefinedChecklistItem!
                               .component!.componentName
-                          : widget.checklistItem!.customComponent!
-                              .componentName)! +
+                          : widget
+                              .checklistItem!.customComponent!.componentName)! +
                       " Details",
                   textColor: Colors.black,
                   fontSize: textSizeNormal,
@@ -152,8 +152,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                           ticketInfo(
                               t13_unit_price,
                               "\$" +
-                                  (widget.checklistItem!.customComponent ==
-                                              null
+                                  (widget.checklistItem!.customComponent == null
                                           ? widget
                                               .checklistItem!
                                               .predefinedChecklistItem!

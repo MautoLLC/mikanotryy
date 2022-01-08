@@ -26,16 +26,15 @@ import 'MyInspectionsScreen.dart';
 import 'PlaceholderScreen.dart';
 import 'ProfileScreen.dart';
 
-
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({ Key? key }) : super(key: key);
+  const MenuScreen({Key? key}) : super(key: key);
 
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-    late Directory directory;
+  late Directory directory;
   late File file;
   late String fileContent;
   late SharedPreferences prefs;
@@ -49,8 +48,8 @@ class _MenuScreenState extends State<MenuScreen> {
     super.initState();
   }
 
-  init() async{
-        prefs = await SharedPreferences.getInstance();
+  init() async {
+    prefs = await SharedPreferences.getInstance();
     directory = await getApplicationDocumentsDirectory();
     file = File('${directory.path}/credentials.json');
     fileContent = await file.readAsString();
@@ -98,8 +97,6 @@ class _MenuScreenState extends State<MenuScreen> {
       ic_Contact_Us
     ];
 
-    
-
     return Scaffold(
       backgroundColor: menuScreenColor,
       body: SafeArea(
@@ -116,81 +113,101 @@ class _MenuScreenState extends State<MenuScreen> {
                   children: [
                     Transform(
                       alignment: Alignment.center,
-                                        transform: Matrix4.rotationY(math.pi),
-                                        child: SvgPicture.asset(t5_menu,
-                                            width: 25,
-                                            height: 25,
-                                            color: Colors.white),
-                                      ),
+                      transform: Matrix4.rotationY(math.pi),
+                      child: SvgPicture.asset(t5_menu,
+                          width: 25, height: 25, color: Colors.white),
+                    ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: spacing_xlarge,),
+            SizedBox(
+              height: spacing_xlarge,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: t13EditTextStyle("Search", searchController,
-                    isPassword: false),
+                  isPassword: false),
             ),
-            SizedBox(height: spacing_standard_new,),
-
+            SizedBox(
+              height: spacing_standard_new,
+            ),
             ListView.builder(
               shrinkWrap: true,
               itemCount: 7,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => MenuListScreens[index],
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MenuListScreens[index],
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color:
+                              index == 0 ? mainColorTheme : Colors.transparent,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
+                        child: Row(
+                          children: [
+                            commonCacheImageWidget(MenuListIcons[index], 25,
+                                width: 25),
+                            SizedBox(
+                              width: spacing_standard_new,
+                            ),
+                            Text(
+                              MenuListNames[index],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: PoppinsFamily,
+                                fontSize: 18,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: index==0?mainColorTheme:Colors.transparent,
-                    borderRadius: BorderRadius.circular(30)
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                    child: Row(
-                      children: [
-                        commonCacheImageWidget(MenuListIcons[index], 25, width: 25),
-                        SizedBox(width: spacing_standard_new,),
-                        Text(MenuListNames[index], style: TextStyle(color: Colors.white, fontFamily: PoppinsFamily, fontSize: 18,),)
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
+                );
               },
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-              Expanded(child: Divider(
-                thickness: 1,
-                color: Colors.white,
-              )),
-
+                  Expanded(
+                      child: Divider(
+                    thickness: 1,
+                    color: Colors.white,
+                  )),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-              child: Row(children: [
-                GestureDetector(
-                  onTap: (){
-                    logout();
-                  },
-                  child: Text('Sign Out', style: TextStyle(color: Colors.white, fontFamily: PoppinsFamily, fontSize: 18,),))
-              ],),
+              child: Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        logout();
+                      },
+                      child: Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: PoppinsFamily,
+                          fontSize: 18,
+                        ),
+                      ))
+                ],
+              ),
             ),
             Spacer(),
             Padding(
@@ -199,29 +216,36 @@ class _MenuScreenState extends State<MenuScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ProfileScreen(),
                         ),
                       );
                     },
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                      backgroundColor: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                      child: Text(tech!.firstname + tech!.lastname, style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: PoppinsFamily),),
-                    ),
-                      ]
-                    ),
+                    child: Row(children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.white,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          tech!.firstname + tech!.lastname,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: PoppinsFamily),
+                        ),
+                      ),
+                    ]),
                   ),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
-                    child: Icon(Icons.help, color: Colors.white,),
+                    child: Icon(
+                      Icons.help,
+                      color: Colors.white,
+                    ),
                   )
                 ],
               ),

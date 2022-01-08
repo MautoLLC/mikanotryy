@@ -8,7 +8,7 @@ import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 
 class PurchasesScreen extends StatefulWidget {
-  const PurchasesScreen({ Key? key }) : super(key: key);
+  const PurchasesScreen({Key? key}) : super(key: key);
 
   @override
   _PurchasesScreenState createState() => _PurchasesScreenState();
@@ -25,25 +25,29 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
           child: Column(
             children: [
               TopRowBar(title: lbl_Purchases),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Expanded(
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 20.0,
-                    childAspectRatio: 0.8
-                    ),
-                  itemBuilder: (context, index) {
-                    return ItemElement(title: "Philips led bulb", image: t3_mcb, code: "Code-2344", price: "\$14.88",);
-                  }
-                ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 20.0,
+                        childAspectRatio: 0.8),
+                    itemBuilder: (context, index) {
+                      return ItemElement(
+                        title: "Philips led bulb",
+                        image: t3_mcb,
+                        code: "Code-2344",
+                        price: "\$14.88",
+                      );
+                    }),
               )
             ],
           ),
         ),
       ),
-      
     );
   }
 }

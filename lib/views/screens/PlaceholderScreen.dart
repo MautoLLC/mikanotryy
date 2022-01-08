@@ -20,20 +20,20 @@ class PlaceHolder extends StatelessWidget {
               children: <Widget>[
                 Spacer(),
                 Image.asset('images/MyMikanoLogo.png',
-                      height: 85, fit: BoxFit.fill),
-                    Text("This feature will be available soon"),
-                    
+                    height: 85, fit: BoxFit.fill),
+                Text("This feature will be available soon"),
                 Spacer(),
                 GestureDetector(
-                                                        onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WebView(
-                          Title: "Mauto",
-                          Url:
-                              "https://Mauto.co",
-                        )),);
-                    },
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WebView(
+                                Title: "Mauto",
+                                Url: "https://Mauto.co",
+                              )),
+                    );
+                  },
                   child: Transform.translate(
                     offset: Offset(0, -10),
                     child: Row(
@@ -47,7 +47,6 @@ class PlaceHolder extends StatelessWidget {
                           height: 32,
                           color: Colors.grey,
                         ),
-                        
                       ],
                     ),
                   ),

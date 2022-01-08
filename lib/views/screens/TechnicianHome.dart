@@ -86,37 +86,27 @@ class T5ProfileState extends State<T5Profile> {
   Widget gridItem() {
     bool pressed = false;
     return GestureDetector(
-      // onDoubleTap: (){},
+        // onDoubleTap: (){},
         onTap: () async {
           // await init();
-          if(!pressed){
+          if (!pressed) {
             pressed = true;
-                      Future.delayed(
-                        Duration(seconds: 2), 
-                      (){
-                        pressed = false;
-                        });
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => T5Listing()),
-          );
-
+            Future.delayed(Duration(seconds: 2), () {
+              pressed = false;
+            });
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => T5Listing()),
+            );
           }
         },
         child: Container(
             width: width! * 0.5,
             height: width! * 0.5,
-            decoration:
-            BoxDecoration(boxShadow: [
-                          BoxShadow(
-                              blurRadius: 10,
-                              color: Colors.black26,
-                              offset: Offset(3, 3))
-                        ],
-                        color: t5White,
-                        borderRadius: BorderRadius.circular(24.0)
-                        ),
-                
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  blurRadius: 10, color: Colors.black26, offset: Offset(3, 3))
+            ], color: t5White, borderRadius: BorderRadius.circular(24.0)),
             padding: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,15 +115,18 @@ class T5ProfileState extends State<T5Profile> {
                 Spacer(),
                 Spacer(),
                 Image.asset("images/tech.png",
-                    height: SizerUtil.deviceType ==
-                                                    DeviceType.mobile?90:160, width: SizerUtil.deviceType ==
-                                                    DeviceType.mobile?90:160, color: t5Cat2),
+                    height:
+                        SizerUtil.deviceType == DeviceType.mobile ? 90 : 160,
+                    width: SizerUtil.deviceType == DeviceType.mobile ? 90 : 160,
+                    color: t5Cat2),
                 Spacer(),
                 Flexible(
                     child: AutoSizeText("My Inspections",
-                        style:
-                            boldTextStyle(color: Color(0xff464646), size: SizerUtil.deviceType ==
-                                                    DeviceType.mobile?16:24))),
+                        style: boldTextStyle(
+                            color: Color(0xff464646),
+                            size: SizerUtil.deviceType == DeviceType.mobile
+                                ? 16
+                                : 24))),
                 Spacer(),
               ],
             )));
@@ -145,72 +138,82 @@ class T5ProfileState extends State<T5Profile> {
     width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Stack(
-      children: [Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          toolbarHeight: height*0.15,
-          actions: [
-                                    Transform.translate(
-                                      offset: Offset(-5,height*0.04),
-                                      child: GestureDetector(
-                                                              onTap: () async{
-                                                                await logout();
-                                                              },
-                                                              onDoubleTap: (){},
-                                                              child: Column(
-                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                children: [
-                                                                  Icon(
-                                                                      Icons.logout,
-                                                                      color: Colors.black,
-                                                                      ),
-                                                                      Text("Sign Out", style: TextStyle(fontSize: 12, color: Colors.black,))
-                                                                ],
-                                                              ),
-                                                            ),
-                                    )
-          ],
-          backgroundColor: Color(0xfff0f0f0),
-        
-        ),
-        backgroundColor: Color(0xfff0f0f0),
-        body:             Container(
-          padding: EdgeInsets.only(top: 60),
-          alignment: Alignment.topCenter,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24))),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              
-              text(tech!.firstname + " " + tech!.lastname,
-                  textColor: t5TextColorPrimary,
-                  fontFamily: fontBold,
-                  fontSize: textSizeNormal),
-              text(tech!.email, fontSize: textSizeLargeMedium),
-              SizedBox(height: 58),
-              gridItem(),
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            toolbarHeight: height * 0.15,
+            actions: [
+              Transform.translate(
+                offset: Offset(-5, height * 0.04),
+                child: GestureDetector(
+                  onTap: () async {
+                    await logout();
+                  },
+                  onDoubleTap: () {},
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                      ),
+                      Text("Sign Out",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ))
+                    ],
+                  ),
+                ),
+              )
             ],
+            backgroundColor: Color(0xfff0f0f0),
+          ),
+          backgroundColor: Color(0xfff0f0f0),
+          body: Container(
+            padding: EdgeInsets.only(top: 60),
+            alignment: Alignment.topCenter,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24))),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                text(tech!.firstname + " " + tech!.lastname,
+                    textColor: t5TextColorPrimary,
+                    fontFamily: fontBold,
+                    fontSize: textSizeNormal),
+                text(tech!.email, fontSize: textSizeLargeMedium),
+                SizedBox(height: 58),
+                gridItem(),
+              ],
+            ),
           ),
         ),
-      ),
-                      Row(
-                        children: [
-                          Spacer(),
-                          Transform.translate(
-                            offset: Offset(0,height*0.125),
-                            child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(50.0),
-                                            child: CachedNetworkImage(imageUrl: tech!.image, placeholder: (context, url) => CircularProgressIndicator(), height: 100, width: 100,fit: BoxFit.cover,),
-                                          ),
-                          ),
-                Spacer(),
-                        ],
-                      )],
+        Row(
+          children: [
+            Spacer(),
+            Transform.translate(
+              offset: Offset(0, height * 0.125),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: CachedNetworkImage(
+                  imageUrl: tech!.image,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Spacer(),
+          ],
+        )
+      ],
     );
   }
 }

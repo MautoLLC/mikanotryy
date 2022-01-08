@@ -5,7 +5,6 @@ import 'package:mymikano_app/utils/AppColors.dart';
 
 import '../../appsettings.dart';
 
-
 part 'AppStore.g.dart';
 
 class AppStore = AppStoreBase with _$AppStore;

@@ -9,11 +9,12 @@ class GaugeWidget extends StatefulWidget {
   final String title;
   final double value;
   final Color needleColor;
-  const GaugeWidget({ Key? key,
-   required this.title,
-   required this.value,
-   this.needleColor = mainBlackColorTheme
-   }) : super(key: key);
+  const GaugeWidget(
+      {Key? key,
+      required this.title,
+      required this.value,
+      this.needleColor = mainBlackColorTheme})
+      : super(key: key);
 
   @override
   _GaugeWidgetState createState() => _GaugeWidgetState();
@@ -59,7 +60,12 @@ class _GaugeWidgetState extends State<GaugeWidget> {
             GaugeAnnotation(
               angle: 90,
               positionFactor: 0.7,
-              widget: Text("${widget.title} | ${widget.value}", style: TextStyle(color: mainBlackColorTheme, fontSize: 11, fontFamily: PoppinsFamily,)),
+              widget: Text("${widget.title} | ${widget.value}",
+                  style: TextStyle(
+                    color: mainBlackColorTheme,
+                    fontSize: 11,
+                    fontFamily: PoppinsFamily,
+                  )),
             ),
           ],
         ),

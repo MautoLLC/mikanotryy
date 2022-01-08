@@ -1,5 +1,6 @@
 class TechnicianModel {
-  TechnicianModel( this.id, this.firstname,this.lastname,this.image,this.phoneNumber,this.email);
+  TechnicianModel(this.id, this.firstname, this.lastname, this.image,
+      this.phoneNumber, this.email);
 
   late int id;
   late String firstname;

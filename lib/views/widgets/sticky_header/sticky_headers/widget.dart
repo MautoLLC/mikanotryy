@@ -18,7 +18,8 @@ import './render.dart';
 ///  -1.0 >= value >= 0.0: past stuck
 /// ```
 ///
-typedef Widget StickyHeaderWidgetBuilder(BuildContext context, double stuckAmount);
+typedef Widget StickyHeaderWidgetBuilder(
+    BuildContext context, double stuckAmount);
 
 /// Stick Header Widget
 ///
@@ -60,7 +61,8 @@ class StickyHeader extends MultiChildRenderObjectWidget {
 
   @override
   RenderStickyHeader createRenderObject(BuildContext context) {
-    final scrollPosition = this.controller?.position ?? Scrollable.of(context)!.position;
+    final scrollPosition =
+        this.controller?.position ?? Scrollable.of(context)!.position;
     return RenderStickyHeader(
       scrollPosition: scrollPosition,
       callback: this.callback,
@@ -69,8 +71,10 @@ class StickyHeader extends MultiChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, RenderStickyHeader renderObject) {
-    final scrollPosition = this.controller?.position ?? Scrollable.of(context)!.position;
+  void updateRenderObject(
+      BuildContext context, RenderStickyHeader renderObject) {
+    final scrollPosition =
+        this.controller?.position ?? Scrollable.of(context)!.position;
     renderObject
       ..scrollPosition = scrollPosition
       ..callback = this.callback

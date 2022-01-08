@@ -22,9 +22,9 @@ class _Presso extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Icon(
-            ico,
-            color: color,
-          ),
+          ico,
+          color: color,
+        ),
       ),
     );
   }
@@ -53,15 +53,14 @@ class _RecordsUrlState extends State<RecordsUrl> {
   bool isPlay = false;
   AudioPlayer advancedPlayer = AudioPlayer();
 
-  
   @override
   void initState() {
     voiceLength.clear();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     for (var i = 0; i < widget.records.length; i++) {
       voiceLength.add("0:00:00".toString());
     }
@@ -83,61 +82,66 @@ class _RecordsUrlState extends State<RecordsUrl> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _Presso(
-                      color: mainColorTheme,
-                      ico: (isPlay && _selected == i)?Icons.pause:Icons.play_arrow,
-                      onPressed: (isPlay && _selected == i)?(){
-                        _selected = -1;
-                        advancedPlayer.pause();
+                  color: mainColorTheme,
+                  ico: (isPlay && _selected == i)
+                      ? Icons.pause
+                      : Icons.play_arrow,
+                  onPressed: (isPlay && _selected == i)
+                      ? () {
+                          _selected = -1;
+                          advancedPlayer.pause();
 
-                        setState(() {
-                          
-                        });
-                      }:() {
+                          setState(() {});
+                        }
+                      : () {
                           _selected = i;
                           isPlay = true;
                           advancedPlayer.onDurationChanged.listen((event) {
                             setState(() {
-                              voiceLength[i] = Duration(microseconds: event.inMicroseconds).toString();
+                              voiceLength[i] =
+                                  Duration(microseconds: event.inMicroseconds)
+                                      .toString();
                             });
                           });
-                        advancedPlayer.play(
-                            widget.records.elementAt(i),
-                            isLocal: widget.isLocal);
-                        advancedPlayer.onPlayerCompletion
-                            .listen((_) {
+                          advancedPlayer.play(widget.records.elementAt(i),
+                              isLocal: widget.isLocal);
+                          advancedPlayer.onPlayerCompletion.listen((_) {
                             _percent = 0.0;
                             _selected = -1;
+                            setState(() {});
+                          });
+                          advancedPlayer.onDurationChanged.listen((duration) {
                             setState(() {
-                              
+                              _totalTime = duration.inMicroseconds;
                             });
-                        });
-                        advancedPlayer.onDurationChanged
-                            .listen((duration) {
-                          setState(() {
-                            _totalTime = duration.inMicroseconds;
                           });
-                        });
-                        advancedPlayer.onAudioPositionChanged
-                            .listen((duration) {
-                          setState(() {
-                            _currentTime = duration.inMicroseconds;
-                            _percent = _currentTime.toDouble() /
-                                _totalTime.toDouble();
+                          advancedPlayer.onAudioPositionChanged
+                              .listen((duration) {
+                            setState(() {
+                              _currentTime = duration.inMicroseconds;
+                              _percent = _currentTime.toDouble() /
+                                  _totalTime.toDouble();
+                            });
                           });
-                        });
-                      }),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                          child: LinearProgressIndicator(
-                                    minHeight: 5,
-                                    backgroundColor: Colors.black,
-                                    valueColor: AlwaysStoppedAnimation<Color>(mainColorTheme),
-                                    value: _selected == i ? _percent : 0,
-                                  ),
-                        ),
-                      ),
-                      Text("${voiceLength.elementAt(i).substring(2,7)}min", style: TextStyle(fontSize: 12, fontFamily: PoppinsFamily, color: mainColorTheme),),
+                        }),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  child: LinearProgressIndicator(
+                    minHeight: 5,
+                    backgroundColor: Colors.black,
+                    valueColor: AlwaysStoppedAnimation<Color>(mainColorTheme),
+                    value: _selected == i ? _percent : 0,
+                  ),
+                ),
+              ),
+              Text(
+                "${voiceLength.elementAt(i).substring(2, 7)}min",
+                style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: PoppinsFamily,
+                    color: mainColorTheme),
+              ),
             ],
           ),
         );

@@ -162,8 +162,7 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
                                             child: new ListTile(
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          24),
+                                                      BorderRadius.circular(24),
                                                 ),
                                                 title: new Text(icvm
                                                             .inpectionItems[
@@ -201,8 +200,8 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
                                                           ? Icon(
                                                               Icons
                                                                   .check_box_rounded,
-                                                              color: Colors
-                                                                  .green,
+                                                              color:
+                                                                  Colors.green,
                                                               size: 24,
                                                             )
                                                           : Icon(
@@ -211,8 +210,7 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
                                                               size: 24,
                                                             ),
                                                     ]),
-                                                trailing:
-                                                    Icon(Icons.keyboard_arrow_right),
+                                                trailing: Icon(Icons.keyboard_arrow_right),
                                                 subtitle: Row(
                                                   children: <Widget>[
                                                     Expanded(
@@ -302,11 +300,11 @@ class T13InspectionScreenState extends State<T13InspectionScreen> {
                                   });
                             } else
                               return Center(
-              child: SpinKitCircle(
-                color: Colors.black,
-                size: 65,
-              ),
-            );
+                                child: SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 65,
+                                ),
+                              );
                           }),
                       SizedBox(height: 20),
                       SizedBox(

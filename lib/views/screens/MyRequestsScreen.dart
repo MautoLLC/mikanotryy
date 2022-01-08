@@ -12,6 +12,7 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/auto_size_text/auto_size_text.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/utils/strings.dart';
+
 class MyRequests extends StatefulWidget {
   static var tag = "/T5Dashboard";
   List<MaintenanceRequestModel> mRequestt = [];
@@ -167,8 +168,7 @@ class MyRequestsState extends State<MyRequests> {
                 child: Column(children: <Widget>[
                   SizedBox(height: 20),
                   Expanded(
-                    child:
-                        Padding(padding: EdgeInsets.all(24.0), child: child),
+                    child: Padding(padding: EdgeInsets.all(24.0), child: child),
                   )
                 ]),
               ),

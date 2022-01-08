@@ -19,8 +19,6 @@ class OPSplashScreen extends StatefulWidget {
 
 class _OPSplashScreenState extends State<OPSplashScreen>
     with SingleTickerProviderStateMixin {
-
-
   Future<bool> checkIfLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     // if (await prefs.getBool('IsLoggedIn') == true){
@@ -39,12 +37,12 @@ class _OPSplashScreenState extends State<OPSplashScreen>
       if (value) {
         finish(context);
         Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-                );
-          } else {
-            super.initState();
-          }          
+          context,
+          MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+        );
+      } else {
+        super.initState();
+      }
     });
   }
 
@@ -61,35 +59,44 @@ class _OPSplashScreenState extends State<OPSplashScreen>
               children: <Widget>[
                 Spacer(),
                 Spacer(),
-                commonCacheImageWidget(Splash_Screen_Mikano_Logo, 205, fit: BoxFit.fill),
+                commonCacheImageWidget(Splash_Screen_Mikano_Logo, 205,
+                    fit: BoxFit.fill),
                 Spacer(),
-
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => T13SignUpScreen()),
-                        );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => T13SignUpScreen()),
+                    );
                   },
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),color: mainColorTheme),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: mainColorTheme),
                     height: 45,
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Center(
                       child: Text(
                         "Create Account",
-                        style: TextStyle(color: Colors.white, fontFamily: "Poppins", fontSize: 18),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Poppins",
+                            fontSize: 18),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => T13SignInScreen()),
-                        );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => T13SignInScreen()),
+                    );
                   },
                   child: Container(
                     height: 45,
@@ -98,7 +105,10 @@ class _OPSplashScreenState extends State<OPSplashScreen>
                     child: Center(
                       child: Text(
                         "Login",
-                        style: TextStyle(color: mainColorTheme, fontFamily: "Poppins", fontSize: 18),
+                        style: TextStyle(
+                            color: mainColorTheme,
+                            fontFamily: "Poppins",
+                            fontSize: 18),
                       ),
                     ),
                   ),
