@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -94,7 +93,7 @@ class FavoritesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
+    return Dismissible( 
       behavior: HitTestBehavior.deferToChild,
       background: Container(
         color: Colors.transparent,

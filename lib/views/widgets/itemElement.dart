@@ -4,6 +4,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 
 import 'AppWidget.dart';
+import 'auto_size_text/auto_size_text.dart';
 
 class ItemElement extends StatelessWidget {
   final String title;
@@ -30,15 +31,22 @@ class ItemElement extends StatelessWidget {
           padding: const EdgeInsets.all(6.0),
           child: Column(
             children: [
-              Container(
-                  padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: commonCacheImageWidget(image, 85)),
-              SizedBox(
-                height: 10,
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                        padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15))),
+                        child: commonCacheImageWidget(image, 85)),
+                  ),
+                ],
               ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -84,6 +92,7 @@ class ItemElement extends StatelessWidget {
                   ),
                 ],
               ),
+              Spacer(),
             ],
           ),
         ),

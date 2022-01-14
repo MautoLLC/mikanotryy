@@ -71,11 +71,7 @@ class MaintenanceGridListScreen extends StatelessWidget {
                             decoration: boxDecoration(
                                 radius: 33,
                                 showShadow: true,
-                                bgColor: Color.fromRGBO(
-                                    mainGreyColorTheme.red,
-                                    mainGreyColorTheme.green,
-                                    mainGreyColorTheme.blue,
-                                    0.3)),
+                                bgColor: mainGreyColorTheme.withOpacity(0.3)),
                             child: commonCacheImageWidget(
                                 listCategViewModel.maincategs![index].mcateg!
                                     .maintenanceCategoryIcon,

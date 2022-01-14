@@ -29,20 +29,25 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                 height: 30,
               ),
               Expanded(
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 20.0,
-                        childAspectRatio: 0.8),
-                    itemBuilder: (context, index) {
-                      return ItemElement(
-                        title: "Philips led bulb",
-                        image: t3_mcb,
-                        code: "Code-2344",
-                        price: "\$14.88",
-                      );
-                    }),
+                child: LayoutBuilder(
+                  
+                  builder: (BuildContext context, BoxConstraints constraints) { 
+                  return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: (constraints.constrainWidth()~/310).toInt() + 1,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 20.0,
+                          childAspectRatio: 0.8),
+                      itemBuilder: (context, index) {
+                        return ItemElement(
+                          title: "Philips led bulb",
+                          image: t3_mcb,
+                          code: "Code-2344",
+                          price: "\$14.88",
+                        );
+                      });
+                  },
+                ),
               )
             ],
           ),

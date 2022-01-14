@@ -140,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               switchstate = value;
                               setState(() {});
                             },
-                            activeColor: Colors.green,
+                            activeColor: mainColorTheme,
                           ),
                         ],
                       ),
