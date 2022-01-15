@@ -5,6 +5,9 @@ const authorizationEndpoint =
     '$KeyCloakBaseUrl/auth/realms/master/protocol/openid-connect/token';
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 
+const userApiUrl = 'http://dev.codepickles.com:8083';
+const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
+
 const MaintenanceApiBaseUrl = 'http://dev.codepickles.com:8085';
 const GetMainCategoriesURL =
     '$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';

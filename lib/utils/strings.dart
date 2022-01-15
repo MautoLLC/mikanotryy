@@ -84,3 +84,11 @@ const lbl_Pressure = 'Pressure';
 const lbl_Temperature = 'Temperature';
 const lbl_Gas = 'Gas';
 const lbl_Load = 'Load';
+
+const lbl_Search = 'Search';
+const lbl_Top_Categories = 'Top Categories';
+const lbl_Popular_Products = 'Popular Products';
+const lbl_View_more = 'View more';
+const lbl_Flash_Sale = 'Flash Sale';
+const lbl_Top_Brands = 'Top Brands';
+const lbl_Trending_Now = 'Trending Now';

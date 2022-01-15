@@ -38,7 +38,8 @@ class ItemElement extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15))),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
                         child: commonCacheImageWidget(image, 85)),
                   ),
                 ],
@@ -96,17 +97,39 @@ class ItemElement extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: GestureDetector(
-              onTap: () {},
-              child: commonCacheImageWidget(ic_heart, 20),
-            ),
-          ),
-        )
+        LikeWidget()
       ]),
+    );
+  }
+}
+
+class LikeWidget extends StatefulWidget {
+  bool liked;
+  LikeWidget({
+    Key? key,
+    this.liked = false,
+  }) : super(key: key);
+
+  @override
+  State<LikeWidget> createState() => _LikeWidgetState();
+}
+
+class _LikeWidgetState extends State<LikeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Align(
+        alignment: Alignment.bottomRight,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              widget.liked = !widget.liked;
+            });
+          },
+          child: commonCacheImageWidget(ic_heart, 20, color: !widget.liked?null:mainColorTheme),
+        ),
+      ),
     );
   }
 }

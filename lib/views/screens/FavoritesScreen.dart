@@ -93,7 +93,7 @@ class FavoritesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible( 
+    return Dismissible(
       behavior: HitTestBehavior.deferToChild,
       background: Container(
         color: Colors.transparent,

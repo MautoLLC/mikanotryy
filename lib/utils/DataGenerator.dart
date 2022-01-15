@@ -5,17 +5,6 @@ import 'package:mymikano_app/utils/colors.dart';
 import 'images.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 
-List<T3DashboardSliderModel> getDashboardSlider() {
-  List<T3DashboardSliderModel> list = [];
-  list.add(T3DashboardSliderModel("Philips LED Bulb", "US 14.88", "Fast Food",
-      "US \$14.88", t3_led, t3_led));
-  list.add(T3DashboardSliderModel(
-      "ABB MCB", "US 14.88", "Fast Food", "US \$20.00", t3_mcb, t3_mcb));
-  list.add(T3DashboardSliderModel("Philips LED Bulb", "US 14.88", "Fast Food",
-      "US \$14.88", t3_led, t3_led));
-  return list;
-}
-
 List<T5Category> getDItems() {
   List<T5Category> list = [];
 
@@ -88,20 +77,11 @@ List<T5Category> getCategoryItems() {
   return list;
 }
 
-List<T5Slider> getSliders() {
-  List<T5Slider> list = [];
-  T5Slider model1 = T5Slider();
-  model1.balance = "\$150000";
-  model1.accountNo = "145 250 230 120 150";
-  model1.image = "images/HomepageSlider/CircuitBreaker.png";
-  T5Slider model2 = T5Slider();
-  model2.balance = "\$150000";
-  model2.accountNo = "145 250 230 120 150";
-  model2.image = "images/HomepageSlider/GeelyVolvo.png";
-  T5Slider model3 = T5Slider();
-  model3.balance = "\$150000";
-  model3.accountNo = "145 250 230 120 150";
-  model3.image = "images/HomepageSlider/Hyundaitruck.png";
+List<String> getSliders() {
+  List<String> list = [];
+  String model1 = "assets/MaskGroup2.png";
+  String model2 = "assets/MaskGroup2.png";
+  String model3 = "assets/MaskGroup2.png";
 
   list.add(model1);
   list.add(model2);

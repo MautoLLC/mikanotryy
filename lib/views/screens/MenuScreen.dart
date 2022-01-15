@@ -7,7 +7,6 @@ import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
-import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'dart:math' as math;
 
@@ -22,8 +21,6 @@ import 'ContactUsScreen.dart';
 import 'Dashboard/Dashboard_Index.dart';
 import 'FavoritesScreen.dart';
 import 'MaintenanceHome.dart';
-import 'MyInspectionsScreen.dart';
-import 'PlaceholderScreen.dart';
 import 'ProfileScreen.dart';
 
 class MenuScreen extends StatefulWidget {

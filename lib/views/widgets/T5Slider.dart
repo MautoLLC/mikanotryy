@@ -1,43 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T5SliderWidget.dart';
 
 // ignore: must_be_immutable
 class T5SliderWidget extends StatelessWidget {
-  List<T5Slider>? mSliderList;
+  List<String>? mSliderList;
+  bool enlargeCenter;
+  bool enableInfiniteScroll;
 
-  T5SliderWidget(this.mSliderList);
+  T5SliderWidget({ required this.mSliderList, this.enlargeCenter = false, this.enableInfiniteScroll = true });
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    final Size cardSize = Size(width, width / 1.8);
     return T5CarouselSlider(
-      viewportFraction: 0.9,
-      height: cardSize.height,
-      enlargeCenterPage: true,
+      enableInfiniteScroll: enableInfiniteScroll,
+      enlargeCenterPage: enlargeCenter,
       scrollDirection: Axis.horizontal,
       items: mSliderList!.map((slider) {
-        return Builder(
-          builder: (BuildContext context) {
-            print(slider.image);
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: cardSize.height,
-              child: Stack(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                      slider.image,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: commonCacheImageWidget(slider, 300),
+          );
       }).toList(),
     );
   }

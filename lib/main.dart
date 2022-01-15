@@ -17,17 +17,17 @@ Future<void> _messageHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
-  // FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  FirebaseMessaging.onBackgroundMessage(_messageHandler);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // FirebaseMessaging _fcm = FirebaseMessaging.instance;
-    // PushNotificationService(_fcm).initialise(context);
+    FirebaseMessaging _fcm = FirebaseMessaging.instance;
+    PushNotificationService(_fcm).initialise(context);
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
         navigatorKey: navigator,

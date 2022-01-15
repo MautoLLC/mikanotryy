@@ -7,9 +7,9 @@ class T5CarouselSlider extends StatefulWidget {
   T5CarouselSlider(
       {required List<Widget> this.items,
       this.height,
-      this.aspectRatio: 16 / 9,
-      this.viewportFraction: 0.8,
-      this.initialPage: 0,
+      this.aspectRatio: 22 / 9,
+      this.viewportFraction: 0.6,
+      this.initialPage: 1,
       int realPage: 10000,
       this.enableInfiniteScroll: true,
       this.reverse: false,
@@ -26,36 +26,6 @@ class T5CarouselSlider extends StatefulWidget {
             enableInfiniteScroll ? realPage + initialPage : initialPage,
         this.itemCount = items.length,
         this.itemBuilder = null,
-        this.pageController = PageController(
-          viewportFraction: viewportFraction as double,
-          initialPage: enableInfiniteScroll
-              ? realPage + (initialPage as int)
-              : initialPage as int,
-        );
-
-  /// The on demand item builder constructor
-  T5CarouselSlider.builder(
-      {required this.itemCount,
-      required this.itemBuilder,
-      this.height,
-      this.aspectRatio: 16 / 9,
-      this.viewportFraction: 0.8,
-      this.initialPage: 0,
-      int realPage: 10000,
-      this.enableInfiniteScroll: true,
-      this.reverse: false,
-      this.autoPlay: false,
-      this.autoPlayInterval: const Duration(seconds: 4),
-      this.autoPlayAnimationDuration = const Duration(milliseconds: 800),
-      this.autoPlayCurve: Curves.fastOutSlowIn,
-      this.pauseAutoPlayOnTouch,
-      this.enlargeCenterPage = false,
-      this.onPageChanged,
-      this.scrollPhysics,
-      this.scrollDirection: Axis.horizontal})
-      : this.realPage =
-            enableInfiniteScroll ? realPage + initialPage : initialPage,
-        this.items = null,
         this.pageController = PageController(
           viewportFraction: viewportFraction as double,
           initialPage: enableInfiniteScroll
@@ -265,14 +235,14 @@ class _T5CarouselSliderState extends State<T5CarouselSlider>
   Widget build(BuildContext context) {
     return getWrapper(CarouselSlider(
       options: CarouselOptions(
-        enlargeCenterPage: true,
-        viewportFraction: 0.8,
+        initialPage: widget.initialPage.toInt(),
+        enlargeCenterPage: widget.enlargeCenterPage,
+        viewportFraction: widget.viewportFraction.toDouble(),
+        aspectRatio: widget.aspectRatio,
+        height: 200,
+        enableInfiniteScroll: widget.enableInfiniteScroll,
       ),
-      items: widget.items!.map((i) {
-        return Container(
-          child: i,
-        );
-      }).toList(),
+      items: widget.items,
     ));
   }
 }

@@ -3,26 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mymikano_app/utils/SDDashboardScreen.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/MenuScreen.dart';
-import 'package:mymikano_app/views/widgets/auto_size_text/auto_size_text.dart';
-import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
-import 'package:mymikano_app/views/screens/WebViewScreen.dart';
-import 'package:mymikano_app/views/widgets/DashboardSlider.dart';
-import 'package:mymikano_app/views/widgets/SfLinearGauge.dart';
-import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
-import 'package:mymikano_app/views/widgets/searchView.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:mymikano_app/views/widgets/SubTitleText.dart';
+import 'package:mymikano_app/views/widgets/T13Widget.dart';
+import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mymikano_app/views/widgets/T5DashBoardListing.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/images.dart';
-import 'package:mymikano_app/views/widgets/T5Slider.dart';
 import 'dart:math' as math;
-import 'MaintenanceHome.dart';
 import 'package:mymikano_app/utils/strings.dart';
 
 class Dashboard extends StatefulWidget {
@@ -37,8 +29,7 @@ class DashboardState extends State<Dashboard> {
   bool isRemember = false;
   var currentIndexPage = 0;
   List<T5Category>? mFavouriteList;
-  List<T5Slider>? mSliderList;
-  late List<T3DashboardSliderModel> mSliderListings;
+  List<String>? mSliderList;
 
   @override
   void initState() {
@@ -46,7 +37,6 @@ class DashboardState extends State<Dashboard> {
     passwordVisible = false;
     mFavouriteList = getDItems();
     mSliderList = getSliders();
-    mSliderListings = getDashboardSlider();
   }
 
   void changeSldier(int index) {
@@ -59,13 +49,10 @@ class DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    final Size cardSize = SizerUtil.deviceType == DeviceType.mobile
-        ? Size(width, width / 2.2)
-        : Size(width, width / 5);
     width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
+    TextEditingController SearchController = new TextEditingController();
     return Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldKey,
@@ -109,330 +96,330 @@ class DashboardState extends State<Dashboard> {
                       height: 60,
                     ),
                     Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          // TODO Notification Page Open
+                        },
+                        icon: Icon(Icons.notifications))
                   ],
                 ),
               ),
             ),
-            Container(
-              child: Row(
-                children: [Expanded(child: searchView())],
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: t13EditTextStyle(lbl_Search, SearchController))
+                  ],
+                ),
               ),
             ),
-            T5SliderWidget(mSliderList),
-            Container(
-              margin: EdgeInsets.only(left: 16, right: 16),
-              height: SizerUtil.deviceType == DeviceType.mobile ? 155 : 24.h,
+            SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      T5Maintenance().launch(context);
-                    },
-                    child: Container(
-                      width: cardSize.width / 2.7,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 10,
-                              color: Colors.black26,
-                              offset: Offset(3, 3))
-                        ],
-                        border: Border.all(
-                          color: Colors.white70,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(
-                                24.0) //                 <--- border radius here
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SubTitleText(title: lbl_Top_Categories),
+                ],
+              ),
+            ),
+            SizedBox(
+                    height: 21,
+            ),
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: mFavouriteList!.length,
+                physics: AlwaysScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              // TODO Open category page
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: boxDecoration(
+                                  radius: 33,
+                                  showShadow: true,
+                                  bgColor: mainGreyColorTheme.withOpacity(0.3)),
+                              child: commonCacheImageWidget(
+                                mFavouriteList![index].icon,
+                                60,
+                                width: 80,
+                              ),
                             ),
-                        gradient: LinearGradient(
-                            colors: [cards[0].startColor!, cards[0].endColor!]),
-                      ),
-                      child: Stack(
-                        children: [
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Image.asset(
-                                  'images/MaintenanceAndRepairRedIcon.png',
-                                  width:
-                                      SizerUtil.deviceType == DeviceType.mobile
-                                          ? 80
-                                          : 140,
-                                  height:
-                                      SizerUtil.deviceType == DeviceType.mobile
-                                          ? 80
-                                          : 140,
-                                ),
-                                SizedBox(height: 5),
-                                SizerUtil.deviceType == DeviceType.mobile
-                                    ? AutoSizeText(cards[0].examName!,
-                                        style: boldTextStyle(
-                                            color: Color(0xff484848),
-                                            fontFamily: fontRegular,
-                                            weight: FontWeight.bold,
-                                            size: 16))
-                                    : AutoSizeText(cards[0].examName!,
-                                        style: boldTextStyle(
-                                            color: Color(0xff484848),
-                                            fontFamily: fontRegular,
-                                            weight: FontWeight.bold,
-                                            size: 24))
-                              ]),
-                          Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Icon(
-                                Icons.keyboard_arrow_right,
-                                color: Color(0xffa1a1a1),
-                              ))
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Dashboard_Index(),
                           ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 10,
-                                color: Colors.black26,
-                                offset: Offset(3, 3))
-                          ],
-                          border: Border.all(
-                            color: Colors.white70,
-                            width: 1.0,
+                        ),
+                        Text(
+                          mFavouriteList![index].name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            fontFamily: PoppinsFamily,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(24.0)),
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.white]),
                         ),
-                        margin: EdgeInsets.only(left: 10),
-                        padding: EdgeInsets.all(10),
-                        child: Stack(
-                          children: [
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  SizerUtil.deviceType == DeviceType.mobile
-                                      ? AutoSizeText("Generator",
-                                          style: boldTextStyle(
-                                              color: Color(0xff484848),
-                                              fontFamily: fontRegular,
-                                              weight: FontWeight.bold,
-                                              size: 16))
-                                      : AutoSizeText("Generator",
-                                          style: boldTextStyle(
-                                              color: Color(0xff484848),
-                                              fontFamily: fontRegular,
-                                              weight: FontWeight.bold,
-                                              size: 24)),
-                                  Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        SizedBox(width: 5),
-                                        Expanded(
-                                            child: Container(
-                                                height: SizerUtil.deviceType ==
-                                                        DeviceType.mobile
-                                                    ? 100
-                                                    : 15.h,
-                                                child: GaugeWidget(
-                                                  title: 'RPM',
-                                                  value: 60,
-                                                ))),
-                                        SizedBox(width: 5),
-                                        Expanded(
-                                          child: Container(
-                                            height: SizerUtil.deviceType ==
-                                                    DeviceType.mobile
-                                                ? 100
-                                                : 15.h,
-                                            child: t5SfLinearGauge(),
-                                          ),
-                                        ),
-                                      ]),
-                                ]),
-                            Positioned(
-                                right: 0,
-                                top: 0,
-                                child: Icon(Icons.keyboard_arrow_right))
-                          ],
-                        ),
-                      ),
+                      ],
                     ),
-                  ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 41,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SubTitleText(title: lbl_Popular_Products),
+                  GestureDetector(
+                    onTap: (){
+                      //TODO View More Logic
+                    },
+                    child: Text(lbl_View_more, style: TextStyle(color: mainGreyColorTheme, fontSize: 15, fontFamily: PoppinsFamily))),
                 ],
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 15.0),
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage("images/MikanoShopCarousel.png"),
-                              fit: BoxFit.fill),
-                          boxShadow: <BoxShadow>[],
-                          borderRadius: BorderRadius.circular(24.0)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(height: 15),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => WebView(
-                                                  Url:
-                                                      "https://mikanoshop.mauto.co/",
-                                                  Title: "Mikano Shop",
-                                                )),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 16, right: 16),
-                                      child: Row(
-                                        children: <Widget>[
-                                          SizerUtil.deviceType ==
-                                                  DeviceType.mobile
-                                              ? AutoSizeText(t5_mikano_shop,
-                                                  style: boldTextStyle(
-                                                      color: Colors.white,
-                                                      size: 16))
-                                              : AutoSizeText(t5_mikano_shop,
-                                                  style: boldTextStyle(
-                                                      color: Colors.white,
-                                                      size: 24)),
-                                          Spacer(),
-                                          Icon(
-                                            Icons.keyboard_arrow_right,
-                                            color: Colors.white,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    transform: Matrix4.translationValues(
-                                        0.0, -10.0, 0.0),
-                                    height: SizerUtil.deviceType ==
-                                            DeviceType.mobile
-                                        ? 160
-                                        : 16.h,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: mSliderListings.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          child: DashboardSlider(
-                                              mSliderListings[index], index),
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => WebView(
-                                                        Title: mSliderListings[
-                                                                index]
-                                                            .dishName,
-                                                        // Url:
-                                                        //     "https://mikanoshop.mauto.co/${mSliderListings[index].dishName}",
-                                                        Url:
-                                                            "https://mikanoshop.mauto.co/electrical",
-                                                      )),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
-            Padding(
-              padding: SizerUtil.deviceType == DeviceType.mobile
-                  ? EdgeInsets.only(
-                      left: 10.0, right: 10.0, top: 15.0, bottom: 15.0)
-                  : EdgeInsets.only(
-                      left: 10.0, right: 10.0, top: 25.0, bottom: 15.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 10,
-                        color: Colors.black26,
-                        offset: Offset(3, 3))
-                  ],
-                  border: Border.all(
-                    color: Colors.white70,
-                    width: 1.0,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                height: 440,
+                child: GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.8,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(24.0)),
-                  gradient:
-                      LinearGradient(colors: [Colors.white, Colors.white]),
-                ),
-                padding: EdgeInsets.all(10),
-                child: Padding(
-                    padding: SizerUtil.deviceType == DeviceType.mobile
-                        ? EdgeInsets.only(left: 16.0, right: 16.0)
-                        : EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Transform.translate(
-                              offset: Offset(0, 10),
-                              child: Text(
-                                "Shop by Categories",
-                                style: TextStyle(
-                                    color: Color(0xff484848),
-                                    fontSize: 20,
-                                    fontFamily: fontRegular,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                        T5DashBoardListing(mFavouriteList, false),
-                      ],
-                    )),
+                  itemCount: 4,
+                  itemBuilder: (context, index){
+                    return ItemElement(
+                              title: "Philips led bulb",
+                              image: t3_mcb,
+                              code: "Code-2344",
+                              price: "\$14.88",
+                            );
+                  }
+                  ),
               ),
             ),
+            SizedBox(
+              height: 41,
+            ),
+            SizedBox(
+              height: 140,
+              child: ListView.builder(
+                itemCount: mSliderList!.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: commonCacheImageWidget(mSliderList!.elementAt(index), 300),
+                  );
+                }
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SubTitleText(title: lbl_Flash_Sale),
+                  GestureDetector(
+                    onTap: (){
+                      //TODO View More Logic
+                    },
+                    child: Text(lbl_View_more, style: TextStyle(color: mainGreyColorTheme, fontSize: 15, fontFamily: PoppinsFamily))),
+                ],
+              ),
+            ),
+            SizedBox(
+                    height: 21,
+            ),
+            SizedBox(
+              height: 250,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: SizedBox(
+                      width: 140,
+                      child: ItemElement(
+                                  title: "Philips led bulb",
+                                  image: t3_mcb,
+                                  code: "Code-2344",
+                                  price: "\$14.88",
+                                ),
+                    ),
+                  );
+                }
+              )
+            ),
+                        SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SubTitleText(title: lbl_Top_Brands),                
+                  ],
+              ),
+            ),
+            SizedBox(
+                    height: 21,
+            ),
+            SizedBox(
+              height: 60,
+              child: ListView.builder(
+                itemCount: 4,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context,index){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Container(
+                      width: 105,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: lightBorderColor, width: 1),
+                      ),
+                      child: commonCacheImageWidget("assets/Brand${index+1}.png", 60, width: 60),
+                    ),
+                  );
+                }
+                )
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SubTitleText(title: lbl_Trending_Now),
+                  GestureDetector(
+                    onTap: (){
+                      //TODO View More Logic
+                    },
+                    child: Text(lbl_View_more, style: TextStyle(color: mainGreyColorTheme, fontSize: 15, fontFamily: PoppinsFamily))),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                height: 450,
+                child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 4,
+                  itemBuilder: (context, index){
+                    return Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(bottom: BorderSide(color: lightBorderColor, width: 1))
+                        ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                // TODO Open category page
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                decoration: boxDecoration(
+                                    radius: 33,
+                                    showShadow: true,
+                                    bgColor: mainGreyColorTheme.withOpacity(0.3)),
+                                child: commonCacheImageWidget(
+                                  t3_mcb,
+                                  60,
+                                  width: 80,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Philips led bulb",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: "Poppins",
+                                    color: mainBlackColorTheme,
+                                  ),
+                                ),
+                                Text(
+                                  "Code-2344",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: "Poppins",
+                                    color: mainGreyColorTheme,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "\$14.88",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: "Poppins",
+                                    color: mainBlackColorTheme,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    // TODO logic
+                                  },
+                                  child: commonCacheImageWidget(ic_heart, 30),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+
+                      ),
+                      );
+                  }
+                ),
+              ),
+            )
           ]),
         ));
   }

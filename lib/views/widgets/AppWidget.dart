@@ -65,7 +65,7 @@ void changeStatusColor(Color color) async {
 }
 
 Widget commonCacheImageWidget(String? url, double height,
-    {double? width, BoxFit? fit}) {
+    {double? width, BoxFit? fit, Color? color}) {
   if (url.validate().startsWith('http')) {
     if (isMobile) {
       return CachedNetworkImage(
@@ -81,7 +81,7 @@ Widget commonCacheImageWidget(String? url, double height,
       return Image.network(url!, height: height, width: width, fit: fit);
     }
   } else {
-    return Image.asset(url!, height: height, width: width, fit: fit);
+    return Image.asset(url!, height: height, width: width, fit: fit, color: color,);
   }
 }
 

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/screens/MenuScreen.dart';
-import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'DashboardScreen.dart';
 import 'PlaceholderScreen.dart';
-import 'SignUpScreen.dart';
+import 'ProfileScreen.dart';
 import 'TechnicianHome.dart';
 
 class Theme5Dashboard extends StatefulWidget {
@@ -22,7 +20,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     PlaceHolder(),
     Dashboard(),
     PlaceHolder(),
-    T5Profile(),
+    ProfileScreen(),
   ];
 
   @override

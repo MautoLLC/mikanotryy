@@ -28,14 +28,12 @@ class T5MaintenanceState extends State<T5Maintenance> {
   List<T5Category>? mFavouriteList;
   List<T5Bill>? cardList;
   List<MaintenanceRequestModel2>? reqList;
-  List<T5Slider>? mSliderList;
 
   @override
   void initState() {
     super.initState();
     passwordVisible = false;
     mFavouriteList = getCategoryItems();
-    mSliderList = getSliders();
     cardList = getListData();
     reqList = getMaintenanceListData();
   }
