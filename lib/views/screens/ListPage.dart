@@ -69,7 +69,9 @@ class ListPage extends StatelessWidget {
                         return GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ProductDetailsPage()));
+                                  builder: (context) => ProductDetailsPage(
+                                        product: temp,
+                                      )));
                             },
                             child: ItemElement(
                                 title: temp.Name,

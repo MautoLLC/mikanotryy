@@ -93,3 +93,5 @@ const lbl_Flash_Sale = 'Flash Sale';
 const lbl_Top_Brands = 'Top Brands';
 const lbl_Trending_Now = 'Trending Now';
 const lbl_Top_Products = 'Top Products';
+const lbl_About_the_product = 'About the product';
+const lbl_Buy_Now = 'Buy Now';

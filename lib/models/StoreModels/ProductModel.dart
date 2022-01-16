@@ -14,7 +14,8 @@ class Product {
       required this.Image,
       required this.Code,
       required this.Category,
-      required this.Rating, this.id = 0});
+      required this.Rating,
+      this.id = 0});
 
   // From json
   factory Product.fromJson(Map<String, dynamic> json) {
