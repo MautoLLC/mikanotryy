@@ -81,7 +81,13 @@ Widget commonCacheImageWidget(String? url, double height,
       return Image.network(url!, height: height, width: width, fit: fit);
     }
   } else {
-    return Image.asset(url!, height: height, width: width, fit: fit, color: color,);
+    return Image.asset(
+      url!,
+      height: height,
+      width: width,
+      fit: fit,
+      color: color,
+    );
   }
 }
 

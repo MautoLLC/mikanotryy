@@ -40,6 +40,7 @@ const ComponentsStatusURL = '$InspectionApiBaseUrl/api/ComponentStatus';
 
 const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';
+const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 
 const mainAppName = 'My Mikano App';
 

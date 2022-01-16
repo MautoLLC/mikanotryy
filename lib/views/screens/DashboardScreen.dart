@@ -17,6 +17,8 @@ import 'package:mymikano_app/utils/images.dart';
 import 'dart:math' as math;
 import 'package:mymikano_app/utils/strings.dart';
 
+import 'ListPage.dart';
+
 class Dashboard extends StatefulWidget {
   static var tag = "/T5Dashboard";
 
@@ -132,7 +134,7 @@ class DashboardState extends State<Dashboard> {
               ),
             ),
             SizedBox(
-                    height: 21,
+              height: 21,
             ),
             SizedBox(
               height: 100,
@@ -189,11 +191,7 @@ class DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SubTitleText(title: lbl_Popular_Products),
-                  GestureDetector(
-                    onTap: (){
-                      //TODO View More Logic
-                    },
-                    child: Text(lbl_View_more, style: TextStyle(color: mainGreyColorTheme, fontSize: 15, fontFamily: PoppinsFamily))),
+                  ViewMoreBtn(),
                 ],
               ),
             ),
@@ -202,23 +200,22 @@ class DashboardState extends State<Dashboard> {
               child: SizedBox(
                 height: 440,
                 child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: 4,
-                  itemBuilder: (context, index){
-                    return ItemElement(
-                              title: "Philips led bulb",
-                              image: t3_mcb,
-                              code: "Code-2344",
-                              price: "\$14.88",
-                            );
-                  }
-                  ),
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.8,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return ItemElement(
+                        title: "Philips led bulb",
+                        image: t3_mcb,
+                        code: "Code-2344",
+                        price: "\$14.88",
+                      );
+                    }),
               ),
             ),
             SizedBox(
@@ -227,15 +224,15 @@ class DashboardState extends State<Dashboard> {
             SizedBox(
               height: 140,
               child: ListView.builder(
-                itemCount: mSliderList!.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: commonCacheImageWidget(mSliderList!.elementAt(index), 300),
-                  );
-                }
-              ),
+                  itemCount: mSliderList!.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: commonCacheImageWidget(
+                          mSliderList!.elementAt(index), 300),
+                    );
+                  }),
             ),
             SizedBox(
               height: 40,
@@ -246,39 +243,33 @@ class DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SubTitleText(title: lbl_Flash_Sale),
-                  GestureDetector(
-                    onTap: (){
-                      //TODO View More Logic
-                    },
-                    child: Text(lbl_View_more, style: TextStyle(color: mainGreyColorTheme, fontSize: 15, fontFamily: PoppinsFamily))),
+                  ViewMoreBtn(),
                 ],
               ),
             ),
             SizedBox(
-                    height: 21,
+              height: 21,
             ),
             SizedBox(
-              height: 250,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: SizedBox(
-                      width: 140,
-                      child: ItemElement(
-                                  title: "Philips led bulb",
-                                  image: t3_mcb,
-                                  code: "Code-2344",
-                                  price: "\$14.88",
-                                ),
-                    ),
-                  );
-                }
-              )
-            ),
-                        SizedBox(
+                height: 250,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: SizedBox(
+                          width: 140,
+                          child: ItemElement(
+                            title: "Philips led bulb",
+                            image: t3_mcb,
+                            code: "Code-2344",
+                            price: "\$14.88",
+                          ),
+                        ),
+                      );
+                    })),
+            SizedBox(
               height: 40,
             ),
             Padding(
@@ -286,34 +277,35 @@ class DashboardState extends State<Dashboard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SubTitleText(title: lbl_Top_Brands),                
-                  ],
+                  SubTitleText(title: lbl_Top_Brands),
+                ],
               ),
             ),
             SizedBox(
-                    height: 21,
+              height: 21,
             ),
             SizedBox(
-              height: 60,
-              child: ListView.builder(
-                itemCount: 4,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context,index){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Container(
-                      width: 105,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: lightBorderColor, width: 1),
-                      ),
-                      child: commonCacheImageWidget("assets/Brand${index+1}.png", 60, width: 60),
-                    ),
-                  );
-                }
-                )
-            ),
+                height: 60,
+                child: ListView.builder(
+                    itemCount: 4,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Container(
+                          width: 105,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border:
+                                Border.all(color: lightBorderColor, width: 1),
+                          ),
+                          child: commonCacheImageWidget(
+                              "assets/Brand${index + 1}.png", 60,
+                              width: 60),
+                        ),
+                      );
+                    })),
             SizedBox(
               height: 40,
             ),
@@ -323,11 +315,7 @@ class DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SubTitleText(title: lbl_Trending_Now),
-                  GestureDetector(
-                    onTap: (){
-                      //TODO View More Logic
-                    },
-                    child: Text(lbl_View_more, style: TextStyle(color: mainGreyColorTheme, fontSize: 15, fontFamily: PoppinsFamily))),
+                  ViewMoreBtn()
                 ],
               ),
             ),
@@ -336,91 +324,112 @@ class DashboardState extends State<Dashboard> {
               child: SizedBox(
                 height: 450,
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 4,
-                  itemBuilder: (context, index){
-                    return Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border(bottom: BorderSide(color: lightBorderColor, width: 1))
-                        ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                // TODO Open category page
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: boxDecoration(
-                                    radius: 33,
-                                    showShadow: true,
-                                    bgColor: mainGreyColorTheme.withOpacity(0.3)),
-                                child: commonCacheImageWidget(
-                                  t3_mcb,
-                                  60,
-                                  width: 80,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: lightBorderColor, width: 1))),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // TODO Open category page
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: boxDecoration(
+                                      radius: 33,
+                                      showShadow: true,
+                                      bgColor:
+                                          mainGreyColorTheme.withOpacity(0.3)),
+                                  child: commonCacheImageWidget(
+                                    t3_mcb,
+                                    60,
+                                    width: 80,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 15,),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Philips led bulb",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: "Poppins",
-                                    color: mainBlackColorTheme,
-                                  ),
-                                ),
-                                Text(
-                                  "Code-2344",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: "Poppins",
-                                    color: mainGreyColorTheme,
-                                  ),
-                                ),
-                              ],
+                            SizedBox(
+                              width: 15,
                             ),
-                          ),
-                          Spacer(),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Text(
-                                  "\$14.88",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: "Poppins",
-                                    color: mainBlackColorTheme,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Philips led bulb",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: "Poppins",
+                                      color: mainBlackColorTheme,
+                                    ),
                                   ),
-                                ),
-                                GestureDetector(
-                                  onTap: (){
-                                    // TODO logic
-                                  },
-                                  child: commonCacheImageWidget(ic_heart, 30),
-                                )
-                              ],
+                                  Text(
+                                    "Code-2344",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: "Poppins",
+                                      color: mainGreyColorTheme,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
-                        ],
-
-                      ),
+                            Spacer(),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "\$14.88",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: "Poppins",
+                                      color: mainBlackColorTheme,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // TODO logic
+                                    },
+                                    child: commonCacheImageWidget(ic_heart, 30),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       );
-                  }
-                ),
+                    }),
               ),
             )
           ]),
         ));
+  }
+}
+
+class ViewMoreBtn extends StatelessWidget {
+  const ViewMoreBtn({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          //TODO View More Logic
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => ListPage()));
+        },
+        child: Text(lbl_View_more,
+            style: TextStyle(
+                color: mainGreyColorTheme,
+                fontSize: 15,
+                fontFamily: PoppinsFamily)));
   }
 }

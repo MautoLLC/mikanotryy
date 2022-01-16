@@ -40,23 +40,27 @@ class ItemElement extends StatelessWidget {
                             color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
-                        child: commonCacheImageWidget(image, 85)),
+                        child: commonCacheImageWidget(image, 85,
+                            fit: BoxFit.fitWidth)),
                   ),
                 ],
               ),
-              // SizedBox(
-              //   height: 10,
-              // ),
               Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "Poppins",
-                      color: mainBlackColorTheme,
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Poppins",
+                        color: mainBlackColorTheme,
+                        // overflow: TextOverflow.ellipsis,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 1,
                     ),
                   ),
                 ],
@@ -127,7 +131,8 @@ class _LikeWidgetState extends State<LikeWidget> {
               widget.liked = !widget.liked;
             });
           },
-          child: commonCacheImageWidget(ic_heart, 20, color: !widget.liked?null:mainColorTheme),
+          child: commonCacheImageWidget(ic_heart, 20,
+              color: !widget.liked ? null : mainColorTheme),
         ),
       ),
     );

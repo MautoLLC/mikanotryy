@@ -7,23 +7,21 @@ import 'package:http/http.dart' as http;
 
 logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  try{
-      var response = await http.delete(Uri.parse(
-      deleteDeviceUrl+'/${prefs.get("UserID")}?deviceToken=${prefs.getString("DeviceToken")}"'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer ${prefs.getString("accessToken")}"
-      }
-      );
-      prefs.clear();
-      await prefs.setBool('IsLoggedIn', false);
-      print(response.statusCode);
-      navigator.currentState!.pushReplacement(
-        MaterialPageRoute(builder: (context) => T13SignInScreen()),
-      );
-  }catch(e){
+  try {
+    var response = await http.delete(
+        Uri.parse(deleteDeviceUrl +
+            '/${prefs.get("UserID")}?deviceToken=${prefs.getString("DeviceToken")}"'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${prefs.getString("accessToken")}"
+        });
+    prefs.clear();
+    await prefs.setBool('IsLoggedIn', false);
+    print(response.statusCode);
+    navigator.currentState!.pushReplacement(
+      MaterialPageRoute(builder: (context) => T13SignInScreen()),
+    );
+  } catch (e) {
     print(e);
   }
-
-
 }

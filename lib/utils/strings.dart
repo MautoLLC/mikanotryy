@@ -92,3 +92,4 @@ const lbl_View_more = 'View more';
 const lbl_Flash_Sale = 'Flash Sale';
 const lbl_Top_Brands = 'Top Brands';
 const lbl_Trending_Now = 'Trending Now';
+const lbl_Top_Products = 'Top Products';

@@ -48,25 +48,27 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
     await prefs.setInt("tokenStartTime", jwtData['iat']);
 
-    try{
-      response = await dio.post(MikanoShopTokenURL,
-      data: {
-              "guest": true,
-              "username": username,
-              "password": password,
-              "remember_me": true
-            });
+    try {
+      response = await dio.post(MikanoShopTokenURL, data: {
+        "guest": true,
+        "username": username,
+        "password": password,
+        "remember_me": true
+      });
       await prefs.setString("StoreToken", response.data["access_token"]);
-      await prefs.setString("StoreCustomerId", response.data["customer_id"].toString());
-      await prefs.setString("StoreCustomerGuid", response.data["customer_guid"]);
-    } on Exception catch(e){
+      await prefs.setString(
+          "StoreCustomerId", response.data["customer_id"].toString());
+      await prefs.setString(
+          "StoreCustomerGuid", response.data["customer_guid"]);
+    } on Exception catch (e) {
       FailedToast();
       print(e.toString());
       return false;
     }
     try {
-      await http.post(Uri.parse(
-          "http://dev.codepickles.com:8083/api/Users/Devices/${jwtData['sub']}?deviceToken=${prefs.getString("DeviceToken")}"),
+      await http.post(
+          Uri.parse(
+              "http://dev.codepickles.com:8083/api/Users/Devices/${jwtData['sub']}?deviceToken=${prefs.getString("DeviceToken")}"),
           headers: {
             "Authorization": "Bearer ${prefs.getString("accessToken")}",
             "Content-Type": "application/json"
@@ -90,24 +92,24 @@ Login(String username, String password, BuildContext context) async {
   }
 }
 
-SuccessToast(){
+SuccessToast() {
   return Fluttertoast.showToast(
-        msg: "Login Successfull",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color,
-        textColor: Colors.black87,
-        fontSize: 16.0);
+      msg: "Login Successfull",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: t13_edit_text_color,
+      textColor: Colors.black87,
+      fontSize: 16.0);
 }
 
-FailedToast(){
+FailedToast() {
   return Fluttertoast.showToast(
-        msg: "Login Failed",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color,
-        textColor: Colors.black87,
-        fontSize: 16.0);
+      msg: "Login Failed",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: t13_edit_text_color,
+      textColor: Colors.black87,
+      fontSize: 16.0);
 }
