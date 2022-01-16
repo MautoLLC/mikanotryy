@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
@@ -17,7 +16,6 @@ Login(String username, String password, BuildContext context) async {
     client.badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
   };
-  Response response;
   try {
     Response response = await dio.post((authorizationEndpoint),
         options: Options(headers: {
@@ -49,9 +47,51 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setInt("tokenDuration", temp['expires_in']);
     await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
     await prefs.setInt("tokenStartTime", jwtData['iat']);
-    print(prefs.getInt('tokenDuration'));
 
-    Fluttertoast.showToast(
+    try{
+      response = await dio.post(MikanoShopTokenURL,
+      data: {
+              "guest": true,
+              "username": username,
+              "password": password,
+              "remember_me": true
+            });
+      await prefs.setString("StoreToken", response.data["access_token"]);
+      await prefs.setString("StoreCustomerId", response.data["customer_id"].toString());
+      await prefs.setString("StoreCustomerGuid", response.data["customer_guid"]);
+    } on Exception catch(e){
+      FailedToast();
+      print(e.toString());
+      return false;
+    }
+    try {
+      await http.post(Uri.parse(
+          "http://dev.codepickles.com:8083/api/Users/Devices/${jwtData['sub']}?deviceToken=${prefs.getString("DeviceToken")}"),
+          headers: {
+            "Authorization": "Bearer ${prefs.getString("accessToken")}",
+            "Content-Type": "application/json"
+          });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+      );
+    } on Exception catch (e) {
+      FailedToast();
+      print(e.toString());
+      return false;
+    }
+    SuccessToast();
+    prefs.setBool('IsLoggedIn', true);
+    return true;
+  } on Exception catch (e) {
+    print(e);
+    FailedToast();
+    return false;
+  }
+}
+
+SuccessToast(){
+  return Fluttertoast.showToast(
         msg: "Login Successfull",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
@@ -59,31 +99,10 @@ Login(String username, String password, BuildContext context) async {
         backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
         fontSize: 16.0);
-    prefs.setBool('IsLoggedIn', true);
-    try {
-      String token = await prefs.getString("DeviceToken").toString();
-      var response = await http.post(Uri.parse(
-          "http://dev.codepickles.com:8083/api/Users/Devices/${jwtData['sub']}?deviceToken=${prefs.getString("DeviceToken")}"));
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-      );
-      return true;
-    } on Exception catch (e) {
-      Fluttertoast.showToast(
-          msg: "Login Failed",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
-          textColor: Colors.black87,
-          fontSize: 16.0);
-      print(e.toString());
-      return false;
-    }
-  } on Exception catch (e) {
-    print(e);
-    Fluttertoast.showToast(
+}
+
+FailedToast(){
+  return Fluttertoast.showToast(
         msg: "Login Failed",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
@@ -91,6 +110,4 @@ Login(String username, String password, BuildContext context) async {
         backgroundColor: t13_edit_text_color,
         textColor: Colors.black87,
         fontSize: 16.0);
-    return false;
-  }
 }

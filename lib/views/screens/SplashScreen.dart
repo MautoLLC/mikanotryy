@@ -21,13 +21,6 @@ class _OPSplashScreenState extends State<OPSplashScreen>
     with SingleTickerProviderStateMixin {
   Future<bool> checkIfLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    // if (await prefs.getBool('IsLoggedIn') == true){
-    //   finish(context);
-    //   Navigator.pushReplacement(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => Theme5Dashboard()),
-    //       );
-    // }
     return (prefs.getBool('IsLoggedIn') == true);
   }
 

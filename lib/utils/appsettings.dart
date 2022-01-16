@@ -38,6 +38,9 @@ const componentStatusIDParameter = "componentStatusID";
 const ComponentsURL = '$InspectionApiBaseUrl/api/Components';
 const ComponentsStatusURL = '$InspectionApiBaseUrl/api/ComponentStatus';
 
+const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
+const MikanoShopTokenURL = '$MikanoShopMainURl/token';
+
 const mainAppName = 'My Mikano App';
 
 const fontRegular = 'Roboto';

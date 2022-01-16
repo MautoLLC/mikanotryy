@@ -9,7 +9,12 @@ logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   try{
       var response = await http.delete(Uri.parse(
-      deleteDeviceUrl+'/${prefs.get("UserID")}?deviceToken=${prefs.getString("DeviceToken")}"'));
+      deleteDeviceUrl+'/${prefs.get("UserID")}?deviceToken=${prefs.getString("DeviceToken")}"'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${prefs.getString("accessToken")}"
+      }
+      );
       prefs.clear();
       await prefs.setBool('IsLoggedIn', false);
       print(response.statusCode);
