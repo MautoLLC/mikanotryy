@@ -88,7 +88,7 @@ class ItemElement extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    price,
+                    "\$ ${price}",
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "Poppins",

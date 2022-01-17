@@ -55,8 +55,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   var controller2 = TextEditingController();
   var controller3 = TextEditingController();
 
-  late Future fetchaddress;
-
   late Directory? appDir;
   List<String>? records;
 
@@ -252,7 +250,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
       });
     });
 
-    fetchaddress = address2.fetchRealEstates();
     selectedAddressValue = "";
     setState(() {});
   }
@@ -369,7 +366,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           ),
                           SizedBox(height: 16),
                           FutureBuilder(
-                              future: fetchaddress,
+                              future: address2.fetchRealEstates(),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {

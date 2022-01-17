@@ -174,10 +174,7 @@ class MyRepairsScreen extends StatelessWidget {
                                               .mMaintenacerequest!
                                               .maintenaceRequestStatus!
                                               .maintenanceStatusDescription,
-                                          fontSize: SizerUtil.deviceType ==
-                                                  DeviceType.mobile
-                                              ? 16.0
-                                              : 24.0,
+                                          fontSize: 14.0,
                                           textColor: t5White),
                                     ),
                                   ],
