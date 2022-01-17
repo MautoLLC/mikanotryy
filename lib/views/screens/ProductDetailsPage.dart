@@ -101,10 +101,10 @@ class ProductDetailsPage extends StatelessWidget {
               children: [
                 QuantityChooser(),
                 Text(
-                  '\$ ${product.Price}',
+                  '\$${product.Price}',
                   style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontFamily: PoppinsFamily
                 ),
                 ),
               ],

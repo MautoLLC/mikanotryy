@@ -37,7 +37,7 @@ class _MenuScreenState extends State<MenuScreen> {
   late SharedPreferences prefs;
 
   TechnicianModel? tech =
-      new TechnicianModel(1, 'null', 'null', t5_profile_7, 'null', 'null');
+      new TechnicianModel(1, 'null', 'null', ic_profile_7, 'null', 'null');
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _MenuScreenState extends State<MenuScreen> {
       jwtData[key] = value;
     });
     tech = new TechnicianModel(1, jwtData['given_name'], jwtData['family_name'],
-        t5_profile_7, "null", jwtData['email']);
+        ic_profile_7, "null", jwtData['email']);
     setState(() {});
   }
 
@@ -111,7 +111,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationY(math.pi),
-                      child: SvgPicture.asset(t5_menu,
+                      child: SvgPicture.asset(ic_menu,
                           width: 25, height: 25, color: Colors.white),
                     ),
                   ],

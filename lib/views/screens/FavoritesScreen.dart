@@ -87,7 +87,7 @@ class FavoritesItem extends StatelessWidget {
     this.title = "Philips led bulb",
     this.image = t3_led,
     this.code = "Code-2344",
-    this.price = "\$14.88",
+    this.price = "14.88",
     required this.OnPressed,
   }) : super(key: key);
 

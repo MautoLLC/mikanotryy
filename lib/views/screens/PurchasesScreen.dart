@@ -44,7 +44,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                             title: "Philips led bulb",
                             image: t3_mcb,
                             code: "Code-2344",
-                            price: "\$14.88",
+                            price: "14.88",
                           );
                         });
                   },

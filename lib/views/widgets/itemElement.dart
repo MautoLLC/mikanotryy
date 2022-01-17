@@ -11,8 +11,10 @@ class ItemElement extends StatelessWidget {
   final String image;
   final String code;
   final String price;
+  final String id;
   const ItemElement({
     Key? key,
+    this.id = '0',
     required this.title,
     required this.image,
     required this.code,
@@ -88,7 +90,7 @@ class ItemElement extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "\$ ${price}",
+                    "\$${price}",
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "Poppins",

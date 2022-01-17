@@ -36,8 +36,6 @@ class MyRequestsState extends State<MyRequests> {
 
     if (this.widget.mRequestt.length == 0)
       print("empty" + this.widget.mRequestt.length.toString());
-    //print("helpppppp");
-    // print(this.widget.mRequestt[1].maintenanceCategory!.maintenanceCategoryName.toString()+"hello");
   }
 
   void changeSldier(int index) {
@@ -143,10 +141,10 @@ class MyRequestsState extends State<MyRequests> {
                       },
                     ),
                     SizedBox(width: 10),
-                    Image.asset(t5_general_repair,
+                    Image.asset(ic_general_repair,
                         width: 25, height: 25, color: t5White),
                     SizedBox(width: 8),
-                    text(t5_maintenance_repair,
+                    text(lbl_maintenance_repair,
                         textColor: t5White,
                         fontSize: textSizeNormal,
                         fontFamily: fontMedium)

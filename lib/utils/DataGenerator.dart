@@ -11,29 +11,29 @@ List<T5Category> getDItems() {
   var category1 = T5Category();
   category1.name = "Generators";
   category1.color = t5Cat1;
-  category1.icon = t5_generator;
+  category1.icon = ic_generator;
   list.add(category1);
   var category3 = T5Category();
   category3.name = "Electrical";
   category3.color = t5Cat3;
-  category3.icon = t5_electricity;
+  category3.icon = ic_electricity;
   list.add(category3);
   var category4 = T5Category();
   category4.name = "Motors";
   category4.color = t5Cat4;
-  category4.icon = t5_engine;
+  category4.icon = ic_motor;
   list.add(category4);
 
   var category5 = T5Category();
   category5.name = "Steel";
   category5.color = t5Cat5;
-  category5.icon = t5_steel;
+  category5.icon = ic_steel;
   list.add(category5);
 
   var category = T5Category();
   category.name = "Medical";
   category.color = t5Cat6;
-  category.icon = t5_circle;
+  category.icon = ic_Medical;
   list.add(category);
   return list;
 }
@@ -44,34 +44,34 @@ List<T5Category> getCategoryItems() {
   var category1 = T5Category();
   category1.name = "General Repair";
   category1.color = t5Cat1;
-  category1.icon = t5_general_repair;
+  category1.icon = ic_general_repair;
   list.add(category1);
   var category2 = T5Category();
   category2.name = "Mechanical Repair";
   category2.color = t5Cat2;
-  category2.icon = t5_mechanical_repair;
+  category2.icon = ic_mechanical_repair;
   list.add(category2);
   var category3 = T5Category();
   category3.name = "Electrical Repair";
   category3.color = t5Cat3;
-  category3.icon = t5_img_electrical;
+  category3.icon = ic_img_electrical;
   list.add(category3);
   var category4 = T5Category();
   category4.name = "Security";
   category4.color = t5Cat4;
-  category4.icon = t5_security;
+  category4.icon = ic_security;
   list.add(category4);
 
   var category5 = T5Category();
   category5.name = "Cleaning";
   category5.color = t5Cat5;
-  category5.icon = t5_cleaning;
+  category5.icon = ic_cleaning;
   list.add(category5);
 
   var category = T5Category();
   category.name = "Landscape";
   category.color = t5Cat6;
-  category.icon = t5_img_landscape;
+  category.icon = ic_img_landscape;
   list.add(category);
 
   return list;
@@ -94,8 +94,8 @@ List<T5Bill> getListData() {
   var bill = T5Bill();
   bill.name = "Electric bill";
   bill.day = "22";
-  bill.icon = t5_light_bulb;
-  bill.amount = "\$155.00";
+  bill.icon = ic_light_bulb;
+  bill.amount = "155.00";
   bill.date = "10/2/2019";
 
   list.add(bill);
@@ -103,8 +103,8 @@ List<T5Bill> getListData() {
   var bill1 = T5Bill();
   bill1.name = "Water bill";
   bill1.day = "20";
-  bill1.icon = t5_drop;
-  bill1.amount = "\$855.00";
+  bill1.icon = ic_drop;
+  bill1.amount = "855.00";
   bill1.date = "10/2/2019";
 
   list.add(bill1);
@@ -112,8 +112,8 @@ List<T5Bill> getListData() {
   var bill2 = T5Bill();
   bill2.name = "Water bill";
   bill2.day = "12";
-  bill2.icon = t5_drop;
-  bill2.amount = "\$155.00";
+  bill2.icon = ic_drop;
+  bill2.amount = "155.00";
   bill2.isPaid = true;
   bill2.date = "10/2/2019";
 
@@ -122,8 +122,8 @@ List<T5Bill> getListData() {
   var bill3 = T5Bill();
   bill3.name = "Phone bill";
   bill3.day = "12";
-  bill3.icon = t5_call_answer;
-  bill3.amount = "\$25.00";
+  bill3.icon = ic_call_answer;
+  bill3.amount = "25.00";
   bill3.date = "10/2/2019";
 
   list.add(bill3);
@@ -131,16 +131,16 @@ List<T5Bill> getListData() {
   var bill4 = T5Bill();
   bill4.name = "Internet bill";
   bill4.day = "11";
-  bill4.icon = t5_wifi;
-  bill4.amount = "\$70.00";
+  bill4.icon = ic_wifi;
+  bill4.amount = "70.00";
   bill4.date = "10/2/2019";
 
   list.add(bill4);
   var bill5 = T5Bill();
   bill5.name = "Electric bill";
   bill5.day = "10";
-  bill5.icon = t5_light_bulb;
-  bill5.amount = "\$600.00";
+  bill5.icon = ic_light_bulb;
+  bill5.amount = "600.00";
   bill5.date = "10/2/2019";
   bill5.isPaid = true;
   list.add(bill);

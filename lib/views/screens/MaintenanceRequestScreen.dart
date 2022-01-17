@@ -774,7 +774,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           images.length < 1 ? uploadImage() : SizedBox(),
                           SizedBox(height: 40),
                           T13Button(
-                            textContent: t13_lbl_request,
+                            textContent: lbl_lbl_request,
                             onPressed: () {
                               if (selectedSubCategId != 0) {
                                 datetime = new DateTime(

@@ -88,10 +88,10 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                         fontFamily: "Poppins",
                         color: Color(0xFFBFBFBF))),
                 SizedBox(height: spacing_large),
-                t13EditTextStyle(t13_hint_Email, emailController,
+                t13EditTextStyle(lbl_hint_Email, emailController,
                     isPassword: false),
                 SizedBox(height: spacing_standard_new),
-                t13EditTextStyle(t13_hint_password, passController,
+                t13EditTextStyle(lbl_hint_password, passController,
                     isPassword: true),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 0.0),
@@ -106,7 +106,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                                   builder: (context) =>
                                       ForgotPasswordScreen()));
                         },
-                        child: Text(t13_lbl_forgot_your_password,
+                        child: Text(lbl_lbl_forgot_your_password,
                             style: TextStyle(
                                 fontSize: 15,
                                 fontFamily: "Poppins",
@@ -122,7 +122,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     Expanded(
                       child: T13Button(
                         // onPressed: (){},
-                        textContent: t13_lbl_login,
+                        textContent: lbl_lbl_login,
                         onPressed: () async {
                           if (!pressed) {
                             pressed = true;
@@ -152,7 +152,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     text(
-                      t13_lbl_need_an_account,
+                      lbl_lbl_need_an_account,
                       textColor: t13_textColorSecondary,
                     ),
                     SizedBox(
@@ -164,7 +164,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                           MaterialPageRoute(
                               builder: (context) => T13SignUpScreen())),
                       child: Container(
-                        child: text(t13_lbl_sign_up,
+                        child: text(lbl_lbl_sign_up,
                             fontSize: 14.0,
                             fontFamily: fontMedium,
                             textColor: mainColorTheme),

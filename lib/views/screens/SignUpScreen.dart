@@ -56,7 +56,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                       ),
                     ],
                   ),
-                  // commonCacheImageWidget(t13_ic_logo, 85, width: width * 0.8),
+                  // commonCacheImageWidget(lbl_ic_logo, 85, width: width * 0.8),
                   TitleText(
                     title: 'Sign Up here',
                   ),
@@ -70,10 +70,10 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                   SizedBox(height: spacing_standard_new),
                   t13EditTextStyle("Lastname", lnController, isPassword: false),
                   SizedBox(height: spacing_standard_new),
-                  t13EditTextStyle(t13_hint_Email, emlController,
+                  t13EditTextStyle(lbl_hint_Email, emlController,
                       isPassword: false),
                   SizedBox(height: spacing_standard_new),
-                  t13EditTextStyle(t13_hint_password, passwController,
+                  t13EditTextStyle(lbl_hint_password, passwController,
                       isPassword: true),
                   SizedBox(height: spacing_large),
                   T13Button(
@@ -149,7 +149,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      text(t13_lbl_already_member,
+                      text(lbl_lbl_already_member,
                           textColor: t13_textColorSecondary),
                       SizedBox(width: spacing_control),
                       GestureDetector(
@@ -158,7 +158,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                             MaterialPageRoute(
                                 builder: (context) => T13SignInScreen())),
                         child: Container(
-                          child: text(t13_lbl_login,
+                          child: text(lbl_lbl_login,
                               fontSize: 14.0,
                               fontFamily: fontMedium,
                               textColor: mainColorTheme),

@@ -77,7 +77,7 @@ class DashboardState extends State<Dashboard> {
                           ? Transform(
                               alignment: Alignment.center,
                               transform: Matrix4.rotationY(math.pi),
-                              child: SvgPicture.asset(t5_menu,
+                              child: SvgPicture.asset(ic_menu,
                                   width: 25,
                                   height: 25,
                                   color: Color(0Xff767676)),
@@ -85,7 +85,7 @@ class DashboardState extends State<Dashboard> {
                           : Transform(
                               alignment: Alignment.center,
                               transform: Matrix4.rotationY(math.pi),
-                              child: SvgPicture.asset(t5_menu,
+                              child: SvgPicture.asset(ic_menu,
                                   width: 40,
                                   height: 40,
                                   color: Color(0Xff767676)),
@@ -213,7 +213,7 @@ class DashboardState extends State<Dashboard> {
                         title: "Philips led bulb",
                         image: t3_mcb,
                         code: "Code-2344",
-                        price: "\$14.88",
+                        price: "14.88",
                       );
                     }),
               ),
@@ -264,7 +264,7 @@ class DashboardState extends State<Dashboard> {
                             title: "Philips led bulb",
                             image: t3_mcb,
                             code: "Code-2344",
-                            price: "\$14.88",
+                            price: "14.88",
                           ),
                         ),
                       );
@@ -388,7 +388,7 @@ class DashboardState extends State<Dashboard> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "\$14.88",
+                                    "14.88",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: "Poppins",

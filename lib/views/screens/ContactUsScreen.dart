@@ -81,7 +81,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               SizedBox(
                 height: 20,
               ),
-              t13EditTextStyle(t13_hint_Email, emailController),
+              t13EditTextStyle(lbl_hint_Email, emailController),
               SizedBox(
                 height: 20,
               ),

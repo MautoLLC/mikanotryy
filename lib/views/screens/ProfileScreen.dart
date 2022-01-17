@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late SharedPreferences prefs;
 
   TechnicianModel? tech =
-      new TechnicianModel(1, 'null', 'null', t5_profile_7, 'null', 'null');
+      new TechnicianModel(1, 'null', 'null', ic_profile_7, 'null', 'null');
 
   bool switchstate = false;
 
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       jwtData[key] = value;
     });
     tech = new TechnicianModel(1, jwtData['given_name'], jwtData['family_name'],
-        t5_profile_7, "null", jwtData['email']);
+        ic_profile_7, "null", jwtData['email']);
     setState(() {});
   }
 

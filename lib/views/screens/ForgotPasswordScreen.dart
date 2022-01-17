@@ -40,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             commonCacheImageWidget(ForgotPassword_Screen_PNG, 155),
             SizedBox(height: spacing_xlarge),
-            TitleText(title: t13_lbl_forgot_your_password),
+            TitleText(title: lbl_lbl_forgot_your_password),
             text('Please enter the address associated',
                 fontFamily: "Poppin",
                 fontSize: 15.0,
@@ -50,7 +50,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 fontSize: 15.0,
                 textColor: mainGreyColorTheme),
             SizedBox(height: spacing_large),
-            t13EditTextStyle(t13_hint_Email, emailController,
+            t13EditTextStyle(lbl_hint_Email, emailController,
                 isPassword: false),
             SizedBox(height: spacing_xlarge),
             GestureDetector(

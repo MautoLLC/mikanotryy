@@ -151,7 +151,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
                           Divider(height: 24),
                           ticketInfo(
                               t13_unit_price,
-                              "\$" +
+                              "" +
                                   (widget.checklistItem!.customComponent == null
                                           ? widget
                                               .checklistItem!
