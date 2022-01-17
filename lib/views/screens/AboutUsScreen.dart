@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -17,6 +19,12 @@ class AboutUsScreen extends StatelessWidget {
     'Chief Technical Officer',
     'Chief Technology Officer',
     'Chief Financial Officer',
+  ];
+
+  static const List<String> images = [
+    ic_Founder1,
+    ic_Founder2,
+    ic_Founder3,
   ];
 
   @override
@@ -97,12 +105,7 @@ class AboutUsScreen extends StatelessWidget {
                               Container(
                                 width: 80,
                                 height: 60,
-                                child: Text(''),
-                                // child: commonCacheImageWidget(listmrequestsViewModel
-                                //             .maintenanceRequests![index]
-                                //             .mMaintenacerequest!
-                                //             .maintenanceCategory!
-                                //             .maintenanceCategoryIcon, 25),
+                                child: commonCacheImageWidget(images[index], 10),
                                 decoration: BoxDecoration(
                                     color: Color.fromRGBO(
                                         mainGreyColorTheme.red,
@@ -124,6 +127,7 @@ class AboutUsScreen extends StatelessWidget {
                                           fontSize: 14,
                                           fontFamily: PoppinsFamily),
                                     ),
+                                    SizedBox(height: 11,),
                                     Text(
                                       Titles[index],
                                       style: TextStyle(
