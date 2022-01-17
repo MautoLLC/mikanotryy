@@ -67,3 +67,5 @@ const ic_visa = "assets/icons8-visa.png";
 const ic_Founder1 = "assets/Founder1.png";
 const ic_Founder2 = "assets/Founder2.png";
 const ic_Founder3 = "assets/Founder3.png";
+
+const ic_Cart = "assets/cart.png";
