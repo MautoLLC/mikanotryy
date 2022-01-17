@@ -9,6 +9,7 @@ class SubTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: 18,
         fontFamily: "Poppins",

@@ -191,7 +191,7 @@ class DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SubTitleText(title: lbl_Popular_Products),
-                  ViewMoreBtn(),
+                  ViewMoreBtn(title: lbl_Popular_Products),
                 ],
               ),
             ),
@@ -243,7 +243,7 @@ class DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SubTitleText(title: lbl_Flash_Sale),
-                  ViewMoreBtn(),
+                  ViewMoreBtn(title: lbl_Flash_Sale),
                 ],
               ),
             ),
@@ -315,7 +315,7 @@ class DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SubTitleText(title: lbl_Trending_Now),
-                  ViewMoreBtn()
+                  ViewMoreBtn(title: lbl_Trending_Now)
                 ],
               ),
             ),
@@ -347,9 +347,8 @@ class TrendingNowItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border(
-              bottom: BorderSide(
-                  color: lightBorderColor, width: 1))),
+          border:
+              Border(bottom: BorderSide(color: lightBorderColor, width: 1))),
       child: Row(
         children: [
           Padding(
@@ -363,8 +362,7 @@ class TrendingNowItem extends StatelessWidget {
                 decoration: boxDecoration(
                     radius: 33,
                     showShadow: true,
-                    bgColor:
-                        mainGreyColorTheme.withOpacity(0.3)),
+                    bgColor: mainGreyColorTheme.withOpacity(0.3)),
                 child: commonCacheImageWidget(
                   t3_mcb,
                   60,
@@ -434,15 +432,16 @@ class TrendingNowItem extends StatelessWidget {
 }
 
 class ViewMoreBtn extends StatelessWidget {
-  const ViewMoreBtn({Key? key}) : super(key: key);
+  String title;
+  ViewMoreBtn({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           //TODO View More Logic
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => ListPage()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ListPage(title: title)));
         },
         child: Text(lbl_View_more,
             style: TextStyle(

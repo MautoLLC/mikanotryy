@@ -10,7 +10,8 @@ import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
 import 'ProductDetailsPage.dart';
 
 class ListPage extends StatelessWidget {
-  ListPage({Key? key}) : super(key: key);
+  final String title;
+  ListPage({Key? key, required this.title}) : super(key: key);
 
   TextEditingController seearchController = TextEditingController();
 
@@ -35,7 +36,7 @@ class ListPage extends StatelessWidget {
                         size: 32.0,
                       )),
                   Spacer(),
-                  TitleText(title: lbl_Top_Products),
+                  TitleText(title: title),
                   Spacer(),
                   IconButton(
                       onPressed: () {
@@ -66,18 +67,13 @@ class ListPage extends StatelessWidget {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         Product temp = snapshot.data!.elementAt(index);
-                        return GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ProductDetailsPage(
-                                        product: temp,
-                                      )));
-                            },
-                            child: ItemElement(
-                                title: temp.Name,
-                                image: temp.Image,
-                                code: temp.Code,
-                                price: temp.Price.toString()));
+                        return ItemElement(
+                            Description: temp.Description,
+                            Rating: temp.Rating,
+                            title: temp.Name,
+                            image: temp.Image,
+                            code: temp.Code,
+                            price: temp.Price.toString());
                       },
                     );
                   } else {

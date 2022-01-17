@@ -62,7 +62,7 @@ class ProductDetailsPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SubTitleText(title: product.Name),
+                Expanded(child: SubTitleText(title: product.Name)),
               ],
             ),
             SizedBox(height: 16),

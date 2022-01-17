@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/views/screens/ProductDetailsPage.dart';
 
 import 'AppWidget.dart';
 import 'auto_size_text/auto_size_text.dart';
@@ -12,9 +14,15 @@ class ItemElement extends StatelessWidget {
   final String code;
   final String price;
   final String id;
+  final String Description;
+  final String Category;
+  final int Rating;
   const ItemElement({
     Key? key,
     this.id = '0',
+    this.Description = '',
+    this.Category = '',
+    this.Rating = 0,
     required this.title,
     required this.image,
     required this.code,
@@ -23,88 +31,106 @@ class ItemElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: mainGreyColorTheme2,
-          borderRadius: BorderRadius.all(Radius.circular(15))),
-      width: MediaQuery.of(context).size.width,
-      child: Stack(children: [
-        Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                        padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: commonCacheImageWidget(image, 85,
-                            fit: BoxFit.fitWidth)),
-                  ),
-                ],
-              ),
-              Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      title,
+    Product temp = Product(
+      id: int.parse(id),
+      Name: title,
+      Price: double.parse(price),
+      Description: Description,
+      Image: image,
+      Code: code,
+      Category: Category,
+      Rating: Rating,
+    );
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(
+                  product: temp,
+                )));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: mainGreyColorTheme2,
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        width: MediaQuery.of(context).size.width,
+        child: Stack(children: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: commonCacheImageWidget(image, 85,
+                              fit: BoxFit.fitWidth)),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: "Poppins",
+                          color: mainBlackColorTheme,
+                          // overflow: TextOverflow.ellipsis,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      code,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Poppins",
+                        color: mainGreyColorTheme,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "\$${price}",
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: "Poppins",
                         color: mainBlackColorTheme,
-                        // overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 1,
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    code,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "Poppins",
-                      color: mainGreyColorTheme,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "\$${price}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "Poppins",
-                      color: mainBlackColorTheme,
-                    ),
-                  ),
-                ],
-              ),
-              Spacer(),
-            ],
+                  ],
+                ),
+                Spacer(),
+              ],
+            ),
           ),
-        ),
-        LikeWidget()
-      ]),
+          LikeWidget()
+        ]),
+      ),
     );
   }
 }
