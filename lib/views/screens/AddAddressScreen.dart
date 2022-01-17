@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/screens/AddressScreen.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -48,9 +50,23 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               padding: const EdgeInsets.only(bottom: 16),
               child: T13Button(
                   textContent: lbl_Add_Address,
-                  onPressed: () {
+                  onPressed: () async {
                     // TODO : Add Address
-                    finish(context);
+                    bool success = await CustomerService().addShippingAddress(
+                      addressController.text,
+                      CityController.text,
+                      StateController.text,
+                    );
+                    if (!success) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Address Not Added")));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Address Added Successfully")));
+                      finish(context);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => AddressScreen()));
+                    }
                   }),
             )
           ],

@@ -14,21 +14,9 @@ int Quantity = 1;
 class ProductDetailsPage extends StatelessWidget {
   Product product;
   bool isFavorite = false;
-  RegExp exp = RegExp(
-      r"<[^>]/*>",
-      multiLine: true,
-      caseSensitive: true
-    );
-  RegExp exp2 = RegExp(
-      r"<[^>]*/>",
-      multiLine: true,
-      caseSensitive: true
-    );
-  RegExp exp3 = RegExp(
-      r"</[^>]*>",
-      multiLine: true,
-      caseSensitive: true
-    );
+  RegExp exp = RegExp(r"<[^>]/*>", multiLine: true, caseSensitive: true);
+  RegExp exp2 = RegExp(r"<[^>]*/>", multiLine: true, caseSensitive: true);
+  RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
 
   ProductDetailsPage({Key? key, required this.product}) : super(key: key);
 
@@ -41,8 +29,7 @@ class ProductDetailsPage extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
+          child: Column(children: [
             Stack(children: [
               Row(
                 children: [
@@ -102,10 +89,7 @@ class ProductDetailsPage extends StatelessWidget {
                 QuantityChooser(),
                 Text(
                   '\$${product.Price}',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: PoppinsFamily
-                ),
+                  style: TextStyle(fontSize: 20, fontFamily: PoppinsFamily),
                 ),
               ],
             ),
@@ -115,62 +99,65 @@ class ProductDetailsPage extends StatelessWidget {
                 SizedBox(height: 30),
                 TitleText(title: lbl_About_the_product),
                 SizedBox(height: 11),
-            Text(
-              product.Description.replaceAll(exp, "").replaceAll(exp2, "\n").replaceAll(exp3, "\n"),
-              maxLines: 1000,
-              style: TextStyle(
-                fontSize: 12,
-                fontFamily: PoppinsFamily,
-                color: mainGreyColorTheme
-              ),
-            )
+                Text(
+                  product.Description.replaceAll(exp, "")
+                      .replaceAll(exp2, "\n")
+                      .replaceAll(exp3, "\n"),
+                  maxLines: 1000,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: PoppinsFamily,
+                      color: mainGreyColorTheme),
+                )
               ],
             ),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: 50,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO Buy Now
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          color: mainBlackColorTheme,
-                        ),
-                        child: Center(
-                            child: Text(lbl_Buy_Now,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontFamily: PoppinsFamily))),
+                  child: GestureDetector(
+                    onTap: () {
+                      // TODO Buy Now
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        color: mainBlackColorTheme,
                       ),
+                      child: Center(
+                          child: Text(lbl_Buy_Now,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: PoppinsFamily))),
                     ),
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO Add To Cart Logic
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          color: mainColorTheme,
-                        ),
-                        child: Center(
-                            child: Text(lbl_Add_To_Cart,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontFamily: PoppinsFamily))),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      // TODO Add To Cart Logic
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        color: mainColorTheme,
                       ),
+                      child: Center(
+                          child: Text(lbl_Add_To_Cart,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: PoppinsFamily))),
                     ),
-                  )
+                  ),
+                )
               ],
             )
           ]),
@@ -193,41 +180,39 @@ class _QuantityChooserState extends State<QuantityChooser> {
   @override
   Widget build(BuildContext context) {
     return Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-              border: Border.all(color: lightBorderColor, width: 1)
-              ),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: IconButton(
-                  onPressed: (){
-                    Quantity>0?Quantity--:null;
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            border: Border.all(color: lightBorderColor, width: 1)),
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: IconButton(
+                  onPressed: () {
+                    Quantity > 0 ? Quantity-- : null;
                     setState(() {});
                   },
-                  icon: Icon(Icons.minimize, color: mainGreyColorTheme,)
-                ),
-              ),
-              Text(
-                Quantity.toString(),
-                style: TextStyle(
+                  icon: Icon(
+                    Icons.minimize,
+                    color: mainGreyColorTheme,
+                  )),
+            ),
+            Text(
+              Quantity.toString(),
+              style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  fontFamily: PoppinsFamily
-                ),
-              ),
-              IconButton(
-                onPressed: (){
+                  fontFamily: PoppinsFamily),
+            ),
+            IconButton(
+                onPressed: () {
                   Quantity++;
                   setState(() {});
                 },
-                icon: Icon(Icons.add, color: mainGreyColorTheme)
-              ),
-            ],
-          )
-        );
+                icon: Icon(Icons.add, color: mainGreyColorTheme)),
+          ],
+        ));
   }
 }
 
