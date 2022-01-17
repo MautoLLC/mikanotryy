@@ -116,16 +116,11 @@ class _AddressScreenState extends State<AddressScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Switch(
-                                value: snapshot.data!
-                                    .elementAt(index)
-                                    .chosen,
+                                value: snapshot.data!.elementAt(index).chosen,
                                 onChanged: (value) {
                                   setState(() {
-                                    snapshot.data!
-                                    .elementAt(index)
-                                    .chosen = !snapshot.data!
-                                    .elementAt(index)
-                                    .chosen;
+                                    snapshot.data!.elementAt(index).chosen =
+                                        !snapshot.data!.elementAt(index).chosen;
                                   });
                                 }),
                           )

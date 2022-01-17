@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -16,6 +18,7 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   int numOfItems = 10;
   void OnDismissed() {
+    //TODO : Remove from favorites
     numOfItems--;
     setState(() {});
   }
@@ -31,43 +34,67 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           children: <Widget>[
             TopRowBar(title: lbl_Favorites),
             SizedBox(height: 40),
-            Container(
-              height: 60,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: mainGreyColorTheme.withOpacity(0.18),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  commonCacheImageWidget(ic_favorite, 20),
-                  SizedBox(width: 5),
-                  Text(
-                      numOfItems == 0
-                          ? "You have no favorites yet"
-                          : "You have ${numOfItems} items in your Favorites",
-                      style: TextStyle(
-                          color: mainGreyColorTheme,
-                          fontSize: 12,
-                          fontFamily: PoppinsFamily)),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: numOfItems,
-                itemBuilder: (context, index) {
-                  return FavoritesItem(
-                    title: "Philips led bulb $index",
-                    OnPressed: OnDismissed,
+            FutureBuilder(
+              future: ProductsService().getProducts(),
+              builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+                if (snapshot.hasData) {
+                  numOfItems = snapshot.data!.length;
+                  return Expanded(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 60,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: mainGreyColorTheme.withOpacity(0.18),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              commonCacheImageWidget(ic_favorite, 20),
+                              SizedBox(width: 5),
+                              Text(
+                                  numOfItems == 0
+                                      ? "You have no favorites yet"
+                                      : "You have ${snapshot.data!.length} items in your Favorites",
+                                  style: TextStyle(
+                                      color: mainGreyColorTheme,
+                                      fontSize: 12,
+                                      fontFamily: PoppinsFamily)),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return FavoritesItem(
+                                id: snapshot.data![index].id,
+                                title: snapshot.data!.elementAt(index).Name,
+                                price: snapshot.data!
+                                    .elementAt(index)
+                                    .Price
+                                    .toString(),
+                                image: snapshot.data!.elementAt(index).Image,
+                                OnPressed: OnDismissed,
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
                   );
-                },
-              ),
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
             )
           ],
         ),
@@ -78,12 +105,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
 class FavoritesItem extends StatelessWidget {
   final String title;
+  final int id;
   final String image;
   final String code;
   final String price;
   final Function OnPressed;
   const FavoritesItem({
     Key? key,
+    required this.id,
     this.title = "Philips led bulb",
     this.image = t3_led,
     this.code = "Code-2344",
@@ -100,7 +129,7 @@ class FavoritesItem extends StatelessWidget {
       ),
       secondaryBackground: DeleteBtn(),
       direction: DismissDirection.endToStart,
-      key: Key(title),
+      key: Key(this.id.toString()),
       onDismissed: (direction) {
         OnPressed();
         // Then show a snackbar.
@@ -142,12 +171,16 @@ class FavoritesItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            title,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: "Poppins",
-                              color: mainBlackColorTheme,
+                          SizedBox(
+                            width: 200,
+                            child: Text(
+                              title,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: "Poppins",
+                                color: mainBlackColorTheme,
+                              ),
                             ),
                           ),
                         ],
@@ -175,7 +208,7 @@ class FavoritesItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            price,
+                            "\$${price}",
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: "Poppins",

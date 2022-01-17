@@ -48,11 +48,12 @@ class CustomerService {
     if (response.statusCode == 200) {
       List<Address> addresses = [];
       try {
-        Address chosenAddress = Address.fromJson(response.data['customers'][0]['shipping_address']);
+        Address chosenAddress =
+            Address.fromJson(response.data['customers'][0]['shipping_address']);
         var addressesdata = response.data['customers'][0]['addresses'];
         for (var item in addressesdata) {
           Address temp = Address.fromJson(item);
-          if(chosenAddress.id!=temp.id){
+          if (chosenAddress.id != temp.id) {
             addresses.add(temp);
           } else {
             temp.chosen = true;

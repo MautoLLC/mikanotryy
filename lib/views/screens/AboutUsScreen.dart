@@ -105,7 +105,8 @@ class AboutUsScreen extends StatelessWidget {
                               Container(
                                 width: 80,
                                 height: 60,
-                                child: commonCacheImageWidget(images[index], 10),
+                                child:
+                                    commonCacheImageWidget(images[index], 10),
                                 decoration: BoxDecoration(
                                     color: Color.fromRGBO(
                                         mainGreyColorTheme.red,
@@ -127,7 +128,9 @@ class AboutUsScreen extends StatelessWidget {
                                           fontSize: 14,
                                           fontFamily: PoppinsFamily),
                                     ),
-                                    SizedBox(height: 11,),
+                                    SizedBox(
+                                      height: 11,
+                                    ),
                                     Text(
                                       Titles[index],
                                       style: TextStyle(
