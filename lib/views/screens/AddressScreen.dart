@@ -4,7 +4,6 @@ import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -20,36 +19,11 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
-  // List<String> ListLocationTitle = [
-  //   "Address 1",
-  //   "Address 2",
-  // ];
-
-  // List<String> ListLocationAddress = [
-  //   "Estate bldg st 9 apt 23/4",
-  //   "Estate bldg st 9 apt 23/4",
-  // ];
-
-  // List<bool> SwitchValue = [
-  //   true,
-  //   false,
-  // ];
-
   @override
   void initState() {
     // TODO: implement initState
-    // init();
     super.initState();
   }
-
-  // init() async {
-  //   List<Address> addresses = await CustomerService().GetShippingAddressesForLoggedInUser();
-  //   for (var item in addresses) {
-  //     ListLocationTitle.add(item.city.toString());
-  //     ListLocationAddress.add(item.address1.toString());
-  //     SwitchValue.add(false);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +49,10 @@ class _AddressScreenState extends State<AddressScreen> {
                         child: Stack(children: [
                           Row(
                             children: [
-                              ImageBox(image: ic_Location_Pin, color: Colors.black,),
+                              ImageBox(
+                                image: ic_Location_Pin,
+                                color: Colors.black,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     14.3, 0.0, 0.0, 0.0),
@@ -162,5 +139,3 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 }
-
-

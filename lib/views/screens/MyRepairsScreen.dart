@@ -105,11 +105,12 @@ class MyRepairsScreen extends StatelessWidget {
                                 const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
                             child: Row(
                               children: [
-                                ImageBox(image: listmrequestsViewModel
-                                          .maintenanceRequests![index]
-                                          .mMaintenacerequest!
-                                          .maintenanceCategory!
-                                          .maintenanceCategoryIcon),
+                                ImageBox(
+                                    image: listmrequestsViewModel
+                                        .maintenanceRequests![index]
+                                        .mMaintenacerequest!
+                                        .maintenanceCategory!
+                                        .maintenanceCategoryIcon),
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       14.3, 0.0, 0.0, 0.0),

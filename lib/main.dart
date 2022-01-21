@@ -34,10 +34,9 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigator,
         title: 'My Mikano',
         theme: ThemeData(
-          primarySwatch: Colors.red,
-          scaffoldBackgroundColor: Colors.white,
-          fontFamily: PoppinsFamily
-        ),
+            primarySwatch: Colors.red,
+            scaffoldBackgroundColor: Colors.white,
+            fontFamily: PoppinsFamily),
         home: new OPSplashScreen(),
       );
     });

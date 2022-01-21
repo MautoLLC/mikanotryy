@@ -67,8 +67,10 @@ class MaintenanceGridListScreen extends StatelessWidget {
                               });
                             }
                           },
-                          child: ImageBox(image: listCategViewModel.maincategs![index].mcateg!
-                                    .maintenanceCategoryIcon,),
+                          child: ImageBox(
+                            image: listCategViewModel.maincategs![index].mcateg!
+                                .maintenanceCategoryIcon,
+                          ),
                         ),
                       ),
                       Text(

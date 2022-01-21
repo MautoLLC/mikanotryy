@@ -95,3 +95,6 @@ const lbl_Trending_Now = 'Trending Now';
 const lbl_Top_Products = 'Top Products';
 const lbl_About_the_product = 'About the product';
 const lbl_Buy_Now = 'Buy Now';
+const lbl_Generator_Alerts = 'Generator Alerts';
+const lbl_Alarm = 'Alarm';
+const lbl_Notification = 'Notification';

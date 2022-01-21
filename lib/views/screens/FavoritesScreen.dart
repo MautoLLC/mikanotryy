@@ -52,7 +52,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              commonCacheImageWidget(ic_favorite, 20, color: mainGreyColorTheme),
+                              commonCacheImageWidget(ic_favorite, 20,
+                                  color: mainGreyColorTheme),
                               SizedBox(width: 5),
                               Text(
                                   numOfItems == 0

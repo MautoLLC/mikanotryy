@@ -9,6 +9,7 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/DashBoard_ModelView.dart';
+import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
@@ -120,8 +121,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                       color: Colors.black,
                       size: 65,
                     ));
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.done) {
+                  } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
                       return Custom_Alert(
                           Title: 'Error Has Occured',
@@ -129,31 +129,31 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                               "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
                     } else {
                       return Column(children: [
-                        // TopRowBar(title: lbl_Generator),
                         Row(
-      children: [
-        IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: backArrowColor,
-          ),
-          onPressed: () {
-            finish(context);
-          },
-        ),
-        Spacer(),
-        TitleText(
-          title: lbl_Generator,
-        ),
-        Spacer(),
-        GestureDetector(
-          onTap: (){
-
-          },
-          child: commonCacheImageWidget(ic_error, 22)
-        )
-      ],
-    ),
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: backArrowColor,
+                              ),
+                              onPressed: () {
+                                finish(context);
+                              },
+                            ),
+                            Spacer(),
+                            TitleText(
+                              title: lbl_Generator,
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          GeneratorAlertsPage()));
+                                },
+                                child: commonCacheImageWidget(ic_error, 22))
+                          ],
+                        ),
                         SizedBox(
                           height: 40,
                         ),
@@ -319,8 +319,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                       padding: EdgeInsets.only(top: 15),
                                       decoration: BoxDecoration(
                                         color: mainGreyColorTheme2,
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       height: 129,
                                       width: 79,
@@ -345,8 +344,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                       padding: EdgeInsets.only(top: 15),
                                       decoration: BoxDecoration(
                                         color: mainGreyColorTheme2,
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                       height: 129,
                                       width: 79,
@@ -459,7 +457,7 @@ class infotile extends StatelessWidget {
                 border: Border.all(color: mainColorTheme, width: 1),
                 color: Colors.transparent,
               ),
-              child: Text(value==""?"0":value,
+              child: Text(value == "" ? "0" : value,
                   style: TextStyle(
                       color: mainColorTheme,
                       fontSize: 14,

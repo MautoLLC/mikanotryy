@@ -59,7 +59,9 @@ class _CardsScreenState extends State<CardsScreen> {
                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
                     child: Row(
                       children: [
-                        ImageBox(image: ListIcons[index],),
+                        ImageBox(
+                          image: ListIcons[index],
+                        ),
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(14.3, 0.0, 0.0, 0.0),
