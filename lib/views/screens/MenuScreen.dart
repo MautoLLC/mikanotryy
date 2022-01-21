@@ -108,12 +108,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(math.pi),
-                      child: SvgPicture.asset(ic_menu,
-                          width: 25, height: 25, color: Colors.white),
-                    ),
+                    SvgPicture.asset(ic_menu, color: Colors.white),
                   ],
                 ),
               ),

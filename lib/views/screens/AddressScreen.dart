@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -72,14 +75,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         child: Stack(children: [
                           Row(
                             children: [
-                              Container(
-                                width: 80,
-                                height: 60,
-                                child: Icon(Icons.location_pin),
-                                decoration: BoxDecoration(
-                                    color: mainGreyColorTheme.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(30)),
-                              ),
+                              ImageBox(image: ic_Location_Pin, color: Colors.black,),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     14.3, 0.0, 0.0, 0.0),
@@ -133,7 +129,7 @@ class _AddressScreenState extends State<AddressScreen> {
                 }
               },
             ),
-            SizedBox(height: 14),
+            SizedBox(height: 4),
             Row(
               children: [
                 Expanded(
@@ -166,3 +162,5 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 }
+
+

@@ -65,21 +65,37 @@ class T5MaintenanceState extends State<T5Maintenance> {
                 title: lbl_Maintenace_And_Repair,
               ),
               bottom: TabBar(
-                indicatorSize: TabBarIndicatorSize.label,
+                indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(
+                    width: 4.0,
+                    color: mainColorTheme,
+                  ),
+                  insets: EdgeInsets.fromLTRB(15.0, 0.0, 140.0, 0.0),
+                ),
                 indicatorColor: mainColorTheme,
                 indicatorWeight: 4,
                 labelStyle: boldTextStyle(color: mainBlackColorTheme),
                 tabs: [
                   Tab(
-                    child: Text(
-                      "Maintenance",
-                      style: TextStyle(color: mainBlackColorTheme),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Maintenance",
+                          style: TextStyle(color: mainBlackColorTheme),
+                        ),
+                      ],
                     ),
                   ),
                   Tab(
-                    child: Text(
-                      "My Repairs",
-                      style: TextStyle(color: mainBlackColorTheme),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "My Repairs",
+                          style: TextStyle(color: mainBlackColorTheme),
+                        ),
+                      ],
                     ),
                   ),
                 ],

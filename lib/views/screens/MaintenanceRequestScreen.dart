@@ -278,6 +278,9 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
             child: Column(
               children: [
                 TopRowBar(title: this.widget.mainCatg.maintenanceCategoryName),
+                SizedBox(
+                  height: 42,
+                ),
                 Container(
                   decoration: BoxDecoration(
                       color: mainLightGreyColorTheme,

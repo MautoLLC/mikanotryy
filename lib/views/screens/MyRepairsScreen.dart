@@ -9,6 +9,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/colors.dart';
+import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/auto_size_text/auto_size_text.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:intl/intl.dart';
@@ -18,8 +19,6 @@ import 'RepairDetailsPage.dart';
 
 class MyRepairsScreen extends StatelessWidget {
   static var tag = "/T5Dashboard";
-  // List<MaintenanceRequestModel> mRequestt=[];
-  // MyRequests({Key? key, required this.mRequestt,required this.mCards}) : super(key: key);
 
   int selectedPos = 1;
   late List<T5Bill>? mCards;
@@ -106,24 +105,11 @@ class MyRepairsScreen extends StatelessWidget {
                                 const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
                             child: Row(
                               children: [
-                                Container(
-                                  width: 80,
-                                  height: 60,
-                                  child: commonCacheImageWidget(
-                                      listmrequestsViewModel
+                                ImageBox(image: listmrequestsViewModel
                                           .maintenanceRequests![index]
                                           .mMaintenacerequest!
                                           .maintenanceCategory!
-                                          .maintenanceCategoryIcon,
-                                      25),
-                                  decoration: BoxDecoration(
-                                      color: Color.fromRGBO(
-                                          mainGreyColorTheme.red,
-                                          mainGreyColorTheme.green,
-                                          mainGreyColorTheme.blue,
-                                          0.3),
-                                      borderRadius: BorderRadius.circular(24)),
-                                ),
+                                          .maintenanceCategoryIcon),
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       14.3, 0.0, 0.0, 0.0),

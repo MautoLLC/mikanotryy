@@ -43,16 +43,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     child: Column(
                       children: [
                         Container(
-                          height: 60,
+                          height: 55,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: mainGreyColorTheme.withOpacity(0.18),
+                            borderRadius: BorderRadius.circular(33),
+                            color: mainGreyColorTheme.withOpacity(0.1),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              commonCacheImageWidget(ic_favorite, 20),
+                              commonCacheImageWidget(ic_favorite, 20, color: mainGreyColorTheme),
                               SizedBox(width: 5),
                               Text(
                                   numOfItems == 0
@@ -143,7 +143,7 @@ class FavoritesItem extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            color: mainGreyColorTheme.withOpacity(0.18),
+            color: mainGreyColorTheme2,
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 12.0, right: 12.0),
@@ -257,16 +257,16 @@ class FavoritesItem extends StatelessWidget {
         alignment: Alignment.centerRight,
         color: Colors.transparent,
         child: Container(
-          width: 60,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          alignment: Alignment.center,
+          width: 50,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(20),
             color: mainColorTheme,
           ),
-          child: Icon(
-            Icons.delete,
-            color: Colors.white,
+          child: Center(
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
           ),
         ),
       );

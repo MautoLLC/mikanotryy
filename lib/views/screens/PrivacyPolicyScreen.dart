@@ -67,7 +67,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                         finish(context);
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           color: mainBlackColorTheme,
@@ -86,7 +86,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                     child: GestureDetector(
                       onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           color: mainColorTheme,

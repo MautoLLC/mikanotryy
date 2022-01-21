@@ -69,3 +69,5 @@ const ic_Founder2 = "assets/Founder2.png";
 const ic_Founder3 = "assets/Founder3.png";
 
 const ic_Cart = "assets/cart.png";
+const ic_Location_Pin = "assets/icons8-location.png";
+const ic_error = "assets/icons8-error.png";

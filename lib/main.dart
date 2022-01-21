@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:sizer/sizer.dart';
@@ -34,6 +35,8 @@ class MyApp extends StatelessWidget {
         title: 'My Mikano',
         theme: ThemeData(
           primarySwatch: Colors.red,
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: PoppinsFamily
         ),
         home: new OPSplashScreen(),
       );

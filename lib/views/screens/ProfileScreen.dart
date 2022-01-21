@@ -60,8 +60,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Column(
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TopRowBar(title: 'Profile'),
@@ -260,7 +260,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ],
-            )),
+            ),
+        ),
       ),
     );
   }

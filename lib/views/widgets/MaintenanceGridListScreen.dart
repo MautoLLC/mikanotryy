@@ -8,6 +8,7 @@ import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/views/screens/MaintenanceRequestScreen.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
+import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
@@ -66,18 +67,8 @@ class MaintenanceGridListScreen extends StatelessWidget {
                               });
                             }
                           },
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: boxDecoration(
-                                radius: 33,
-                                showShadow: true,
-                                bgColor: mainGreyColorTheme.withOpacity(0.3)),
-                            child: commonCacheImageWidget(
-                                listCategViewModel.maincategs![index].mcateg!
-                                    .maintenanceCategoryIcon,
-                                60,
-                                width: 80),
-                          ),
+                          child: ImageBox(image: listCategViewModel.maincategs![index].mcateg!
+                                    .maintenanceCategoryIcon,),
                         ),
                       ),
                       Text(

@@ -73,23 +73,7 @@ class DashboardState extends State<Dashboard> {
                             MaterialPageRoute(
                                 builder: (context) => MenuScreen()));
                       },
-                      child: SizerUtil.deviceType == DeviceType.mobile
-                          ? Transform(
-                              alignment: Alignment.center,
-                              transform: Matrix4.rotationY(math.pi),
-                              child: SvgPicture.asset(ic_menu,
-                                  width: 25,
-                                  height: 25,
-                                  color: Color(0Xff767676)),
-                            )
-                          : Transform(
-                              alignment: Alignment.center,
-                              transform: Matrix4.rotationY(math.pi),
-                              child: SvgPicture.asset(ic_menu,
-                                  width: 40,
-                                  height: 40,
-                                  color: Color(0Xff767676)),
-                            ),
+                      child: SvgPicture.asset(ic_menu),
                     ),
                     Spacer(),
                     Image.asset(
@@ -158,7 +142,7 @@ class DashboardState extends State<Dashboard> {
                               alignment: Alignment.center,
                               decoration: boxDecoration(
                                   radius: 33,
-                                  showShadow: true,
+                                  showShadow: false,
                                   bgColor: mainGreyColorTheme.withOpacity(0.3)),
                               child: commonCacheImageWidget(
                                 mFavouriteList![index].icon,

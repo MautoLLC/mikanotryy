@@ -5,6 +5,7 @@ import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
+import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -45,18 +46,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
                     child: Row(
                       children: [
-                        Container(
-                          width: 80,
-                          height: 60,
-                          child: commonCacheImageWidget(ListIcons[index], 25),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(
-                                  mainGreyColorTheme.red,
-                                  mainGreyColorTheme.green,
-                                  mainGreyColorTheme.blue,
-                                  0.3),
-                              borderRadius: BorderRadius.circular(24)),
-                        ),
+                        ImageBox(image: ListIcons[index]),
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(14.3, 0.0, 0.0, 0.0),

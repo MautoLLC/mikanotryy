@@ -30,21 +30,24 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   }
 
   void _onItemTapped(int index) {
-    selectedIndex = index;
-    selectedIndex == 0
+    
+    index == 0
         ? Navigator.push(
             context, MaterialPageRoute(builder: (context) => MenuScreen()))
-        : setState(() {});
+        : setState(() {
+          selectedIndex = index;
+        });
   }
 
   @override
   Widget build(BuildContext context) {
+    // var _navigatorKey;
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BankingBottomNavigationBar(
         backgroundColor: bottomNavigationBarColor,
         selectedItemColor: bottomNavigationBarSelectedItemColor,
-        unselectedItemColor: mainGreyColorTheme,
+        unselectedItemColor: Colors.white,
         items: <BankingBottomNavigationBarItem>[
           BankingBottomNavigationBarItem(icon: ic_menu),
           BankingBottomNavigationBarItem(icon: ic_search),
@@ -59,6 +62,18 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
         onTap: _onItemTapped,
         type: BankingBottomNavigationBarType.fixed,
       ),
+      // body: Stack(
+      //   children: [
+      //     Navigator(
+      //         key: _navigatorKey,
+      //         onGenerateRoute: (RouteSettings settings) { 
+      //           return MaterialPageRoute(
+      //             builder: (BuildContext context) => pages[selectedIndex],
+      //      );
+      //   },
+      // ),
+          
+      //     ]),
       body: pages[selectedIndex],
     );
   }
