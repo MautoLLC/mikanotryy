@@ -3,6 +3,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/images.dart';
+import 'CartPage.dart';
 import 'DashboardScreen.dart';
 import 'PlaceholderScreen.dart';
 import 'ProfileScreen.dart';
@@ -19,7 +20,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     MenuScreen(),
     PlaceHolder(),
     Dashboard(),
-    PlaceHolder(),
+    CartPage(),
     ProfileScreen(),
   ];
 

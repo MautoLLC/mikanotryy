@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -7,6 +8,7 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
+import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
@@ -75,13 +77,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return FavoritesItem(
-                                id: snapshot.data![index].id,
-                                title: snapshot.data!.elementAt(index).Name,
-                                price: snapshot.data!
-                                    .elementAt(index)
-                                    .Price
-                                    .toString(),
-                                image: snapshot.data!.elementAt(index).Image,
+                                product: snapshot.data![index],
                                 OnPressed: OnDismissed,
                               );
                             },
@@ -105,19 +101,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 }
 
 class FavoritesItem extends StatelessWidget {
-  final String title;
-  final int id;
-  final String image;
-  final String code;
-  final String price;
+  final Product product;
   final Function OnPressed;
   const FavoritesItem({
     Key? key,
-    required this.id,
-    this.title = "Philips led bulb",
-    this.image = t3_led,
-    this.code = "Code-2344",
-    this.price = "14.88",
+    required this.product,
     required this.OnPressed,
   }) : super(key: key);
 
@@ -130,12 +118,12 @@ class FavoritesItem extends StatelessWidget {
       ),
       secondaryBackground: DeleteBtn(),
       direction: DismissDirection.endToStart,
-      key: Key(this.id.toString()),
+      key: Key(this.product.id.toString()),
       onDismissed: (direction) {
         OnPressed();
         // Then show a snackbar.
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("$title dismissed")));
+            .showSnackBar(SnackBar(content: Text("${product.Name} dismissed")));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 9.0),
@@ -161,7 +149,7 @@ class FavoritesItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
-                          child: commonCacheImageWidget(image, 65),
+                          child: commonCacheImageWidget(product.Image, 65),
                         )
                       ]),
                   SizedBox(width: 22),
@@ -175,7 +163,7 @@ class FavoritesItem extends StatelessWidget {
                           SizedBox(
                             width: 200,
                             child: Text(
-                              title,
+                              product.Name,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 14,
@@ -193,7 +181,7 @@ class FavoritesItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            code,
+                            product.Code,
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: "Poppins",
@@ -209,7 +197,7 @@ class FavoritesItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "\$${price}",
+                            "\$${product.Price}",
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: "Poppins",
@@ -226,25 +214,31 @@ class FavoritesItem extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 12),
-                  child: GestureDetector(
-                    onTap: () {
-                      // TODO add to cart logic
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          bottom: 6, top: 6, left: 16, right: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: mainColorTheme, width: 1),
-                        color: Colors.transparent,
+                  child:
+                      Consumer<ProductState>(builder: (context, ProductState, child) {
+                    return GestureDetector(
+                      onTap: () {
+                        // TODO add to cart logic
+                        ProductState.addProduct(product);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("${product.Name} added to cart")));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            bottom: 6, top: 6, left: 16, right: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: mainColorTheme, width: 1),
+                          color: Colors.transparent,
+                        ),
+                        child: Text(lbl_Add_To_Cart,
+                            style: TextStyle(
+                                color: mainColorTheme,
+                                fontSize: 14,
+                                fontFamily: PoppinsFamily)),
                       ),
-                      child: Text(lbl_Add_To_Cart,
-                          style: TextStyle(
-                              color: mainColorTheme,
-                              fontSize: 14,
-                              fontFamily: PoppinsFamily)),
-                    ),
-                  ),
+                    );
+                  }),
                 ),
               ),
             ]),

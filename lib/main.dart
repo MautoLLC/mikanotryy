@@ -6,7 +6,10 @@ import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import 'State/ProductState.dart';
 
 AppStore appStore = AppStore();
 final GlobalKey<NavigatorState> navigator =
@@ -29,8 +32,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseMessaging _fcm = FirebaseMessaging.instance;
     PushNotificationService(_fcm).initialise(context);
-    return Sizer(builder: (context, orientation, deviceType) {
-      return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ProductState>(create: (context) => ProductState()),
+      ],
+      child: MaterialApp(
         navigatorKey: navigator,
         title: 'My Mikano',
         theme: ThemeData(
@@ -38,7 +44,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: Colors.white,
             fontFamily: PoppinsFamily),
         home: new OPSplashScreen(),
-      );
-    });
+      ),
+    );
   }
 }
