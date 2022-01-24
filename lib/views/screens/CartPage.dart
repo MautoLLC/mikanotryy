@@ -90,7 +90,7 @@ class _CartPageState extends State<CartPage> {
                     return CartItem(
                         product: ProductState.productsInCart[index],
                         OnPressed: () {
-                          ProductState.toggleProductSelection(ProductState.productsInCart[index]);
+                          ProductState.removeFromSelected(ProductState.productsInCart[index]);
                           ProductState.removeProduct(ProductState.productsInCart[index]);
                         });
                   },

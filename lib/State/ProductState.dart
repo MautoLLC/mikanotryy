@@ -55,6 +55,11 @@ class ProductState extends ChangeNotifier {
     }
   }
 
+  void removeFromSelected(Product product) {
+    selectedProducts.remove(product);
+    notifyListeners();
+  }
+
   bool isProductSelected(Product product) {
     if (selectMode) {
       return selectedProducts.contains(product);

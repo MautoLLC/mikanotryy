@@ -7,8 +7,6 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/main/store/AppStore.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
-
 import 'State/ProductState.dart';
 
 AppStore appStore = AppStore();
