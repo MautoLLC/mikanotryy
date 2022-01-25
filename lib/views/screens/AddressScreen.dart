@@ -93,7 +93,15 @@ class _AddressScreenState extends State<AddressScreen> {
                                 onChanged: (value) {
                                   setState(() {
                                     CustomerService().addShippingAddress(
-                                        snapshot.data!.elementAt(index).address1.toString(), snapshot.data!.elementAt(index).city.toString(), '');
+                                        snapshot.data!
+                                            .elementAt(index)
+                                            .address1
+                                            .toString(),
+                                        snapshot.data!
+                                            .elementAt(index)
+                                            .city
+                                            .toString(),
+                                        '');
                                   });
                                 }),
                           )

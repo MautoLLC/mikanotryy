@@ -85,6 +85,7 @@ const lbl_Temperature = 'Temperature';
 const lbl_Gas = 'Gas';
 const lbl_Load = 'Load';
 
+const lbl_Categories = 'Categories';
 const lbl_Search = 'Search';
 const lbl_Top_Categories = 'Top Categories';
 const lbl_Popular_Products = 'Popular Products';
@@ -104,3 +105,7 @@ const lbl_Item_Selected = 'Item Selected';
 const lbl_Total_Price = 'Total Price';
 const lbl_Checkout = 'Checkout';
 const lbl_Actions_Needed = 'Actions Needed';
+const lbl_num_of_item_stored = '# of item stored';
+const lbl_Items = 'Items';
+const lbl_Stored_Items = 'Stored Items';
+const lbl_Shop_by_Category = 'Shop by Category';

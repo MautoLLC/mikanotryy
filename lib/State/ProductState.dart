@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
 
 class ProductState extends ChangeNotifier {
   bool selectMode = false;
   List<Product> productsInCart = [];
   List<Product> selectedProducts = [];
   List<Product> favoriteProducts = [];
+  List<Product> allProducts = [];
+  int allProductNumbers = 0;
+
+  void updateAllProductNumbers() {
+    ProductsService().getProducts().then((value) {
+      allProducts = value;
+      allProductNumbers = value.length;
+      notifyListeners();
+    });
+  }
+
+  int getAllProductNumbers() {
+    updateAllProductNumbers();
+    return allProductNumbers;
+  }
 
   void addProductToFavorite(Product product) {
     favoriteProducts.add(product);

@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
     PushNotificationService(_fcm).initialise(context);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ProductState>(create: (context) => ProductState()),
+        ChangeNotifierProvider<ProductState>(
+            create: (context) => ProductState()),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

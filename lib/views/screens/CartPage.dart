@@ -90,8 +90,10 @@ class _CartPageState extends State<CartPage> {
                     return CartItem(
                         product: ProductState.productsInCart[index],
                         OnPressed: () {
-                          ProductState.removeFromSelected(ProductState.productsInCart[index]);
-                          ProductState.removeProduct(ProductState.productsInCart[index]);
+                          ProductState.removeFromSelected(
+                              ProductState.productsInCart[index]);
+                          ProductState.removeProduct(
+                              ProductState.productsInCart[index]);
                         });
                   },
                 ),
@@ -116,7 +118,10 @@ class _CartPageState extends State<CartPage> {
                   ],
                 ),
                 SizedBox(height: 30),
-                T13Button(textContent: lbl_Checkout, onPressed: (){},),
+                T13Button(
+                  textContent: lbl_Checkout,
+                  onPressed: () {},
+                ),
               ],
             ),
           ),
@@ -144,7 +149,9 @@ class CartItem extends StatelessWidget {
             color: Colors.transparent,
           ),
           secondaryBackground: DeleteBtn(),
-          direction: ProductState.selectMode?DismissDirection.none:DismissDirection.endToStart,
+          direction: ProductState.selectMode
+              ? DismissDirection.none
+              : DismissDirection.endToStart,
           key: Key(this.product.id.toString()),
           onDismissed: (direction) {
             OnPressed();
@@ -197,7 +204,8 @@ class CartItem extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     SizedBox(
-                                      width: !ProductState.selectMode?200:150,
+                                      width:
+                                          !ProductState.selectMode ? 200 : 150,
                                       child: Text(
                                         product.Name,
                                         overflow: TextOverflow.ellipsis,

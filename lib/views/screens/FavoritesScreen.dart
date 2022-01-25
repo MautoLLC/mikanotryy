@@ -214,8 +214,8 @@ class FavoritesItem extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 12),
-                  child:
-                      Consumer<ProductState>(builder: (context, ProductState, child) {
+                  child: Consumer<ProductState>(
+                      builder: (context, ProductState, child) {
                     return GestureDetector(
                       onTap: () {
                         // TODO add to cart logic

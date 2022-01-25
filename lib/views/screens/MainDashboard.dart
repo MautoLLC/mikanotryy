@@ -7,6 +7,7 @@ import 'CartPage.dart';
 import 'DashboardScreen.dart';
 import 'PlaceholderScreen.dart';
 import 'ProfileScreen.dart';
+import 'SearchScreen.dart';
 import 'TechnicianHome.dart';
 
 class Theme5Dashboard extends StatefulWidget {
@@ -18,7 +19,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   var selectedIndex = 0;
   var pages = [
     MenuScreen(),
-    PlaceHolder(),
+    SearchPage(),
     Dashboard(),
     CartPage(),
     ProfileScreen(),

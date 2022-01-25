@@ -10,11 +10,9 @@ import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/utils/images.dart';
-import 'dart:math' as math;
 import 'package:mymikano_app/utils/strings.dart';
 
 import 'ListPage.dart';

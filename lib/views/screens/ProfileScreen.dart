@@ -71,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: SubTitleText(title: 'Account'),
               ),
               SizedBox(
-                    height: 10,
+                height: 10,
               ),
               Column(
                 children: [
@@ -242,51 +242,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: lbl_Privacy,
                           ),
                         ),
-                        privacyPolicyAccepted?GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PrivacyPolicyScreen()));
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: mainGreyColorTheme),
-                                child: Icon(
-                                  Icons.keyboard_arrow_right_outlined,
-                                  color: Colors.white,
-                                )),
-                          ),
-                        ):
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PrivacyPolicyScreen()));
-                          },
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: yellowColor),
+                        privacyPolicyAccepted
+                            ? GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          PrivacyPolicyScreen()));
+                                },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(lbl_Actions_Needed,style: TextStyle(color: Colors.white,fontSize: 14),),
-                                      Icon(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 0.0, 8.0, 0.0),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: mainGreyColorTheme),
+                                      child: Icon(
                                         Icons.keyboard_arrow_right_outlined,
                                         color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ),
-                        ),
+                                      )),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          PrivacyPolicyScreen()));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 0.0, 8.0, 0.0),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: yellowColor),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              lbl_Actions_Needed,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14),
+                                            ),
+                                            Icon(
+                                              Icons
+                                                  .keyboard_arrow_right_outlined,
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                ),
+                              ),
                       ],
                     ),
                   ),
