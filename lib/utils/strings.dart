@@ -103,3 +103,4 @@ const lbl_Select = 'Select';
 const lbl_Item_Selected = 'Item Selected';
 const lbl_Total_Price = 'Total Price';
 const lbl_Checkout = 'Checkout';
+const lbl_Actions_Needed = 'Actions Needed';

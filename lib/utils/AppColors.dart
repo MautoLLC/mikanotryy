@@ -53,7 +53,7 @@ const bottomNavigationBarSelectedItemColor = Color(0xFFDE1D39);
 const backArrowColor = Color(0xFF111111);
 const mainBlackColorTheme = Color(0xFF111111);
 const lightBorderColor = Color(0xFFF1F1F1);
-
+const yellowColor = Color(0xFFF39C12);
 // status colors
 const PendingColor = Color(0xFFF39C12);
 const AssignedColor = Color(0xFF014FF2);

@@ -24,9 +24,10 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late Directory directory;
-  late File file; //
+  late File file;
   late String fileContent;
   late SharedPreferences prefs;
+  bool privacyPolicyAccepted = false;
 
   TechnicianModel? tech =
       new TechnicianModel(1, 'null', 'null', ic_profile_7, 'null', 'null');
@@ -68,6 +69,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                 child: SubTitleText(title: 'Account'),
+              ),
+              SizedBox(
+                    height: 10,
               ),
               Column(
                 children: [
@@ -113,6 +117,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: mainGreyColorTheme,
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Row(
                     children: [
@@ -235,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: lbl_Privacy,
                           ),
                         ),
-                        GestureDetector(
+                        privacyPolicyAccepted?GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PrivacyPolicyScreen()));
@@ -250,6 +257,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Icon(
                                   Icons.keyboard_arrow_right_outlined,
                                   color: Colors.white,
+                                )),
+                          ),
+                        ):
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PrivacyPolicyScreen()));
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: yellowColor),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(lbl_Actions_Needed,style: TextStyle(color: Colors.white,fontSize: 14),),
+                                      Icon(
+                                        Icons.keyboard_arrow_right_outlined,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                 )),
                           ),
                         ),
