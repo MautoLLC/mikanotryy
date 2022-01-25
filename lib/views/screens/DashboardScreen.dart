@@ -62,29 +62,20 @@ class DashboardState extends State<Dashboard> {
               child: Container(
                 transform: Matrix4.translationValues(0.0, 8.0, 0.0),
                 margin: EdgeInsets.only(left: 16, right: 16),
-                child: Row(
+                child: Stack(
+                  alignment: Alignment.center,
                   children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MenuScreen()));
-                      },
-                      child: SvgPicture.asset(ic_menu),
-                    ),
-                    Spacer(),
-                    Image.asset(
-                      'images/MyMikanoLogo2.png',
-                      width: 60,
-                      height: 60,
-                    ),
-                    Spacer(),
-                    IconButton(
-                        onPressed: () {
-                          // TODO Notification Page Open
-                        },
-                        icon: Icon(Icons.notifications))
+                    Align(
+                        alignment: Alignment.center,
+                        child: commonCacheImageWidget(ic_AppLogo, 60)),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                          onPressed: () {
+                            // TODO Notification Page Open
+                          },
+                          icon: Icon(Icons.notifications)),
+                    )
                   ],
                 ),
               ),

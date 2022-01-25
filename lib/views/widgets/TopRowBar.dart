@@ -10,9 +10,10 @@ class TopRowBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
+    return Stack(alignment: Alignment.center, children: [
+      Align(
+        alignment: Alignment.centerLeft,
+        child: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
             color: backArrowColor,
@@ -21,12 +22,13 @@ class TopRowBar extends StatelessWidget {
             finish(context);
           },
         ),
-        Spacer(),
-        TitleText(
+      ),
+      Align(
+        alignment: Alignment.center,
+        child: TitleText(
           title: title,
         ),
-        Spacer(),
-      ],
-    );
+      ),
+    ]);
   }
 }
