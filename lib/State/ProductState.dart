@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
-import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
+import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
+import 'package:mymikano_app/services/StoreServices/ProductService.dart';
 
 class ProductState extends ChangeNotifier {
   bool selectMode = false;
@@ -10,27 +11,40 @@ class ProductState extends ChangeNotifier {
   List<Product> allProducts = [];
   int allProductNumbers = 0;
 
-  void updateAllProductNumbers() {
+  ProductState() {
+    update();
+  }
+
+  void update() {
     ProductsService().getProducts().then((value) {
       allProducts = value;
       allProductNumbers = value.length;
       notifyListeners();
     });
+    CustomerService().getAllFavoriteItemsforLoggedInUser().then((value) {
+      favoriteProducts = value;
+      notifyListeners();
+    });
   }
 
   int getAllProductNumbers() {
-    updateAllProductNumbers();
+    // updateAllProductNumbers();
     return allProductNumbers;
   }
 
-  void addProductToFavorite(Product product) {
-    favoriteProducts.add(product);
+  void addorremoveProductToFavorite(Product product) {
+    if (favoriteProducts.contains(product)) {
+      favoriteProducts.remove(product);
+      ProductsService().removeProductToFavorite(product.id);
+    } else {
+      favoriteProducts.add(product);
+      ProductsService().addProductToFavorite(product.id);
+    }
     notifyListeners();
   }
 
-  void removeProductFromFavorite(Product product) {
-    favoriteProducts.remove(product);
-    notifyListeners();
+  bool isInFavorite(Product product) {
+    return favoriteProducts.contains(product);
   }
 
   int get totalFavoriteProducts => favoriteProducts.length;

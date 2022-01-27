@@ -7,6 +7,8 @@ const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 
 const userApiUrl = 'http://dev.codepickles.com:8083';
 const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
+const MikanoShopGetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
+const MikanoShopSetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 
 const MaintenanceApiBaseUrl = 'http://dev.codepickles.com:8085';
 const GetMainCategoriesURL =
@@ -20,6 +22,7 @@ const PostMaintenaceRequestURL =
 const GetRealEstatesURL = '$MaintenanceApiBaseUrl/api/RealEstates';
 const GetMaintenaceRequestURL =
     '$MaintenanceApiBaseUrl/api/MaintenanceRequests';
+const MikanoShopContactUs = '$MaintenanceApiBaseUrl/api/ContactUs';
 
 const InspectionApiBaseUrl = 'http://dev.codepickles.com:8087';
 const GetInspectionURL = '$InspectionApiBaseUrl/api/Inspections/';
@@ -45,7 +48,10 @@ const MikanoShopAddShippingAddress =
     '$MikanoShopMainURl/customers/{customerId}/shippingaddress';
 const MikanoShopGetUserById = '$MikanoShopMainURl/customers/{customerId}';
 const MikanoShopGetLoggedInUser = '$MikanoShopMainURl/customers/me';
-
+const MikanoAddProductToFavorites =
+    '$MikanoShopMainURl/customers/AddFavoriteProduct/{id}';
+const MikanoRemoveProductFromFavorites =
+    '$MikanoShopMainURl/customers/RemoveFavoriteProduct/{id}';
 const mainAppName = 'My Mikano App';
 
 const fontRegular = 'Roboto';

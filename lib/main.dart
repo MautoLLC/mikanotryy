@@ -8,6 +8,7 @@ import 'package:mymikano_app/utils/main/store/AppStore.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'State/ProductState.dart';
+import 'State/UserState.dart';
 
 AppStore appStore = AppStore();
 final GlobalKey<NavigatorState> navigator =
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<ProductState>(
             create: (context) => ProductState()),
+        ChangeNotifierProvider<UserState>(create: (context) => UserState()),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

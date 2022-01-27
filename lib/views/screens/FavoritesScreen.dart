@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
-import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
+import 'package:mymikano_app/services/StoreServices/ProductService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -27,75 +27,122 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Padding(
-        padding: EdgeInsets.only(left: 16, right: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TopRowBar(title: lbl_Favorites),
-            SizedBox(height: 40),
-            FutureBuilder(
-              future: ProductsService().getProducts(),
-              builder: (context, AsyncSnapshot<List<Product>> snapshot) {
-                if (snapshot.hasData) {
-                  numOfItems = snapshot.data!.length;
-                  return Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 55,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(33),
-                            color: mainGreyColorTheme.withOpacity(0.1),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              commonCacheImageWidget(ic_favorite, 20,
-                                  color: mainGreyColorTheme),
-                              SizedBox(width: 5),
-                              Text(
-                                  numOfItems == 0
-                                      ? "You have no favorites yet"
-                                      : "You have ${snapshot.data!.length} items in your Favorites",
-                                  style: TextStyle(
-                                      color: mainGreyColorTheme,
-                                      fontSize: 12,
-                                      fontFamily: PoppinsFamily)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Expanded(
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return FavoritesItem(
-                                product: snapshot.data![index],
-                                OnPressed: OnDismissed,
-                              );
-                            },
-                          ),
-                        )
-                      ],
+    return Consumer<ProductState>(
+      builder: (context, state, child) => Scaffold(
+        body: SafeArea(
+            child: Padding(
+          padding: EdgeInsets.only(left: 16, right: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TopRowBar(title: lbl_Favorites),
+              SizedBox(height: 40),
+              Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 55,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(33),
+                        color: mainGreyColorTheme.withOpacity(0.1),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          commonCacheImageWidget(ic_favorite, 20,
+                              color: mainGreyColorTheme),
+                          SizedBox(width: 5),
+                          Text(
+                              numOfItems == 0
+                                  ? "You have no favorites yet"
+                                  : "You have ${state.favoriteProducts.length} items in your Favorites",
+                              style: TextStyle(
+                                  color: mainGreyColorTheme,
+                                  fontSize: 12,
+                                  fontFamily: PoppinsFamily)),
+                        ],
+                      ),
                     ),
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            )
-          ],
-        ),
-      )),
+                    SizedBox(height: 20),
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.favoriteProducts.length,
+                        itemBuilder: (context, index) {
+                          return FavoritesItem(
+                            product: state.favoriteProducts[index],
+                            OnPressed: OnDismissed,
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              )
+              // FutureBuilder(
+              //   future: ProductsService().getProducts(),
+              //   builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+              //     if (snapshot.hasData) {
+              //       numOfItems = snapshot.data!.length;
+              //       return Expanded(
+              //         child: Column(
+              //           children: [
+              //             Container(
+              //               height: 55,
+              //               width: MediaQuery.of(context).size.width,
+              //               decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.circular(33),
+              //                 color: mainGreyColorTheme.withOpacity(0.1),
+              //               ),
+              //               child: Row(
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 children: [
+              //                   commonCacheImageWidget(ic_favorite, 20,
+              //                       color: mainGreyColorTheme),
+              //                   SizedBox(width: 5),
+              //                   Text(
+              //                       numOfItems == 0
+              //                           ? "You have no favorites yet"
+              //                           : "You have ${snapshot.data!.length} items in your Favorites",
+              //                       style: TextStyle(
+              //                           color: mainGreyColorTheme,
+              //                           fontSize: 12,
+              //                           fontFamily: PoppinsFamily)),
+              //                 ],
+              //               ),
+              //             ),
+              //             SizedBox(height: 20),
+              //             Expanded(
+              //               child: ListView.builder(
+              //                 scrollDirection: Axis.vertical,
+              //                 physics: BouncingScrollPhysics(),
+              //                 shrinkWrap: true,
+              //                 itemCount: snapshot.data!.length,
+              //                 itemBuilder: (context, index) {
+              //                   return FavoritesItem(
+              //                     product: snapshot.data![index],
+              //                     OnPressed: OnDismissed,
+              //                   );
+              //                 },
+              //               ),
+              //             )
+              //           ],
+              //         ),
+              //       );
+              //     } else {
+              //       return Center(
+              //         child: CircularProgressIndicator(),
+              //       );
+              //     }
+              //   },
+              // )
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

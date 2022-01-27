@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import '../../../main.dart';
-import '../../utils/strings.dart';
 import '../../utils/appsettings.dart';
 
 Widget t13EditTextStyle(var hintText, var contt,
@@ -17,7 +13,7 @@ Widget t13EditTextStyle(var hintText, var contt,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
       hintText: hintText,
-      hintStyle: primaryTextStyle(color: black),
+      hintStyle: primaryTextStyle(color: textFieldHintColor),
       filled: true,
       fillColor: lightBorderColor,
       enabledBorder: OutlineInputBorder(

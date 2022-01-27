@@ -116,11 +116,20 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                   AsyncSnapshot<bool> snapshot,
                 ) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child: SpinKitCircle(
-                      color: Colors.black,
-                      size: 65,
-                    ));
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SpinKitCircle(
+                            color: Colors.black,
+                            size: 65,
+                          ),
+                        ],
+                      ),
+                    );
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
                       return Custom_Alert(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/ProductDetailsPage.dart';
+import 'package:provider/provider.dart';
 
 import 'AppWidget.dart';
 import 'auto_size_text/auto_size_text.dart';
@@ -128,7 +130,7 @@ class ItemElement extends StatelessWidget {
               ],
             ),
           ),
-          LikeWidget()
+          LikeWidget(product: temp),
         ]),
       ),
     );
@@ -136,11 +138,8 @@ class ItemElement extends StatelessWidget {
 }
 
 class LikeWidget extends StatefulWidget {
-  bool liked;
-  LikeWidget({
-    Key? key,
-    this.liked = false,
-  }) : super(key: key);
+  Product product;
+  LikeWidget({Key? key, required this.product}) : super(key: key);
 
   @override
   State<LikeWidget> createState() => _LikeWidgetState();
@@ -149,18 +148,20 @@ class LikeWidget extends StatefulWidget {
 class _LikeWidgetState extends State<LikeWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              widget.liked = !widget.liked;
-            });
-          },
-          child: commonCacheImageWidget(ic_heart, 20,
-              color: !widget.liked ? null : mainColorTheme),
+    return Consumer<ProductState>(
+      builder: (context, state, child) => Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: GestureDetector(
+            onTap: () {
+              state.addorremoveProductToFavorite(widget.product);
+            },
+            child: commonCacheImageWidget(ic_heart, 20,
+                color: !state.isInFavorite(widget.product)
+                    ? null
+                    : mainColorTheme),
+          ),
         ),
       ),
     );

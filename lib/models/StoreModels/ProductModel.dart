@@ -7,6 +7,7 @@ class Product {
   String Code;
   String Category;
   int Rating;
+  bool liked;
   Product(
       {required this.Name,
       required this.Price,
@@ -15,6 +16,7 @@ class Product {
       required this.Code,
       required this.Category,
       required this.Rating,
+      this.liked = false,
       this.id = 0});
 
   // From json

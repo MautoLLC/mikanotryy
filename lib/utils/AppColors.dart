@@ -55,6 +55,8 @@ const mainBlackColorTheme = Color(0xFF111111);
 const lightBorderColor = Color(0xFFF1F1F1);
 const yellowColor = Color(0xFFF39C12);
 const GreenColor = Color(0xFF61D27A);
+const textFieldHintColor = Color(0xFF484848);
+
 // status colors
 const PendingColor = Color(0xFFF39C12);
 const AssignedColor = Color(0xFF014FF2);

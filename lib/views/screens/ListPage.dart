@@ -5,7 +5,7 @@ import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:mymikano_app/services/StoreServices/GetProducts.dart';
+import 'package:mymikano_app/services/StoreServices/ProductService.dart';
 
 import 'ProductDetailsPage.dart';
 

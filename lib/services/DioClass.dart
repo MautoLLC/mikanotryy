@@ -16,10 +16,6 @@ class DioClass {
 
   static Future<Dio> getDio() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/credentials.json');
-    String fileContent = await file.readAsString();
     Dio dio = Dio();
     dio.interceptors.add(
         InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
