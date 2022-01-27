@@ -11,37 +11,24 @@ import 'AppWidget.dart';
 import 'auto_size_text/auto_size_text.dart';
 
 class ItemElement extends StatelessWidget {
-  final String title;
-  final String image;
-  final String code;
-  final String price;
-  final String id;
-  final String Description;
-  final String Category;
-  final int Rating;
+  final Product product;
   const ItemElement({
     Key? key,
-    this.id = '0',
-    this.Description = '',
-    this.Category = '',
-    this.Rating = 0,
-    required this.title,
-    required this.image,
-    required this.code,
-    required this.price,
+    required this.product
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     Product temp = Product(
-      id: int.parse(id),
-      Name: title,
-      Price: double.parse(price),
-      Description: Description,
-      Image: image,
-      Code: code,
-      Category: Category,
-      Rating: Rating,
+      id: int.parse(product.id.toString()),
+      Name: product.Name,
+      Price: double.parse(product.Price.toString()),
+      Description: product.Description,
+      Image: product.Image,
+      Code: product.Code,
+      Category: product.Category,
+      Rating: product.Rating,
     );
     return GestureDetector(
       onTap: () {
@@ -69,8 +56,8 @@ class ItemElement extends StatelessWidget {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: commonCacheImageWidget(image, 85,
-                              fit: BoxFit.fitWidth)),
+                          child: commonCacheImageWidget(product.Image, 85,
+                              fit: BoxFit.fitHeight)),
                     ),
                   ],
                 ),
@@ -80,7 +67,7 @@ class ItemElement extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        title,
+                        product.Name,
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: "Poppins",
@@ -101,7 +88,7 @@ class ItemElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      code,
+                      product.Code,
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: "Poppins",
@@ -117,7 +104,7 @@ class ItemElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "\$${price}",
+                      "\$${product.Price}",
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: "Poppins",

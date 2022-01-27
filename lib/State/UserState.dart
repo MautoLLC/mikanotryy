@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 
 class UserState extends ChangeNotifier {
-  bool termsAccepted = false;
+  bool termsAccepted = true;
 
   UserState() {
     fetchtermsState();

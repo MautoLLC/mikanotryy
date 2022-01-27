@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
@@ -8,6 +10,10 @@ class ProductState extends ChangeNotifier {
   List<Product> productsInCart = [];
   List<Product> selectedProducts = [];
   List<Product> favoriteProducts = [];
+  List<Product> purchasedProducts = [];
+  List<Product> trendingProducts = [];
+  List<Product> popularProducts = [];
+  List<Product> flashsaleProducts = [];
   List<Product> allProducts = [];
   int allProductNumbers = 0;
 
@@ -15,22 +21,34 @@ class ProductState extends ChangeNotifier {
     update();
   }
 
-  void update() {
-    ProductsService().getProducts().then((value) {
-      allProducts = value;
-      allProductNumbers = value.length;
-      notifyListeners();
-    });
-    CustomerService().getAllFavoriteItemsforLoggedInUser().then((value) {
-      favoriteProducts = value;
-      notifyListeners();
-    });
+  void update() async {
+    allProducts = await ProductsService().getProducts();
+    for (var i = 0; i < 8; i++) {
+      Random random = new Random();
+      Product item = allProducts[random.nextInt(allProducts.length)];
+      purchasedProducts.add(item);
+    }
+    for (var i = 0; i < 4; i++) {
+      Random random = new Random();
+      Product item = allProducts[random.nextInt(allProducts.length)];
+      trendingProducts.add(item);
+    }
+    for (var i = 0; i < 4; i++) {
+      Random random = new Random();
+      Product item = allProducts[random.nextInt(allProducts.length)];
+      popularProducts.add(item);
+    }
+    for (var i = 0; i < 3; i++) {
+      Random random = new Random();
+      Product item = allProducts[random.nextInt(allProducts.length)];
+      flashsaleProducts.add(item);
+    }
+    favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
+    notifyListeners();
   }
 
-  int getAllProductNumbers() {
-    // updateAllProductNumbers();
-    return allProductNumbers;
-  }
+  int get getAllProductNumbers => allProductNumbers;
+
 
   void addorremoveProductToFavorite(Product product) {
     if (favoriteProducts.contains(product)) {
