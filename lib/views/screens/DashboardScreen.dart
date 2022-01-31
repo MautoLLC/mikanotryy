@@ -9,7 +9,7 @@ import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
-import 'package:mymikano_app/views/widgets/VerticalItemElement.dart';
+import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/models/DashboardCardModel.dart';
@@ -293,18 +293,16 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox(
-                  height: 450,
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: state.trendingProducts.length,
-                      itemBuilder: (context, index) {
-                        Product temp = state.trendingProducts[index];
-                        return VerticalItemElement(
-                          product: temp,
-                        );
-                      }),
-                ),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: state.trendingProducts.length,
+                    itemBuilder: (context, index) {
+                      Product temp = state.trendingProducts[index];
+                      return HorizontalItemElement(
+                        product: temp,
+                      );
+                    }),
               )
             ]),
           )),

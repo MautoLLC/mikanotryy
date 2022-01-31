@@ -32,4 +32,20 @@ class Product {
         Category: json['Category'] == null ? '' : json['Category'],
         Rating: json['approved_rating_sum']);
   }
+
+  // To json
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': Name,
+      'price': Price,
+      'full_description': Description,
+      'images': [
+        {'src': Image}
+      ],
+      'sku': Code,
+      'Category': Category,
+      'approved_rating_sum': Rating
+    };
+  }
 }

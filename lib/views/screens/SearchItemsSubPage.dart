@@ -5,7 +5,7 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
-import 'package:mymikano_app/views/widgets/VerticalItemElement.dart';
+import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:provider/provider.dart';
 
 class SearchItemSubPage extends StatelessWidget {
@@ -26,7 +26,7 @@ class SearchItemSubPage extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 Random random = new Random();
                 Product temp = state.allProducts[random.nextInt(state.allProducts.length)];
-                return VerticalItemElement(
+                return HorizontalItemElement(
                   product: temp,
                 );
               },

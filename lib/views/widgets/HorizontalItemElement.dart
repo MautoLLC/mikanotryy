@@ -5,9 +5,9 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/ProductDetailsPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 
-class VerticalItemElement extends StatelessWidget {
+class HorizontalItemElement extends StatelessWidget {
   Product product;
-  VerticalItemElement({
+  HorizontalItemElement({
     Key? key,
     required this.product,
   }) : super(key: key);

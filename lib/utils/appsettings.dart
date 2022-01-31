@@ -48,10 +48,8 @@ const MikanoShopAddShippingAddress =
     '$MikanoShopMainURl/customers/{customerId}/shippingaddress';
 const MikanoShopGetUserById = '$MikanoShopMainURl/customers/{customerId}';
 const MikanoShopGetLoggedInUser = '$MikanoShopMainURl/customers/me';
-const MikanoAddProductToFavorites =
-    '$MikanoShopMainURl/customers/AddFavoriteProduct/{id}';
-const MikanoRemoveProductFromFavorites =
-    '$MikanoShopMainURl/customers/RemoveFavoriteProduct/{id}';
+const MikanoFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items';
+
 const mainAppName = 'My Mikano App';
 
 const fontRegular = 'Roboto';

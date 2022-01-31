@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -75,7 +76,7 @@ class _CartPageState extends State<CartPage> {
                           color: mainGreyColorTheme),
                       SizedBox(width: 5),
                       Text(
-                          "You have ${ProductState.totalProducts} items in your list cart",
+                          "You have ${ProductState.productsInCart.length} items in your list cart",
                           style: TextStyle(
                               color: mainGreyColorTheme, fontSize: 12)),
                     ],
@@ -85,7 +86,7 @@ class _CartPageState extends State<CartPage> {
                 ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: ProductState.totalProducts,
+                  itemCount: ProductState.productsInCart.length,
                   itemBuilder: (context, index) {
                     return CartItem(
                         product: ProductState.productsInCart[index],
@@ -102,7 +103,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Item_Selected, style: TextStyle(fontSize: 14)),
                     Text(
-                      "${ProductState.selectedProductsCount}",
+                      "${ProductState.selectedProducts.length}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -112,7 +113,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
-                      "\$${ProductState.selectedProductsPrice}",
+                      "\$${ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price*product.quantity)}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -132,7 +133,7 @@ class _CartPageState extends State<CartPage> {
 }
 
 class CartItem extends StatelessWidget {
-  final Product product;
+  final CartProduct product;
   final Function OnPressed;
   const CartItem({
     Key? key,
@@ -157,7 +158,7 @@ class CartItem extends StatelessWidget {
             OnPressed();
             // Then show a snackbar.
             ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("${product.Name} removed from cart")));
+                SnackBar(content: Text("${product.product.Name} removed from cart")));
           },
           child: Padding(
             padding: const EdgeInsets.only(bottom: 9.0),
@@ -192,7 +193,7 @@ class CartItem extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     child: commonCacheImageWidget(
-                                        product.Image, 65),
+                                        product.product.Image, 65),
                                   )
                                 ]),
                             SizedBox(width: 22),
@@ -205,9 +206,9 @@ class CartItem extends StatelessWidget {
                                   children: [
                                     SizedBox(
                                       width:
-                                          !ProductState.selectMode ? 200 : 150,
+                                          !ProductState.selectMode ? 100 : 150,
                                       child: Text(
-                                        product.Name,
+                                        product.product.Name,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 14,
@@ -225,7 +226,7 @@ class CartItem extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      product.Code,
+                                      product.product.Code,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: "Poppins",
@@ -241,7 +242,7 @@ class CartItem extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "\$${product.Price}",
+                                      "\$${product.product.Price}",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: "Poppins",
@@ -252,32 +253,37 @@ class CartItem extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            if (!ProductState.selectMode)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: (){
+                                          ProductState.decreaseCartItemQuantity(product);
+                                        },
+                                        icon: Icon(Icons.remove_circle, color: mainGreyColorTheme,),
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(product.quantity.toString(), style: TextStyle(color: mainGreyColorTheme, fontSize: 14),),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      IconButton(
+                                        onPressed: (){
+                                          ProductState.increaseCartItemQuantity(product);
+                                        },
+                                        icon: Icon(Icons.add_circle, color: mainGreyColorTheme,),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
                           ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.bottomRight,
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.only(bottom: 12),
-                        //     child: GestureDetector(
-                        //         onTap: () {
-                        //           // TODO add to cart logic
-                        //         },
-                        //         child: Container(
-                        //           padding: EdgeInsets.only(
-                        //               bottom: 6, top: 6, left: 16, right: 16),
-                        //           decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(20),
-                        //             border: Border.all(color: mainColorTheme, width: 1),
-                        //             color: Colors.transparent,
-                        //           ),
-                        //           child: Text(lbl_Add_To_Cart,
-                        //               style: TextStyle(
-                        //                   color: mainColorTheme,
-                        //                   fontSize: 14)),
-                        //         ),
-                        //     ),
-                        //   ),
-                        // ),
                       ]),
                     ),
                   ),

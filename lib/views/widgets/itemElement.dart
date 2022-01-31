@@ -57,7 +57,7 @@ class ItemElement extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: commonCacheImageWidget(product.Image, 85,
-                              fit: BoxFit.fitHeight)),
+                              fit: BoxFit.fill)),
                     ),
                   ],
                 ),

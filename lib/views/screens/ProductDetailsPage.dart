@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -144,7 +145,8 @@ class ProductDetailsPage extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        state.addProduct(product);
+                        CartProduct p = CartProduct(product: product, quantity: Quantity);
+                        state.addProduct(p);
                         toast("${product.Name} added to cart");
                       },
                       child: Container(

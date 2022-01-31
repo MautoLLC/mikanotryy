@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -76,7 +77,11 @@ class CustomerService {
   Future<List<Product>> getAllFavoriteItemsforLoggedInUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.get(
-      MikanoShopGetLoggedInUser,
+      MikanoFavoritAndCartItems,
+      queryParameters: {
+        "ShoppingCartType": "Wishlist",
+        "CustomerId": prefs.getString("StoreCustomerId").toString()
+      },
       options: Options(headers: {
         "Authorization": "Bearer ${prefs.getString("StoreToken")}"
       }),
@@ -84,9 +89,9 @@ class CustomerService {
     if (response.statusCode == 200) {
       List<Product> products = [];
       try {
-        var productsdata = response.data['customers'][0]['FavoriteProducts'];
+        var productsdata = response.data["shopping_carts"];
         for (var item in productsdata) {
-          Product temp = Product.fromJson(item);
+          Product temp = Product.fromJson(item["product"]);
           products.add(temp);
         }
         return products;
@@ -96,6 +101,100 @@ class CustomerService {
       }
     } else {
       throw Exception('Failed to get shipping addresses');
+    }
+  }
+  Future<void> deleteFavoriteItemsforLoggedInUser(List<int> arr) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Response response = await dio.delete(
+      MikanoFavoritAndCartItems,
+      queryParameters: {
+        "Ids": arr,
+        "ShoppingCartType": "Wishlist",
+        "CustomerId": prefs.getString("StoreCustomerId").toString()
+      },
+      options: Options(headers: {
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to delete item from favorites');
+    }
+  }
+
+    Future<List<CartProduct>> getAllCartItemsforLoggedInUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Response response = await dio.get(
+      MikanoFavoritAndCartItems,
+      queryParameters: {
+        "ShoppingCartType": "ShoppingCart",
+        "CustomerId": prefs.getString("StoreCustomerId").toInt()
+      },
+      options: Options(headers: {
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      List<CartProduct> products = [];
+      try {
+        var productsdata = response.data["shopping_carts"];
+        for (var item in productsdata) {
+          CartProduct temp = CartProduct.fromJson(item);
+          products.add(temp);
+        }
+        return products;
+      } catch (e) {
+        print(e);
+        return products;
+      }
+    } else {
+      throw Exception('Failed to get cart Items');
+    }
+  }
+
+  Future<void> addCartItemsforLoggedInUser(CartProduct product) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Response response = await dio.post(
+      MikanoFavoritAndCartItems,
+      data:{
+        "shopping_cart_item": {
+          "quantity": 1,
+          "shopping_cart_type": "ShoppingCart",
+          "product_id": product.product.id,
+          "customer_id": prefs.getString("StoreCustomerId").toInt(),
+        }
+      },
+      options: Options(headers: {
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to add to cart');
+    }
+  }
+  Future<void> addFavoriteItemsforLoggedInUser(Product product) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Response response = await dio.post(
+      MikanoFavoritAndCartItems,
+      data:{
+        "shopping_cart_item": {
+          "quantity": 1,
+          "shopping_cart_type": "Wishlist",
+          "product_id": product.id,
+          "customer_id": prefs.getString("StoreCustomerId").toInt(),
+        }
+      },
+      options: Options(headers: {
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to add to cart');
     }
   }
 

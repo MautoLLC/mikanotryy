@@ -38,32 +38,4 @@ class ProductsService {
       throw Exception('Failed to load products');
     }
   }
-
-  Future<void> addProductToFavorite(int id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.get(
-        MikanoAddProductToFavorites.replaceAll("{id}", id.toString()),
-        options: Options(headers: {
-          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-        }));
-    if (response.statusCode == 200) {
-      return;
-    } else {
-      throw Exception('Failed to add product to favorite');
-    }
-  }
-
-  Future<void> removeProductToFavorite(int id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.get(
-        MikanoRemoveProductFromFavorites.replaceAll("{id}", id.toString()),
-        options: Options(headers: {
-          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-        }));
-    if (response.statusCode == 200) {
-      return;
-    } else {
-      throw Exception('Failed to add product to favorite');
-    }
-  }
 }
