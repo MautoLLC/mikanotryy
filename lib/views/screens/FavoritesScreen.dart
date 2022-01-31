@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
+import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -69,7 +70,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           return FavoritesItem(
                             product: state.favoriteProducts[index],
                             OnPressed: (){
-                              state.addorremoveProductToFavorite(state.favoriteProducts[index]);
+                              state.addorremoveProductToFavorite(state.favoriteProducts[index].product);
                             },
                           );
                         },
@@ -87,7 +88,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 }
 
 class FavoritesItem extends StatelessWidget {
-  final Product product;
+  final FavoriteProduct product;
   final Function OnPressed;
   const FavoritesItem({
     Key? key,
@@ -109,7 +110,7 @@ class FavoritesItem extends StatelessWidget {
         OnPressed();
         // Then show a snackbar.
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${product.Name} dismissed")));
+            .showSnackBar(SnackBar(content: Text("${product.product.Name} dismissed")));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 9.0),
@@ -135,7 +136,7 @@ class FavoritesItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
-                          child: commonCacheImageWidget(product.Image, 65),
+                          child: commonCacheImageWidget(product.product.Image, 65),
                         )
                       ]),
                   SizedBox(width: 22),
@@ -149,7 +150,7 @@ class FavoritesItem extends StatelessWidget {
                           SizedBox(
                             width: 200,
                             child: Text(
-                              product.Name,
+                              product.product.Name,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 14,
@@ -167,7 +168,7 @@ class FavoritesItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            product.Code,
+                            product.product.Code,
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: "Poppins",
@@ -183,7 +184,7 @@ class FavoritesItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "\$${product.Price}",
+                            "\$${product.product.Price}",
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: "Poppins",
@@ -205,10 +206,10 @@ class FavoritesItem extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         // TODO add to cart logic
-                        CartProduct p = CartProduct(product: product, quantity: 1);
+                        CartProduct p = CartProduct(product: product.product, quantity: 1);
                         ProductState.addProduct(p);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("${product.Name} added to cart")));
+                            content: Text("${product.product.Name} added to cart")));
                       },
                       child: Container(
                         padding: EdgeInsets.only(

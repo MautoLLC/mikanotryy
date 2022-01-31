@@ -153,7 +153,7 @@ class CartItem extends StatelessWidget {
           direction: ProductState.selectMode
               ? DismissDirection.none
               : DismissDirection.endToStart,
-          key: Key(this.product.id.toString()),
+          key: UniqueKey(),
           onDismissed: (direction) {
             OnPressed();
             // Then show a snackbar.

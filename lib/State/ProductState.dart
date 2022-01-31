@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
+import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/services/StoreServices/ProductService.dart';
@@ -10,7 +11,7 @@ class ProductState extends ChangeNotifier {
   bool selectMode = false;
   List<CartProduct> productsInCart = [];
   List<CartProduct> selectedProducts = [];
-  List<Product> favoriteProducts = [];
+  List<FavoriteProduct> favoriteProducts = [];
   List<Product> purchasedProducts = [];
   List<Product> trendingProducts = [];
   List<Product> popularProducts = [];
@@ -53,21 +54,28 @@ class ProductState extends ChangeNotifier {
 
 
   void addorremoveProductToFavorite(Product product) async {
-    if (favoriteProducts.contains(product)) {
-      product.liked = false;
-      favoriteProducts.remove(product);
-      await CustomerService().deleteFavoriteItemsforLoggedInUser([product.id]);
+    if (isInFavorite(product)) {
+      for (var item in favoriteProducts) {
+        if(item.product.id == product.id){
+          favoriteProducts.remove(product);
+          await CustomerService().deleteFavoriteItemsforLoggedInUser([product.id]);
+        }
+      }
     } else {
-      product.liked = true;
-      favoriteProducts.add(product);
-      await CustomerService().addFavoriteItemsforLoggedInUser(product);
+      FavoriteProduct t = await CustomerService().addFavoriteItemsforLoggedInUser(product);
+      favoriteProducts.add(t);
     }
     favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
     notifyListeners();
   }
 
   bool isInFavorite(Product product) {
-    return favoriteProducts.contains(product);
+    for (var item in favoriteProducts) {
+      if(item.product == product) {
+        return true;
+      }
+    }
+    return false;
   }
 
   int get totalFavoriteProducts => favoriteProducts.length;
@@ -78,14 +86,14 @@ class ProductState extends ChangeNotifier {
   }
 
   void addProduct(CartProduct product) async {
+    product = await CustomerService().addCartItemsforLoggedInUser(product);
     productsInCart.add(product);
-    // await CustomerService().addCartItemsforLoggedInUser(product);
     notifyListeners();
   }
 
-  void removeProduct(CartProduct product) {
+  void removeProduct(CartProduct product) async {
+    await CustomerService().deleteCartItemsforLoggedInUser([product.id]);
     productsInCart.remove(product);
-    
     notifyListeners();
   }
 
@@ -122,7 +130,7 @@ class ProductState extends ChangeNotifier {
     return false;
   }
 
-  void clearSelectedProducts() {
+  void clearSelectedProducts() async {
     selectedProducts.clear();
     notifyListeners();
   }

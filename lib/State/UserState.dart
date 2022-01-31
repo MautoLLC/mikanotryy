@@ -3,9 +3,21 @@ import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 
 class UserState extends ChangeNotifier {
   bool termsAccepted = true;
+  bool NotificationsEnabled = true;
 
   UserState() {
     fetchtermsState();
+    fetchNotificationsState();
+  }
+
+  Future<void> fetchNotificationsState() async {
+    NotificationsEnabled = await CustomerService().getNotificationsState();
+    notifyListeners();
+  }
+
+  Future<void> setNotificationsState(bool state) async {
+    NotificationsEnabled = await CustomerService().setNotificationsState(state);
+    notifyListeners();
   }
 
   Future<void> fetchtermsState() async {

@@ -145,10 +145,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Switch(
-                            value: switchstate,
+                            value: state.NotificationsEnabled,
                             onChanged: (value) {
-                              switchstate = value;
-                              setState(() {});
+                              state.setNotificationsState(value);
                             },
                             activeColor: mainColorTheme,
                           ),
