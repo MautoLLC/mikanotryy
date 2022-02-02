@@ -5,28 +5,26 @@ import 'package:nb_utils/nb_utils.dart';
 
 class ProductsService {
   Dio dio = new Dio();
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getProducts({int limit = -1, int page = -1}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> params = {};
+    if(limit!=-1){
+      params["limit"] = limit;
+    }
+    if(page!=-1){
+      params["page"] = page;
+    }
     Response response = await dio.get(MikanoShopGetAllProductsURL,
+    queryParameters: params,
         options: Options(headers: {
           "Authorization": "Bearer ${prefs.getString("StoreToken")}"
         }));
-    Response response2 = await dio.get(MikanoShopGetLoggedInUser,
-        options: Options(headers: {
-          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-        }));
-    if (response.statusCode == 200 && response2.statusCode == 200) {
-      // List<Product> favoriteProducts = [];
+    if (response.statusCode == 200) {
 
-      // for (var item in response.data['customers'][0]['FavoriteProducts']) {
-      //   favoriteProducts.add(Product.fromJson(item));
-      // }
       List<Product> products = [];
       try {
         for (var item in response.data['products']) {
           Product temp = Product.fromJson(item);
-          // if(favoriteProducts.contains(temp))
-          //   temp.liked = true;
           products.add(temp);
         }
         return products;

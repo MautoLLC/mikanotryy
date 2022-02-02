@@ -53,6 +53,7 @@ const MikanoShopGetUserById = '$MikanoShopMainURl/customers/{customerId}';
 const MikanoShopGetLoggedInUser = '$MikanoShopMainURl/customers/me';
 const MikanoFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items';
 const MikanoDeleteFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items/delete';
+const MikanoChangeQuantityCartItem = '$MikanoShopMainURl/shopping_cart_items/incrementqty';
 
 const mainAppName = 'My Mikano App';
 

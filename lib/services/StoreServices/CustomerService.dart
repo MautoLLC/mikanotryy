@@ -226,6 +226,34 @@ class CustomerService {
     }
   }
 
+    Future<void> ChangeQuantityCartProductforLoggedInUser(CartProduct product, int quantity) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+    Response response = await dio.post(
+      MikanoChangeQuantityCartItem,
+      queryParameters:{
+        "Ids": [product.id],
+        "ShoppingCartType": "ShoppingCart",
+        "CustomerId": prefs.getString("StoreCustomerId").toInt()
+      },
+      data: quantity,
+      options: Options(
+        headers: {
+          "Accept" : "application/json",
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to Change Quantity');
+    }
+    }catch(e){
+      print(e.toString());
+      throw Exception('Failed to Change Quantity');
+    }
+  }
+
     Future<bool> getNotificationsState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = await DioClass.getDio();

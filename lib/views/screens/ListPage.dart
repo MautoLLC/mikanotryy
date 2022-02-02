@@ -14,6 +14,7 @@ class ListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int page = 1;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -50,7 +51,7 @@ class ListPage extends StatelessWidget {
                 height: 40,
               ),
               FutureBuilder(
-                future: ProductsService().getProducts(),
+                future: ProductsService().getProducts(limit: 8, page: page),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {
                     return GridView.builder(

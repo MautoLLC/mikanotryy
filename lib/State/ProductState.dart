@@ -149,14 +149,16 @@ class ProductState extends ChangeNotifier {
   double get selectedProductsPrice =>
       selectedProducts.fold(0, (total, product) => total + product.product.Price);
 
-  void increaseCartItemQuantity(CartProduct product) {
+  void increaseCartItemQuantity(CartProduct product) async {
     product.quantity++;
+    await CustomerService().ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
     notifyListeners();
   }
 
-  void decreaseCartItemQuantity(CartProduct product) {
+  void decreaseCartItemQuantity(CartProduct product) async {
     if (product.quantity > 1) {
       product.quantity--;
+      await CustomerService().ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
       notifyListeners();
     }
   }
