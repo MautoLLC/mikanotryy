@@ -117,39 +117,24 @@ class ItemElement extends StatelessWidget {
               ],
             ),
           ),
-          LikeWidget(product: temp),
-        ]),
-      ),
-    );
-  }
-}
-
-class LikeWidget extends StatefulWidget {
-  Product product;
-  LikeWidget({Key? key, required this.product}) : super(key: key);
-
-  @override
-  State<LikeWidget> createState() => _LikeWidgetState();
-}
-
-class _LikeWidgetState extends State<LikeWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ProductState>(
+          Consumer<ProductState>(
       builder: (context, state, child) => Padding(
         padding: const EdgeInsets.all(12.0),
         child: Align(
           alignment: Alignment.bottomRight,
           child: GestureDetector(
             onTap: () {
-              state.addorremoveProductToFavorite(widget.product);
+              state.addorremoveProductToFavorite(product);
             },
             child: commonCacheImageWidget(ic_heart, 20,
-                color: !state.isInFavorite(widget.product)
-                    ? null
-                    : mainColorTheme),
+                color: state.allProducts.firstWhere((element) => element.id == product.id).liked
+                    ? mainColorTheme
+                    : null),
           ),
         ),
+      ),
+    )
+        ]),
       ),
     );
   }

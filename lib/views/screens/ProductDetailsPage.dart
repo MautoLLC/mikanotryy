@@ -56,9 +56,14 @@ class ProductDetailsPage extends StatelessWidget {
                     IconButton(
                         onPressed: () => finish(context),
                         icon: Icon(Icons.arrow_back_ios_new)),
-                    FavoriteWidget(
-                      isFavorite: isFavorite,
-                    )
+                    Consumer<ProductState>(
+      builder:(context, state, child) => GestureDetector(
+          onTap: () {
+            state.addorremoveProductToFavorite(product);
+          },
+          child: commonCacheImageWidget(ic_heart, 30,
+              color: state.allProducts.firstWhere((element) => element.id == product.id).liked ? mainColorTheme : null)),
+    )
                   ],
                 ),
               ]),
@@ -220,27 +225,5 @@ class _QuantityChooserState extends State<QuantityChooser> {
                 icon: Icon(Icons.add, color: mainGreyColorTheme)),
           ],
         ));
-  }
-}
-
-class FavoriteWidget extends StatefulWidget {
-  bool isFavorite;
-  FavoriteWidget({Key? key, required this.isFavorite}) : super(key: key);
-
-  @override
-  _FavoriteWidgetState createState() => _FavoriteWidgetState();
-}
-
-class _FavoriteWidgetState extends State<FavoriteWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          setState(() {
-            widget.isFavorite = !widget.isFavorite;
-          });
-        },
-        child: commonCacheImageWidget(ic_heart, 30,
-            color: widget.isFavorite ? mainColorTheme : null));
   }
 }

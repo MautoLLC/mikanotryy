@@ -112,7 +112,7 @@ class CustomerService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.post(
       MikanoDeleteFavoritAndCartItems,
-      data: {
+      queryParameters: {
         "Ids": arr,
         "ShoppingCartType": "Wishlist",
         "CustomerId": prefs.getString("StoreCustomerId").toString()
@@ -131,7 +131,7 @@ class CustomerService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.post(
       MikanoDeleteFavoritAndCartItems,
-      data: {
+      queryParameters: {
         "Ids": arr,
         "ShoppingCartType": "ShoppingCart",
         "CustomerId": prefs.getString("StoreCustomerId").toString()
@@ -143,7 +143,7 @@ class CustomerService {
     if (response.statusCode == 200) {
       return;
     } else {
-      throw Exception('Failed to delete item from favorites');
+      throw Exception('Failed to delete item from Cart');
     }
   }
 

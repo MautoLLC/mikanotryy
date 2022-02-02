@@ -24,7 +24,13 @@ class ProductState extends ChangeNotifier {
   }
 
   void update() async {
+    favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
     allProducts = await ProductsService().getProducts();
+    for (var item in allProducts) {
+      if(isInFavorite(item)){
+        item.liked = true;
+      }
+    }
     for (var i = 0; i < 8; i++) {
       Random random = new Random();
       Product item = allProducts[random.nextInt(allProducts.length)];
@@ -45,7 +51,6 @@ class ProductState extends ChangeNotifier {
       Product item = allProducts[random.nextInt(allProducts.length)];
       flashsaleProducts.add(item);
     }
-    favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
     productsInCart = await CustomerService().getAllCartItemsforLoggedInUser();
     notifyListeners();
   }
@@ -57,21 +62,25 @@ class ProductState extends ChangeNotifier {
     if (isInFavorite(product)) {
       for (var item in favoriteProducts) {
         if(item.product.id == product.id){
-          favoriteProducts.remove(product);
-          await CustomerService().deleteFavoriteItemsforLoggedInUser([product.id]);
+          product.liked = false;
+          favoriteProducts.remove(item);
+          await CustomerService().deleteFavoriteItemsforLoggedInUser([item.product.id]);
+          break;
         }
       }
+      allProducts.firstWhere((element) => element.id == product.id).liked = false;
     } else {
       FavoriteProduct t = await CustomerService().addFavoriteItemsforLoggedInUser(product);
+      allProducts.firstWhere((element) => element.id == product.id).liked = true;
       favoriteProducts.add(t);
     }
-    favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
+    // favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
     notifyListeners();
   }
 
   bool isInFavorite(Product product) {
     for (var item in favoriteProducts) {
-      if(item.product == product) {
+      if(item.product.id == product.id) {
         return true;
       }
     }
