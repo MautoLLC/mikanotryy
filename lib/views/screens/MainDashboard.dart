@@ -5,10 +5,8 @@ import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'CartPage.dart';
 import 'DashboardScreen.dart';
-import 'PlaceholderScreen.dart';
 import 'ProfileScreen.dart';
 import 'SearchScreen.dart';
-import 'TechnicianHome.dart';
 
 class Theme5Dashboard extends StatefulWidget {
   @override

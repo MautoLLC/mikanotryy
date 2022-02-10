@@ -10,6 +10,7 @@ Widget t13EditTextStyle(var hintText, var contt,
     obscureText: isPassword,
     cursorColor: black,
     controller: contt,
+    keyboardType: keyboardType,
     decoration: InputDecoration(
       contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
       hintText: hintText,

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:mymikano_app/services/StoreServices/ProductService.dart';
+
+import 'NotificationsScreen.dart';
+
 class ListPage extends StatelessWidget {
   final String title;
   ListPage({Key? key, required this.title}) : super(key: key);
@@ -36,11 +40,7 @@ class ListPage extends StatelessWidget {
                   Spacer(),
                   TitleText(title: title),
                   Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        // TODO Notification Page Open
-                      },
-                      icon: Icon(Icons.notifications))
+                  NotificationBell()
                 ],
               ),
               SizedBox(
@@ -66,8 +66,8 @@ class ListPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         Product temp = snapshot.data!.elementAt(index);
                         return ItemElement(
-                            product: temp,
-                            );
+                          product: temp,
+                        );
                       },
                     );
                   } else {

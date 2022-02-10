@@ -9,8 +9,10 @@ const userApiUrl = 'http://dev.codepickles.com:8083';
 const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
 const MikanoShopGetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 const MikanoShopSetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
-const MikanoShopGetNotificationsState = '$userApiUrl/api/Users/NotificationsEnabled/{id}';
-const MikanoShopSetNotificationsState = '$userApiUrl/api/Users/NotificationsEnabled/{id}';
+const MikanoShopGetNotificationsState =
+    '$userApiUrl/api/Users/NotificationsEnabled/{id}';
+const MikanoShopSetNotificationsState =
+    '$userApiUrl/api/Users/NotificationsEnabled/{id}';
 const MikanoShopResetPassword = '$userApiUrl/api/Users/reset-credentials';
 
 const MaintenanceApiBaseUrl = 'http://dev.codepickles.com:8085';
@@ -52,8 +54,11 @@ const MikanoShopAddShippingAddress =
 const MikanoShopGetUserById = '$MikanoShopMainURl/customers/{customerId}';
 const MikanoShopGetLoggedInUser = '$MikanoShopMainURl/customers/me';
 const MikanoFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items';
-const MikanoDeleteFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items/delete';
-const MikanoChangeQuantityCartItem = '$MikanoShopMainURl/shopping_cart_items/incrementqty';
+const MikanoDeleteFavoritAndCartItems =
+    '$MikanoShopMainURl/shopping_cart_items/delete';
+const MikanoChangeQuantityCartItem =
+    '$MikanoShopMainURl/shopping_cart_items/incrementqty';
+const MikanoShopPlaceOrder = '$MikanoShopMainURl/orders';
 
 const mainAppName = 'My Mikano App';
 

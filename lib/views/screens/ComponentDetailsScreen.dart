@@ -270,6 +270,7 @@ class _BankingShareInformationState extends State<BankingShareInformation> {
     // toast(currentValue);
     // finish(context);
     Navigator.pop(context);
+    Navigator.pop(context);
     Navigator.push(
       context,
       MaterialPageRoute(

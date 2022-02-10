@@ -174,6 +174,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             padding:
                                 const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
                             child: DropdownButton(
+                              onChanged: (value) {},
                               underline: Divider(
                                 thickness: 0.0,
                                 color: Colors.transparent,

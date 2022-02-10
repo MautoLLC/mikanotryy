@@ -57,13 +57,18 @@ class ProductDetailsPage extends StatelessWidget {
                         onPressed: () => finish(context),
                         icon: Icon(Icons.arrow_back_ios_new)),
                     Consumer<ProductState>(
-      builder:(context, state, child) => GestureDetector(
-          onTap: () {
-            state.addorremoveProductToFavorite(product);
-          },
-          child: commonCacheImageWidget(ic_heart, 30,
-              color: state.allProducts.firstWhere((element) => element.id == product.id).liked ? mainColorTheme : null)),
-    )
+                      builder: (context, state, child) => GestureDetector(
+                          onTap: () {
+                            state.addorremoveProductToFavorite(product);
+                          },
+                          child: commonCacheImageWidget(ic_heart, 30,
+                              color: state.allProducts
+                                      .firstWhere(
+                                          (element) => element.id == product.id)
+                                      .liked
+                                  ? mainColorTheme
+                                  : null)),
+                    )
                   ],
                 ),
               ]),
@@ -150,7 +155,8 @@ class ProductDetailsPage extends StatelessWidget {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        CartProduct p = CartProduct(product: product, quantity: Quantity);
+                        CartProduct p =
+                            CartProduct(product: product, quantity: Quantity);
                         state.addProduct(p);
                         toast("${product.Name} added to cart");
                       },

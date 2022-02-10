@@ -10,7 +10,7 @@ import 'package:mymikano_app/utils/colors.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
-import 'package:oauth2/oauth2.dart' as oauth2;
+
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

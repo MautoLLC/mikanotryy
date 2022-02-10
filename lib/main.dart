@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/main/store/AppStore.dart';
+import 'package:mymikano_app/utils/main/store%20-%20Copy/AppStore.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'State/ProductState.dart';

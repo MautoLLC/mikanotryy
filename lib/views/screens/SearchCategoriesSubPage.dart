@@ -6,6 +6,8 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 
+import 'ListPage.dart';
+
 class SearchCategoriesSubPage extends StatelessWidget {
   SearchCategoriesSubPage({Key? key}) : super(key: key);
   List<T5Category> mFavouriteList = getDItems();
@@ -36,6 +38,7 @@ class SearchCategoriesSubPage extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           // TODO Open category page
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListPage(title: mFavouriteList[index].name,)));
                         },
                         child: Container(
                           alignment: Alignment.center,

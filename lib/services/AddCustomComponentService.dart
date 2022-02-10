@@ -5,15 +5,11 @@ import 'package:http_interceptor/http_interceptor.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 
 late Dio dio;
 

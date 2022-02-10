@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'PrivacyPolicyScreen.dart';
+import 'ProfileEditScreen.dart';
 import 'PurchasesScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -25,36 +26,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Directory directory;
-  late File file;
-  late String fileContent;
-  late SharedPreferences prefs;
   bool privacyPolicyAccepted = false;
-
-  TechnicianModel? tech =
-      new TechnicianModel(1, 'null', 'null', ic_profile_7, 'null', 'null');
 
   bool switchstate = false;
 
   @override
   void initState() {
-    init();
     super.initState();
-  }
-
-  init() async {
-    prefs = await SharedPreferences.getInstance();
-    directory = await getApplicationDocumentsDirectory();
-    file = File('${directory.path}/credentials.json');
-    fileContent = await file.readAsString();
-    Map<String, dynamic> jwtData = {};
-
-    JwtDecoder.decode(fileContent)!.forEach((key, value) {
-      jwtData[key] = value;
-    });
-    tech = new TechnicianModel(1, jwtData['given_name'], jwtData['family_name'],
-        ic_profile_7, "null", jwtData['email']);
-    setState(() {});
   }
 
   @override
@@ -68,10 +46,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TopRowBar(title: 'Profile'),
+                TopRowBar(title: lbl_Profile),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
-                  child: SubTitleText(title: 'Account'),
+                  child: SubTitleText(title: lbl_Account),
                 ),
                 SizedBox(
                   height: 10,
@@ -93,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${tech!.firstname} ${tech!.lastname}',
+                                  '${state.getUser.username}',
                                   style: TextStyle(
                                       color: mainBlackColorTheme,
                                       fontSize: 18,
@@ -103,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: const EdgeInsets.fromLTRB(
                                       0.0, 6.0, 0.0, 0.0),
                                   child: Text(
-                                    lbl_Personal_Info,
+                                    state.getUser.email,
                                     style: TextStyle(
                                         color: mainGreyColorTheme,
                                         fontSize: 14,
@@ -115,9 +93,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ]),
                         Spacer(),
-                        Icon(
-                          Icons.edit,
-                          color: mainGreyColorTheme,
+                        IconButton(
+                          onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: ((context) => ProfileEditScreen()))),
+                          icon: Icon(
+                            Icons.edit,
+                            color: mainGreyColorTheme,
+                          ),
                         ),
                       ],
                     ),

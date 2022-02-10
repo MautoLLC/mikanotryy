@@ -19,7 +19,6 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductState>(
@@ -69,8 +68,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         itemBuilder: (context, index) {
                           return FavoritesItem(
                             product: state.favoriteProducts[index],
-                            OnPressed: (){
-                              state.addorremoveProductToFavorite(state.favoriteProducts[index].product);
+                            OnPressed: () {
+                              state.addorremoveProductToFavorite(
+                                  state.favoriteProducts[index].product);
                             },
                           );
                         },
@@ -109,8 +109,8 @@ class FavoritesItem extends StatelessWidget {
       onDismissed: (direction) {
         OnPressed();
         // Then show a snackbar.
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("${product.product.Name} dismissed")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("${product.product.Name} dismissed")));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 9.0),
@@ -136,7 +136,8 @@ class FavoritesItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
-                          child: commonCacheImageWidget(product.product.Image, 65),
+                          child:
+                              commonCacheImageWidget(product.product.Image, 65),
                         )
                       ]),
                   SizedBox(width: 22),
@@ -206,10 +207,12 @@ class FavoritesItem extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         // TODO add to cart logic
-                        CartProduct p = CartProduct(product: product.product, quantity: 1);
+                        CartProduct p =
+                            CartProduct(product: product.product, quantity: 1);
                         ProductState.addProduct(p);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("${product.product.Name} added to cart")));
+                            content:
+                                Text("${product.product.Name} added to cart")));
                       },
                       child: Container(
                         padding: EdgeInsets.only(

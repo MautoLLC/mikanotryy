@@ -7,6 +7,7 @@ import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
@@ -73,11 +74,7 @@ class DashboardState extends State<Dashboard> {
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: IconButton(
-                            onPressed: () {
-                              // TODO Notification Page Open
-                            },
-                            icon: Icon(Icons.notifications)),
+                        child: NotificationBell(),
                       )
                     ],
                   ),
@@ -92,7 +89,7 @@ class DashboardState extends State<Dashboard> {
                   child: Row(
                     children: [
                       Expanded(
-                          child: t13EditTextStyle(lbl_Search, SearchController))
+                          child: t13EditTextStyle(lbl_Search, SearchController, isPassword: false))
                     ],
                   ),
                 ),
@@ -129,13 +126,15 @@ class DashboardState extends State<Dashboard> {
                             child: GestureDetector(
                               onTap: () {
                                 // TODO Open category page
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListPage(title: mFavouriteList![index].name,)));
                               },
                               child: Container(
                                 alignment: Alignment.center,
                                 decoration: boxDecoration(
                                     radius: 33,
                                     showShadow: false,
-                                    bgColor: mainGreyColorTheme.withOpacity(0.3)),
+                                    bgColor:
+                                        mainGreyColorTheme.withOpacity(0.3)),
                                 child: commonCacheImageWidget(
                                   mFavouriteList![index].icon,
                                   60,
@@ -187,7 +186,7 @@ class DashboardState extends State<Dashboard> {
                       itemBuilder: (context, index) {
                         Product temp = state.popularProducts[index];
                         return ItemElement(
-                          product: temp,                       
+                          product: temp,
                         );
                       }),
                 ),

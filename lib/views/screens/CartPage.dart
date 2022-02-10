@@ -11,6 +11,8 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import 'CheckoutScreen.dart';
+
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
@@ -113,7 +115,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
-                      "\$${ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price*product.quantity)}",
+                      "\$${ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -121,7 +123,10 @@ class _CartPageState extends State<CartPage> {
                 SizedBox(height: 30),
                 T13Button(
                   textContent: lbl_Checkout,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CheckoutScreen()));
+                  },
                 ),
               ],
             ),
@@ -157,8 +162,8 @@ class CartItem extends StatelessWidget {
           onDismissed: (direction) {
             OnPressed();
             // Then show a snackbar.
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("${product.product.Name} removed from cart")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("${product.product.Name} removed from cart")));
           },
           child: Padding(
             padding: const EdgeInsets.only(bottom: 9.0),
@@ -260,23 +265,36 @@ class CartItem extends StatelessWidget {
                                   Row(
                                     children: [
                                       IconButton(
-                                        onPressed: (){
-                                          ProductState.decreaseCartItemQuantity(product);
+                                        onPressed: () {
+                                          ProductState.decreaseCartItemQuantity(
+                                              product);
                                         },
-                                        icon: Icon(Icons.remove_circle, color: mainGreyColorTheme,),
+                                        icon: Icon(
+                                          Icons.remove_circle,
+                                          color: mainGreyColorTheme,
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 4,
                                       ),
-                                      Text(product.quantity.toString(), style: TextStyle(color: mainGreyColorTheme, fontSize: 14),),
+                                      Text(
+                                        product.quantity.toString(),
+                                        style: TextStyle(
+                                            color: mainGreyColorTheme,
+                                            fontSize: 14),
+                                      ),
                                       SizedBox(
                                         width: 4,
                                       ),
                                       IconButton(
-                                        onPressed: (){
-                                          ProductState.increaseCartItemQuantity(product);
+                                        onPressed: () {
+                                          ProductState.increaseCartItemQuantity(
+                                              product);
                                         },
-                                        icon: Icon(Icons.add_circle, color: mainGreyColorTheme,),
+                                        icon: Icon(
+                                          Icons.add_circle,
+                                          color: mainGreyColorTheme,
+                                        ),
                                       ),
                                     ],
                                   )

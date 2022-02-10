@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -33,24 +34,26 @@ class SearchPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Stack(
+                    alignment: Alignment.center,
                     children: [
-                      TitleText(
-                        title: lbl_Search,
+                      Align(
+                        alignment: Alignment.center,
+                        child: TitleText(
+                          title: lbl_Search,
+                        ),
                       ),
-                      IconButton(
-                          onPressed: () {
-                            // TODO Notification Page Open
-                          },
-                          icon: Icon(Icons.notifications))
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: NotificationBell(),
+                      )
                     ],
                   ),
                   SizedBox(height: 16.0),
                   Row(
                     children: [
                       Expanded(
-                          child: t13EditTextStyle(lbl_Search, SearchController))
+                          child: t13EditTextStyle(lbl_Search, SearchController, isPassword: false))
                     ],
                   ),
                   SizedBox(height: 40.0),

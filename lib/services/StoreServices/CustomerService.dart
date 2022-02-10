@@ -10,8 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerService {
   Dio dio = new Dio();
-  Future<bool> addShippingAddress(
-      String Address, String City, String State) async {
+  Future<bool> addShippingAddress(Address address) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       Response response = await dio.post(
@@ -21,8 +20,8 @@ class CustomerService {
             "Authorization": "Bearer ${prefs.getString("StoreToken")}"
           }),
           data: {
-            "city": City,
-            "address1": Address,
+            "city": address.city,
+            "address1": address.address1,
             "first_name": "f1",
             "last_name": "l1",
             "email": "email@hotmail.com",
@@ -32,13 +31,38 @@ class CustomerService {
             "phone_number": "01234567",
           });
       if (response.statusCode == 200) {
+        toast("Address Added Successfully");
         return true;
       } else {
+        toast("Address Not Added");
         throw Exception('Failed to add shipping address');
       }
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  Future<Address> GetShippingAddresseForLoggedInUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var chosenAddress;
+    Response response = await dio.get(
+      MikanoShopGetLoggedInUser,
+      options: Options(headers: {
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      try {
+        chosenAddress =
+            Address.fromJson(response.data['customers'][0]['shipping_address']);
+        return chosenAddress;
+      } catch (e) {
+        print(e);
+        return chosenAddress;
+      }
+    } else {
+      throw Exception('Failed to get shipping addresses');
     }
   }
 
@@ -93,10 +117,7 @@ class CustomerService {
         var productsdata = response.data["shopping_carts"];
         for (var item in productsdata) {
           Product temp = Product.fromJson(item["product"]);
-          FavoriteProduct t = FavoriteProduct(
-              product: temp,
-              id: item["id"]
-              );
+          FavoriteProduct t = FavoriteProduct(product: temp, id: item["id"]);
           products.add(t);
         }
         return products;
@@ -108,6 +129,7 @@ class CustomerService {
       throw Exception('Failed to get shipping addresses');
     }
   }
+
   Future<void> deleteFavoriteItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.post(
@@ -127,7 +149,8 @@ class CustomerService {
       throw Exception('Failed to delete item from favorites');
     }
   }
-    Future<void> deleteCartItemsforLoggedInUser(List<int?> arr) async {
+
+  Future<void> deleteCartItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.post(
       MikanoDeleteFavoritAndCartItems,
@@ -147,7 +170,7 @@ class CustomerService {
     }
   }
 
-    Future<List<CartProduct>> getAllCartItemsforLoggedInUser() async {
+  Future<List<CartProduct>> getAllCartItemsforLoggedInUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.get(
       MikanoFavoritAndCartItems,
@@ -181,7 +204,7 @@ class CustomerService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.post(
       MikanoFavoritAndCartItems,
-      data:{
+      data: {
         "shopping_cart_item": {
           "quantity": product.quantity,
           "shopping_cart_type": "ShoppingCart",
@@ -194,18 +217,24 @@ class CustomerService {
       }),
     );
     if (response.statusCode == 200) {
-      var data = response.data["shopping_carts"][response.data["shopping_carts"].length-1];
-      CartProduct result = CartProduct(product: Product.fromJson(data["product"]), quantity: data["quantity"], id: data["id"]);
+      var data = response.data["shopping_carts"]
+          [response.data["shopping_carts"].length - 1];
+      CartProduct result = CartProduct(
+          product: Product.fromJson(data["product"]),
+          quantity: data["quantity"],
+          id: data["id"]);
       return result;
     } else {
       throw Exception('Failed to add to cart');
     }
   }
-  Future<FavoriteProduct> addFavoriteItemsforLoggedInUser(Product product) async {
+
+  Future<FavoriteProduct> addFavoriteItemsforLoggedInUser(
+      Product product) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response = await dio.post(
       MikanoFavoritAndCartItems,
-      data:{
+      data: {
         "shopping_cart_item": {
           "quantity": 1,
           "shopping_cart_type": "Wishlist",
@@ -218,43 +247,45 @@ class CustomerService {
       }),
     );
     if (response.statusCode == 200) {
-      var data = response.data["shopping_carts"][response.data["shopping_carts"].length-1];
-      FavoriteProduct result = FavoriteProduct(product: Product.fromJson(data["product"]), id: data["id"]);
+      var data = response.data["shopping_carts"]
+          [response.data["shopping_carts"].length - 1];
+      FavoriteProduct result = FavoriteProduct(
+          product: Product.fromJson(data["product"]), id: data["id"]);
       return result;
     } else {
       throw Exception('Failed to add to cart');
     }
   }
 
-    Future<void> ChangeQuantityCartProductforLoggedInUser(CartProduct product, int quantity) async {
+  Future<void> ChangeQuantityCartProductforLoggedInUser(
+      CartProduct product, int quantity) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
-    Response response = await dio.post(
-      MikanoChangeQuantityCartItem,
-      queryParameters:{
-        "Ids": [product.id],
-        "ShoppingCartType": "ShoppingCart",
-        "CustomerId": prefs.getString("StoreCustomerId").toInt()
-      },
-      data: quantity,
-      options: Options(
-        headers: {
-          "Accept" : "application/json",
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      return;
-    } else {
-      throw Exception('Failed to Change Quantity');
-    }
-    }catch(e){
+    try {
+      Response response = await dio.post(
+        MikanoChangeQuantityCartItem,
+        queryParameters: {
+          "Ids": [product.id],
+          "ShoppingCartType": "ShoppingCart",
+          "CustomerId": prefs.getString("StoreCustomerId").toInt()
+        },
+        data: quantity,
+        options: Options(headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception('Failed to Change Quantity');
+      }
+    } catch (e) {
       print(e.toString());
       throw Exception('Failed to Change Quantity');
     }
   }
 
-    Future<bool> getNotificationsState() async {
+  Future<bool> getNotificationsState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = await DioClass.getDio();
     Response response = await dio.get(
@@ -276,7 +307,7 @@ class CustomerService {
     }
   }
 
-    Future<bool> setNotificationsState(bool state) async {
+  Future<bool> setNotificationsState(bool state) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = await DioClass.getDio();
     String url = MikanoShopSetNotificationsState.replaceAll(
@@ -351,13 +382,12 @@ class CustomerService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = await DioClass.getDio();
     String url = MikanoShopContactUs;
-    try{
+    try {
       Response response = await dio.post(url,
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("accessToken")}"
-      }),
-      data: {"fullName": fullname, "email": email, "message": message})
-      ;
+          options: Options(headers: {
+            "Authorization": "Bearer ${prefs.getString("accessToken")}"
+          }),
+          data: {"fullName": fullname, "email": email, "message": message});
       if (response.statusCode == 201) {
         toast("Request sent successfully");
         return;
@@ -365,7 +395,7 @@ class CustomerService {
         toast("Failed to send request");
         return;
       }
-    }catch(e){
+    } catch (e) {
       toast("Failed to send request");
       return;
     }
@@ -373,20 +403,65 @@ class CustomerService {
 
   Future<void> resetPassword(String email) async {
     String url = MikanoShopResetPassword;
-    try{
-      Response response = await dio.post(url,
-      data: {"username": email});
+    try {
+      Response response = await dio.post(url, data: {"username": email});
       if (response.statusCode == 200) {
-        toast("If the mail exists, you will receive an email with instructions");
+        toast(
+            "If the mail exists, you will receive an email with instructions");
         return;
       } else {
         toast("Something went wrong");
         return;
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       toast("Something went wrong");
       return;
+    }
+  }
+
+  Future<bool> Checkout(Address add, List<CartProduct> products) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = await DioClass.getDio();
+    List<dynamic> items = [];
+    List<int?> itemIds = [];
+    for (CartProduct item in products) {
+      dynamic temp = {
+        "quantity": item.quantity,
+        "product_id": item.id,
+      };
+      itemIds.add(item.id);
+      items.add(temp);
+    }
+    String url = MikanoShopPlaceOrder;
+    try {
+      Response response = await dio.post(url,
+          // queryParameters: {
+          //   "CustomerId": prefs.getString("StoreCustomerId").toInt(),
+          // },
+          data: {
+            "order": {
+              "customer_id": prefs.getString("StoreCustomerId").toInt(),
+              "billing_address": add.toJson(),
+              "shipping_address": add.toJson(),
+              "order_items": [items],
+            }
+          },
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+          }));
+      if (response.statusCode == 200) {
+        toast("Checkout successfully");
+        return true;
+      } else {
+        toast("Failed to checkout");
+        throw Exception('Failed to checkout');
+      }
+    } catch (e) {
+      print(e.toString());
+      toast("Failed to checkout");
+      throw Exception('Failed to checkout');
     }
   }
 }

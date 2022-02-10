@@ -12,11 +12,7 @@ import 'auto_size_text/auto_size_text.dart';
 
 class ItemElement extends StatelessWidget {
   final Product product;
-  const ItemElement({
-    Key? key,
-    required this.product
-  }) : super(key: key);
-
+  const ItemElement({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -118,22 +114,24 @@ class ItemElement extends StatelessWidget {
             ),
           ),
           Consumer<ProductState>(
-      builder: (context, state, child) => Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: GestureDetector(
-            onTap: () {
-              state.addorremoveProductToFavorite(product);
-            },
-            child: commonCacheImageWidget(ic_heart, 20,
-                color: state.allProducts.firstWhere((element) => element.id == product.id).liked
-                    ? mainColorTheme
-                    : null),
-          ),
-        ),
-      ),
-    )
+            builder: (context, state, child) => Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () {
+                    state.addorremoveProductToFavorite(product);
+                  },
+                  child: commonCacheImageWidget(ic_heart, 20,
+                      color: state.allProducts
+                              .firstWhere((element) => element.id == product.id)
+                              .liked
+                          ? mainColorTheme
+                          : null),
+                ),
+              ),
+            ),
+          )
         ]),
       ),
     );

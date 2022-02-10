@@ -1,14 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/services/StoreServices/ProductService.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class ProductState extends ChangeNotifier {
   bool selectMode = false;
+  bool cashOnDelivery = true;
   List<CartProduct> productsInCart = [];
   List<CartProduct> selectedProducts = [];
   List<FavoriteProduct> favoriteProducts = [];
@@ -24,10 +27,11 @@ class ProductState extends ChangeNotifier {
   }
 
   void update() async {
-    favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
+    favoriteProducts =
+        await CustomerService().getAllFavoriteItemsforLoggedInUser();
     allProducts = await ProductsService().getProducts();
     for (var item in allProducts) {
-      if(isInFavorite(item)){
+      if (isInFavorite(item)) {
         item.liked = true;
       }
     }
@@ -55,32 +59,41 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get getAllProductNumbers => allProductNumbers;
+  void setCashOnDelivery(bool value) {
+    cashOnDelivery = value;
+    notifyListeners();
+  }
 
+  bool get getCashOnDelivery => cashOnDelivery;
+
+  int get getAllProductNumbers => allProductNumbers;
 
   void addorremoveProductToFavorite(Product product) async {
     if (isInFavorite(product)) {
       for (var item in favoriteProducts) {
-        if(item.product.id == product.id){
+        if (item.product.id == product.id) {
           product.liked = false;
           favoriteProducts.remove(item);
-          await CustomerService().deleteFavoriteItemsforLoggedInUser([item.product.id]);
+          await CustomerService()
+              .deleteFavoriteItemsforLoggedInUser([item.product.id]);
           break;
         }
       }
-      allProducts.firstWhere((element) => element.id == product.id).liked = false;
+      allProducts.firstWhere((element) => element.id == product.id).liked =
+          false;
     } else {
-      FavoriteProduct t = await CustomerService().addFavoriteItemsforLoggedInUser(product);
-      allProducts.firstWhere((element) => element.id == product.id).liked = true;
+      FavoriteProduct t =
+          await CustomerService().addFavoriteItemsforLoggedInUser(product);
+      allProducts.firstWhere((element) => element.id == product.id).liked =
+          true;
       favoriteProducts.add(t);
     }
-    // favoriteProducts = await CustomerService().getAllFavoriteItemsforLoggedInUser();
     notifyListeners();
   }
 
   bool isInFavorite(Product product) {
     for (var item in favoriteProducts) {
-      if(item.product.id == product.id) {
+      if (item.product.id == product.id) {
         return true;
       }
     }
@@ -144,22 +157,48 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removecheckedProducts() async {
+    for (var item in selectedProducts) {
+      productsInCart.remove(item);
+    }
+    notifyListeners();
+  }
+
   int get selectedProductsCount => selectedProducts.length;
 
-  double get selectedProductsPrice =>
-      selectedProducts.fold(0, (total, product) => total + product.product.Price);
+  double get selectedProductsPrice => selectedProducts.fold(
+      0, (total, product) => total + product.product.Price * product.quantity);
 
   void increaseCartItemQuantity(CartProduct product) async {
     product.quantity++;
-    await CustomerService().ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
+    await CustomerService()
+        .ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
     notifyListeners();
   }
 
   void decreaseCartItemQuantity(CartProduct product) async {
     if (product.quantity > 1) {
       product.quantity--;
-      await CustomerService().ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
+      await CustomerService()
+          .ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
       notifyListeners();
     }
+  }
+
+  Future<void> checkout(Address add, bool checkBox) async {
+    if (!checkBox) {
+      toast("Check the checkbox to agree to the terms of user");
+    } else {
+      bool success = await CustomerService().Checkout(add, selectedProducts);
+      if (success) {
+        List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
+        await CustomerService().deleteCartItemsforLoggedInUser(ids);
+        removecheckedProducts();
+        toast("Checkout Successful");
+      } else {
+        toast("Checkout Failed");
+      }
+    }
+    notifyListeners();
   }
 }

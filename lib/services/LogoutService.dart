@@ -16,8 +16,8 @@ logout() async {
           "Authorization": "Bearer ${prefs.getString("accessToken")}"
         });
     prefs.clear();
-    await prefs.setBool('IsLoggedIn', false);
     print(response.statusCode);
+    await prefs.setBool('IsLoggedIn', false);
     navigator.currentState!.pushReplacement(
       MaterialPageRoute(builder: (context) => T13SignInScreen()),
     );

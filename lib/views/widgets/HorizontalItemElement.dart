@@ -87,9 +87,9 @@ class HorizontalItemElement extends StatelessWidget {
                   onTap: () {
                     // TODO logic
                     Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProductDetailsPage(
-                  product: product,
-                )));
+                        builder: (context) => ProductDetailsPage(
+                              product: product,
+                            )));
                   },
                   child: commonCacheImageWidget(ic_Cart, 24),
                 )

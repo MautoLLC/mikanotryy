@@ -1,13 +1,15 @@
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 
-class FavoriteProduct{
+class FavoriteProduct {
   late Product product;
   late int? id;
 
   FavoriteProduct({required this.product, this.id});
 
   FavoriteProduct.fromJson(Map<String, dynamic> json) {
-    product = (json['product'] != null ? new Product.fromJson(json['product']) : null)!;
+    product = (json['product'] != null
+        ? new Product.fromJson(json['product'])
+        : null)!;
     id = json['id'];
   }
 

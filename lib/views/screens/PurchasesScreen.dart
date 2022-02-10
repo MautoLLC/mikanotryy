@@ -32,18 +32,21 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                 ),
                 Expanded(
                   child: LayoutBuilder(
-                    builder: (BuildContext context, BoxConstraints constraints) {
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
                       return GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount:
-                                  (constraints.constrainWidth() ~/ 310).toInt() +
-                                      1,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 20.0,
-                              childAspectRatio: 0.8),
-                              itemCount: 4,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount:
+                                      (constraints.constrainWidth() ~/ 310)
+                                              .toInt() +
+                                          1,
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 20.0,
+                                  childAspectRatio: 0.8),
+                          itemCount: 4,
                           itemBuilder: (context, index) {
-                        Product temp = state.purchasedProducts[index];
+                            Product temp = state.purchasedProducts[index];
                             return ItemElement(
                               product: temp,
                             );

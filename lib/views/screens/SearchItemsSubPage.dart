@@ -25,7 +25,8 @@ class SearchItemSubPage extends StatelessWidget {
               itemCount: 10,
               itemBuilder: (BuildContext context, int index) {
                 Random random = new Random();
-                Product temp = state.allProducts[random.nextInt(state.allProducts.length)];
+                Product temp =
+                    state.allProducts[random.nextInt(state.allProducts.length)];
                 return HorizontalItemElement(
                   product: temp,
                 );

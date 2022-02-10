@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/models/NotificationModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/views/widgets/NotificationItem.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -22,30 +24,11 @@ class NotificationPage extends StatelessWidget {
       child: ListView.builder(
         itemCount: 9,
         itemBuilder: (context, index) {
-          return Container(
-            padding: const EdgeInsets.only(bottom: 20.0, top: 20),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: lightBorderColor,
-                  width: 0.5,
-                ),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  Notifications[index],
-                  style: TextStyle(fontSize: 14, color: mainBlackColorTheme),
-                ),
-                SizedBox(height: 11.0),
-                Text(
-                  "September 20, 2021",
-                  style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
-                )
-              ],
-            ),
+          NotificationModel notification =
+              NotificationModel(Message: Notifications[index]);
+          return NotificationItem(
+            Message: notification.Message,
+            Date: notification.Date,
           );
         },
       ),
