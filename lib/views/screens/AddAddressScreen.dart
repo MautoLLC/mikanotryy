@@ -59,6 +59,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         addressController.text,
                         CityController.text,
                       );
+                      Navigator.pop(context);
                     }),
               )
             ],
