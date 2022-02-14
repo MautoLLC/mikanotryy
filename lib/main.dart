@@ -7,6 +7,7 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/main/store%20-%20Copy/AppStore.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
+import 'State/InspectionsState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
 
@@ -36,6 +37,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProductState>(
             create: (context) => ProductState()),
         ChangeNotifierProvider<UserState>(create: (context) => UserState()),
+        ChangeNotifierProvider<InspectionsState>(
+            create: (context) => InspectionsState()),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

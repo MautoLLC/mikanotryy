@@ -53,7 +53,8 @@ class SearchPage extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                          child: t13EditTextStyle(lbl_Search, SearchController, isPassword: false))
+                          child: t13EditTextStyle(lbl_Search, SearchController,
+                              isPassword: false))
                     ],
                   ),
                   SizedBox(height: 40.0),

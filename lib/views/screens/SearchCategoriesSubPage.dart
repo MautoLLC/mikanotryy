@@ -38,7 +38,10 @@ class SearchCategoriesSubPage extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           // TODO Open category page
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListPage(title: mFavouriteList[index].name,)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ListPage(
+                                    title: mFavouriteList[index].name,
+                                  )));
                         },
                         child: Container(
                           alignment: Alignment.center,

@@ -13,7 +13,6 @@ class MaintenanceRequestService {
 
   Future<List<MaintenanceRequestModel>> fetchAllMaintenanceRequest() async {
     await PrepareCall();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final response;
     List<MaintenanceRequestModel> listresult = [];
@@ -42,9 +41,8 @@ class MaintenanceRequestService {
     List<MaintenanceRequestModel> listresult = [];
 
     try {
-      response = await dio.get((GetMaintenaceRequestURL +
-          '/UserRequests/' +
-          prefs.getString('UserID').toString()));
+      response = await dio.get(GetMaintenaceRequestByUserIdURL.replaceAll(
+          "{userID}", prefs.getString('UserID').toString()));
 
       if (response.statusCode == 200) {
         for (var item in response.data) {

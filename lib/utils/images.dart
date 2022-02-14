@@ -73,3 +73,5 @@ const ic_Location_Pin = "assets/icons8-location.png";
 const ic_error = "assets/icons8-error.png";
 
 const ic_AppLogo = "images/MyMikanoLogo2.png";
+const ic_Filter = "assets/icons8-conversion.png";
+const ic_sorting = "assets/icons8-sorting.png";

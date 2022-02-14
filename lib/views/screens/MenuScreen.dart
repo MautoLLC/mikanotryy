@@ -34,6 +34,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  bool istechnician = true;
   @override
   void initState() {
     super.initState();
@@ -44,7 +45,7 @@ class _MenuScreenState extends State<MenuScreen> {
     final searchController = TextEditingController();
 
     List<String> MenuListNames = [
-      "Maintenance & Repair",
+      !istechnician ? "Maintenance & Repair" : "My Inspections",
       "Generator Info",
       "Favorites",
       "Address",
@@ -54,7 +55,7 @@ class _MenuScreenState extends State<MenuScreen> {
     ];
 
     List<Widget> MenuListScreens = [
-      T5Maintenance(),
+      !istechnician ? T5Maintenance() : MyInspectionsScreen(),
       Dashboard_Index(),
       FavoritesScreen(),
       AddressScreen(),
@@ -201,18 +202,11 @@ class _MenuScreenState extends State<MenuScreen> {
                       ]),
                     ),
                     Spacer(),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => T5Listing(),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
-                        child: Icon(
-                          Icons.help,
-                          color: Colors.white,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
+                      child: Icon(
+                        Icons.help,
+                        color: Colors.white,
                       ),
                     )
                   ],

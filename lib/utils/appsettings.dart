@@ -27,6 +27,8 @@ const PostMaintenaceRequestURL =
 const GetRealEstatesURL = '$MaintenanceApiBaseUrl/api/RealEstates';
 const GetMaintenaceRequestURL =
     '$MaintenanceApiBaseUrl/api/MaintenanceRequests';
+const GetMaintenaceRequestByUserIdURL =
+    '$MaintenanceApiBaseUrl/api/MaintenanceRequests/UserRequests/{userID}';
 const MikanoShopContactUs = '$MaintenanceApiBaseUrl/api/ContactUs';
 
 const InspectionApiBaseUrl = 'http://dev.codepickles.com:8087';

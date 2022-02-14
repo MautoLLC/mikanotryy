@@ -89,7 +89,8 @@ class DashboardState extends State<Dashboard> {
                   child: Row(
                     children: [
                       Expanded(
-                          child: t13EditTextStyle(lbl_Search, SearchController, isPassword: false))
+                          child: t13EditTextStyle(lbl_Search, SearchController,
+                              isPassword: false))
                     ],
                   ),
                 ),
@@ -126,7 +127,10 @@ class DashboardState extends State<Dashboard> {
                             child: GestureDetector(
                               onTap: () {
                                 // TODO Open category page
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListPage(title: mFavouriteList![index].name,)));
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ListPage(
+                                          title: mFavouriteList![index].name,
+                                        )));
                               },
                               child: Container(
                                 alignment: Alignment.center,
