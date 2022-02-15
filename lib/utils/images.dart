@@ -1,34 +1,9 @@
-import 'appsettings.dart';
 
-const ic_profile_7 = "$BaseUrl2/images/theme5/t5_profile_7.jpeg";
-const ic_call_answer = "images/TelephoneIcon.png";
 const ic_Medical = "assets/heart_mask.png";
-const ic_drop = "images/WaterDroplet.png";
-const ic_img_fingerprint_2 = "images/theme5/t5_fingerprint_2.svg";
-const ic_light_bulb = "images/Bulb_Icon.png";
-const ic_list_check = "images/theme5/t5_list_check.svg";
-const ic_wifi = "images/WIFIIcon.png";
-const ic_payments = "images/theme5/t5_payment.svg";
-const ic_general_repair = "images/GeneralRepairIcon.png";
-const ic_mechanical_repair = "images/MechanicalRepairIcon.png";
-const ic_security = "images/SecurityIcon.png";
-const ic_cleaning = "images/CleaningIcon.png";
-const ic_electrical_repair = "images/MaintenanceAndRepair.png";
-const ic_img_quotations = "images/theme5/money-bag.svg";
-const ic_img_landscape = "images/LandscapeIcon.png";
-const ic_img_electrical = "images/ElectricalRepairIcon.png";
 const ic_generator = "assets/compressor.png";
 const ic_motor = "assets/tesla_model_x.png";
-const ic_engine = "images/MotorsIcon.png";
 const ic_electricity = "assets/electricity.png";
 const ic_steel = "assets/steel_i_beam.png";
-const ic_shopping_cart = "images/theme5/shopping-cart.svg";
-const ic_card1 =
-    "https://www.mikano-intl.com/intl/images/services/large/rich6.jpg";
-const ic_technician_profile = "images/theme5/technician-profile.jpg";
-const t3_led = "images/theme5/LED.png";
-const t3_mcb = "images/theme5/mcb.png";
-const t13_ic_logo = "images/MyMikanoLogo.png";
 
 // Auth Pages
 const login_Page_PNG = "assets/Login.jpg";
@@ -72,6 +47,6 @@ const ic_Cart = "assets/cart.png";
 const ic_Location_Pin = "assets/icons8-location.png";
 const ic_error = "assets/icons8-error.png";
 
-const ic_AppLogo = "images/MyMikanoLogo2.png";
+const ic_AppLogo = "assets/MyMikanoLogo2.png";
 const ic_Filter = "assets/icons8-conversion.png";
 const ic_sorting = "assets/icons8-sorting.png";

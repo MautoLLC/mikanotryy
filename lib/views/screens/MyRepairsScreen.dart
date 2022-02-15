@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mymikano_app/models/DashboardCardModel.dart';
-import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +12,6 @@ class MyRepairsScreen extends StatelessWidget {
   static var tag = "/T5Dashboard";
 
   int selectedPos = 1;
-  late List<T5Bill>? mCards;
-  List<MaintenanceRequestModel2>? mRequestt;
-  MyRepairsScreen(this.mCards, this.mRequestt);
 
   List<String> statuses = [
     'Pending',
@@ -156,7 +150,7 @@ class MyRepairsScreen extends StatelessWidget {
                                               .maintenaceRequestStatus!
                                               .maintenanceStatusDescription,
                                           fontSize: 14.0,
-                                          textColor: t5White),
+                                          textColor: Colors.white),
                                     ),
                                   ],
                                 ),

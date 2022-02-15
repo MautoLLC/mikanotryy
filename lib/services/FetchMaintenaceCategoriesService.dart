@@ -1,12 +1,7 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'dart:io';
-import 'package:http/http.dart';
-import 'package:http_interceptor/http_interceptor.dart';
 import 'package:mymikano_app/services/DioClass.dart';
-import 'package:path_provider/path_provider.dart';
 
 class Service {
   var headers;

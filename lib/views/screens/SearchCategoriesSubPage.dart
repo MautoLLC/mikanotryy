@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/models/DashboardCardModel.dart';
+import 'package:mymikano_app/models/CategoryModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -10,7 +10,7 @@ import 'ListPage.dart';
 
 class SearchCategoriesSubPage extends StatelessWidget {
   SearchCategoriesSubPage({Key? key}) : super(key: key);
-  List<T5Category> mFavouriteList = getDItems();
+  List<CategoryModel> mFavouriteList = getDItems();
 
   @override
   Widget build(BuildContext context) {

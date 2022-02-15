@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 
 class UserState extends ChangeNotifier {
   TechnicianModel User =
-      TechnicianModel(1, 'null', ic_profile_7, 'null', 'null');
+      TechnicianModel(1, 'null', '', 'null', 'null');
   bool termsAccepted = true;
   bool NotificationsEnabled = true;
   Address ChosenAddress = Address();
@@ -41,7 +41,7 @@ class UserState extends ChangeNotifier {
         jwtData['given_name'].toString() +
             " " +
             jwtData['family_name'].toString(),
-        ic_profile_7,
+        '',
         "null",
         jwtData['email']);
   }

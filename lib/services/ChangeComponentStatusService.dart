@@ -1,15 +1,8 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart';
-import 'package:http_interceptor/http_interceptor.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 
 late Dio dio;
 
@@ -38,7 +31,7 @@ changeChecklistItemStatus(int? itemId, int? StatusId) async {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
     } else {
@@ -48,7 +41,7 @@ changeChecklistItemStatus(int? itemId, int? StatusId) async {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
     }
@@ -60,7 +53,7 @@ changeChecklistItemStatus(int? itemId, int? StatusId) async {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color,
+        backgroundColor: Colors.white,
         textColor: Colors.black87,
         fontSize: 16.0);
   }

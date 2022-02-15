@@ -1,7 +1,5 @@
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestStatus.dart';
-
 class MaintenanceRequestModel {
   late final int? idMaintenanceRequest;
   final int maintenanceCategoryId;

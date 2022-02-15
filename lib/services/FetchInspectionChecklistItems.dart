@@ -1,13 +1,9 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart';
-import 'package:http_interceptor/http_interceptor.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/models/InspectionChecklistItem.dart';
 import 'package:mymikano_app/models/PredefinedChecklistModel.dart';
 import 'dart:convert';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ChecklistItemsService {
   late Dio dio;

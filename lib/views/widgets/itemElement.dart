@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -8,7 +7,6 @@ import 'package:mymikano_app/views/screens/ProductDetailsPage.dart';
 import 'package:provider/provider.dart';
 
 import 'AppWidget.dart';
-import 'auto_size_text/auto_size_text.dart';
 
 class ItemElement extends StatelessWidget {
   final Product product;

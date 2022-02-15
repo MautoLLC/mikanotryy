@@ -1,14 +1,8 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mymikano_app/main.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/services/getNewTokenService.dart';
-import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/views/screens/SignInScreen.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClass {
@@ -30,7 +24,7 @@ class DioClass {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
-            backgroundColor: t13_edit_text_color,
+            backgroundColor: Colors.white,
             textColor: Colors.black87,
             fontSize: 16.0);
         await logout();

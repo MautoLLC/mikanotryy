@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mymikano_app/models/DashboardCardModel.dart';
+import 'package:mymikano_app/models/CategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
@@ -25,17 +25,11 @@ class T5MaintenanceState extends State<T5Maintenance> {
   bool isRemember = false;
   var currentIndexPage = 0;
   var currentIndex = 0;
-  List<T5Category>? mFavouriteList;
-  List<T5Bill>? cardList;
-  List<MaintenanceRequestModel2>? reqList;
 
   @override
   void initState() {
     super.initState();
     passwordVisible = false;
-    mFavouriteList = getCategoryItems();
-    cardList = getListData();
-    reqList = getMaintenanceListData();
   }
 
   void changeSldier(int index) {
@@ -105,9 +99,9 @@ class T5MaintenanceState extends State<T5Maintenance> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-                  child: MaintenanceGridListScreen(mFavouriteList, false),
+                  child: MaintenanceGridListScreen(),
                 ),
-                MyRepairsScreen(cardList, reqList),
+                MyRepairsScreen(),
               ],
             ),
           ),

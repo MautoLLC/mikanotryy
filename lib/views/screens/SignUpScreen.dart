@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/services/RegisterService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
@@ -150,7 +148,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       text(lbl_lbl_already_member,
-                          textColor: t13_textColorSecondary),
+                          textColor: mainGreyColorTheme),
                       SizedBox(width: spacing_control),
                       GestureDetector(
                         onTap: () => Navigator.push(

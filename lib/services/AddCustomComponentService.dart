@@ -1,14 +1,9 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart';
-import 'package:http_interceptor/http_interceptor.dart';
 import 'package:mymikano_app/services/DioClass.dart';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 late Dio dio;
@@ -38,7 +33,7 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
     } else {
@@ -48,7 +43,7 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
     }
@@ -60,7 +55,7 @@ AddCustomComponentService(ComponentModel comp, int idInspection) async {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color,
+        backgroundColor: Colors.white,
         textColor: Colors.black87,
         fontSize: 16.0);
   }

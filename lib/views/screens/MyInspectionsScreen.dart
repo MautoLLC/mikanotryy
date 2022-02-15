@@ -7,7 +7,6 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
@@ -211,7 +210,7 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                                     .maintenaceRequestStatus!
                                                     .maintenanceStatusDescription,
                                                 fontSize: 14.0,
-                                                textColor: t5White),
+                                                textColor: Colors.white),
                                           ),
                                         ],
                                       ),

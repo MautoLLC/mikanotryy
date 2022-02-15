@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -13,7 +10,7 @@ import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:mymikano_app/models/DashboardCardModel.dart';
+import 'package:mymikano_app/models/CategoryModel.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +28,7 @@ class DashboardState extends State<Dashboard> {
   bool passwordVisible = false;
   bool isRemember = false;
   var currentIndexPage = 0;
-  List<T5Category>? mFavouriteList;
+  List<CategoryModel>? mFavouriteList;
   List<String>? mSliderList;
 
   @override

@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/models/Sensor_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';
 import 'package:mymikano_app/models/Unit_Model.dart';
-import 'package:mymikano_app/services/DashBorad_Service.dart';
+import 'package:mymikano_app/services/DashBoard_Service.dart';
 
 class DashBoard_ModelView {
   DashBorad_Service DashBoardService = new DashBorad_Service();

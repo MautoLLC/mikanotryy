@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
@@ -63,7 +62,7 @@ SubmitMaintenanceRequest(
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 2,
-      backgroundColor: t13_edit_text_color,
+      backgroundColor: Colors.white,
       textColor: Colors.black87,
       fontSize: 16.0);
   request.send().then((response) {
@@ -74,7 +73,7 @@ SubmitMaintenanceRequest(
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
       Navigator.pop(context);
@@ -85,7 +84,7 @@ SubmitMaintenanceRequest(
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
     }

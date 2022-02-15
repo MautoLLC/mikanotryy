@@ -1,16 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/main.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
 
 RefreshToken(String refreshToken) async {
   Dio dio = new Dio();
@@ -54,7 +49,7 @@ RefreshToken(String refreshToken) async {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: t13_edit_text_color,
+          backgroundColor: Colors.white,
           textColor: Colors.black87,
           fontSize: 16.0);
       await logout();
@@ -66,7 +61,7 @@ RefreshToken(String refreshToken) async {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: t13_edit_text_color,
+        backgroundColor: Colors.white,
         textColor: Colors.black87,
         fontSize: 16.0);
     await logout();

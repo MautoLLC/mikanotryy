@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/models/EntryModel.dart';
-import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:mymikano_app/models/DashboardCardModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/views/screens/MaintenanceRequestScreen.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
-import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class MaintenanceGridListScreen extends StatelessWidget {
-  List<T5Category>? mFavouriteList;
-  var isScrollable = false;
-
-  MaintenanceGridListScreen(this.mFavouriteList, this.isScrollable);
   ListCategViewModel listCategViewModel = new ListCategViewModel();
   bool pressed = false;
   @override

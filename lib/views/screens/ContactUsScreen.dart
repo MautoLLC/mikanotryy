@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -101,12 +99,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         fillColor: lightBorderColor,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                              color: t13_edit_text_color, width: 0.0),
+                          borderSide: BorderSide(color: Colors.transparent, width: 0.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: t13_edit_text_color, width: 0.0),
+                          borderSide: BorderSide(color: Colors.transparent, width: 0.0),
                         ),
                       ),
                     ),

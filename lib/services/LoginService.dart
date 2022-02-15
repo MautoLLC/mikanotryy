@@ -3,7 +3,6 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/colors.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
@@ -98,7 +97,7 @@ SuccessToast() {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: t13_edit_text_color,
+      backgroundColor: Colors.white,
       textColor: Colors.black87,
       fontSize: 16.0);
 }
@@ -109,7 +108,7 @@ FailedToast() {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: t13_edit_text_color,
+      backgroundColor: Colors.white,
       textColor: Colors.black87,
       fontSize: 16.0);
 }

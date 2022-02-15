@@ -13,13 +13,19 @@ class ImageBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return image!="null"?Container(
       width: 75,
       height: 55,
       child: commonCacheImageWidget(image, 24, color: color),
       decoration: BoxDecoration(
           color: mainGreyColorTheme.withOpacity(0.3),
           borderRadius: BorderRadius.circular(30)),
+    ):Container(
+      width: 75,
+      height: 55,
+      decoration: BoxDecoration(
+          color: mainGreyColorTheme.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(30))
     );
   }
 }

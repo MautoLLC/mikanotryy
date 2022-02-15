@@ -1,19 +1,12 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/State/UserState.dart';
-import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'dart:math' as math;
-
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'AboutUsScreen.dart';
