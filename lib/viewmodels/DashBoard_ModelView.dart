@@ -9,20 +9,6 @@ class DashBoard_ModelView {
   late Token AppToken;
   late Unit _UserUnit;
   late List<Sensor> _SensorsList = [];
-  // List<String> AllowedGUIDs = [
-  //   dotenv.env['EngineState_Guid'].toString(),
-  //   dotenv.env['BreakerState_Guid'].toString(),
-  //   dotenv.env['RunningHours_Guid'].toString(),
-  //   dotenv.env['Rpm_Guid'].toString(),
-  //   dotenv.env['OilPressure_Guid'].toString(),
-  //   dotenv.env['BatteryVoltage_Guid'].toString(),
-  //   dotenv.env['GeneratorFrequency_Guid'].toString(),
-  //   dotenv.env['FuelLevel_Guid'].toString(),
-  //   dotenv.env['CoolantTemp_Guid'].toString(),
-  //   dotenv.env['GeneratorVoltage_Guid'].toString(),
-  //   dotenv.env['GeneratorLoad_Guid'].toString(),
-  //   dotenv.env['Controller_Mode'].toString()
-  // ];
   List<String> AllowedGUID = [];
 
   Future<void> GetUserToken() async {

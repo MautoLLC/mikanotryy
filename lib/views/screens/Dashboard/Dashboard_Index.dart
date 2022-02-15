@@ -156,11 +156,13 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                               title: lbl_Generator,
                             ),
                             Spacer(),
-                            IconButton(onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           ApiConfigurationPage()));
-                            }, icon: Icon(Icons.settings)),
+                                },
+                                icon: Icon(Icons.settings)),
                             GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(

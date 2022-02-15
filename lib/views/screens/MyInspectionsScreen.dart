@@ -2,27 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/InspectionsState.dart';
-import 'package:mymikano_app/models/ComponentStatusModel.dart';
-import 'package:mymikano_app/models/DashboardCardModel.dart';
-import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
-import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/colors.dart';
-import 'package:mymikano_app/utils/DataGenerator.dart';
-import 'package:mymikano_app/viewmodels/LIstComponentStatusViewModel.dart';
-import 'package:mymikano_app/viewmodels/ListInspectionsViewModel.dart';
-import 'package:mymikano_app/viewmodels/ListMaintenanceCategoriesViewModel.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'InspectionScreen.dart';
+import 'InspectionDetailsScreen.dart';
 
 class MyInspectionsScreen extends StatefulWidget {
   static var tag = "/MyInspectionsScreen";
@@ -33,59 +25,15 @@ class MyInspectionsScreen extends StatefulWidget {
 }
 
 class MyInspectionsScreenState extends State<MyInspectionsScreen> {
-  List<Categ> cnames = [];
-  List<MaintenanceRequestModel> reqs = [];
-  ListInspectionsViewModel inspViewModel = new ListInspectionsViewModel();
-  ListComponentStatusesViewModel compSts = new ListComponentStatusesViewModel();
-  List<ComponentStatusViewModel> statusList = [];
-  List<InspectionsViewModel>? fetchinspections;
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
-
-  init() async {
-    await inspViewModel.fetchInspections();
-
-    ListCategViewModel lcvm = new ListCategViewModel();
-    await lcvm.fetchAllCategories();
-
-    for (int i = 0; i < lcvm.allcategs!.length; i++) {
-      cnames.add(lcvm.allcategs![i].mcateg!);
-    }
-
-    ListMaintenanceRequestsViewModel temp =
-        new ListMaintenanceRequestsViewModel();
-    await temp.fetchAllMaintenanceRequests();
-
-    for (int i = 0; i < temp.maintenanceRequests!.length; i++) {
-      reqs.add(temp.maintenanceRequests![i].mMaintenacerequest!);
-    }
-    await compSts.fetchComponentStatus();
-    int l = compSts.componentStatuses!.length;
-    for (int i = 0; i < l; i++) {
-      ComponentStatus sts = new ComponentStatus(
-          idComponentStatus:
-              compSts.componentStatuses![i].mcomponentStatus!.idComponentStatus,
-          componentStatusDescription: compSts.componentStatuses![i]
-              .mcomponentStatus!.componentStatusDescription);
-      ComponentStatusViewModel csvm = new ComponentStatusViewModel(sts);
-      statusList.add(csvm);
-    }
-
-    setState(() {});
-  }
-
   List<String> statuses = [
-    'poor',
-    'repair',
-    'good',
+    'Pending',
+    'Assigned',
+    'Done',
   ];
 
   switchColor<Color>(String status) {
     if (status.toUpperCase() == statuses[0].toUpperCase()) {
-      return PendingColor;
+      return Colors.grey;
     } else if (status.toUpperCase() == statuses[1].toUpperCase()) {
       return AssignedColor;
     } else if (status.toUpperCase() == statuses[2].toUpperCase()) {
@@ -97,8 +45,6 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Categ catgg;
-    MaintenanceRequestModel reqq;
     return Consumer<InspectionsState>(
       builder: (context, inspectionsState, child) => Scaffold(
           body: SafeArea(
@@ -129,53 +75,39 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
               ),
               SizedBox(height: 20),
               Expanded(
-                child: inspectionsState.inspections.length == 0 ||
-                        cnames.length == 0
+                child: inspectionsState.inspections.length == 0
                     ? Center(
                         child: SpinKitCircle(
                           color: Colors.black,
                           size: 65,
                         ),
                       )
-                    : 
-                    ListView.builder(
+                    : ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: inspViewModel.inspections!.length,
+                        itemCount: inspectionsState.inspections.length,
                         shrinkWrap: true,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          reqq = inspectionsState.inspections.firstWhere(
-                              (element) =>
-                                  element.idMaintenanceRequest ==
-                                  inspViewModel.inspections![index].mInspection!
-                                      .maintenanceRequestID,
-                              orElse: () => inspectionsState.inspections.first);
-                          catgg = cnames.firstWhere(
-                              (element) =>
-                                  element.idMaintenanceCategory ==
-                                  reqq.maintenanceCategoryId,
-                              orElse: () => cnames.first);
-
-                          DateTime startTime = DateTime.parse(inspViewModel
-                              .inspections![index]
-                              .mInspection!
-                              .inspectionStartTime);
+                          DateTime startTime = DateTime.parse(inspectionsState
+                              .inspections[index].preferredVisitTimee
+                              .toString());
                           String month = DateFormat.MMM().format(startTime);
-                          if(inspectionsState.filters.length != 0 && !inspectionsState.filters.contains(statusList[
-                                                        index]
-                                                    .mcomponentStatus!
-                                                    .componentStatusDescription))
-                                                    return Container();
+                          if (inspectionsState.filters.length != 0 &&
+                              !inspectionsState.filters.contains(
+                                  inspectionsState
+                                      .inspections[index]
+                                      .maintenaceRequestStatus!
+                                      .maintenanceStatusDescription))
+                            return Container();
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => T13InspectionScreen(
-                                          mInspection: inspViewModel
-                                              .inspections![index].mInspection!,
-                                          statusList: statusList,
-                                          category: catgg,
+                                    builder: (context) =>
+                                        InspectionDetailsScreen(
+                                          mInspection: inspectionsState
+                                              .inspections[index],
                                         )),
                               );
                             },
@@ -200,7 +132,9 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                           future:
                                               ListMaintenanceRequestsViewModel()
                                                   .fetchMaintenanceRequestsByID(
-                                                      reqq.idMaintenanceRequest!
+                                                      inspectionsState
+                                                          .inspections[index]
+                                                          .idMaintenanceRequest!
                                                           .toInt()),
                                           builder: (context,
                                               AsyncSnapshot<
@@ -233,7 +167,10 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              catgg.maintenanceCategoryName,
+                                              inspectionsState
+                                                  .inspections[index]
+                                                  .maintenanceCategory!
+                                                  .maintenanceCategoryName,
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontFamily: PoppinsFamily),
@@ -263,15 +200,16 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                             padding: EdgeInsets.fromLTRB(
                                                 10, 0, 10, 0),
                                             decoration: boxDecoration(
-                                                bgColor: switchColor(statusList[
-                                                        index]
-                                                    .mcomponentStatus!
-                                                    .componentStatusDescription),
+                                                bgColor: switchColor(inspectionsState
+                                                    .inspections[index]
+                                                    .maintenaceRequestStatus!
+                                                    .maintenanceStatusDescription),
                                                 radius: 16),
                                             child: text(
-                                                statusList[index]
-                                                    .mcomponentStatus!
-                                                    .componentStatusDescription,
+                                                inspectionsState
+                                                    .inspections[index]
+                                                    .maintenaceRequestStatus!
+                                                    .maintenanceStatusDescription,
                                                 fontSize: 14.0,
                                                 textColor: t5White),
                                           ),
@@ -324,9 +262,18 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      FilterOption(value: value, option: lbl_Pending,),
-                      FilterOption(value: value, option: lbl_Assigned,),
-                      FilterOption(value: value, option: lbl_Done,),
+                      FilterOption(
+                        value: value,
+                        option: lbl_Pending,
+                      ),
+                      FilterOption(
+                        value: value,
+                        option: lbl_Assigned,
+                      ),
+                      FilterOption(
+                        value: value,
+                        option: lbl_Done,
+                      ),
                     ],
                   ),
                   Spacer(),
@@ -348,11 +295,8 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
 class FilterOption extends StatelessWidget {
   InspectionsState value;
   String option;
-  FilterOption({
-    Key? key,
-    required this.value,
-    required this.option
-  }) : super(key: key);
+  FilterOption({Key? key, required this.value, required this.option})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -363,22 +307,22 @@ class FilterOption extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            color: contains
-                ? DoneColor
-                : Colors.white,
+            color: contains ? DoneColor : Colors.white,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-                color: contains
-                    ? DoneColor
-                    : Colors.black)),
+            border: Border.all(color: contains ? DoneColor : Colors.black)),
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
             children: [
-              Text(option, style: TextStyle(color: contains?Colors.white:Colors.black),),
+              Text(
+                option,
+                style: TextStyle(color: contains ? Colors.white : Colors.black),
+              ),
               SizedBox(width: 10),
-              Icon(contains?Icons.check:Icons.add, color: contains?Colors.white:Colors.black,),
+              Icon(
+                contains ? Icons.check : Icons.add,
+                color: contains ? Colors.white : Colors.black,
+              ),
             ],
           ),
         ),

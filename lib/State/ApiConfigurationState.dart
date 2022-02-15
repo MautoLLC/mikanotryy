@@ -12,9 +12,9 @@ class ApiConfigurationState extends ChangeNotifier {
   void ChangeSuccessState(String ssid, String password) {
     if (ssid == '' && password == '') {
       isSuccess = false;
-    }
-    else isSuccess = true;
-    
+    } else
+      isSuccess = true;
+
     notifyListeners();
   }
 }
