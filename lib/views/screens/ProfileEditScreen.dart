@@ -9,16 +9,17 @@ import 'package:provider/provider.dart';
 
 class ProfileEditScreen extends StatelessWidget {
   ProfileEditScreen({Key? key}) : super(key: key);
-  TextEditingController UsernameController = TextEditingController();
-  TextEditingController EmailController = TextEditingController();
+  TextEditingController FirstNameController = TextEditingController();
+  TextEditingController LastNameController = TextEditingController();
   TextEditingController PhoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var temp = Provider.of<UserState>(context);
-    UsernameController.text = "${temp.getUser.username}";
-    EmailController.text =
-        temp.getUser.email == "null" ? "" : temp.getUser.email;
+    String firstName = temp.getUser.username.split(' ')[0];
+    String lastName = temp.getUser.username.split(' ')[1];
+    FirstNameController.text = "${firstName}";
+    LastNameController.text = "${lastName}";
     PhoneNumberController.text =
         temp.getUser.phoneNumber == "null" ? "" : temp.getUser.phoneNumber;
     return Consumer<UserState>(
@@ -32,10 +33,10 @@ class ProfileEditScreen extends StatelessWidget {
             SizedBox(height: 20.0),
             SubTitleText(title: lbl_Edit_Profile),
             SizedBox(height: 10.0),
-            t13EditTextStyle(lbl_UserName, UsernameController,
+            t13EditTextStyle(lbl_FirstName, FirstNameController,
                 isPassword: false, keyboardType: TextInputType.name),
             SizedBox(height: 10.0),
-            t13EditTextStyle(lbl_hint_Email, EmailController,
+            t13EditTextStyle(lbl_LastName, LastNameController,
                 isPassword: false, keyboardType: TextInputType.emailAddress),
             SizedBox(height: 10.0),
             t13EditTextStyle(lbl_Phone_Number, PhoneNumberController,
@@ -44,8 +45,8 @@ class ProfileEditScreen extends StatelessWidget {
             T13Button(
                 textContent: lbl_Save,
                 onPressed: () {
-                  state.updateUserInfo(UsernameController.text,
-                      EmailController.text, PhoneNumberController.text);
+                  state.updateUserInfo(FirstNameController.text,
+                      LastNameController.text, PhoneNumberController.text);
                   toast(lbl_Update_Success);
                   Navigator.pop(context);
                 }),
