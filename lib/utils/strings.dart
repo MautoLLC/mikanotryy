@@ -138,3 +138,13 @@ const lbl_Done = 'good';
 // const lbl_Assigned = 'Assigned';
 // const lbl_Done = 'Done';
 const lbl_Show_Result = 'Show Result';
+const lbl_API_Configuration = 'API Configuration';
+const lbl_LAN = 'LAN';
+const lbl_Cloud = 'Cloud';
+const txt_API_Configuration =
+    "Make sure that the first time you launch the app you must connect manually to the ESP Access point. once done hit the proceed button to get the list of SSIDs";
+const txt_SSID = 'The SSID will load after you click proceed';
+const lbl_SSID = 'SSID';
+const lbl_Submit = 'Submit';
+const lbl_Test_Success = 'Test Success';
+const lbl_Test_Failed = 'Test Failed';

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/main/store%20-%20Copy/AppStore.dart';
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserState>(create: (context) => UserState()),
         ChangeNotifierProvider<InspectionsState>(
             create: (context) => InspectionsState()),
+        ChangeNotifierProvider<ApiConfigurationState>(
+            create: ((context) => ApiConfigurationState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

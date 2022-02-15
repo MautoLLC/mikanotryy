@@ -17,6 +17,8 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'ApiConfigurationPage.dart';
+
 class Dashboard_Index extends StatefulWidget {
   @override
   _Dashboard_IndexState createState() => _Dashboard_IndexState();
@@ -154,6 +156,11 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                               title: lbl_Generator,
                             ),
                             Spacer(),
+                            IconButton(onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ApiConfigurationPage()));
+                            }, icon: Icon(Icons.settings)),
                             GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
