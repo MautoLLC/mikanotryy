@@ -94,121 +94,132 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                   inspectionsState
                                       .inspections[index].maintenanceRequestID),
                               builder: (context, snapshot) {
-                                DateTime startTime = DateTime.parse(snapshot
-                                    .data!.preferredVisitTimee
-                                    .toString());
-                                String month =
-                                    DateFormat.MMM().format(startTime);
-                                if (inspectionsState.filters.length != 0 &&
-                                    !inspectionsState.filters.contains(snapshot
-                                        .data!
-                                        .maintenaceRequestStatus!
-                                        .maintenanceStatusDescription))
-                                  return Container();
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              InspectionDetailsScreen(
-                                                  mInspection: inspectionsState
-                                                      .inspections[index],
-                                                  Maintenance: snapshot.data!)),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 0.0, 0.0, 16.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: lightBorderColor,
-                                            width: 1.0,
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  DateTime startTime = DateTime.parse(snapshot
+                                      .data!.preferredVisitTimee
+                                      .toString());
+                                  String month =
+                                      DateFormat.MMM().format(startTime);
+                                  if (inspectionsState.filters.length != 0 &&
+                                      !inspectionsState.filters.contains(
+                                          snapshot
+                                              .data!
+                                              .maintenaceRequestStatus!
+                                              .maintenanceStatusDescription))
+                                    return Container();
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                InspectionDetailsScreen(
+                                                    mInspection:
+                                                        inspectionsState
+                                                            .inspections[index],
+                                                    Maintenance:
+                                                        snapshot.data!)),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 0.0, 0.0, 16.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: lightBorderColor,
+                                              width: 1.0,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0.0, 0.0, 0.0, 16.0),
-                                        child: Row(
-                                          children: [
-                                            ImageBox(
-                                                image: snapshot
-                                                    .data!
-                                                    .maintenanceCategory!
-                                                    .maintenanceCategoryIcon),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      14.3, 0.0, 0.0, 0.0),
-                                              child: Column(
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0.0, 0.0, 0.0, 16.0),
+                                          child: Row(
+                                            children: [
+                                              ImageBox(
+                                                  image: snapshot
+                                                      .data!
+                                                      .maintenanceCategory!
+                                                      .maintenanceCategoryIcon),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        14.3, 0.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      snapshot
+                                                          .data!
+                                                          .maintenanceCategory!
+                                                          .maintenanceCategoryName,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              PoppinsFamily),
+                                                    ),
+                                                    Text(
+                                                      month +
+                                                          " " +
+                                                          startTime.day
+                                                              .toString() +
+                                                          ", " +
+                                                          startTime.year
+                                                              .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              PoppinsFamily,
+                                                          color:
+                                                              mainGreyColorTheme),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                    MainAxisAlignment.end,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.end,
                                                 children: [
-                                                  Text(
-                                                    snapshot
-                                                        .data!
-                                                        .maintenanceCategory!
-                                                        .maintenanceCategoryName,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily:
-                                                            PoppinsFamily),
-                                                  ),
-                                                  Text(
-                                                    month +
-                                                        " " +
-                                                        startTime.day
-                                                            .toString() +
-                                                        ", " +
-                                                        startTime.year
-                                                            .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontFamily:
-                                                            PoppinsFamily,
-                                                        color:
-                                                            mainGreyColorTheme),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            10, 0, 10, 0),
+                                                    decoration: boxDecoration(
+                                                        bgColor: switchColor(snapshot
+                                                            .data!
+                                                            .maintenaceRequestStatus!
+                                                            .maintenanceStatusDescription),
+                                                        radius: 16),
+                                                    child: text(
+                                                        snapshot
+                                                            .data!
+                                                            .maintenaceRequestStatus!
+                                                            .maintenanceStatusDescription,
+                                                        fontSize: 14.0,
+                                                        textColor:
+                                                            Colors.white),
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                            Spacer(),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      10, 0, 10, 0),
-                                                  decoration: boxDecoration(
-                                                      bgColor: switchColor(snapshot
-                                                          .data!
-                                                          .maintenaceRequestStatus!
-                                                          .maintenanceStatusDescription),
-                                                      radius: 16),
-                                                  child: text(
-                                                      snapshot
-                                                          .data!
-                                                          .maintenaceRequestStatus!
-                                                          .maintenanceStatusDescription,
-                                                      fontSize: 14.0,
-                                                      textColor: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                } else {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                }
                               });
                         }),
               )

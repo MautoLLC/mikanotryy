@@ -17,17 +17,14 @@ class UserService {
     await PrepareCall();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String url = userEditInfoUrl.replaceAll(
-              "{id}", prefs.getString('UserID').toString());
+        "{id}", prefs.getString('UserID').toString());
     try {
-      Response response = await dio.put(
-          (url),
-          data: {
-            "id": prefs.getString('UserID').toString(),
-            "firstName": firstName,
-            "lastName": lastName,
-            "phoneNumber": phoneNumber
-          }
-        );
+      Response response = await dio.put((url), data: {
+        "id": prefs.getString('UserID').toString(),
+        "firstName": firstName,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber
+      });
       if (response.statusCode == 204) {
         return true;
       } else {
@@ -37,17 +34,19 @@ class UserService {
       throw Exception('Error');
     }
   }
+
   Future<TechnicianModel> GetUserInfo() async {
     await PrepareCall();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String url = userGetInfoUrl.replaceAll(
-              "{id}", prefs.getString('UserID').toString());
+    String url =
+        userGetInfoUrl.replaceAll("{id}", prefs.getString('UserID').toString());
     try {
       Response response = await dio.get(
-          (url),
-        );
+        (url),
+      );
       if (response.statusCode == 200) {
-        TechnicianModel technicianModel = TechnicianModel.fromJson(response.data);
+        TechnicianModel technicianModel =
+            TechnicianModel.fromJson(response.data);
         return technicianModel;
       } else {
         throw Exception('Error');

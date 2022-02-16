@@ -12,7 +12,7 @@ class TechnicianModel {
     return TechnicianModel(
         json['id'],
         json['firstName'] + " " + json['lastName'],
-        json['image']??"",
+        json['image'] ?? "",
         json['phoneNumber'],
         json['email']);
   }

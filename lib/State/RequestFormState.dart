@@ -5,7 +5,12 @@ class RequestFormState extends ChangeNotifier {
   List<ComponentItem> items = [];
 
   RequestFormState() {
-    addItem("Default Item");
+    addItem("Default Item 1");
+    addItem("Default Item 2");
+    addItem("Default Item 3");
+    addItem("Default Item 4");
+    addItem("Default Item 5");
+    addItem("Default Item 6");
   }
 
   void deleteItem(String name) {

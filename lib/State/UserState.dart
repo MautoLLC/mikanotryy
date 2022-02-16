@@ -3,6 +3,7 @@ import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/services/UserService.dart';
+
 class UserState extends ChangeNotifier {
   TechnicianModel User = TechnicianModel("1", 'null', '', 'null', 'null');
   bool termsAccepted = true;

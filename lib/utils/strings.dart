@@ -152,3 +152,4 @@ const lbl_Audio = 'Audio';
 const lbl_Additional_Notes = 'Additional Notes';
 const lbl_Components = 'Components';
 const lbl_Change_Status = 'Change Status';
+const lbl_Revert_Status = 'Revert Status';
