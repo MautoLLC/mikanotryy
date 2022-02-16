@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/InspectionsState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
@@ -7,7 +6,6 @@ import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/services/RequestFormService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/widgets/ComponentItem.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -173,7 +171,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                               filled: true,
                               fillColor: Colors.transparent,
                               contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
-                              hintText: 'Text Here',
+                              hintText: lbl_Text_Here,
                               hintStyle: TextStyle(
                                   height: 1.4, color: textFieldHintColor),
                               enabledBorder: OutlineInputBorder(
@@ -191,14 +189,24 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 30,
                         ),
-                        TitleText(title: lbl_Components),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TitleText(title: lbl_Components),
+                            IconButton(onPressed: (){
+                              bottomSheet(context);
+                              // showModalBottomSheet(context: context, builder: (context) => Text("JE"),);
+                            }, icon: Icon(Icons.add))
+                          ],
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         if(state.items !=0)
                           Container(
+                            padding: EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width,
-                            height: 50 * (state.items.length / 3) + 50,
+                            height: 50 * (state.items.length / 3) + 60,
                             decoration: BoxDecoration(
                               color: lightBorderColor.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(10),
@@ -208,7 +216,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         childAspectRatio: 4,
                                         crossAxisCount: 2,
-                                        crossAxisSpacing: 10,
+                                        crossAxisSpacing: 4,
                                         mainAxisSpacing: 10),
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: state.items.length,
@@ -278,6 +286,109 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+    void bottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Consumer<RequestFormState>(
+          builder: (context, value, child) => Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () => finish(context),
+                    child: Row(
+                      children: [
+                        Icon(Icons.arrow_back_ios_new),
+                        Text(lbl_Status)
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  SizedBox(
+                    height: context.height() * 0.3,
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 4,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      physics: BouncingScrollPhysics(),
+                      itemCount: value.items.length,
+                      itemBuilder: (context, index) {
+                        return FilterOption(
+                          value: value,
+                          option: value.items[index].name,
+                        );
+                      },
+                    ),
+                  ),
+                  Spacer(),
+                  T13Button(
+                      textContent: lbl_Show_Result,
+                      onPressed: () {
+                        finish(context);
+                      })
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+}
+
+class FilterOption extends StatelessWidget {
+  RequestFormState value;
+  String option;
+  FilterOption({Key? key, required this.value, required this.option})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool contains = value.isSelected(option);
+    return GestureDetector(
+      onTap: () {
+        value.selectItem(option);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: contains ? DoneColor : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: contains ? DoneColor : Colors.black)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            children: [
+              Text(
+                option,
+                style: TextStyle(color: contains ? Colors.white : Colors.black),
+              ),
+              SizedBox(width: 10),
+              Icon(
+                contains ? Icons.check : Icons.add,
+                color: contains ? Colors.white : Colors.black,
+              ),
+            ],
           ),
         ),
       ),
