@@ -6,6 +6,8 @@ const authorizationEndpoint =
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 
 const userApiUrl = 'http://dev.codepickles.com:8083';
+const userEditInfoUrl = '$userApiUrl/api/Users/{id}';
+const userGetInfoUrl = '$userApiUrl/api/Users/{id}';
 const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
 const MikanoShopGetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 const MikanoShopSetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';

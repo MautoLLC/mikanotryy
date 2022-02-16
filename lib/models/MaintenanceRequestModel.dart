@@ -1,5 +1,6 @@
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestStatus.dart';
+
 class MaintenanceRequestModel {
   late final int? idMaintenanceRequest;
   final int maintenanceCategoryId;
@@ -30,8 +31,6 @@ class MaintenanceRequestModel {
   });
 
   factory MaintenanceRequestModel.fromJson(Map<String, dynamic> json) {
-    print(json['userId']);
-    print(json['dtoMaintenanceRequestFiles']);
     List audioList = [];
     List imageList = [];
     if (json['dtoMaintenanceRequestFiles'] != null) {

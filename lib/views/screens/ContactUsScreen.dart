@@ -99,10 +99,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         fillColor: lightBorderColor,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                          borderSide:
+                              BorderSide(color: Colors.transparent, width: 0.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                          borderSide:
+                              BorderSide(color: Colors.transparent, width: 0.0),
                         ),
                       ),
                     ),

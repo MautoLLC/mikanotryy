@@ -1,4 +1,3 @@
-
 const ic_Medical = "assets/heart_mask.png";
 const ic_generator = "assets/compressor.png";
 const ic_motor = "assets/tesla_model_x.png";

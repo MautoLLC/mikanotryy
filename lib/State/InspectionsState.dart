@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/services/FetchInspectionsService.dart';
 import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
 
 class InspectionsState extends ChangeNotifier {
-  List<MaintenanceRequestModel> inspections = [];
+  List<InspectionModel> inspections = [];
   List<String> filters = [];
 
   InspectionsState() {
     fetchInspectionByUser();
   }
 
-  void fetchAllInspection() async {
-    inspections =
-        await MaintenanceRequestService().fetchAllMaintenanceRequest();
+  void fetchInspectionByUser() async {
+    inspections = await InspectionService().fetchInspectionsByUser();
     notifyListeners();
   }
 
-  void fetchInspectionByUser() async {
-    inspections = await MaintenanceRequestService().fetchMaintenanceRequest();
-    notifyListeners();
+  Future<MaintenanceRequestModel> fetchRelatedMaintenance(int id) async {
+    return await MaintenanceRequestService().fetchMaintenanceRequestByID(id);
   }
 
   void sortInspections() {

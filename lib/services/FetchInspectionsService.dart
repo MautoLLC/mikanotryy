@@ -13,7 +13,7 @@ class InspectionService {
     dio = await DioClass.getDio();
   }
 
-  Future<List<InspectionModel>> fetchInspections() async {
+  Future<List<InspectionModel>> fetchInspectionsByUser() async {
     await PrepareCall();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(GetTechnicianInspectionURL + prefs.getString('UserID').toString());

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
+import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -13,9 +14,11 @@ import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:provider/provider.dart';
 
 class InspectionDetailsScreen extends StatefulWidget {
-  MaintenanceRequestModel mInspection;
+  InspectionModel mInspection;
+  MaintenanceRequestModel Maintenance;
 
-  InspectionDetailsScreen({Key? key, required this.mInspection})
+  InspectionDetailsScreen(
+      {Key? key, required this.mInspection, required this.Maintenance})
       : super(key: key);
   @override
   InspectionDetailsScreenState createState() => InspectionDetailsScreenState();
@@ -29,12 +32,12 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
     return Consumer<RequestFormState>(
       builder: (context, state, child) => Scaffold(
         body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -47,7 +50,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         height: 10,
                       ),
                       Text(
-                          this.widget.mInspection.requestDescription.toString(),
+                          this.widget.Maintenance.requestDescription.toString(),
                           style: TextStyle(
                               fontSize: 12, color: mainGreyColorTheme)),
                       SizedBox(
@@ -59,7 +62,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                       ),
                       this
                                   .widget
-                                  .mInspection
+                                  .Maintenance
                                   .maintenanceRequestImagesFiles!
                                   .length !=
                               0
@@ -69,7 +72,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: this
                                       .widget
-                                      .mInspection
+                                      .Maintenance
                                       .maintenanceRequestImagesFiles!
                                       .length,
                                   itemBuilder:
@@ -93,7 +96,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                                             String)?,
                                                 imageUrl: this
                                                         .widget
-                                                        .mInspection
+                                                        .Maintenance
                                                         .maintenanceRequestImagesFiles![
                                                     index],
                                                 fit: BoxFit.fill,
@@ -114,14 +117,14 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                       ),
                       this
                                   .widget
-                                  .mInspection
+                                  .Maintenance
                                   .maintenanceRequestRecordsFiles!
                                   .length !=
                               0
                           ? SizedBox(
                               height: this
                                       .widget
-                                      .mInspection
+                                      .Maintenance
                                       .maintenanceRequestRecordsFiles!
                                       .length *
                                   45,
@@ -131,7 +134,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                       (BuildContext context, int index) {
                                     List<String> tempList = this
                                         .widget
-                                        .mInspection
+                                        .Maintenance
                                         .maintenanceRequestRecordsFiles!
                                         .map((e) => e.toString())
                                         .toList();
@@ -189,14 +192,13 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemCount: state.items.length,
-                          itemBuilder: (context, index){
-                            return state.items[index];
-                          }
-                        ),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: state.items.length,
+                            itemBuilder: (context, index) {
+                              return state.items[index];
+                            }),
                       ),
                       SizedBox(
                         height: 30,
@@ -209,9 +211,9 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                       T13Button(textContent: lbl_Submit, onPressed: () {})
                     ],
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

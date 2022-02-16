@@ -17,7 +17,6 @@ class InspectionModel {
       required this.inspectionComments});
 
   factory InspectionModel.fromJson(Map<String, dynamic> json) {
-    print(json['technicianID']);
     return InspectionModel(
       idInspection: json['idInspection'],
       technicianID: (json['technicianID'].toString()),

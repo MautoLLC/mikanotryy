@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/InspectionsState.dart';
+import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -87,139 +89,127 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                         shrinkWrap: true,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          DateTime startTime = DateTime.parse(inspectionsState
-                              .inspections[index].preferredVisitTimee
-                              .toString());
-                          String month = DateFormat.MMM().format(startTime);
-                          if (inspectionsState.filters.length != 0 &&
-                              !inspectionsState.filters.contains(
+                          return FutureBuilder<MaintenanceRequestModel>(
+                              future: inspectionsState.fetchRelatedMaintenance(
                                   inspectionsState
-                                      .inspections[index]
-                                      .maintenaceRequestStatus!
-                                      .maintenanceStatusDescription))
-                            return Container();
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        InspectionDetailsScreen(
-                                          mInspection: inspectionsState
-                                              .inspections[index],
-                                        )),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: lightBorderColor,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      0.0, 0.0, 0.0, 16.0),
-                                  child: Row(
-                                    children: [
-                                      FutureBuilder(
-                                          future:
-                                              ListMaintenanceRequestsViewModel()
-                                                  .fetchMaintenanceRequestsByID(
-                                                      inspectionsState
-                                                          .inspections[index]
-                                                          .idMaintenanceRequest!
-                                                          .toInt()),
-                                          builder: (context,
-                                              AsyncSnapshot<
-                                                      MaintenanceRequestsViewModel>
-                                                  snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              return ImageBox(
-                                                  image: snapshot
-                                                      .data!
-                                                      .mMaintenacerequest!
-                                                      .maintenanceCategory!
-                                                      .maintenanceCategoryIcon);
-                                            } else {
-                                              return Center(
-                                                child: SpinKitCircle(
-                                                  color: Colors.black,
-                                                  size: 65,
-                                                ),
-                                              );
-                                            }
-                                          }),
-                                      Padding(
+                                      .inspections[index].maintenanceRequestID),
+                              builder: (context, snapshot) {
+                                DateTime startTime = DateTime.parse(snapshot
+                                    .data!.preferredVisitTimee
+                                    .toString());
+                                String month =
+                                    DateFormat.MMM().format(startTime);
+                                if (inspectionsState.filters.length != 0 &&
+                                    !inspectionsState.filters.contains(snapshot
+                                        .data!
+                                        .maintenaceRequestStatus!
+                                        .maintenanceStatusDescription))
+                                  return Container();
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              InspectionDetailsScreen(
+                                                  mInspection: inspectionsState
+                                                      .inspections[index],
+                                                  Maintenance: snapshot.data!)),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0.0, 0.0, 0.0, 16.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: lightBorderColor,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            14.3, 0.0, 0.0, 0.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                            0.0, 0.0, 0.0, 16.0),
+                                        child: Row(
                                           children: [
-                                            Text(
-                                              inspectionsState
-                                                  .inspections[index]
-                                                  .maintenanceCategory!
-                                                  .maintenanceCategoryName,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily: PoppinsFamily),
+                                            ImageBox(
+                                                image: snapshot
+                                                    .data!
+                                                    .maintenanceCategory!
+                                                    .maintenanceCategoryIcon),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      14.3, 0.0, 0.0, 0.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    snapshot
+                                                        .data!
+                                                        .maintenanceCategory!
+                                                        .maintenanceCategoryName,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            PoppinsFamily),
+                                                  ),
+                                                  Text(
+                                                    month +
+                                                        " " +
+                                                        startTime.day
+                                                            .toString() +
+                                                        ", " +
+                                                        startTime.year
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                            Text(
-                                              month +
-                                                  " " +
-                                                  startTime.day.toString() +
-                                                  ", " +
-                                                  startTime.year.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontFamily: PoppinsFamily,
-                                                  color: mainGreyColorTheme),
+                                            Spacer(),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
+                                                  decoration: boxDecoration(
+                                                      bgColor: switchColor(snapshot
+                                                          .data!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription),
+                                                      radius: 16),
+                                                  child: text(
+                                                      snapshot
+                                                          .data!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription,
+                                                      fontSize: 14.0,
+                                                      textColor: Colors.white),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ),
-                                      Spacer(),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                10, 0, 10, 0),
-                                            decoration: boxDecoration(
-                                                bgColor: switchColor(inspectionsState
-                                                    .inspections[index]
-                                                    .maintenaceRequestStatus!
-                                                    .maintenanceStatusDescription),
-                                                radius: 16),
-                                            child: text(
-                                                inspectionsState
-                                                    .inspections[index]
-                                                    .maintenaceRequestStatus!
-                                                    .maintenanceStatusDescription,
-                                                fontSize: 14.0,
-                                                textColor: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          );
+                                );
+                              });
                         }),
               )
             ],

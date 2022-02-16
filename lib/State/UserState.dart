@@ -1,16 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
-import 'package:mymikano_app/utils/images.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:path_provider/path_provider.dart';
-
+import 'package:mymikano_app/services/UserService.dart';
 class UserState extends ChangeNotifier {
-  TechnicianModel User =
-      TechnicianModel(1, 'null', '', 'null', 'null');
+  TechnicianModel User = TechnicianModel("1", 'null', '', 'null', 'null');
   bool termsAccepted = true;
   bool NotificationsEnabled = true;
   Address ChosenAddress = Address();
@@ -25,32 +19,17 @@ class UserState extends ChangeNotifier {
   }
 
   void fillUserInfo() async {
-    Directory directory;
-    File file;
-    String fileContent;
-    directory = await getApplicationDocumentsDirectory();
-    file = File('${directory.path}/credentials.json');
-    fileContent = await file.readAsString();
-    Map<String, dynamic> jwtData = {};
-
-    JwtDecoder.decode(fileContent)!.forEach((key, value) {
-      jwtData[key] = value;
-    });
-    User = new TechnicianModel(
-        1,
-        jwtData['given_name'].toString() +
-            " " +
-            jwtData['family_name'].toString(),
-        '',
-        "null",
-        jwtData['email']);
+    User = await UserService().GetUserInfo();
   }
 
-  void updateUserInfo(String Username, String Email, String PhoneNumber) async {
-    User.username = Username;
-    User.email = Email;
-    User.phoneNumber = PhoneNumber;
-    // ToDo: Update user info in db
+  void updateUserInfo(
+      String firstName, String lastName, String PhoneNumber) async {
+    bool flag =
+        await UserService().EditUserInfo(firstName, lastName, PhoneNumber);
+    if (flag) {
+      User.username = firstName + " " + lastName;
+      User.phoneNumber = PhoneNumber;
+    }
     notifyListeners();
   }
 
