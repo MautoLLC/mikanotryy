@@ -25,7 +25,7 @@ class RequestFormState extends ChangeNotifier {
 
   bool isSelected(String item) {
     if (selectedItems.contains(item)) {
-       return true;
+      return true;
     } else {
       return false;
     }

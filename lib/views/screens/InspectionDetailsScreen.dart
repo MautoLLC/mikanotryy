@@ -31,8 +31,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<InspectionsState>(
-      builder:(context, InsState, child) => 
-      Consumer<RequestFormState>(
+      builder: (context, InsState, child) => Consumer<RequestFormState>(
         builder: (context, state, child) => Scaffold(
           body: SafeArea(
             child: Padding(
@@ -53,7 +52,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           height: 10,
                         ),
                         Text(
-                            this.widget.Maintenance.requestDescription.toString(),
+                            this
+                                .widget
+                                .Maintenance
+                                .requestDescription
+                                .toString(),
                             style: TextStyle(
                                 fontSize: 12, color: mainGreyColorTheme)),
                         SizedBox(
@@ -82,12 +85,14 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                         (BuildContext context, int index) {
                                       Widget temp = SizedBox(
                                           height: 100,
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.6,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
                                           child: Padding(
-                                              padding: const EdgeInsets.fromLTRB(
-                                                  8.0, 0.0, 8.0, 0.0),
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      8.0, 0.0, 8.0, 0.0),
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
@@ -97,7 +102,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                                           .Maintenance
                                                           .maintenanceRequestImagesFiles![
                                                       index],
-                                                      80,
+                                                  80,
                                                   fit: BoxFit.fill,
                                                 ),
                                               )));
@@ -144,11 +149,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                     }),
                               )
                             : Container(
-                              height: 50,
-                              child: Center(
+                                height: 50,
+                                child: Center(
                                   child: Text("No Audio"),
                                 ),
-                            ),
+                              ),
                         TitleText(title: lbl_Additional_Notes),
                         SizedBox(
                           height: 10,
@@ -156,9 +161,8 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         Container(
                           height: 80,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: lightBorderColor
-                          ),
+                              borderRadius: BorderRadius.circular(20),
+                              color: lightBorderColor),
                           child: TextFormField(
                             enabled: false,
                             textAlignVertical: TextAlignVertical.top,
@@ -170,7 +174,8 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.transparent,
-                              contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(26, 14, 4, 14),
                               hintText: lbl_Text_Here,
                               hintStyle: TextStyle(
                                   height: 1.4, color: textFieldHintColor),
@@ -193,16 +198,18 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TitleText(title: lbl_Components),
-                            IconButton(onPressed: (){
-                              bottomSheet(context);
-                              // showModalBottomSheet(context: context, builder: (context) => Text("JE"),);
-                            }, icon: Icon(Icons.add))
+                            IconButton(
+                                onPressed: () {
+                                  bottomSheet(context);
+                                  // showModalBottomSheet(context: context, builder: (context) => Text("JE"),);
+                                },
+                                icon: Icon(Icons.add))
                           ],
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        if(state.items !=0)
+                        if (state.items != 0)
                           Container(
                             padding: EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width,
@@ -234,9 +241,8 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         Container(
                           height: 55,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: lightBorderColor
-                          ),
+                              borderRadius: BorderRadius.circular(20),
+                              color: lightBorderColor),
                           child: TextFormField(
                             enabled: false,
                             textAlignVertical: TextAlignVertical.top,
@@ -248,7 +254,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.transparent,
-                              hintText: this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription,
+                              hintText: this
+                                  .widget
+                                  .Maintenance
+                                  .maintenaceRequestStatus!
+                                  .maintenanceStatusDescription,
                               hintStyle: TextStyle(
                                   height: 1.4, color: textFieldHintColor),
                               enabledBorder: OutlineInputBorder(
@@ -266,17 +276,41 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 36,
                         ),
-                        T13Button(textContent: this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription == "Assigned"?lbl_Submit:lbl_Revert_Status, onPressed: () {
-                          RequestFormService().SubmitRequestForm(this.widget.mInspection.maintenanceRequestID.toString(), this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription == "Assigned"?"4":"2").then((value) { 
-                            if(value){
-                              toast("Submitted Successfully");
-                              InsState.fetchInspectionByUser();
-                              Navigator.pop(context);
-                            } else {
-                              toast("Error! please try again.");
-                            }
-                          });
-                        }),
+                        T13Button(
+                            textContent: this
+                                        .widget
+                                        .Maintenance
+                                        .maintenaceRequestStatus!
+                                        .maintenanceStatusDescription ==
+                                    "Assigned"
+                                ? lbl_Submit
+                                : lbl_Revert_Status,
+                            onPressed: () {
+                              RequestFormService()
+                                  .SubmitRequestForm(
+                                      this
+                                          .widget
+                                          .mInspection
+                                          .maintenanceRequestID
+                                          .toString(),
+                                      this
+                                                  .widget
+                                                  .Maintenance
+                                                  .maintenaceRequestStatus!
+                                                  .maintenanceStatusDescription ==
+                                              "Assigned"
+                                          ? "4"
+                                          : "2")
+                                  .then((value) {
+                                if (value) {
+                                  toast("Submitted Successfully");
+                                  InsState.fetchInspectionByUser();
+                                  Navigator.pop(context);
+                                } else {
+                                  toast("Error! please try again.");
+                                }
+                              });
+                            }),
                         SizedBox(
                           height: 10,
                         ),
@@ -292,7 +326,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
     );
   }
 
-    void bottomSheet(BuildContext context) {
+  void bottomSheet(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -354,7 +388,6 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
       },
     );
   }
-
 }
 
 class FilterOption extends StatelessWidget {

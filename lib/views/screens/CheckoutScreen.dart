@@ -310,8 +310,14 @@ class CheckoutScreen extends StatelessWidget {
                             T13Button(
                                 textContent: lbl_Pay,
                                 onPressed: () {
-                                  productState.checkout(state.ChosenAddress,
-                                      state.checkedValueForOrder);
+                                  productState
+                                      .checkout(state.ChosenAddress,
+                                          state.checkedValueForOrder)
+                                      .then((value) {
+                                    if (value) {
+                                      Navigator.pop(context);
+                                    }
+                                  });
                                 }),
                             SizedBox(height: 20.0),
                           ],

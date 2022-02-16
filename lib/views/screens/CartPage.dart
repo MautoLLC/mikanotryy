@@ -124,6 +124,9 @@ class _CartPageState extends State<CartPage> {
                 T13Button(
                   textContent: lbl_Checkout,
                   onPressed: () {
+                    if (ProductState.selectedProducts.length == 0)
+                      ProductState.selectedProducts =
+                          ProductState.productsInCart;
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CheckoutScreen()));
                   },

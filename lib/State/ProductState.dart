@@ -29,32 +29,46 @@ class ProductState extends ChangeNotifier {
   void update() async {
     favoriteProducts =
         await CustomerService().getAllFavoriteItemsforLoggedInUser();
-    allProducts = await ProductsService().getProducts();
+    await getAllProducts();
     for (var item in allProducts) {
       if (isInFavorite(item)) {
         item.liked = true;
       }
     }
+    purchasedProducts = [];
     for (var i = 0; i < 8; i++) {
       Random random = new Random();
       Product item = allProducts[random.nextInt(allProducts.length)];
       purchasedProducts.add(item);
     }
+    trendingProducts = [];
     for (var i = 0; i < 4; i++) {
       Random random = new Random();
       Product item = allProducts[random.nextInt(allProducts.length)];
       trendingProducts.add(item);
     }
+    popularProducts = [];
     for (var i = 0; i < 4; i++) {
       Random random = new Random();
       Product item = allProducts[random.nextInt(allProducts.length)];
       popularProducts.add(item);
     }
+    flashsaleProducts = [];
     for (var i = 0; i < 3; i++) {
       Random random = new Random();
       Product item = allProducts[random.nextInt(allProducts.length)];
       flashsaleProducts.add(item);
     }
+    await updateCart();
+    notifyListeners();
+  }
+
+  Future<void> getAllProducts() async {
+    allProducts = await ProductsService().getProducts();
+    notifyListeners();
+  }
+
+  Future<void> updateCart() async {
     productsInCart = await CustomerService().getAllCartItemsforLoggedInUser();
     notifyListeners();
   }
@@ -185,7 +199,7 @@ class ProductState extends ChangeNotifier {
     }
   }
 
-  Future<void> checkout(Address add, bool checkBox) async {
+  Future<bool> checkout(Address add, bool checkBox) async {
     if (!checkBox) {
       toast("Check the checkbox to agree to the terms of user");
     } else {
@@ -194,11 +208,14 @@ class ProductState extends ChangeNotifier {
         List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
         await CustomerService().deleteCartItemsforLoggedInUser(ids);
         removecheckedProducts();
+        update();
         toast("Checkout Successful");
+        return true;
       } else {
         toast("Checkout Failed");
       }
     }
     notifyListeners();
+    return false;
   }
 }

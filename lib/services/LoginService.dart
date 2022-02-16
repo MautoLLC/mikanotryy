@@ -40,7 +40,7 @@ Login(String username, String password, BuildContext context) async {
     JwtDecoder.decode(fileContent)!.forEach((key, value) {
       jwtData[key] = value;
     });
-  
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.setString("accessToken", temp['access_token']);
@@ -86,9 +86,9 @@ Login(String username, String password, BuildContext context) async {
     }
     SuccessToast();
     prefs.setBool('IsLoggedIn', true);
-    
+
     for (var item in jwtData['roles']) {
-      if(item.toString() == "Technician"){
+      if (item.toString() == "Technician") {
         await prefs.setString("isTechnician", 'true');
         final user = Provider.of<UserState>(context, listen: false);
         user.update();

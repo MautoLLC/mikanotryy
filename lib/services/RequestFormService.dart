@@ -3,8 +3,8 @@ import 'package:mymikano_app/utils/appsettings.dart';
 
 import 'DioClass.dart';
 
-class RequestFormService{
-    late Dio dio;
+class RequestFormService {
+  late Dio dio;
 
   Future<void> PrepareCall() async {
     dio = await DioClass.getDio();
@@ -14,11 +14,8 @@ class RequestFormService{
     await PrepareCall();
     String url = RequestFormUrl.replaceAll("{idrequest}", RequestId);
     try {
-      Response response = await dio.put(url,
-        queryParameters: {
-          "statusID": status
-        }
-      );
+      Response response =
+          await dio.put(url, queryParameters: {"statusID": status});
       if (response.statusCode == 204) {
         return true;
       } else {

@@ -6,6 +6,7 @@ import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:http/http.dart' as http;
 
 class CustomerService {
   Dio dio = new Dio();
@@ -201,29 +202,34 @@ class CustomerService {
 
   Future<CartProduct> addCartItemsforLoggedInUser(CartProduct product) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.post(
-      MikanoFavoritAndCartItems,
-      data: {
-        "shopping_cart_item": {
-          "quantity": product.quantity,
-          "shopping_cart_type": "ShoppingCart",
-          "product_id": product.product.id,
-          "customer_id": prefs.getString("StoreCustomerId").toInt(),
-        }
-      },
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      var data = response.data["shopping_carts"]
-          [response.data["shopping_carts"].length - 1];
-      CartProduct result = CartProduct(
-          product: Product.fromJson(data["product"]),
-          quantity: data["quantity"],
-          id: data["id"]);
-      return result;
-    } else {
+    try {
+      Response response = await dio.post(
+        MikanoFavoritAndCartItems,
+        data: {
+          "shopping_cart_item": {
+            "quantity": product.quantity,
+            "shopping_cart_type": "ShoppingCart",
+            "product_id": product.product.id,
+            "customer_id": prefs.getString("StoreCustomerId").toInt(),
+          }
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        var data = response.data["shopping_carts"]
+            [response.data["shopping_carts"].length - 1];
+        CartProduct result = CartProduct(
+            product: Product.fromJson(data["product"]),
+            quantity: data["quantity"],
+            id: data["id"]);
+        return result;
+      } else {
+        throw Exception('Failed to add to cart');
+      }
+    } catch (e) {
+      print(e.toString());
       throw Exception('Failed to add to cart');
     }
   }
@@ -421,46 +427,74 @@ class CustomerService {
 
   Future<bool> Checkout(Address add, List<CartProduct> products) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Dio dio = await DioClass.getDio();
-    List<dynamic> items = [];
-    List<int?> itemIds = [];
-    for (CartProduct item in products) {
-      dynamic temp = {
-        "quantity": item.quantity,
-        "product_id": item.id,
-      };
-      itemIds.add(item.id);
-      items.add(temp);
-    }
     String url = MikanoShopPlaceOrder;
+    add.customerAttributes = "";
+    add.address2 = add.address1;
     try {
-      Response response = await dio.post(url,
-          // queryParameters: {
-          //   "CustomerId": prefs.getString("StoreCustomerId").toInt(),
-          // },
-          data: {
-            "order": {
-              "customer_id": prefs.getString("StoreCustomerId").toInt(),
-              "billing_address": add.toJson(),
-              "shipping_address": add.toJson(),
-              "order_items": [items],
-            }
-          },
-          options: Options(headers: {
-            "Accept": "application/json",
-            "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-          }));
-      if (response.statusCode == 200) {
-        toast("Checkout successfully");
-        return true;
-      } else {
-        toast("Failed to checkout");
-        throw Exception('Failed to checkout');
-      }
+      await dio
+          .post((url),
+              data: {
+                "order": {
+                  "payment_method_system_name": "Payments.CheckMoneyOrder",
+                  "shipping_method": "Shipping.FixedByWeightByTotal",
+                  "customer_id": prefs.getString("StoreCustomerId").toInt(),
+                  "billing_address": {
+                    "first_name": add.firstName,
+                    "last_name": add.lastName,
+                    "email": add.email,
+                    "company": add.company,
+                    "country_id": add.countryId,
+                    "country": add.country,
+                    "state_province_id": add.stateProvinceId,
+                    "city": add.city,
+                    "address1": add.address1,
+                    "address2": add.address2,
+                    "zip_postal_code": add.zipPostalCode,
+                    "phone_number": add.phoneNumber,
+                    "fax_number": add.faxNumber,
+                    "customer_attributes": add.customerAttributes,
+                    "created_on_utc": add.createdOnUtc,
+                    "province": add.province,
+                    "id": add.id
+                  },
+                  "shipping_address": {
+                    "first_name": add.firstName,
+                    "last_name": add.lastName,
+                    "email": add.email,
+                    "company": add.company,
+                    "country_id": add.countryId,
+                    "country": add.country,
+                    "state_province_id": add.stateProvinceId,
+                    "city": add.city,
+                    "address1": add.address1,
+                    "address2": add.address2,
+                    "zip_postal_code": add.zipPostalCode,
+                    "phone_number": add.phoneNumber,
+                    "fax_number": add.faxNumber,
+                    "customer_attributes": add.customerAttributes,
+                    "created_on_utc": add.createdOnUtc,
+                    "province": add.province,
+                    "id": add.id
+                  },
+                }
+              },
+              options: Options(headers: {
+                'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
+              }))
+          .then((response) {
+        if (response.statusCode == 200) {
+          toast("Checkout successfully");
+          return true;
+        } else {
+          toast("Failed to checkout");
+          throw Exception('Failed to checkout');
+        }
+      });
     } catch (e) {
       print(e.toString());
       toast("Failed to checkout");
       throw Exception('Failed to checkout');
     }
+    return true;
   }
 }
