@@ -7,6 +7,7 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'AboutUsScreen.dart';
 import 'AddressScreen.dart';
@@ -26,18 +27,14 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  bool istechnician = true;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController();
+    final user = Provider.of<UserState>(context, listen: false);
 
     List<String> MenuListNames = [
-      !istechnician ? "Maintenance & Repair" : "My Inspections",
+      !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
       "Generator Info",
       "Favorites",
       "Address",
@@ -47,7 +44,7 @@ class _MenuScreenState extends State<MenuScreen> {
     ];
 
     List<Widget> MenuListScreens = [
-      !istechnician ? T5Maintenance() : MyInspectionsScreen(),
+      !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
       Dashboard_Index(),
       FavoritesScreen(),
       AddressScreen(),
@@ -68,6 +65,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return Consumer<UserState>(
       builder: (context, userstate, child) => Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: menuScreenColor,
         body: SafeArea(
           child: Column(

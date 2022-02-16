@@ -16,8 +16,20 @@ class MyRepairsScreen extends StatelessWidget {
   List<String> statuses = [
     'Pending',
     'Assigned',
-    'Completed',
+    'Done',
   ];
+
+  switchColor<Color>(String status) {
+    if (status.toUpperCase() == statuses[0].toUpperCase()) {
+      return PendingColor;
+    } else if (status.toUpperCase() == statuses[1].toUpperCase()) {
+      return AssignedColor;
+    } else if (status.toUpperCase() == statuses[2].toUpperCase()) {
+      return DoneColor;
+    } else {
+      return Colors.grey;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,17 +176,5 @@ class MyRepairsScreen extends StatelessWidget {
             );
           }
         });
-  }
-
-  switchColor<Color>(String status) {
-    if (status.toUpperCase() == statuses[0].toUpperCase()) {
-      return PendingColor;
-    } else if (status.toUpperCase() == statuses[1].toUpperCase()) {
-      return AssignedColor;
-    } else if (status.toUpperCase() == statuses[2].toUpperCase()) {
-      return DoneColor;
-    } else {
-      return Colors.grey;
-    }
   }
 }

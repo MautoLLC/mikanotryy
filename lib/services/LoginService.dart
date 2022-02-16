@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 Login(String username, String password, BuildContext context) async {
   Dio dio = new Dio();
@@ -38,8 +40,9 @@ Login(String username, String password, BuildContext context) async {
     JwtDecoder.decode(fileContent)!.forEach((key, value) {
       jwtData[key] = value;
     });
-
+  
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     await prefs.setString("accessToken", temp['access_token']);
     await prefs.setString("refreshToken", temp['refresh_token']);
     await prefs.setString("UserID", jwtData['sub']);
@@ -83,6 +86,15 @@ Login(String username, String password, BuildContext context) async {
     }
     SuccessToast();
     prefs.setBool('IsLoggedIn', true);
+    
+    for (var item in jwtData['roles']) {
+      if(item.toString() == "Technician"){
+        await prefs.setString("isTechnician", 'true');
+        final user = Provider.of<UserState>(context, listen: false);
+        user.update();
+        break;
+      }
+    }
     return true;
   } on Exception catch (e) {
     print(e);
