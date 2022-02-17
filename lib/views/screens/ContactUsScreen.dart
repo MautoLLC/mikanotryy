@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/UserState.dart';
+import 'package:mymikano_app/models/CompanyModels.dart';
+import 'package:mymikano_app/services/CompanyService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -22,8 +24,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
 
-  List<String> ListLabels = [lbl_Company_Email, lbl_Company_Address];
-
   List<String> ListIcons = [ic_Mail, ic_Location];
   @override
   Widget build(BuildContext context) {
@@ -32,100 +32,155 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TopRowBar(title: lbl_Contact_Us),
-                ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: ListLabels.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
-                      child: Row(
-                        children: [
-                          ImageBox(image: ListIcons[index]),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(14.3, 0.0, 0.0, 0.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  ListLabels[index],
-                                  style: TextStyle(
-                                      fontSize: 14, fontFamily: PoppinsFamily),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TopRowBar(title: lbl_Contact_Us),
+                  SizedBox(height: 40.0),
+                  FutureBuilder<CompanyInfo>(
+                      future: CompanyService().fetchCompanyInfo(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Wrap(
+                            spacing: 20,
+                            children: [
+                              Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0.0, 0.0, 0.0, 20.0),
+                                    child: Row(
+                                      children: [
+                                        ImageBox(image: ListIcons[0]),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              14.3, 0.0, 0.0, 0.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                snapshot.data!.companyEmail
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontFamily: PoppinsFamily),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0.0, 0.0, 0.0, 20.0),
+                                    child: Row(
+                                      children: [
+                                        ImageBox(image: ListIcons[1]),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              14.3, 0.0, 0.0, 0.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                snapshot
+                                                        .data!.companyAddress
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontFamily: PoppinsFamily),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              t13EditTextStyle(lbl_Full_Name, fullNameController,
+                                  isPassword: false),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              t13EditTextStyle(lbl_hint_Email, emailController,
+                                  isPassword: false),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: 180,
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 50.0),
+                                  child: TextFormField(
+                                    textAlignVertical: TextAlignVertical.top,
+                                    expands: true,
+                                    style: TextStyle(
+                                        fontSize: textSizeMedium,
+                                        fontFamily: PoppinsFamily),
+                                    cursorColor: black,
+                                    controller: messageController,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(26, 14, 4, 14),
+                                      hintText: 'message',
+                                      hintStyle: TextStyle(
+                                          height: 1.4, color: textFieldHintColor),
+                                      filled: true,
+                                      fillColor: lightBorderColor,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0.0),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                t13EditTextStyle(lbl_Full_Name, fullNameController,
-                    isPassword: false),
-                SizedBox(
-                  height: 20,
-                ),
-                t13EditTextStyle(lbl_hint_Email, emailController,
-                    isPassword: false),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 50.0),
-                    child: TextFormField(
-                      textAlignVertical: TextAlignVertical.top,
-                      expands: true,
-                      style: TextStyle(
-                          fontSize: textSizeMedium, fontFamily: PoppinsFamily),
-                      cursorColor: black,
-                      controller: messageController,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
-                        hintText: 'message',
-                        hintStyle:
-                            TextStyle(height: 1.4, color: textFieldHintColor),
-                        filled: true,
-                        fillColor: lightBorderColor,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.transparent, width: 0.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
-                  child: T13Button(
-                      textContent: 'Send',
-                      onPressed: () {
-                        state
-                            .sendContactUsRequest(fullNameController.text,
-                                emailController.text, messageController.text)
-                            .then((value) {
-                          fullNameController.text = '';
-                          emailController.text = '';
-                          messageController.text = '';
-                        });
-                      }),
-                ),
-              ],
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 0.0, 0.0, 16.0),
+                                child: T13Button(
+                                    textContent: 'Send',
+                                    onPressed: () {
+                                      state
+                                          .sendContactUsRequest(
+                                              fullNameController.text,
+                                              emailController.text,
+                                              messageController.text)
+                                          .then((value) {
+                                        fullNameController.text = '';
+                                        emailController.text = '';
+                                        messageController.text = '';
+                                      });
+                                    }),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      })
+                ],
+              ),
             ),
           ),
         ),

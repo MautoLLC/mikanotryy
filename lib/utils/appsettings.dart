@@ -34,6 +34,8 @@ const GetMaintenaceRequestByUserIdURL =
 const MikanoShopContactUs = '$MaintenanceApiBaseUrl/api/ContactUs';
 const RequestFormUrl =
     "$MaintenanceApiBaseUrl/api/MaintenanceRequests/UpdateMaintenanceRequestStatus/{idrequest}";
+const MikanoFoundersUrl = '$MaintenanceApiBaseUrl/api/about-us/founders';
+const MikanoCompanyInfoUrl = '$MaintenanceApiBaseUrl/api/Company';
 
 const InspectionApiBaseUrl = 'http://dev.codepickles.com:8087';
 const GetInspectionURL = '$InspectionApiBaseUrl/api/Inspections/';
