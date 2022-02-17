@@ -29,7 +29,7 @@ class ChecklistItemsService {
     }
   }
 
-  Future<List<InspectionChecklistItem>> fetchAllItems(int inspId) async {
+  Future<List<InspectionChecklistItem>> fetchItemsById(int inspId) async {
     final url = (GetCustomCheckListByInspectionURL + inspId.toString());
 
     await PrepareCall();

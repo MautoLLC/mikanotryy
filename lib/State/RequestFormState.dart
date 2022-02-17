@@ -1,39 +1,37 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mymikano_app/services/FetchInspectionChecklistItems.dart';
 import 'package:mymikano_app/views/widgets/ComponentItem.dart';
 
 class RequestFormState extends ChangeNotifier {
   List<ComponentItem> items = [];
-  List<String> selectedItems = [];
+  List<ComponentItem> selectedItems = [];
 
   RequestFormState() {
-    addItem("Default Item 1");
-    addItem("Default Item 2");
-    addItem("Default Item 3");
-    addItem("Default Item 4");
-    addItem("Default Item 5");
-    addItem("Default Item 6");
   }
 
-  void selectItem(String item) {
-    if (selectedItems.contains(item)) {
-      selectedItems.remove(item);
-    } else {
-      selectedItems.add(item);
+  void selectItem(ComponentItem item) {
+    for (var temp in selectedItems) {
+      if(temp.Component == item){
+        selectedItems.remove(temp);
+        return;
+      }
     }
+    selectedItems.add(item);
     notifyListeners();
   }
 
   bool isSelected(String item) {
-    if (selectedItems.contains(item)) {
-      return true;
-    } else {
-      return false;
+    for (var item in selectedItems) {
+      if(item.Component.idComponent == item){
+        return true;
+      }
     }
+    return false;
   }
 
-  void deleteItem(String name) {
+  void deleteItem(String id) {
     items.every((item) {
-      if (item.name == name) {
+      if (item.Component.idComponent == id) {
         items.remove(item);
         return false;
       }
@@ -42,8 +40,16 @@ class RequestFormState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addItem(String name) {
-    items.add(ComponentItem(name: name));
+  Future<void> fetchAllComponents(int Id) async {
+    items.clear();
+    await ChecklistItemsService().fetchItemsById(Id).then((value){
+      for (var item in value) {
+        if(item.customComponent!=null)
+          items.add(ComponentItem(Component: item.customComponent!));
+        if(item.predefinedChecklistItem !=null)
+          items.add(ComponentItem(Component: item.predefinedChecklistItem!.component!));
+      }
+    });
     notifyListeners();
   }
 }

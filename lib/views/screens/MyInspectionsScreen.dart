@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/InspectionsState.dart';
+import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -109,7 +110,11 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                               .maintenanceStatusDescription))
                                     return Container();
                                   return GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
+                                      await Provider.of<RequestFormState>(context,
+                                              listen: false)
+                                          .fetchAllComponents(inspectionsState
+                                                            .inspections[index].idInspection);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(

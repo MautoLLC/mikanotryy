@@ -6,6 +6,7 @@ import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/services/RequestFormService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/ComponentItem.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -27,6 +28,14 @@ class InspectionDetailsScreen extends StatefulWidget {
 
 class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
   var NotesController = TextEditingController();
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<RequestFormState>(context, listen: false)
+        .selectedItems.clear();
+    Provider.of<RequestFormState>(context, listen: false).fetchAllComponents(this.widget.mInspection.idInspection);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,11 +218,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        if (state.items != 0)
+                        if (state.items.length != 0)
                           Container(
                             padding: EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width,
-                            height: 50 * (state.items.length / 3) + 60,
+                            height: 64 * (state.selectedItems.length / 3) + 60,
                             decoration: BoxDecoration(
                               color: lightBorderColor.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(10),
@@ -225,10 +234,10 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 4,
                                         mainAxisSpacing: 10),
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: state.items.length,
+                                // physics: NeverScrollableScrollPhysics(),
+                                itemCount: state.selectedItems.length,
                                 itemBuilder: (context, index) {
-                                  return state.items[index];
+                                  return ComponentItem(Component: state.items[index].Component);
                                 }),
                           ),
                         SizedBox(
@@ -369,7 +378,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                       itemBuilder: (context, index) {
                         return FilterOption(
                           value: value,
-                          option: value.items[index].name,
+                          option: value.items[index].Component.componentName.toString(),
                         );
                       },
                     ),
@@ -398,16 +407,16 @@ class FilterOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool contains = value.isSelected(option);
+    bool contains = value.isSelected(value.items.firstWhere((element) => element.Component.componentName == option).Component.idComponent.toString());
     return GestureDetector(
       onTap: () {
-        value.selectItem(option);
+        value.selectItem(value.items.firstWhere((element) => element.Component.componentName == option));
       },
       child: Container(
         decoration: BoxDecoration(
-            color: contains ? DoneColor : Colors.white,
+            color: contains ? mainColorTheme : Colors.white,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: contains ? DoneColor : Colors.black)),
+            border: Border.all(color: contains ? mainColorTheme : Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
@@ -418,7 +427,7 @@ class FilterOption extends StatelessWidget {
               ),
               SizedBox(width: 10),
               Icon(
-                contains ? Icons.check : Icons.add,
+                contains ? Icons.check : Icons.close,
                 color: contains ? Colors.white : Colors.black,
               ),
             ],
