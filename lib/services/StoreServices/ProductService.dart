@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -33,6 +34,29 @@ class ProductsService {
       }
     } else {
       throw Exception('Failed to load products');
+    }
+  }
+
+  Future<List<CarouselImageModel>> getCarouselImages() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+      Response response = await dio.get(MikanoCarouselImagesUrl,
+          options: Options(headers: {
+            "Authorization": "Bearer ${prefs.getString("accessToken")}"
+          }));
+      if (response.statusCode == 200) {
+        List<CarouselImageModel> images = [];
+        for (var item in response.data) {
+          CarouselImageModel image = CarouselImageModel.fromJson(item);
+          images.add(image);
+        }
+        return images;
+      } else {
+        throw Exception('Failed to load Carousel Items');
+      }
+    }catch(e){
+      print(e);
+      return [];
     }
   }
 }

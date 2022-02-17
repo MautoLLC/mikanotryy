@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/services/StoreServices/ProductService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -29,14 +31,14 @@ class DashboardState extends State<Dashboard> {
   bool isRemember = false;
   var currentIndexPage = 0;
   List<CategoryModel>? mFavouriteList;
-  List<String>? mSliderList;
+  // List<String>? mSliderList;
 
   @override
   void initState() {
     super.initState();
     passwordVisible = false;
     mFavouriteList = getDItems();
-    mSliderList = getSliders();
+    // mSliderList = getSliders();
   }
 
   void changeSldier(int index) {
@@ -197,16 +199,22 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                 height: 140,
-                child: ListView.builder(
-                    itemCount: mSliderList!.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: commonCacheImageWidget(
-                            mSliderList!.elementAt(index), 300),
-                      );
-                    }),
+                child: FutureBuilder<List<CarouselImageModel>>(
+                  future: ProductsService().getCarouselImages(),
+                  builder: (context, snapshot) => ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: commonCacheImageWidget(
+                                snapshot.data![index].url, 300),
+                          ),
+                        );
+                      }),
+                ),
               ),
               SizedBox(
                 height: 40,
