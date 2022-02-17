@@ -30,10 +30,13 @@ class HorizontalItemElement extends StatelessWidget {
                   radius: 33,
                   showShadow: true,
                   bgColor: mainGreyColorTheme.withOpacity(0.3)),
-              child: commonCacheImageWidget(
-                product.Image,
-                60,
-                width: 80,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(33),
+                child: commonCacheImageWidget(
+                  product.Image,
+                  60,
+                  width: 80,
+                ),
               ),
             ),
           ),

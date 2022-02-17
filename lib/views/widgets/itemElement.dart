@@ -50,8 +50,11 @@ class ItemElement extends StatelessWidget {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: commonCacheImageWidget(product.Image, 85,
-                              fit: BoxFit.fill)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(33),
+                            child: commonCacheImageWidget(product.Image, 85,
+                                fit: BoxFit.fill),
+                          )),
                     ),
                   ],
                 ),
