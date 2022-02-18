@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
@@ -45,9 +46,19 @@ class ProductDetailsPage extends StatelessWidget {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: commonCacheImageWidget(product.Image, 85,
-                              fit: BoxFit.fitWidth)),
+                          child: 
+                              CachedNetworkImage(
+                                imageUrl: '${product.Image}',
+                                height: 85,
+                                fit: BoxFit.fitWidth,
+                                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                          Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                                errorWidget: (_, __, ___) {
+                                  return SizedBox(height: 85, width: 85);
+                                },
+                              ),
                     ),
+                    )
                   ],
                 ),
                 Row(

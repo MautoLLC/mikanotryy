@@ -1,7 +1,7 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
-import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../utils/appsettings.dart';
 
@@ -56,19 +56,25 @@ void changeStatusColor(Color color) async {
 Widget commonCacheImageWidget(String? url, double height,
     {double? width, BoxFit? fit, Color? color}) {
   if (url.validate().startsWith('http')) {
-    if (isMobile) {
+    try{
       return CachedNetworkImage(
-        imageUrl: '$url',
-        height: height,
-        width: width,
-        fit: fit,
-        errorWidget: (_, __, ___) {
-          return SizedBox(height: height, width: width);
-        },
-      );
-    } else {
-      return Image.network(url!, height: height, width: width, fit: fit);
+      imageUrl: '$url',
+      height: height,
+      width: width,
+      fit: fit,
+      memCacheWidth: height.toInt(),
+      memCacheHeight: height.toInt(),
+      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+      errorWidget: (_, __, ___) {
+        return SizedBox(height: height, width: width);
+      },
+    );
     }
+    catch(e){
+      return Container(height: height);
+    }
+    
   } else {
     return Image.asset(
       url!,
@@ -80,60 +86,8 @@ Widget commonCacheImageWidget(String? url, double height,
   }
 }
 
-String convertDate(date) {
-  try {
-    return date != null
-        ? DateFormat(dateFormat).format(DateTime.parse(date))
-        : '';
-  } catch (e) {
-    print(e);
-    return '';
-  }
-}
-
 Widget? Function(BuildContext, String) placeholderWidgetFn() =>
     (_, s) => placeholderWidget();
 
 Widget placeholderWidget() =>
     Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
-
-BoxConstraints dynamicBoxConstraints({double? maxWidth}) {
-  return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);
-}
-
-double dynamicWidth(BuildContext context) {
-  return isMobile ? context.width() : applicationMaxWidth;
-}
-
-String parseHtmlString(String? htmlString) {
-  return parse(parse(htmlString).body!.text).documentElement!.text;
-}
-
-class ContainerX extends StatelessWidget {
-  final Widget? mobile;
-  final Widget? web;
-  final bool? useFullWidth;
-
-  ContainerX({this.mobile, this.web, this.useFullWidth});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, constraints) {
-        if (constraints.device == DeviceSize.mobile) {
-          return mobile ?? SizedBox();
-        } else {
-          return Container(
-            alignment: Alignment.topCenter,
-            child: Container(
-              constraints: useFullWidth.validate()
-                  ? null
-                  : dynamicBoxConstraints(maxWidth: context.width() * 0.9),
-              child: web ?? SizedBox(),
-            ),
-          );
-        }
-      },
-    );
-  }
-}

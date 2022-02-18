@@ -52,7 +52,7 @@ class ItemElement extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(15))),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(33),
-                            child: commonCacheImageWidget(product.Image, 85,
+                            child: commonCacheImageWidget(product.Image, 60,
                                 fit: BoxFit.fill),
                           )),
                     ),

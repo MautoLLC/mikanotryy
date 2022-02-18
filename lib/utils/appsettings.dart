@@ -95,25 +95,3 @@ const spacing_standard_new = 16.0;
 const spacing_large = 24.0;
 const spacing_xlarge = 32.0;
 const spacing_xxLarge = 40.0;
-
-const t13_name = "Name";
-const t13_description = "Description";
-const t13_provider = "Provider";
-const t13_unit_price = "Unit Price";
-const t13_status = "Status";
-const t13_cancel = "Cancel";
-const t13_save = "Save";
-
-// Shared Pref
-const appOpenCount = 'appOpenCount';
-
-/// Linux - for linux, you have to change default window width in linux/my_application.cc
-const applicationMaxWidth = 500.0;
-
-const profileImage =
-    'images/widgets/materialWidgets/mwInputSelectionWidgets/Checkbox/profile.png';
-const isDarkModeOnPref = 'isDarkModeOnPref';
-const dateFormat = 'MMM dd, yyyy';
-
-const BaseUrl = 'https://iqonic.design/themeforest-images/prokit';
-const BaseUrl2 = 'https://assets.iqonic.design/old-themeforest-images/prokit';

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
@@ -31,14 +32,13 @@ class DashboardState extends State<Dashboard> {
   bool isRemember = false;
   var currentIndexPage = 0;
   List<CategoryModel>? mFavouriteList;
-  // List<String>? mSliderList;
+
 
   @override
   void initState() {
     super.initState();
     passwordVisible = false;
     mFavouriteList = getDItems();
-    // mSliderList = getSliders();
   }
 
   void changeSldier(int index) {
@@ -209,8 +209,17 @@ class DashboardState extends State<Dashboard> {
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: commonCacheImageWidget(
-                                snapshot.data![index].url, 300),
+                            child: CachedNetworkImage(
+                              imageUrl: snapshot.data![index].url!,
+                              height: 300,
+                              memCacheHeight: 280,
+                              memCacheWidth: 420,
+                              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                        Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                              errorWidget: (_, __, ___) {
+                                return SizedBox(height: 300, width: width);
+                              },
+                            ),
                           ),
                         );
                       }),

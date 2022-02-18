@@ -20,7 +20,10 @@ class ProductState extends ChangeNotifier {
   List<Product> popularProducts = [];
   List<Product> flashsaleProducts = [];
   List<Product> allProducts = [];
+  List<Product> ListOfProducts = [];
   int allProductNumbers = 0;
+  int page = 0;
+  bool ListOfProductsLoaded = false;
 
   ProductState() {
     update();
@@ -70,6 +73,25 @@ class ProductState extends ChangeNotifier {
 
   Future<void> updateCart() async {
     productsInCart = await CustomerService().getAllCartItemsforLoggedInUser();
+    notifyListeners();
+  }
+  void toggleisLoading(){
+    ListOfProductsLoaded = !ListOfProductsLoaded;
+    notifyListeners();
+  }
+  void Paginate() async {
+    page++;
+    toggleisLoading();
+    await getListOfProducts();  
+    toggleisLoading();
+    notifyListeners();
+  }
+  void clearListOfProducts(){
+    ListOfProducts = [];
+    notifyListeners();
+  }
+  Future<void> getListOfProducts() async {
+    ListOfProducts.addAll(await ProductsService().getProducts(limit: 8, page: page));
     notifyListeners();
   }
 
