@@ -19,10 +19,17 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  bool isfirst = true;
+  
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductState>(
-      builder: (context, state, child) => Scaffold(
+      builder: (context, state, child) { 
+        if(isfirst){
+          state.getFavorites();
+          isfirst = false;
+        }
+      return Scaffold(
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.only(left: 16, right: 16),
@@ -82,7 +89,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             ],
           ),
         )),
-      ),
+      );
+      }
     );
   }
 }

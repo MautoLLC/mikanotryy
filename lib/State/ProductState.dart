@@ -30,8 +30,7 @@ class ProductState extends ChangeNotifier {
   }
 
   void update() async {
-    favoriteProducts =
-        await CustomerService().getAllFavoriteItemsforLoggedInUser();
+    getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
       if (isInFavorite(item)) {
@@ -64,6 +63,12 @@ class ProductState extends ChangeNotifier {
     }
     await updateCart();
     notifyListeners();
+  }
+
+  Future<void> getFavorites() async {
+    favoriteProducts =
+        await CustomerService().getAllFavoriteItemsforLoggedInUser();
+        notifyListeners();
   }
 
   Future<void> getAllProducts() async {

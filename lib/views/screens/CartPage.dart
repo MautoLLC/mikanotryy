@@ -21,9 +21,14 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  bool isFirst = true;
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductState>(builder: (context, ProductState, child) {
+      if(isFirst){
+        ProductState.updateCart();
+        isFirst = false;
+      }
       return Scaffold(
           body: SafeArea(
         child: Padding(
