@@ -28,18 +28,21 @@ class CompanyInfo {
   String? companyEmail;
   String? companyAddress;
   String? companyPhoneNumber;
+  String? companyProfile;
 
   CompanyInfo(
       {this.companyName,
       this.companyEmail,
       this.companyAddress,
-      this.companyPhoneNumber});
+      this.companyPhoneNumber,
+      this.companyProfile});
 
   CompanyInfo.fromJson(Map<String, dynamic> json) {
     companyName = json['companyName'];
     companyEmail = json['companyEmail'];
     companyAddress = json['companyAddress'];
     companyPhoneNumber = json['companyPhoneNumber'];
+    companyProfile = json['companyProfile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +51,8 @@ class CompanyInfo {
     data['companyEmail'] = this.companyEmail;
     data['companyAddress'] = this.companyAddress;
     data['companyPhoneNumber'] = this.companyPhoneNumber;
+    data['companyProfile'] = this.companyProfile;
     return data;
   }
 }
+

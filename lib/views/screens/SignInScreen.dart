@@ -75,7 +75,6 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                   child: Text("Login Now",
                       style: TextStyle(
                           fontSize: 24,
-                          fontFamily: fontMedium,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
                 ),
@@ -163,7 +162,6 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                       child: Container(
                         child: text(lbl_lbl_sign_up,
                             fontSize: 14.0,
-                            fontFamily: fontMedium,
                             textColor: mainColorTheme),
                       ),
                     ),

@@ -71,11 +71,6 @@ const MikanoShopPlaceOrder = '$MikanoShopMainURl/orders';
 
 const mainAppName = 'My Mikano App';
 
-const fontRegular = 'Roboto';
-const fontMedium = 'Medium';
-const fontSemibold = 'Semibold';
-const fontBold = 'Bold';
-
 const PoppinsFamily = 'Poppins';
 
 /* font sizes*/
