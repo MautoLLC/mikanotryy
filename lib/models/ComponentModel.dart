@@ -4,6 +4,7 @@ class ComponentModel {
   String? componentDescription;
   String? componentProvider;
   int componentUnitPrice;
+  String? status;
 
   ComponentModel(
       {this.idComponent,

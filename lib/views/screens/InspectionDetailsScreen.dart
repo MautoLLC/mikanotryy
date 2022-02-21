@@ -34,7 +34,10 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
     // TODO: implement initState
     Provider.of<RequestFormState>(context, listen: false)
         .selectedItems.clear();
-    Provider.of<RequestFormState>(context, listen: false).fetchAllComponents(this.widget.mInspection.idInspection);
+    Provider.of<RequestFormState>(context, listen: false)
+        .customComponents.clear();
+    Provider.of<RequestFormState>(context, listen: false).fetchPredefinedComponents(this.widget.mInspection.idInspection);
+    Provider.of<RequestFormState>(context, listen: false).fetchCustomComponents(this.widget.mInspection.idInspection);
   }
 
   @override
@@ -210,7 +213,6 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                             IconButton(
                                 onPressed: () {
                                   bottomSheet(context);
-                                  // showModalBottomSheet(context: context, builder: (context) => Text("JE"),);
                                 },
                                 icon: Icon(Icons.add))
                           ],
@@ -218,7 +220,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        if (state.items.length != 0)
+                        if (state.selectedItems.length != 0)
                           Container(
                             padding: EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width,
@@ -234,10 +236,9 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 4,
                                         mainAxisSpacing: 10),
-                                // physics: NeverScrollableScrollPhysics(),
                                 itemCount: state.selectedItems.length,
                                 itemBuilder: (context, index) {
-                                  return ComponentItem(Component: state.items[index].Component);
+                                  return state.selectedItems[index];
                                 }),
                           ),
                         SizedBox(
@@ -374,11 +375,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         mainAxisSpacing: 10,
                       ),
                       physics: BouncingScrollPhysics(),
-                      itemCount: value.items.length,
+                      itemCount: value.customComponents.length,
                       itemBuilder: (context, index) {
                         return FilterOption(
                           value: value,
-                          option: value.items[index].Component.componentName.toString(),
+                          option: value.customComponents[index].Component.componentName.toString(),
                         );
                       },
                     ),
@@ -407,10 +408,10 @@ class FilterOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool contains = value.isSelected(value.items.firstWhere((element) => element.Component.componentName == option).Component.idComponent.toString());
+    bool contains = value.isSelected(value.customComponents.firstWhere((element) => element.Component.componentName == option).Component.idComponent.toString());
     return GestureDetector(
       onTap: () {
-        value.selectItem(value.items.firstWhere((element) => element.Component.componentName == option));
+        value.selectItem(value.customComponents.firstWhere((element) => element.Component.componentName == option));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -420,14 +421,14 @@ class FilterOption extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 option,
                 style: TextStyle(color: contains ? Colors.white : Colors.black),
               ),
-              SizedBox(width: 10),
               Icon(
-                contains ? Icons.check : Icons.close,
+                contains ? Icons.close : Icons.add,
                 color: contains ? Colors.white : Colors.black,
               ),
             ],

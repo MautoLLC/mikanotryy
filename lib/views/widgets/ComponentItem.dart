@@ -6,35 +6,43 @@ import 'package:provider/provider.dart';
 
 class ComponentItem extends StatelessWidget {
   late ComponentModel Component;
-  ComponentItem({Key? key, required this.Component}) : super(key: key);
+  bool deletable;
+  ComponentItem({Key? key, required this.Component, required this.deletable}) : super(key: key);
+
+  switchColor(String status){
+    switch(status.toLowerCase()){
+      case "satisfactory":
+        return DoneColor;
+      case "Approved":
+        return AssignedColor;
+      case "Rejected":
+        return PendingColor;
+      default:
+        return Colors.grey;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<RequestFormState>(
       builder: (context, state, child) => Container(
-        height: 37,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(7)),
+            color: Colors.white, borderRadius: BorderRadius.circular(7), border: Border.all(color: switchColor(Component.status.toString()))),
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(Component.componentName.toString()),
-                  IconButton(
-                      onPressed: () {
-                        state.selectItem(state.items.firstWhere((element) => element.Component.idComponent == Component.idComponent));
-                      },
-                      icon: Icon(
-                        Icons.close,
-                        color: mainGreyColorTheme,
-                      ))
-                ],
-              ),
-              Container(height: 1, width: (9*Component.componentName.toString().length).toDouble() , color: Colors.green,)
+              Text(Component.componentName.toString()),
+              deletable?
+                IconButton(
+                    onPressed: () {
+                      state.selectItem(state.selectedItems.firstWhere((element) => element.Component.idComponent == Component.idComponent));
+                    },
+                    icon: Icon(
+                      Icons.close,
+                      color: switchColor(Component.status.toString()),
+                    )):Container()
             ],
           ),
         ),

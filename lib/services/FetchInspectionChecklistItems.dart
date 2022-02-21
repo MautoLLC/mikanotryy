@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/models/InspectionChecklistItem.dart';
 import 'package:mymikano_app/models/PredefinedChecklistModel.dart';
@@ -43,6 +44,44 @@ class ChecklistItemsService {
         InspectionChecklistItem temp = InspectionChecklistItem.fromJson(item);
 
         listresult.add(temp);
+      }
+      return listresult;
+    } else {
+      throw Exception('Error fetching');
+    }
+  }
+
+  Future<List<dynamic>> fetchPredefinedComponents(int inspId) async{
+    final url = (GetPredefinedComponentsURL.replaceAll("{inspectionID}", inspId.toString()));
+
+    await PrepareCall();
+    dynamic response = await dio.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> listresult = [];
+
+      for (var item in response.data) {
+        listresult.add(ComponentModel.fromJson(item));
+      }
+      return listresult;
+    } else {
+      throw Exception('Error fetching');
+    }
+  }
+  Future<List<dynamic>> fetchCustomComponents(int inspId) async{
+    final url = (GetCustomComponentsURL.replaceAll("{inspectionID}", inspId.toString()));
+
+    await PrepareCall();
+    dynamic response = await dio.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> listresult = [];
+
+      for (var item in response.data) {
+        print(item.toString());
+        ComponentModel model = ComponentModel.fromJson(item['customComponent']);
+        model.status = item['componentStatus']['componentStatusDescription'];
+        listresult.add(model);
       }
       return listresult;
     } else {

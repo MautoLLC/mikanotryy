@@ -111,10 +111,10 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                     return Container();
                                   return GestureDetector(
                                     onTap: () async {
-                                      await Provider.of<RequestFormState>(context,
-                                              listen: false)
-                                          .fetchAllComponents(inspectionsState
-                                                            .inspections[index].idInspection);
+                                      // await Provider.of<RequestFormState>(context,
+                                      //         listen: false)
+                                      //     .fetchAllComponents(inspectionsState
+                                      //                       .inspections[index].idInspection);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
