@@ -86,12 +86,10 @@ Login(String username, String password, BuildContext context) async {
     }
     SuccessToast();
     prefs.setBool('IsLoggedIn', true);
-
+    await prefs.setString("isTechnician", 'false');
     for (var item in jwtData['roles']) {
       if (item.toString() == "Technician") {
         await prefs.setString("isTechnician", 'true');
-        final user = Provider.of<UserState>(context, listen: false);
-        user.update();
         break;
       }
     }

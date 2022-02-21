@@ -44,6 +44,11 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
       return Colors.grey;
     }
   }
+  
+  @override
+  void initState() {
+    Provider.of<InspectionsState>(context, listen: false).fetchInspectionByUser();;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,157 +81,147 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                 ],
               ),
               SizedBox(height: 20),
-              Expanded(
-                child: inspectionsState.inspections.length == 0
-                    ? Center(
-                        child: SpinKitCircle(
-                          color: Colors.black,
-                          size: 65,
-                        ),
-                      )
-                    : ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: inspectionsState.inspections.length,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return FutureBuilder<MaintenanceRequestModel>(
-                              future: inspectionsState.fetchRelatedMaintenance(
-                                  inspectionsState
-                                      .inspections[index].maintenanceRequestID),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  DateTime startTime = DateTime.parse(snapshot
-                                      .data!.preferredVisitTimee
-                                      .toString());
-                                  String month =
-                                      DateFormat.MMM().format(startTime);
-                                  if (inspectionsState.filters.length != 0 &&
-                                      !inspectionsState.filters.contains(
-                                          snapshot
-                                              .data!
-                                              .maintenaceRequestStatus!
-                                              .maintenanceStatusDescription))
-                                    return Container();
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      // await Provider.of<RequestFormState>(context,
-                                      //         listen: false)
-                                      //     .fetchAllComponents(inspectionsState
-                                      //                       .inspections[index].idInspection);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                InspectionDetailsScreen(
-                                                    mInspection:
-                                                        inspectionsState
-                                                            .inspections[index],
-                                                    Maintenance:
-                                                        snapshot.data!)),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0.0, 0.0, 0.0, 16.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                              color: lightBorderColor,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0.0, 0.0, 0.0, 16.0),
-                                          child: Row(
-                                            children: [
-                                              ImageBox(
-                                                  image: snapshot
-                                                      .data!
-                                                      .maintenanceCategory!
-                                                      .maintenanceCategoryIcon),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        14.3, 0.0, 0.0, 0.0),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      snapshot
-                                                          .data!
-                                                          .maintenanceCategory!
-                                                          .maintenanceCategoryName,
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontFamily:
-                                                              PoppinsFamily),
-                                                    ),
-                                                    Text(
-                                                      month +
-                                                          " " +
-                                                          startTime.day
-                                                              .toString() +
-                                                          ", " +
-                                                          startTime.year
-                                                              .toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 14,
-                                                          fontFamily:
-                                                              PoppinsFamily,
-                                                          color:
-                                                              mainGreyColorTheme),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            10, 0, 10, 0),
-                                                    decoration: boxDecoration(
-                                                        bgColor: switchColor(snapshot
-                                                            .data!
-                                                            .maintenaceRequestStatus!
-                                                            .maintenanceStatusDescription),
-                                                        radius: 16),
-                                                    child: text(
-                                                        snapshot
-                                                            .data!
-                                                            .maintenaceRequestStatus!
-                                                            .maintenanceStatusDescription,
-                                                        fontSize: 14.0,
-                                                        textColor:
-                                                            Colors.white),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+              Flexible(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: inspectionsState.inspections.length - 1,
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return FutureBuilder<MaintenanceRequestModel>(
+                          future: inspectionsState.fetchRelatedMaintenance(
+                              inspectionsState
+                                  .inspections[index].maintenanceRequestID),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              DateTime startTime = DateTime.parse(snapshot
+                                  .data!.preferredVisitTimee
+                                  .toString());
+                              String month =
+                                  DateFormat.MMM().format(startTime);
+                              if (inspectionsState.filters.length != 0 &&
+                                  !inspectionsState.filters.contains(
+                                      snapshot
+                                          .data!
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription))
+                                return Container();
+                              else
+                                return GestureDetector(
+                                  onTap: () async {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              InspectionDetailsScreen(
+                                                  mInspection:
+                                                      inspectionsState
+                                                          .inspections[index],
+                                                  Maintenance:
+                                                      snapshot.data!)),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0.0, 0.0, 0.0, 16.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: lightBorderColor,
+                                            width: 1.0,
                                           ),
                                         ),
                                       ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                        child: Row(
+                                          children: [
+                                            ImageBox(
+                                                image: snapshot
+                                                    .data!
+                                                    .maintenanceCategory!
+                                                    .maintenanceCategoryIcon),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      14.3, 0.0, 0.0, 0.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    snapshot
+                                                        .data!
+                                                        .maintenanceCategory!
+                                                        .maintenanceCategoryName,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            PoppinsFamily),
+                                                  ),
+                                                  Text(
+                                                    month +
+                                                        " " +
+                                                        startTime.day
+                                                            .toString() +
+                                                        ", " +
+                                                        startTime.year
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  padding:
+                                                      EdgeInsets.fromLTRB(
+                                                          10, 0, 10, 0),
+                                                  decoration: boxDecoration(
+                                                      bgColor: switchColor(snapshot
+                                                          .data!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription),
+                                                      radius: 16),
+                                                  child: text(
+                                                      snapshot
+                                                          .data!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription,
+                                                      fontSize: 14.0,
+                                                      textColor:
+                                                          Colors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                  );
-                                } else {
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                }
-                              });
-                        }),
+                                  ),
+                                );
+                            } else {
+                              return Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          });
+                    }),
               )
             ],
           ),

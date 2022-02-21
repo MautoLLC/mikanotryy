@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/ProductService.dart';
@@ -28,23 +29,15 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardState extends State<Dashboard> {
-  bool passwordVisible = false;
-  bool isRemember = false;
-  var currentIndexPage = 0;
   List<CategoryModel>? mFavouriteList;
 
 
   @override
   void initState() {
     super.initState();
-    passwordVisible = false;
+    Provider.of<ProductState>(context, listen: false).update();
+    Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
-  }
-
-  void changeSldier(int index) {
-    setState(() {
-      currentIndexPage = index;
-    });
   }
 
   @override

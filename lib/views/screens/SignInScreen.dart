@@ -85,7 +85,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                         color: Color(0xFFBFBFBF))),
                 SizedBox(height: spacing_large),
                 t13EditTextStyle(lbl_hint_Email, emailController,
-                    isPassword: false),
+                    isPassword: false, keyboardType: TextInputType.emailAddress),
                 SizedBox(height: spacing_standard_new),
                 t13EditTextStyle(lbl_hint_password, passController,
                     isPassword: true),
