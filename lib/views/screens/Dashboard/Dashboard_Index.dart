@@ -26,23 +26,118 @@ class Dashboard_Index extends StatefulWidget {
 
 class _Dashboard_IndexState extends State<Dashboard_Index> {
   late Token UserToken;
-  late Timer timer;
-  late Sensor EngineState;
-  late Sensor BreakState;
-  late Sensor RunningHours;
+  Sensor EngineState = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor BreakState = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor RunningHours = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
   late String Hours;
   late String Minutes;
-  late Sensor Rpm;
-  late Sensor BatteryVoltage;
-  late Sensor OilPressure;
-  late Sensor CoolantTemp;
-  late Sensor FuelLevel;
-  late Sensor GeneratorVoltage;
-  late Sensor GeneratorFrequency;
-  late Sensor GeneratorLoad;
-  late Sensor ControllerMode;
-  late bool ControllerModeStatus;
-  late bool PowerStatus;
+  Sensor Rpm = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor BatteryVoltage = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor OilPressure = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor CoolantTemp = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor FuelLevel = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor GeneratorVoltage = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor GeneratorFrequency = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor GeneratorLoad = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  Sensor ControllerMode = Sensor(
+          name: "Restricted",
+          valueGuid: "Error",
+          value: 100,
+          unit: "Error",
+          highLimit: "Error",
+          lowLimit: "Error",
+          decimalPlaces: "Error",
+          timeStamp: "Error");
+  bool ControllerModeStatus = false;
+  bool PowerStatus = false;
   late DashBoard_ModelView DashModelView;
   //This function is to fetch the data and await rest apis //
   Future<bool> FetchData() async {
@@ -87,22 +182,10 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
     }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
   late bool isManual = ControllerModeStatus;
-  late bool isIO = false;
-  late bool isMCB = false;
-  late bool isGCB = false;
+  bool isIO = false;
+  bool isMCB = false;
+  bool isGCB = false;
 
   @override
   Widget build(BuildContext context) {
@@ -139,6 +222,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                           Description:
                               "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
                     } else {
+                      print("Done");
                       return Column(children: [
                         Row(
                           children: [

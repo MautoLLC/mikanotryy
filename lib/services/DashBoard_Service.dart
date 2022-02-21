@@ -178,7 +178,7 @@ class DashBorad_Service {
       return Sensor(
           name: "name",
           valueGuid: "valueGuid",
-          value: "value",
+          value: 0.0,
           unit: "unit",
           highLimit: "highLimit",
           lowLimit: "lowLimit",

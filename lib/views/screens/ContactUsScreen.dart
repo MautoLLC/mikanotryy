@@ -152,24 +152,23 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   ),
                                 ),
                               ),
-                              Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    0.0, 0.0, 0.0, 16.0),
-                                child: T13Button(
-                                    textContent: 'Send',
-                                    onPressed: () {
-                                      state
-                                          .sendContactUsRequest(
-                                              fullNameController.text,
-                                              emailController.text,
-                                              messageController.text)
-                                          .then((value) {
-                                        fullNameController.text = '';
-                                        emailController.text = '';
-                                        messageController.text = '';
-                                      });
-                                    }),
+                              // Spacer(),
+                              T13Button(
+                                  textContent: 'Send',
+                                  onPressed: () {
+                                    state
+                                        .sendContactUsRequest(
+                                            fullNameController.text,
+                                            emailController.text,
+                                            messageController.text)
+                                        .then((value) {
+                                      fullNameController.text = '';
+                                      emailController.text = '';
+                                      messageController.text = '';
+                                    });
+                                  }),
+                              SizedBox(
+                                height: 16,
                               ),
                             ],
                           );

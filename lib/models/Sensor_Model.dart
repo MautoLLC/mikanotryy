@@ -1,7 +1,7 @@
 class Sensor {
   String name;
   String valueGuid;
-  dynamic value = "Unavailable";
+  double value = 0.0;
   String unit;
   dynamic highLimit;
   dynamic lowLimit;
