@@ -13,7 +13,7 @@ class TechnicianModel {
         json['id'],
         json['firstName'] + " " + json['lastName'],
         json['image'] ?? "",
-        json['phoneNumber'],
+        json['phoneNumber']??"",
         json['email']);
   }
 

@@ -29,6 +29,7 @@ class UserState extends ChangeNotifier {
     User = await UserService().GetUserInfo();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isTechnician = prefs.getString("isTechnician") == "true" ? true : false;
+    notifyListeners();
   }
 
   void updateUserInfo(
