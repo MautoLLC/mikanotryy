@@ -26,7 +26,7 @@ class _GaugeWidgetState extends State<GaugeWidget> {
       axes: [
         RadialAxis(
           minimum: 10,
-          maximum: 90,
+          maximum: 100,
           // minorTicksPerInterval: 5,
           startAngle: 149,
           endAngle: 30,
