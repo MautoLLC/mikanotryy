@@ -108,7 +108,7 @@ class ComponentService {
       await PrepareCall();
       print(url);
       var response = await dio.delete(url);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 204) {
         return true;
       } else {
         return false;
