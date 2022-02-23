@@ -44,10 +44,12 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
       return Colors.grey;
     }
   }
-  
+
   @override
   void initState() {
-    Provider.of<InspectionsState>(context, listen: false).fetchInspectionByUser();;
+    Provider.of<InspectionsState>(context, listen: false)
+        .fetchInspectionByUser();
+    ;
   }
 
   @override
@@ -98,14 +100,12 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                               DateTime startTime = DateTime.parse(snapshot
                                   .data!.preferredVisitTimee
                                   .toString());
-                              String month =
-                                  DateFormat.MMM().format(startTime);
+                              String month = DateFormat.MMM().format(startTime);
                               if (inspectionsState.filters.length != 0 &&
-                                  !inspectionsState.filters.contains(
-                                      snapshot
-                                          .data!
-                                          .maintenaceRequestStatus!
-                                          .maintenanceStatusDescription))
+                                  !inspectionsState.filters.contains(snapshot
+                                      .data!
+                                      .maintenaceRequestStatus!
+                                      .maintenanceStatusDescription))
                                 return Container();
                               else
                                 return GestureDetector(
@@ -115,11 +115,9 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               InspectionDetailsScreen(
-                                                  mInspection:
-                                                      inspectionsState
-                                                          .inspections[index],
-                                                  Maintenance:
-                                                      snapshot.data!)),
+                                                  mInspection: inspectionsState
+                                                      .inspections[index],
+                                                  Maintenance: snapshot.data!)),
                                     );
                                   },
                                   child: Padding(
@@ -190,9 +188,8 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 Container(
-                                                  padding:
-                                                      EdgeInsets.fromLTRB(
-                                                          10, 0, 10, 0),
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
                                                   decoration: boxDecoration(
                                                       bgColor: switchColor(snapshot
                                                           .data!
@@ -205,8 +202,7 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                                           .maintenaceRequestStatus!
                                                           .maintenanceStatusDescription,
                                                       fontSize: 14.0,
-                                                      textColor:
-                                                          Colors.white),
+                                                      textColor: Colors.white),
                                                 ),
                                               ],
                                             ),
@@ -217,8 +213,7 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                   ),
                                 );
                             } else {
-                              return Center(
-                                  child: CircularProgressIndicator());
+                              return Center(child: CircularProgressIndicator());
                             }
                           });
                     }),

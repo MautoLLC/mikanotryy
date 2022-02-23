@@ -31,7 +31,6 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   List<CategoryModel>? mFavouriteList;
 
-
   @override
   void initState() {
     super.initState();
@@ -207,8 +206,10 @@ class DashboardState extends State<Dashboard> {
                               height: 300,
                               memCacheHeight: 280,
                               memCacheWidth: 420,
-                              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                        Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                      child: CircularProgressIndicator(
+                                          value: downloadProgress.progress)),
                               errorWidget: (_, __, ___) {
                                 return SizedBox(height: 300, width: width);
                               },

@@ -22,134 +22,141 @@ class AboutUsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
           child: FutureBuilder<List<FounderModel>>(
-            future: CompanyService().fetchAboutUsInfo(),
-            builder: (context, snapshot) {
-              if(snapshot.connectionState == ConnectionState.done)
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TopRowBar(title: lbl_About_us),
-                    SizedBox(height: 40.0),
-                    Text(
-                      'Company Profile',
-                      style: TextStyle(
-                          fontSize: 18, fontFamily: PoppinsFamily),
-                    ),
-                    SizedBox(height: 20.0),
-                    FutureBuilder<CompanyInfo>(
-                      future: CompanyService().fetchCompanyInfo(),
-                      builder: (context, snapshot) {
-                        if(snapshot.connectionState == ConnectionState.done){
-                          return Text(
-                          snapshot.data!.companyProfile.toString(),
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: PoppinsFamily,
-                              color: mainGreyColorTheme),
-                        );
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        
-                      }
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      'Get to Know Us',
-                      style: TextStyle(
-                          fontSize: 18, fontFamily: PoppinsFamily),
-                    ),
-                    SizedBox(height: 20.0),
-                    snapshot.data!.length != 0?
-                    ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                              0.0, 0.0, 0.0, 16.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: index != snapshot.data!.length - 1
-                                      ? lightBorderColor
-                                      : Colors.transparent,
-                                  width: 1.0,
-                                ),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0.0, 0.0, 0.0, 16.0),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    height: 60,
-                                    child: 
-                                        CachedNetworkImage(
-                                          imageUrl: snapshot.data![index].image.toString(),
-                                          height: 10,
-                                          progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                                    Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                                          errorWidget: (_, __, ___) {
-                                            return SizedBox(height: 10, width: 10);
-                                          },
-                                        ),
+              future: CompanyService().fetchAboutUsInfo(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done)
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TopRowBar(title: lbl_About_us),
+                      SizedBox(height: 40.0),
+                      Text(
+                        'Company Profile',
+                        style:
+                            TextStyle(fontSize: 18, fontFamily: PoppinsFamily),
+                      ),
+                      SizedBox(height: 20.0),
+                      FutureBuilder<CompanyInfo>(
+                          future: CompanyService().fetchCompanyInfo(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Text(
+                                snapshot.data!.companyProfile.toString(),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: PoppinsFamily,
+                                    color: mainGreyColorTheme),
+                              );
+                            } else {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                          }),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Get to Know Us',
+                        style:
+                            TextStyle(fontSize: 18, fontFamily: PoppinsFamily),
+                      ),
+                      SizedBox(height: 20.0),
+                      snapshot.data!.length != 0
+                          ? ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 0.0, 0.0, 16.0),
+                                  child: Container(
                                     decoration: BoxDecoration(
-                                        color: mainGreyColorTheme
-                                            .withOpacity(0.3),
-                                        borderRadius:
-                                            BorderRadius.circular(24)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        14.3, 0.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          snapshot.data![index].fullName
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily:
-                                                  PoppinsFamily),
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color:
+                                              index != snapshot.data!.length - 1
+                                                  ? lightBorderColor
+                                                  : Colors.transparent,
+                                          width: 1.0,
                                         ),
-                                        SizedBox(
-                                          height: 11,
-                                        ),
-                                        Text(
-                                          snapshot.data![index].position
-                                              .toString(),
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontFamily: PoppinsFamily,
-                                              color:
-                                                  mainGreyColorTheme),
-                                        ),
-                                      ],
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 0.0, 0.0, 16.0),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 80,
+                                            height: 60,
+                                            child: CachedNetworkImage(
+                                              imageUrl: snapshot
+                                                  .data![index].image
+                                                  .toString(),
+                                              height: 10,
+                                              progressIndicatorBuilder: (context,
+                                                      url, downloadProgress) =>
+                                                  Center(
+                                                      child: CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                              errorWidget: (_, __, ___) {
+                                                return SizedBox(
+                                                    height: 10, width: 10);
+                                              },
+                                            ),
+                                            decoration: BoxDecoration(
+                                                color: mainGreyColorTheme
+                                                    .withOpacity(0.3),
+                                                borderRadius:
+                                                    BorderRadius.circular(24)),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                14.3, 0.0, 0.0, 0.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  snapshot.data![index].fullName
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontFamily:
+                                                          PoppinsFamily),
+                                                ),
+                                                SizedBox(
+                                                  height: 11,
+                                                ),
+                                                Text(
+                                                  snapshot.data![index].position
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontFamily: PoppinsFamily,
+                                                      color:
+                                                          mainGreyColorTheme),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ):Container()
-                  ],
-                );
+                                );
+                              },
+                            )
+                          : Container()
+                    ],
+                  );
                 else {
                   return Center(child: CircularProgressIndicator());
                 }
-            }
-          ),
+              }),
         ),
       ),
     );

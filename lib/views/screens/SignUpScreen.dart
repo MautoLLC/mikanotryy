@@ -157,8 +157,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                                 builder: (context) => T13SignInScreen())),
                         child: Container(
                           child: text(lbl_lbl_login,
-                              fontSize: 14.0,
-                              textColor: mainColorTheme),
+                              fontSize: 14.0, textColor: mainColorTheme),
                         ),
                       ),
                     ],

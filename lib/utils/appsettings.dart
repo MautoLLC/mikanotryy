@@ -44,6 +44,8 @@ const GetTechnicianInspectionURL =
     '$InspectionApiBaseUrl/api/Inspections/TechnicianInspections/';
 const PostInspectionCustomChecklistItemURL =
     '$InspectionApiBaseUrl/api/Inspections/CustomChecklistItem?inspectionID=';
+const DeleteInspectionCustomChecklistItemURL =
+    '$InspectionApiBaseUrl/api/Inspections/CustomChecklistItem/{id}';
 const GetPredefinedCheckListByCategURL =
     '$InspectionApiBaseUrl/api/PredefinedChecklistItems/CategoryChecklist?categoryID=';
 const GetCustomCheckListByInspectionURL =
@@ -52,8 +54,10 @@ const ChangeStatusCustomCheckListURL =
     '/api/Inspections/InspectionChecklistItem';
 const inspectionChecklistItemIDParameter = "inspectionChecklistItemID";
 const componentStatusIDParameter = "componentStatusID";
-const GetPredefinedComponentsURL = '$InspectionApiBaseUrl/api/Inspections/InspectionChecklist/predefined/{inspectionID}';
-const GetCustomComponentsURL = '$InspectionApiBaseUrl/api/Inspections/InspectionChecklist/custom/{inspectionID}';
+const GetPredefinedComponentsURL =
+    '$InspectionApiBaseUrl/api/Inspections/InspectionChecklist/predefined/{inspectionID}';
+const GetCustomComponentsURL =
+    '$InspectionApiBaseUrl/api/Inspections/InspectionChecklist/custom/{inspectionID}';
 const ComponentsStatusURL = '$InspectionApiBaseUrl/api/ComponentStatus';
 
 const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';

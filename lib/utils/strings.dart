@@ -155,3 +155,7 @@ const lbl_Change_Status = 'Change Status';
 const lbl_Revert_Status = 'Revert Status';
 const lbl_Text_Here = 'Text Here';
 const lbl_About_us = 'About us';
+const lbl_Component_Name = 'Component Name';
+const lbl_Component_Description = 'Component Description';
+const lbl_Component_Price = 'Component Price';
+const lbl_Back = 'Back';

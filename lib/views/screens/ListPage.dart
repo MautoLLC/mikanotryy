@@ -10,6 +10,7 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+
 class ListPage extends StatelessWidget {
   final String title;
   ListPage({Key? key, required this.title}) : super(key: key);
@@ -19,23 +20,22 @@ class ListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductState>(
-      builder: (context, state, child){
-        if(isfirst){
-          state.clearListOfProducts();
-          state.page = 0;
-          state.Paginate();
-          isfirst = false;
-        }
-        return Scaffold(
+    return Consumer<ProductState>(builder: (context, state, child) {
+      if (isfirst) {
+        state.clearListOfProducts();
+        state.page = 0;
+        state.Paginate();
+        isfirst = false;
+      }
+      return Scaffold(
         backgroundColor: Colors.white,
         body: NotificationListener<ScrollEndNotification>(
           onNotification: (ScrollEndNotification notification) {
-                          if (notification.metrics.pixels ==
-                              notification.metrics.maxScrollExtent) {
-                            state.Paginate();
-                          }
-                          return true;
+            if (notification.metrics.pixels ==
+                notification.metrics.maxScrollExtent) {
+              state.Paginate();
+            }
+            return true;
           },
           child: SingleChildScrollView(
             child: SafeArea(
@@ -76,12 +76,14 @@ class ListPage extends StatelessWidget {
                         mainAxisSpacing: 10),
                     itemCount: state.ListOfProducts.length,
                     itemBuilder: (context, index) {
-                      if(state.ListOfProducts.length !=0){
+                      if (state.ListOfProducts.length != 0) {
                         return ItemElement(
                           product: state.ListOfProducts[index],
                         );
                       } else {
-                        return Center(child: CircularProgressIndicator(),);
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
                     },
                   ),
@@ -90,14 +92,15 @@ class ListPage extends StatelessWidget {
                       : Center(
                           child: CircularProgressIndicator(),
                         ),
-                  SizedBox(height: 80,),
+                  SizedBox(
+                    height: 80,
+                  ),
                 ],
               ),
             )),
           ),
         ),
       );
-      }
-    );
+    });
   }
 }

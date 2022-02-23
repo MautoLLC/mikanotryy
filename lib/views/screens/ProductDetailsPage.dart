@@ -40,24 +40,25 @@ class ProductDetailsPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                          height: size.height / 2,
-                          padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: 
-                              CachedNetworkImage(
-                                imageUrl: '${product.Image}',
-                                height: 85,
-                                fit: BoxFit.fitWidth,
-                                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                          Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                                errorWidget: (_, __, ___) {
-                                  return SizedBox(height: 85, width: 85);
-                                },
-                              ),
-                    ),
+                        height: size.height / 2,
+                        padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: CachedNetworkImage(
+                          imageUrl: '${product.Image}',
+                          height: 85,
+                          fit: BoxFit.fitWidth,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress)),
+                          errorWidget: (_, __, ___) {
+                            return SizedBox(height: 85, width: 85);
+                          },
+                        ),
+                      ),
                     )
                   ],
                 ),

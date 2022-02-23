@@ -68,7 +68,7 @@ class ProductState extends ChangeNotifier {
   Future<void> getFavorites() async {
     favoriteProducts =
         await CustomerService().getAllFavoriteItemsforLoggedInUser();
-        notifyListeners();
+    notifyListeners();
   }
 
   Future<void> getAllProducts() async {
@@ -80,23 +80,28 @@ class ProductState extends ChangeNotifier {
     productsInCart = await CustomerService().getAllCartItemsforLoggedInUser();
     notifyListeners();
   }
-  void toggleisLoading(){
+
+  void toggleisLoading() {
     ListOfProductsLoaded = !ListOfProductsLoaded;
     notifyListeners();
   }
+
   void Paginate() async {
     page++;
     toggleisLoading();
-    await getListOfProducts();  
+    await getListOfProducts();
     toggleisLoading();
     notifyListeners();
   }
-  void clearListOfProducts(){
+
+  void clearListOfProducts() {
     ListOfProducts = [];
     notifyListeners();
   }
+
   Future<void> getListOfProducts() async {
-    ListOfProducts.addAll(await ProductsService().getProducts(limit: 8, page: page));
+    ListOfProducts.addAll(
+        await ProductsService().getProducts(limit: 8, page: page));
     notifyListeners();
   }
 
