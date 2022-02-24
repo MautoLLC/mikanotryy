@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../utils/appsettings.dart';
 
 Widget t13EditTextStyle(var hintText, var contt,
-    {isPassword = true, TextInputType keyboardType = TextInputType.name}) {
+    {isPassword = true, TextInputType keyboardType = TextInputType.text}) {
   return TextFormField(
     style: TextStyle(fontSize: textSizeMedium, fontFamily: PoppinsFamily),
     obscureText: isPassword,

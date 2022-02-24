@@ -9,6 +9,7 @@ import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import 'EntryPage.dart';
 import 'ForgotPasswordScreen.dart';
 import 'SignUpScreen.dart';
 
@@ -34,18 +35,6 @@ class T13SignInScreenState extends State<T13SignInScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
 
-    Widget mSocial(var bgColor, var icon) {
-      return Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, color: bgColor),
-        width: width * 0.11,
-        height: width * 0.11,
-        child: Padding(
-          padding: EdgeInsets.all(spacing_standard),
-          child: Image.asset(icon, color: Colors.white),
-        ),
-      );
-    }
-
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -53,22 +42,28 @@ class T13SignInScreenState extends State<T13SignInScreen> {
             margin: EdgeInsets.only(
                 left: spacing_standard_new, right: spacing_standard_new),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        finish(context);
-                      },
-                      icon: Icon(Icons.arrow_back_ios),
-                      color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => EntryPage(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 5, top: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.arrow_back_ios, color: Colors.black),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-                commonCacheImageWidget(login_Page_PNG, 155, width: width * 0.8),
+                commonCacheImageWidget(login_Page_PNG, 145, width: width * 0.8),
                 SizedBox(height: spacing_xlarge),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 8.0),
@@ -89,6 +84,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     keyboardType: TextInputType.emailAddress),
                 SizedBox(height: spacing_standard_new),
                 t13EditTextStyle(lbl_hint_password, passController,
+                    keyboardType: TextInputType.visiblePassword,
                     isPassword: true),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 8.0, 8.0, 0.0),
