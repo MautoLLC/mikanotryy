@@ -168,7 +168,7 @@ class DashboardState extends State<Dashboard> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
-                  height: 440,
+                  height: 235 * ((state.popularProducts.length)/2),
                   child: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
