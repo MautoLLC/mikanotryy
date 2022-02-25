@@ -127,12 +127,14 @@ class ProductState extends ChangeNotifier {
       }
       allProducts.firstWhere((element) => element.id == product.id).liked =
           false;
+      toast("Product removed to favorites");
     } else {
       FavoriteProduct t =
           await CustomerService().addFavoriteItemsforLoggedInUser(product);
       allProducts.firstWhere((element) => element.id == product.id).liked =
           true;
       favoriteProducts.add(t);
+      toast("Product added to favorites");
     }
     notifyListeners();
   }

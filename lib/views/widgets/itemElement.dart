@@ -123,7 +123,7 @@ class ItemElement extends StatelessWidget {
                   onTap: () {
                     state.addorremoveProductToFavorite(product);
                   },
-                  child: commonCacheImageWidget(ic_heart, 20,
+                  child: commonCacheImageWidget(ic_heart, 30,
                       color: state.allProducts
                               .firstWhere((element) => element.id == product.id)
                               .liked

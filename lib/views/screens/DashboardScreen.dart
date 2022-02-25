@@ -43,7 +43,6 @@ class DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
-    width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
     TextEditingController SearchController = new TextEditingController();
