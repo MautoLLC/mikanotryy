@@ -1,19 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/UserState.dart';
-import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
+import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'PrivacyPolicyScreen.dart';
 import 'ProfileEditScreen.dart';
 import 'PurchasesScreen.dart';
@@ -46,7 +39,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TopRowBar(title: lbl_Profile),
+                Align(
+                  alignment: Alignment.center,
+                  child: TitleText(
+                    title: lbl_Profile,
+                  ),
+                ),
+                // TopRowBar(title: lbl_Profile),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                   child: SubTitleText(title: lbl_Account),

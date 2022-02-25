@@ -41,10 +41,10 @@ class _CartPageState extends State<CartPage> {
                     IconButton(
                       icon: Icon(
                         Icons.arrow_back_ios,
-                        color: backArrowColor,
+                        color: Colors.transparent,
                       ),
                       onPressed: () {
-                        finish(context);
+                        // finish(context);
                       },
                     ),
                     Spacer(),

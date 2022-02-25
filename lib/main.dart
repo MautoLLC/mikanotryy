@@ -6,7 +6,6 @@ import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/views/screens/EntryPage.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'State/InspectionsState.dart';
