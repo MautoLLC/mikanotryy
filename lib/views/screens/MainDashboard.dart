@@ -30,10 +30,13 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   }
 
   void _onItemTapped(int index) {
-    index == 0
-        ? Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MenuScreen()))
-        : setState(() {
+    // index == 0
+    //     ? Navigator.push(
+    //         context, MaterialPageRoute(builder: (context) => MenuScreen()))
+    //     : setState(() {
+    //         selectedIndex = index;
+    //       });
+    setState(() {
             selectedIndex = index;
           });
   }
