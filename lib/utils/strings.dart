@@ -155,3 +155,16 @@ const lbl_Change_Status = 'Change Status';
 const lbl_Revert_Status = 'Revert Status';
 const lbl_Text_Here = 'Text Here';
 const lbl_About_us = 'About us';
+
+
+
+const txt_Api_url_endpoint =
+    'The default End Point Api Url is the one visible in the text field. you must change this Url value once your router changes the IP of the ESP8266 Node';
+const lbl_Api_End_Point_Url = 'Api End Point Url';
+const lbl_Default_Refresh_Rate = 'Default Refresh Rate(in seconds)';
+const txt_App_Proceeds_Alone =
+    'Application will proceed alone if you dont tape the proceed button with the configuration that is shown in TextFields';
+const lbl_Comap = "Comap";
+const lbl_Ip = "IP";
+const lbl_Connect = "Connect";
+
