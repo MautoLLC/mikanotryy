@@ -34,8 +34,8 @@ class DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ProductState>(context, listen: false).update();
-    Provider.of<UserState>(context, listen: false).update();
+    // Provider.of<ProductState>(context, listen: false).update();
+    // Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
   }
 
@@ -202,7 +202,7 @@ class DashboardState extends State<Dashboard> {
                             borderRadius: BorderRadius.circular(15),
                             child: CachedNetworkImage(
                               imageUrl: snapshot.data![index].url!,
-                              height: 300,
+                              height: 280,
                               memCacheHeight: 280,
                               memCacheWidth: 420,
                               progressIndicatorBuilder:

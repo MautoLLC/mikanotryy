@@ -36,7 +36,7 @@ class HorizontalItemElement extends StatelessWidget {
                 decoration: boxDecoration(
                     radius: 33,
                     showShadow: true,
-                    bgColor: mainGreyColorTheme.withOpacity(0.3)),
+                    bgColor: Colors.white),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(33),
                   child: commonCacheImageWidget(

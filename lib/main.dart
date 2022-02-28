@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'State/InspectionsState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
+import 'package:flutter/services.dart';
 
 final GlobalKey<NavigatorState> navigator =
     GlobalKey<NavigatorState>(); //Create a key for navigator
@@ -21,6 +22,8 @@ Future<void> _messageHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
