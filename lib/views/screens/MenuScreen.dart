@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +30,28 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  SharedPreferences? prefs;
+  @override
+  void initState() {
+    super.initState();
+    initializePreference().whenComplete(() {
+      setState(() {});
+    });
+  }
+
+  Future<void> initializePreference() async {
+    ApiConfigurationState apiconfigstate = ApiConfigurationState();
+    this.prefs = await SharedPreferences.getInstance();
+    this.prefs?.setBool('DashboardFirstTimeAccess',
+        apiconfigstate.DashBoardFirstTimeAccess);
+  }
+
+  void notFirstTimeDashboardAccess() async {
+
+    this.prefs = await SharedPreferences.getInstance();
+    this.prefs?.setBool('DashboardFirstTimeAccess', false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final searchController = TextEditingController();
@@ -34,7 +59,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
     List<String> MenuListNames = [
       !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
-      "Generator Info",
+      "Generator Settings",
       "Favorites",
       "Address",
       "Cards",
@@ -45,6 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
     List<Widget> MenuListScreens = [
       !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
       Dashboard_Index(),
+      // Dashboard_Test(),
       FavoritesScreen(),
       AddressScreen(),
       CardsScreen(),
@@ -89,11 +115,23 @@ class _MenuScreenState extends State<MenuScreen> {
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => MenuListScreens[index],
-                          ),
-                        );
+                        if (index == 1 &&
+                            this.prefs?.getBool('DashboardFirstTimeAccess') ==
+                                true) {
+                          notFirstTimeDashboardAccess();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ApiConfigurationPage(),
+                            ),
+                          );
+                        } else {
+                          // notFirstTimeDashboardAccess();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MenuListScreens[index],
+                            ),
+                          );
+                        }
                       },
                       child: Container(
                         height: 50,

@@ -95,3 +95,7 @@ const spacing_standard_new = 16.0;
 const spacing_large = 24.0;
 const spacing_xlarge = 32.0;
 const spacing_xxLarge = 40.0;
+
+const logoAsset = 'assets/SplashScreenMikanoLogo.png';
+const ssidUrl = "http://192.168.4.1";
+const ssidRestartUrl = ssidUrl + '/restart';
