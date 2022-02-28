@@ -3,13 +3,12 @@ import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:html/parser.dart' show parse;
-import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart' as http;
 
 class ApiConfigurationPage extends StatelessWidget {
@@ -36,14 +35,6 @@ class ApiConfigurationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ApiConfigurationState api = ApiConfigurationState();
-    if (api.DashBoardFirstTimeAccess == true) {
-      ApiConfigurationState provider = Provider.of(context);
-      provider.ShowSSIDs();
-    }
-    // ApiConfigurationState provider =
-    //     Provider.of<ApiConfigurationState>(context);
-
     return Consumer<ApiConfigurationState>(
       builder: (context, value, child) => Scaffold(
           body: SafeArea(
@@ -224,8 +215,8 @@ class ApiConfigurationPage extends StatelessWidget {
                                   color: mainGreyColorTheme,
                                 ),
                                 items:
-                                    value.testList.map(buildMenuItem).toList(),
-                                value: value.item,
+                                    value.ssidList.map(buildMenuItem).toList(),
+                                value: value.chosenSSID,
                                 onChanged: (item) {
                                   String string = item.toString();
                                   final splitted = string.split('(');
@@ -240,10 +231,12 @@ class ApiConfigurationPage extends StatelessWidget {
                             textContent: lbl_Connect,
                             onPressed: () async {
                               isFirstTimeInThisPage = false;
-                              value.setpref(value.item, passwordController.text,
+                              value.setpref(
+                                  value.chosenSSID,
+                                  passwordController.text,
                                   int.parse(refreshRateController.text));
                               await Connecttossid(
-                                  value.item, passwordController.text);
+                                  value.chosenSSID, passwordController.text);
                               RestartESP();
                             }),
                         SizedBox(
@@ -302,7 +295,8 @@ class ApiConfigurationPage extends StatelessWidget {
                           height: 10,
                         ),
                         TextFormField(
-                          onChanged: (rate) => value.changeRefreshRate(rate),
+                          onChanged: (rate) =>
+                              value.changeRefreshRate(int.parse(rate)),
                           style: TextStyle(
                               fontSize: textSizeMedium,
                               fontFamily: PoppinsFamily),
@@ -340,16 +334,18 @@ class ApiConfigurationPage extends StatelessWidget {
                             await SharedPreferences.getInstance();
 
                         if (value.DashBoardFirstTimeAccess == true) {
-                          value.setpref(value.item, passwordController.text,
+                          value.setpref(
+                              value.chosenSSID,
+                              passwordController.text,
                               int.parse(refreshRateController.text));
                         }
 
                         value.DashBoardFirstTimeAccess = false;
-                        prefs.setBool('DashBoardFirstTimeAccess',
+                        prefs.setBool('DashboardFirstTimeAccess',
                             value.DashBoardFirstTimeAccess);
 
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Dashboard_Test()));
+                            builder: (context) => Dashboard_Index()));
                       }),
                   SizedBox(
                     height: 25,

@@ -4,17 +4,32 @@ import 'package:nb_utils/nb_utils.dart';
 class ApiConfigurationState extends ChangeNotifier {
   bool DashBoardFirstTimeAccess = true;
   bool isSuccess = false;
-  String? option;
-  bool isFirstTime = true;
-  var item;
-  String? RefreshRate, password;
-  List<String> testList = [];
+  String option = 'lan';
+  var chosenSSID;
+  int RefreshRate = 60;
+  String password = '';
+  List<String> ssidList = [];
+
+  ApiConfigurationState() {
+    update();
+    ShowSSIDs();
+  }
 
   void ChangeMode(String value) async {
     option = value;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('ApiConfigurationOption', option!);
+    prefs.setString('ApiConfigurationOption', option);
     print(prefs.getString('ApiConfigurationOption'));
+    notifyListeners();
+  }
+
+  void update() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DashBoardFirstTimeAccess = prefs.getBool('DashboardFirstTimeAccess')!;
+    option = prefs.getString('ApiConfigurationOption')!;
+    RefreshRate = prefs.getInt('RefreshRate')!;
+    password = prefs.getString('Password')!;
+    chosenSSID = prefs.getString('SSID');
     notifyListeners();
   }
 
@@ -27,7 +42,7 @@ class ApiConfigurationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeRefreshRate(String rate) {
+  changeRefreshRate(int rate) {
     RefreshRate = rate;
     notifyListeners();
   }
@@ -53,7 +68,7 @@ class ApiConfigurationState extends ChangeNotifier {
   // }
 
   void ShowSSIDs() {
-    testList.clear();
+    ssidList.clear();
     List<String> l = [
       'ssid1',
       'ssid2',
@@ -63,26 +78,35 @@ class ApiConfigurationState extends ChangeNotifier {
     ];
 
     l.forEach((element) {
-      testList.add(element);
+      ssidList.add(element);
     });
     notifyListeners();
   }
 
   void ComboBoxState(String splitted) {
-    item = splitted;
+    chosenSSID = splitted;
+    notifyListeners();
+  }
+
+  void clear() {
+    DashBoardFirstTimeAccess = true;
+    isSuccess = false;
+    option = 'lan';
+    chosenSSID = null;
+    RefreshRate = 60;
+    password = '';
+    ssidList = [];
     notifyListeners();
   }
 
   void resetPreferences() async {
-    DashBoardFirstTimeAccess = true;
-    password = null;
-    RefreshRate = null;
-    item = null;
-
+    clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('DashboardFirstTimeAccess', true);
     prefs.remove('SSID');
     prefs.remove('Password');
     prefs.remove('RefreshRate');
+    ShowSSIDs();
     notifyListeners();
   }
 

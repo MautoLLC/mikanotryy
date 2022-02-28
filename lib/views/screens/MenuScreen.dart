@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +30,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-   SharedPreferences? prefs;
+  SharedPreferences? prefs;
   @override
   void initState() {
     super.initState();
@@ -38,45 +40,17 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Future<void> initializePreference() async {
+    ApiConfigurationState apiconfigstate = ApiConfigurationState();
     this.prefs = await SharedPreferences.getInstance();
     this.prefs?.setBool('DashboardFirstTimeAccess',
-        /*this.prefs?.getBool('DashboardFirstTimeAccess') ??*/ true);
-        
+        apiconfigstate.DashBoardFirstTimeAccess);
   }
 
   void notFirstTimeDashboardAccess() async {
+
     this.prefs = await SharedPreferences.getInstance();
     this.prefs?.setBool('DashboardFirstTimeAccess', false);
   }
-
-  // Widget DashboardPage() {
-  //   String? option = prefs?.getString('ApiConfigurationOption');
-  //   Widget page;
-
-  //   switch (option) {
-  //     case 'lan':
-  //       {
-  //         page = Dashboard_Index_LAN(
-  //           ApiEndPoint: 'urlEndPoint',
-  //           RefreshRate: 'refreshRate',
-  //         );
-  //       }
-  //       break;
-
-  //     case 'cloud':
-  //       {
-  //         page = Dashboard_Index_Cloud();
-  //       }
-  //       break;
-
-  //     default:
-  //       {
-  //         page = Dashboard_Index_Comap();
-  //       }
-  //       break;
-  //   }
-  //   return page;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
     List<Widget> MenuListScreens = [
       !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
       Dashboard_Index(),
+      // Dashboard_Test(),
       FavoritesScreen(),
       AddressScreen(),
       CardsScreen(),
@@ -149,12 +124,14 @@ class _MenuScreenState extends State<MenuScreen> {
                               builder: (context) => ApiConfigurationPage(),
                             ),
                           );
-                        } else
+                        } else {
+                          // notFirstTimeDashboardAccess();
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => MenuListScreens[index],
                             ),
                           );
+                        }
                       },
                       child: Container(
                         height: 50,
