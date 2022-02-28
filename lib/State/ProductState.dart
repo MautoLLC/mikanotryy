@@ -25,6 +25,24 @@ class ProductState extends ChangeNotifier {
   int page = 0;
   bool ListOfProductsLoaded = false;
 
+  void clear(){
+    selectMode = false;
+    cashOnDelivery = true;
+    productsInCart.clear();
+    selectedProducts.clear();
+    favoriteProducts.clear();
+    purchasedProducts.clear();
+    trendingProducts.clear();
+    popularProducts.clear();
+    flashsaleProducts.clear();
+    allProducts.clear();
+    ListOfProducts.clear();
+    allProductNumbers = 0;
+    page = 0;
+    ListOfProductsLoaded = false;
+    notifyListeners();
+  }
+
   ProductState() {
     update();
   }

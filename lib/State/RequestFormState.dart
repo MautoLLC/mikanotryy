@@ -16,6 +16,11 @@ class RequestFormState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clear(){
+    allComponents.clear();
+    notifyListeners();
+  }
+
   void fetchCustomComponents(int id) async {
     var temp = await ChecklistItemsService().fetchCustomComponents(id);
     temp.forEach((element) {

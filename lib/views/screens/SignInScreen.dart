@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mymikano_app/State/InspectionsState.dart';
+import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/State/RequestFormState.dart';
+import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/services/LoginService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -8,6 +12,7 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 
 import 'EntryPage.dart';
 import 'ForgotPasswordScreen.dart';
@@ -28,6 +33,10 @@ class T13SignInScreenState extends State<T13SignInScreen> {
 
   @override
   void initState() {
+    Provider.of<ProductState>(context, listen: false).clear();
+    Provider.of<InspectionsState>(context, listen: false).clear();
+    Provider.of<RequestFormState>(context, listen: false).clear();
+    Provider.of<UserState>(context, listen: false).clear();
     super.initState();
   }
 
@@ -46,6 +55,8 @@ class T13SignInScreenState extends State<T13SignInScreen> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
+                    Provider.of<ProductState>(context, listen: false).update();
+                    Provider.of<UserState>(context, listen: false).update();
                     Navigator.of(context).popUntil((route) => route.isFirst);
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(

@@ -12,6 +12,12 @@ class InspectionsState extends ChangeNotifier {
     fetchInspectionByUser();
   }
 
+  void clear() {
+    inspections = [];
+    filters = [];
+    notifyListeners();
+  }
+
   void fetchInspectionByUser() async {
     inspections = await InspectionService().fetchInspectionsByUser();
     notifyListeners();

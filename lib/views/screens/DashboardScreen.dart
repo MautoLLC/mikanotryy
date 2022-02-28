@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
-import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/ProductService.dart';
@@ -34,8 +33,6 @@ class DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    // Provider.of<ProductState>(context, listen: false).update();
-    // Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
   }
 
@@ -203,6 +200,7 @@ class DashboardState extends State<Dashboard> {
                             child: CachedNetworkImage(
                               imageUrl: snapshot.data![index].url!,
                               height: 280,
+                              useOldImageOnUrlChange: true,
                               memCacheHeight: 280,
                               memCacheWidth: 420,
                               progressIndicatorBuilder:
