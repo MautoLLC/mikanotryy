@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
-import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/ProductService.dart';
@@ -31,12 +30,9 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   List<CategoryModel>? mFavouriteList;
 
-
   @override
   void initState() {
     super.initState();
-    Provider.of<ProductState>(context, listen: false).update();
-    Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
   }
 
@@ -44,7 +40,6 @@ class DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
-    width = width - 50;
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
     TextEditingController SearchController = new TextEditingController();
@@ -169,7 +164,7 @@ class DashboardState extends State<Dashboard> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
-                  height: 440,
+                  height: 235 * ((state.popularProducts.length)/2),
                   child: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -204,11 +199,14 @@ class DashboardState extends State<Dashboard> {
                             borderRadius: BorderRadius.circular(15),
                             child: CachedNetworkImage(
                               imageUrl: snapshot.data![index].url!,
-                              height: 300,
+                              height: 280,
+                              useOldImageOnUrlChange: true,
                               memCacheHeight: 280,
                               memCacheWidth: 420,
-                              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                        Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                      child: CircularProgressIndicator(
+                                          value: downloadProgress.progress)),
                               errorWidget: (_, __, ___) {
                                 return SizedBox(height: 300, width: width);
                               },

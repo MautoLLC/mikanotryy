@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/InspectionsState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
+import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
+import 'package:mymikano_app/services/ComponentService.dart';
 import 'package:mymikano_app/services/RequestFormService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -28,16 +30,18 @@ class InspectionDetailsScreen extends StatefulWidget {
 
 class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
   var NotesController = TextEditingController();
-  
+  var ComponentNameController = TextEditingController();
+  var ComponentDescriptionController = TextEditingController();
+  var ComponentPriceController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<RequestFormState>(context, listen: false).allComponents.clear();
     Provider.of<RequestFormState>(context, listen: false)
-        .selectedItems.clear();
+        .fetchPredefinedComponents(this.widget.mInspection.idInspection);
     Provider.of<RequestFormState>(context, listen: false)
-        .customComponents.clear();
-    Provider.of<RequestFormState>(context, listen: false).fetchPredefinedComponents(this.widget.mInspection.idInspection);
-    Provider.of<RequestFormState>(context, listen: false).fetchCustomComponents(this.widget.mInspection.idInspection);
+        .fetchCustomComponents(this.widget.mInspection.idInspection);
   }
 
   @override
@@ -220,11 +224,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        if (state.selectedItems.length != 0)
+                        if (state.allComponents.length != 0)
                           Container(
                             padding: EdgeInsets.all(10),
                             width: MediaQuery.of(context).size.width,
-                            height: 64 * (state.selectedItems.length / 3) + 60,
+                            height: 64 * (state.allComponents.length / 3) + 60,
                             decoration: BoxDecoration(
                               color: lightBorderColor.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(10),
@@ -236,9 +240,9 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 4,
                                         mainAxisSpacing: 10),
-                                itemCount: state.selectedItems.length,
+                                itemCount: state.allComponents.length,
                                 itemBuilder: (context, index) {
-                                  return state.selectedItems[index];
+                                  return state.allComponents[index];
                                 }),
                           ),
                         SizedBox(
@@ -360,35 +364,138 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                     child: Row(
                       children: [
                         Icon(Icons.arrow_back_ios_new),
-                        Text(lbl_Status)
+                        Text(lbl_Back)
                       ],
                     ),
                   ),
                   SizedBox(height: 30),
-                  SizedBox(
-                    height: context.height() * 0.3,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 4,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: lightBorderColor),
+                    child: TextFormField(
+                      textAlignVertical: TextAlignVertical.top,
+                      expands: true,
+                      cursorColor: Colors.black,
+                      controller: ComponentNameController,
+                      keyboardType: TextInputType.text,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        hintText: lbl_Component_Name,
+                        hintStyle:
+                            TextStyle(height: 1.4, color: textFieldHintColor),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.0),
+                        ),
                       ),
-                      physics: BouncingScrollPhysics(),
-                      itemCount: value.customComponents.length,
-                      itemBuilder: (context, index) {
-                        return FilterOption(
-                          value: value,
-                          option: value.customComponents[index].Component.componentName.toString(),
-                        );
-                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: lightBorderColor),
+                    child: TextFormField(
+                      textAlignVertical: TextAlignVertical.top,
+                      expands: true,
+                      cursorColor: Colors.black,
+                      controller: ComponentDescriptionController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        hintText: lbl_Component_Description,
+                        hintStyle:
+                            TextStyle(height: 1.4, color: textFieldHintColor),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: lightBorderColor),
+                    child: TextFormField(
+                      textAlignVertical: TextAlignVertical.top,
+                      expands: true,
+                      cursorColor: Colors.black,
+                      controller: ComponentPriceController,
+                      keyboardType: TextInputType.number,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        hintText: lbl_Component_Price,
+                        hintStyle:
+                            TextStyle(height: 1.4, color: textFieldHintColor),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.0),
+                        ),
+                      ),
                     ),
                   ),
                   Spacer(),
                   T13Button(
-                      textContent: lbl_Show_Result,
+                      textContent: lbl_Submit,
                       onPressed: () {
-                        finish(context);
+                        ComponentModel component = ComponentModel(
+                            componentName: ComponentNameController.text,
+                            componentDescription:
+                                ComponentDescriptionController.text,
+                            componentProvider: "",
+                            componentUnitPrice:
+                                ComponentPriceController.text.toInt());
+                        ComponentService()
+                            .AddCustomComponentService(
+                                component, this.widget.mInspection.idInspection)
+                            .then((value) {
+                          if (value) {
+                            toast("Component Added Successfully");
+                            Provider.of<RequestFormState>(context,
+                                    listen: false)
+                                .addComponent(ComponentItem(
+                              Component: component,
+                              deletable: true,
+                            ));
+                            ComponentNameController.clear();
+                            ComponentDescriptionController.clear();
+                            ComponentPriceController.clear();
+                            Navigator.pop(context);
+                          } else {
+                            toast("Error! please try again.");
+                          }
+                        });
                       })
                 ],
               ),
@@ -396,45 +503,6 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class FilterOption extends StatelessWidget {
-  RequestFormState value;
-  String option;
-  FilterOption({Key? key, required this.value, required this.option})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    bool contains = value.isSelected(value.customComponents.firstWhere((element) => element.Component.componentName == option).Component.idComponent.toString());
-    return GestureDetector(
-      onTap: () {
-        value.selectItem(value.customComponents.firstWhere((element) => element.Component.componentName == option));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: contains ? mainColorTheme : Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: contains ? mainColorTheme : Colors.black)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                option,
-                style: TextStyle(color: contains ? Colors.white : Colors.black),
-              ),
-              Icon(
-                contains ? Icons.close : Icons.add,
-                color: contains ? Colors.white : Colors.black,
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

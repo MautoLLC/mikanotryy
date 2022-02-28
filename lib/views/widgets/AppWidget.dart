@@ -56,25 +56,23 @@ void changeStatusColor(Color color) async {
 Widget commonCacheImageWidget(String? url, double height,
     {double? width, BoxFit? fit, Color? color}) {
   if (url.validate().startsWith('http')) {
-    try{
+    try {
       return CachedNetworkImage(
-      imageUrl: '$url',
-      height: height,
-      width: width,
-      fit: fit,
-      memCacheWidth: height.toInt(),
-      memCacheHeight: height.toInt(),
-      progressIndicatorBuilder: (context, url, downloadProgress) =>
-                Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-      errorWidget: (_, __, ___) {
-        return SizedBox(height: height, width: width);
-      },
-    );
-    }
-    catch(e){
+        imageUrl: '$url',
+        height: height,
+        width: width,
+        fit: fit,
+        memCacheWidth: height.toInt(),
+        memCacheHeight: height.toInt(),
+        progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+            child: CircularProgressIndicator(value: downloadProgress.progress)),
+        errorWidget: (_, __, ___) {
+          return SizedBox(height: height, width: width);
+        },
+      );
+    } catch (e) {
       return Container(height: height);
     }
-    
   } else {
     return Image.asset(
       url!,

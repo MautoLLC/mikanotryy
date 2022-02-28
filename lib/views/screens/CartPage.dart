@@ -25,7 +25,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductState>(builder: (context, ProductState, child) {
-      if(isFirst){
+      if (isFirst) {
         ProductState.updateCart();
         isFirst = false;
       }
@@ -41,10 +41,10 @@ class _CartPageState extends State<CartPage> {
                     IconButton(
                       icon: Icon(
                         Icons.arrow_back_ios,
-                        color: backArrowColor,
+                        color: Colors.transparent,
                       ),
                       onPressed: () {
-                        finish(context);
+                        // finish(context);
                       },
                     ),
                     Spacer(),

@@ -51,8 +51,9 @@ class ChecklistItemsService {
     }
   }
 
-  Future<List<dynamic>> fetchPredefinedComponents(int inspId) async{
-    final url = (GetPredefinedComponentsURL.replaceAll("{inspectionID}", inspId.toString()));
+  Future<List<dynamic>> fetchPredefinedComponents(int inspId) async {
+    final url = (GetPredefinedComponentsURL.replaceAll(
+        "{inspectionID}", inspId.toString()));
 
     await PrepareCall();
     dynamic response = await dio.get(url);
@@ -68,8 +69,10 @@ class ChecklistItemsService {
       throw Exception('Error fetching');
     }
   }
-  Future<List<dynamic>> fetchCustomComponents(int inspId) async{
-    final url = (GetCustomComponentsURL.replaceAll("{inspectionID}", inspId.toString()));
+
+  Future<List<dynamic>> fetchCustomComponents(int inspId) async {
+    final url = (GetCustomComponentsURL.replaceAll(
+        "{inspectionID}", inspId.toString()));
 
     await PrepareCall();
     dynamic response = await dio.get(url);

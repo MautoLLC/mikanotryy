@@ -39,7 +39,7 @@ class ProductsService {
 
   Future<List<CarouselImageModel>> getCarouselImages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
+    try {
       Response response = await dio.get(MikanoCarouselImagesUrl,
           options: Options(headers: {
             "Authorization": "Bearer ${prefs.getString("accessToken")}"
@@ -54,7 +54,7 @@ class ProductsService {
       } else {
         throw Exception('Failed to load Carousel Items');
       }
-    }catch(e){
+    } catch (e) {
       print(e);
       return [];
     }

@@ -25,6 +25,24 @@ class ProductState extends ChangeNotifier {
   int page = 0;
   bool ListOfProductsLoaded = false;
 
+  void clear(){
+    selectMode = false;
+    cashOnDelivery = true;
+    productsInCart.clear();
+    selectedProducts.clear();
+    favoriteProducts.clear();
+    purchasedProducts.clear();
+    trendingProducts.clear();
+    popularProducts.clear();
+    flashsaleProducts.clear();
+    allProducts.clear();
+    ListOfProducts.clear();
+    allProductNumbers = 0;
+    page = 0;
+    ListOfProductsLoaded = false;
+    notifyListeners();
+  }
+
   ProductState() {
     update();
   }
@@ -68,7 +86,7 @@ class ProductState extends ChangeNotifier {
   Future<void> getFavorites() async {
     favoriteProducts =
         await CustomerService().getAllFavoriteItemsforLoggedInUser();
-        notifyListeners();
+    notifyListeners();
   }
 
   Future<void> getAllProducts() async {
@@ -80,23 +98,28 @@ class ProductState extends ChangeNotifier {
     productsInCart = await CustomerService().getAllCartItemsforLoggedInUser();
     notifyListeners();
   }
-  void toggleisLoading(){
+
+  void toggleisLoading() {
     ListOfProductsLoaded = !ListOfProductsLoaded;
     notifyListeners();
   }
+
   void Paginate() async {
     page++;
     toggleisLoading();
-    await getListOfProducts();  
+    await getListOfProducts();
     toggleisLoading();
     notifyListeners();
   }
-  void clearListOfProducts(){
+
+  void clearListOfProducts() {
     ListOfProducts = [];
     notifyListeners();
   }
+
   Future<void> getListOfProducts() async {
-    ListOfProducts.addAll(await ProductsService().getProducts(limit: 8, page: page));
+    ListOfProducts.addAll(
+        await ProductsService().getProducts(limit: 8, page: page));
     notifyListeners();
   }
 
@@ -122,12 +145,14 @@ class ProductState extends ChangeNotifier {
       }
       allProducts.firstWhere((element) => element.id == product.id).liked =
           false;
+      toast("Product removed to favorites");
     } else {
       FavoriteProduct t =
           await CustomerService().addFavoriteItemsforLoggedInUser(product);
       allProducts.firstWhere((element) => element.id == product.id).liked =
           true;
       favoriteProducts.add(t);
+      toast("Product added to favorites");
     }
     notifyListeners();
   }

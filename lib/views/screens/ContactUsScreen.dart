@@ -48,63 +48,63 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             spacing: 20,
                             children: [
                               Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 0.0, 0.0, 20.0),
-                                    child: Row(
-                                      children: [
-                                        ImageBox(image: ListIcons[0]),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              14.3, 0.0, 0.0, 0.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                snapshot.data!.companyEmail
-                                                        .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily: PoppinsFamily),
-                                              ),
-                                            ],
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 0.0, 0.0, 20.0),
+                                child: Row(
+                                  children: [
+                                    ImageBox(image: ListIcons[0]),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          14.3, 0.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            snapshot.data!.companyEmail
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: PoppinsFamily),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 0.0, 0.0, 20.0),
-                                    child: Row(
-                                      children: [
-                                        ImageBox(image: ListIcons[1]),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              14.3, 0.0, 0.0, 0.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                snapshot
-                                                        .data!.companyAddress
-                                                        .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily: PoppinsFamily),
-                                              ),
-                                            ],
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 0.0, 0.0, 20.0),
+                                child: Row(
+                                  children: [
+                                    ImageBox(image: ListIcons[1]),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          14.3, 0.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            snapshot.data!.companyAddress
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: PoppinsFamily),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                              t13EditTextStyle(lbl_Full_Name, fullNameController,
+                                  ],
+                                ),
+                              ),
+                              t13EditTextStyle(
+                                  lbl_Full_Name, fullNameController,
                                   isPassword: false),
                               SizedBox(
                                 height: 20,
@@ -134,7 +134,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                           EdgeInsets.fromLTRB(26, 14, 4, 14),
                                       hintText: 'message',
                                       hintStyle: TextStyle(
-                                          height: 1.4, color: textFieldHintColor),
+                                          height: 1.4,
+                                          color: textFieldHintColor),
                                       filled: true,
                                       fillColor: lightBorderColor,
                                       enabledBorder: OutlineInputBorder(
