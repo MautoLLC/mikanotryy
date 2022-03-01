@@ -33,7 +33,6 @@ class MyRepairsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
 

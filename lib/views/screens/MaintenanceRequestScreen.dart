@@ -267,7 +267,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.transparent);
 
     return Scaffold(
         key: _scaffoldKey,

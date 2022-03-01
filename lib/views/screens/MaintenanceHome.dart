@@ -40,7 +40,6 @@ class T5MaintenanceState extends State<T5Maintenance> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     width = width - 50;
 

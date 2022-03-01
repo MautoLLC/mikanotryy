@@ -41,15 +41,15 @@ class ProductDetailsPage extends StatelessWidget {
                     Expanded(
                       child: Container(
                         height: size.height / 2,
-                        padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
+                        padding: EdgeInsets.fromLTRB(45.0, 0.0, 45.0, 0.0),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
                         child: CachedNetworkImage(
                           imageUrl: '${product.Image}',
-                          height: 85,
-                          fit: BoxFit.fitWidth,
+                          height: 100,
+                          fit: BoxFit.cover,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) => Center(
                                   child: CircularProgressIndicator(

@@ -48,11 +48,6 @@ BoxDecoration boxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
 }
-
-void changeStatusColor(Color color) async {
-  setStatusBarColor(color);
-}
-
 Widget commonCacheImageWidget(String? url, double height,
     {double? width, BoxFit? fit, Color? color}) {
   if (url.validate().startsWith('http')) {
@@ -62,8 +57,8 @@ Widget commonCacheImageWidget(String? url, double height,
         height: height,
         width: width,
         fit: fit,
-        memCacheWidth: height.toInt(),
-        memCacheHeight: height.toInt(),
+        memCacheWidth: height.toInt() + 100,
+        memCacheHeight: height.toInt() + 100,
         progressIndicatorBuilder: (context, url, downloadProgress) => Center(
             child: CircularProgressIndicator(value: downloadProgress.progress)),
         errorWidget: (_, __, ___) {

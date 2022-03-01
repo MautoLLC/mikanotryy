@@ -34,7 +34,7 @@ class ItemElement extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: mainGreyColorTheme2,
-            borderRadius: BorderRadius.all(Radius.circular(15))),
+            borderRadius: BorderRadius.all(Radius.circular(0))),
         width: MediaQuery.of(context).size.width,
         child: Stack(children: [
           Padding(
@@ -45,16 +45,13 @@ class ItemElement extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                          padding: EdgeInsets.fromLTRB(45.0, 10.0, 45.0, 10.0),
+                          padding: EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(33),
-                            child: commonCacheImageWidget(product.Image, 60,
-                                fit: BoxFit.fill),
-                          )),
+                                  BorderRadius.all(Radius.circular(0))),
+                          child: commonCacheImageWidget(product.Image, 106,
+                              fit: BoxFit.cover)),
                     ),
                   ],
                 ),
