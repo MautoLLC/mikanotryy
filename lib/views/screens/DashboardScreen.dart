@@ -68,6 +68,7 @@ class DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
+              
               SizedBox(
                 height: 20,
               ),
@@ -81,6 +82,41 @@ class DashboardState extends State<Dashboard> {
                               isPassword: false))
                     ],
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 140,
+                child: FutureBuilder<List<CarouselImageModel>>(
+                  future: ProductsService().getCarouselImages(),
+                  builder: (context, snapshot) {
+                    return snapshot.data!.length>0?ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: CachedNetworkImage(
+                              imageUrl: snapshot.data![index].url.toString(),
+                              height: 280,
+                              memCacheHeight: 280,
+                              memCacheWidth: 420,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                      child: CircularProgressIndicator(
+                                          value: downloadProgress.progress)),
+                              errorWidget: (_, __, ___) {
+                                return SizedBox(height: 300, width: width);
+                              },
+                            ),
+                          ),
+                        );
+                      }):Container();
+                  }
                 ),
               ),
               SizedBox(
@@ -191,7 +227,7 @@ class DashboardState extends State<Dashboard> {
                 child: FutureBuilder<List<CarouselImageModel>>(
                   future: ProductsService().getCarouselImages(),
                   builder: (context, snapshot) => ListView.builder(
-                      itemCount: snapshot.data!.length,
+                      itemCount: snapshot.data!.length>0?snapshot.data!.length:0,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -199,7 +235,7 @@ class DashboardState extends State<Dashboard> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: CachedNetworkImage(
-                              imageUrl: snapshot.data![index].url!,
+                              imageUrl: snapshot.data![index].url.toString(),
                               height: 280,
                               useOldImageOnUrlChange: true,
                               memCacheHeight: 280,
