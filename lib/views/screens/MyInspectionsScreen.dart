@@ -86,7 +86,7 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
               Flexible(
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: inspectionsState.inspections.length - 1,
+                    itemCount: inspectionsState.inspections.length>0?inspectionsState.inspections.length - 1:0,
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
