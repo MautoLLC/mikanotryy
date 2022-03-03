@@ -42,12 +42,11 @@ class _MenuScreenState extends State<MenuScreen> {
   Future<void> initializePreference() async {
     ApiConfigurationState apiconfigstate = ApiConfigurationState();
     this.prefs = await SharedPreferences.getInstance();
-    this.prefs?.setBool('DashboardFirstTimeAccess',
-        apiconfigstate.DashBoardFirstTimeAccess);
+    this.prefs?.setBool(
+        'DashboardFirstTimeAccess', apiconfigstate.DashBoardFirstTimeAccess);
   }
 
   void notFirstTimeDashboardAccess() async {
-
     this.prefs = await SharedPreferences.getInstance();
     this.prefs?.setBool('DashboardFirstTimeAccess', false);
   }

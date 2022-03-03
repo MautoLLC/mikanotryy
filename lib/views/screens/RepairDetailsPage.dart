@@ -6,7 +6,9 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
+import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
+import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:mymikano_app/views/widgets/list.dart';
 
 class RepairDetailsPage extends StatefulWidget {
@@ -27,77 +29,33 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: backArrowColor,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Spacer(),
-                  TitleText(title: lbl_Request_Form),
-                  Spacer(),
-                  Spacer(),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Description",
-                      style: TextStyle(
-                          fontFamily: PoppinsFamily,
-                          fontSize: 18,
-                          color: mainBlackColorTheme),
-                    ),
-                  )
-                ],
-              ),
-              FutureBuilder(
-                  future: ListMaintenanceRequestsViewModel()
-                      .fetchMaintenanceRequestsByID(this.widget.id),
-                  builder: (context,
-                      AsyncSnapshot<MaintenanceRequestsViewModel?> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: true,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
+                child: FutureBuilder<MaintenanceRequestsViewModel>(
+                    future: ListMaintenanceRequestsViewModel()
+                        .fetchMaintenanceRequestsByID(this.widget.id),
+                    builder: (context, snapshot) {
                       return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Center(
-                              child: SpinKitCircle(
-                            color: Colors.black,
-                            size: 65,
-                          )),
-                        ],
-                      );
-                    }
-
-                    if (snapshot.hasError) {
-                      return Center(
-                          child: Text(
-                              "Please check you internet connection and try again !",
-                              textAlign: TextAlign.center,
+                          TopRowBar(title: lbl_Request_Form),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Description",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: Colors.black)));
-                    } else {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                                  fontFamily: PoppinsFamily,
+                                  fontSize: 18,
+                                  color: mainBlackColorTheme),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -109,182 +67,174 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                                     fontSize: 12,
                                     color: mainGreyColorTheme)),
                           ),
-                        ],
-                      );
-                    }
-                  }),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Images",
-                      style: TextStyle(
-                          fontFamily: PoppinsFamily,
-                          fontSize: 18,
-                          color: mainBlackColorTheme),
-                    ),
-                  )
-                ],
-              ),
-              FutureBuilder(
-                  future: ListMaintenanceRequestsViewModel()
-                      .fetchMaintenanceRequestsByID(this.widget.id),
-                  builder: (context,
-                      AsyncSnapshot<MaintenanceRequestsViewModel?> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SpinKitCircle(
-                            color: Colors.black,
-                            size: 65,
+                          SizedBox(
+                            height: 30,
                           ),
-                        ],
-                      );
-                    }
-
-                    if (snapshot.hasError) {
-                      return Center(
-                          child: Text(
-                              "Please check you internet connection and try again !",
-                              textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Images",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: Colors.black)));
-                    } else {
-                      return snapshot.data!.mMaintenacerequest!
-                                  .maintenanceRequestImagesFiles!.length !=
-                              0
-                          ? Expanded(
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: snapshot.data!.mMaintenacerequest!
-                                      .maintenanceRequestImagesFiles!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    Widget temp = SizedBox(
-                                        height: 100,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.6,
-                                        child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                8.0, 0.0, 8.0, 0.0),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: CachedNetworkImage(
-                                                placeholder:
-                                                    placeholderWidgetFn()
-                                                        as Widget Function(
-                                                            BuildContext,
-                                                            String)?,
-                                                imageUrl: snapshot
-                                                        .data!
-                                                        .mMaintenacerequest!
-                                                        .maintenanceRequestImagesFiles![
-                                                    index],
-                                                fit: BoxFit.fill,
-                                              ),
-                                            )));
-                                    return temp;
-                                  }),
-                            )
-                          : Center(
-                              child: Text("No Images"),
-                            );
-                    }
-                  }),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Audio",
-                      style: TextStyle(
-                          fontFamily: PoppinsFamily,
-                          fontSize: 18,
-                          color: mainBlackColorTheme),
-                    ),
-                  )
-                ],
-              ),
-              FutureBuilder(
-                  future: ListMaintenanceRequestsViewModel()
-                      .fetchMaintenanceRequestsByID(this.widget.id),
-                  builder: (context,
-                      AsyncSnapshot<MaintenanceRequestsViewModel?> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SpinKitCircle(
-                            color: Colors.black,
-                            size: 65,
+                                  fontFamily: PoppinsFamily,
+                                  fontSize: 18,
+                                  color: mainBlackColorTheme),
+                            ),
                           ),
-                        ],
-                      );
-                    }
-
-                    if (snapshot.hasError) {
-                      return Center(
-                          child: Text(
-                              "Please check you internet connection and try again !",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: Colors.black)));
-                    } else {
-                      print(snapshot.data!.mMaintenacerequest!
-                          .maintenanceRequestRecordsFiles);
-                      return snapshot.data!.mMaintenacerequest!
-                                  .maintenanceRequestRecordsFiles!.length !=
-                              0
-                          ? Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: GridView.builder(
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 1,
-                                            mainAxisSpacing: 2),
-                                    itemCount: 1,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      List<String> tempList = snapshot
+                          snapshot.data!.mMaintenacerequest!
+                                      .maintenanceRequestImagesFiles!.length !=
+                                  0
+                              ? Expanded(
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: snapshot
                                           .data!
                                           .mMaintenacerequest!
-                                          .maintenanceRequestRecordsFiles!
-                                          .map((e) => e.toString())
-                                          .toList();
-                                      Widget temp = RecordsUrl(
-                                        records: tempList,
-                                      );
-                                      return temp;
-                                    }),
+                                          .maintenanceRequestImagesFiles!
+                                          .length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        Widget temp = SizedBox(
+                                            height: 100,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            child: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        8.0, 0.0, 8.0, 0.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: snapshot
+                                                            .data!
+                                                            .mMaintenacerequest!
+                                                            .maintenanceRequestImagesFiles![
+                                                        index],
+                                                    progressIndicatorBuilder:
+                                                        (context, url,
+                                                                downloadProgress) =>
+                                                            Center(
+                                                      child: CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress),
+                                                    ),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                )));
+                                        return temp;
+                                      }),
+                                )
+                              : Center(
+                                  child: Text("No Images"),
+                                ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Audio",
+                              style: TextStyle(
+                                  fontFamily: PoppinsFamily,
+                                  fontSize: 18,
+                                  color: mainBlackColorTheme),
+                            ),
+                          ),
+                          snapshot.data!.mMaintenacerequest!
+                                      .maintenanceRequestRecordsFiles!.length !=
+                                  0
+                              ? Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 1,
+                                                mainAxisSpacing: 2),
+                                        itemCount: 1,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          List<String> tempList = snapshot
+                                              .data!
+                                              .mMaintenacerequest!
+                                              .maintenanceRequestRecordsFiles!
+                                              .map((e) => e.toString())
+                                              .toList();
+                                          Widget temp = RecordsUrl(
+                                            records: tempList,
+                                          );
+                                          return temp;
+                                        }),
+                                  ),
+                                )
+                              : Center(
+                                  child: Text("No Audio"),
+                                ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TitleText(title: lbl_Change_Status),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: lightBorderColor),
+                            child: TextFormField(
+                              enabled: false,
+                              textAlignVertical: TextAlignVertical.top,
+                              expands: true,
+                              cursorColor: Colors.black,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                hintText: snapshot
+                                    .data!
+                                    .mMaintenacerequest!
+                                    .maintenaceRequestStatus!
+                                    .maintenanceStatusDescription,
+                                hintStyle: TextStyle(
+                                    height: 1.4, color: textFieldHintColor),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 0.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.white, width: 0.0),
+                                ),
                               ),
-                            )
-                          : Center(
-                              child: Text("No Audio"),
-                            );
-                    }
-                  }),
-            ],
-          ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 36,
+                          ),
+                          T13Button(
+                              textContent: snapshot
+                                          .data!
+                                          .mMaintenacerequest!
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription ==
+                                      "Assigned"
+                                  ? lbl_Submit
+                                  : lbl_Revert_Status,
+                              onPressed: () {}),
+                        ],
+                      );
+                    }),
+              ),
+            )
+          ],
         ),
       ),
     );

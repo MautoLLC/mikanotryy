@@ -17,7 +17,7 @@ class UserState extends ChangeNotifier {
     update();
   }
 
-  void clear(){
+  void clear() {
     User = TechnicianModel("1", 'null', '', 'null', 'null');
     isTechnician = false;
     termsAccepted = true;

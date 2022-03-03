@@ -29,7 +29,6 @@ class InspectionDetailsScreen extends StatefulWidget {
 }
 
 class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
-  var NotesController = TextEditingController();
   var ComponentNameController = TextEditingController();
   var ComponentDescriptionController = TextEditingController();
   var ComponentPriceController = TextEditingController();
@@ -170,43 +169,6 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                   child: Text("No Audio"),
                                 ),
                               ),
-                        TitleText(title: lbl_Additional_Notes),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: lightBorderColor),
-                          child: TextFormField(
-                            enabled: false,
-                            textAlignVertical: TextAlignVertical.top,
-                            expands: true,
-                            cursorColor: Colors.black,
-                            controller: NotesController,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(26, 14, 4, 14),
-                              hintText: lbl_Text_Here,
-                              hintStyle: TextStyle(
-                                  height: 1.4, color: textFieldHintColor),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 0.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 0.0),
-                              ),
-                            ),
-                          ),
-                        ),
                         SizedBox(
                           height: 30,
                         ),
@@ -262,7 +224,6 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                             textAlignVertical: TextAlignVertical.top,
                             expands: true,
                             cursorColor: Colors.black,
-                            controller: NotesController,
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(

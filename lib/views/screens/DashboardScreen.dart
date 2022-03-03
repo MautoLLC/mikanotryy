@@ -68,7 +68,6 @@ class DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              
               SizedBox(
                 height: 20,
               ),
@@ -90,34 +89,40 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 140,
                 child: FutureBuilder<List<CarouselImageModel>>(
-                  future: ProductsService().getCarouselImages(),
-                  builder: (context, snapshot) {
-                    return snapshot.data!.length>0?ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: CachedNetworkImage(
-                              imageUrl: snapshot.data![index].url.toString(),
-                              height: 280,
-                              memCacheHeight: 280,
-                              memCacheWidth: 420,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                      child: CircularProgressIndicator(
-                                          value: downloadProgress.progress)),
-                              errorWidget: (_, __, ___) {
-                                return SizedBox(height: 300, width: width);
-                              },
-                            ),
-                          ),
-                        );
-                      }):Container();
-                  }
-                ),
+                    future: ProductsService().getCarouselImages(),
+                    builder: (context, snapshot) {
+                      if(snapshot.connectionState == ConnectionState.done)
+                        return ListView.builder(
+                                itemCount: snapshot.data!.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            snapshot.data![index].url.toString(),
+                                        height: 280,
+                                        memCacheHeight: 280,
+                                        memCacheWidth: 420,
+                                        progressIndicatorBuilder: (context, url,
+                                                downloadProgress) =>
+                                            Center(
+                                                child: CircularProgressIndicator(
+                                                    value: downloadProgress
+                                                        .progress)),
+                                        errorWidget: (_, __, ___) {
+                                          return SizedBox(
+                                              height: 300, width: width);
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                });
+                        else return Center(child: CircularProgressIndicator());
+                    }),
               ),
               SizedBox(
                 height: 40,
@@ -227,29 +232,32 @@ class DashboardState extends State<Dashboard> {
                 child: FutureBuilder<List<CarouselImageModel>>(
                   future: ProductsService().getCarouselImages(),
                   builder: (context, snapshot) => ListView.builder(
-                      itemCount: snapshot.data!.length>0?snapshot.data!.length:0,
+                      itemCount:
+                          snapshot.data!.length > 0 ? snapshot.data!.length : 0,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: CachedNetworkImage(
-                              imageUrl: snapshot.data![index].url.toString(),
-                              height: 280,
-                              useOldImageOnUrlChange: true,
-                              memCacheHeight: 280,
-                              memCacheWidth: 420,
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                      child: CircularProgressIndicator(
-                                          value: downloadProgress.progress)),
-                              errorWidget: (_, __, ___) {
-                                return SizedBox(height: 300, width: width);
-                              },
+                        if(snapshot.connectionState == ConnectionState.done)
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: CachedNetworkImage(
+                                imageUrl: snapshot.data![index].url.toString(),
+                                height: 280,
+                                useOldImageOnUrlChange: true,
+                                memCacheHeight: 280,
+                                memCacheWidth: 420,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => Center(
+                                        child: CircularProgressIndicator(
+                                            value: downloadProgress.progress)),
+                                errorWidget: (_, __, ___) {
+                                  return SizedBox(height: 300, width: width);
+                                },
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        else return Center(child: CircularProgressIndicator());
                       }),
                 ),
               ),

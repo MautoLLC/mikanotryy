@@ -37,8 +37,8 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     //         selectedIndex = index;
     //       });
     setState(() {
-            selectedIndex = index;
-          });
+      selectedIndex = index;
+    });
   }
 
   @override

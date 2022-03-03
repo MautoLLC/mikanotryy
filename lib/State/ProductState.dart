@@ -25,7 +25,7 @@ class ProductState extends ChangeNotifier {
   int page = 0;
   bool ListOfProductsLoaded = false;
 
-  void clear(){
+  void clear() {
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();

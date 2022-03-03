@@ -26,9 +26,9 @@ class _Dashboard_TestState extends State<Dashboard_Test> {
                 if (prefs.getBool('DashboardFirstTimeAccess')! == false) {
                   value.DashBoardFirstTimeAccess =
                       prefs.getBool('DashboardFirstTimeAccess')!;
-                      print("it's not first time");
+                  print("it's not first time");
                 }
-              
+
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ApiConfigurationPage()));
               },
@@ -43,4 +43,3 @@ class _Dashboard_TestState extends State<Dashboard_Test> {
     );
   }
 }
-

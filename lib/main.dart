@@ -23,9 +23,11 @@ Future<void> _messageHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    Future.delayed(Duration(milliseconds: 1)).then(
-    (value) => SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark)));
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  Future.delayed(Duration(milliseconds: 1)).then((value) =>
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark)));
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
   FirebaseMessaging.onBackgroundMessage(_messageHandler);

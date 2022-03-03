@@ -16,7 +16,7 @@ class RequestFormState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clear(){
+  void clear() {
     allComponents.clear();
     notifyListeners();
   }

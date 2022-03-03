@@ -168,4 +168,3 @@ const lbl_Component_Name = 'Component Name';
 const lbl_Component_Description = 'Component Description';
 const lbl_Component_Price = 'Component Price';
 const lbl_Back = 'Back';
-

@@ -15,11 +15,11 @@ class HorizontalItemElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ProductDetailsPage(
-                              product: product,
-                            )));
+            builder: (context) => ProductDetailsPage(
+                  product: product,
+                )));
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10),
@@ -34,16 +34,11 @@ class HorizontalItemElement extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 decoration: boxDecoration(
-                    radius: 33,
-                    showShadow: true,
-                    bgColor: Colors.white),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(33),
-                  child: commonCacheImageWidget(
-                    product.Image,
-                    60,
-                    width: 80,
-                  ),
+                    radius: 33, showShadow: true, bgColor: Colors.white),
+                child: commonCacheImageWidget(
+                  product.Image,
+                  60,
+                  width: 80,
                 ),
               ),
             ),

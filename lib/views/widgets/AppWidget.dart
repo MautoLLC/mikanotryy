@@ -48,6 +48,7 @@ BoxDecoration boxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(radius)),
   );
 }
+
 Widget commonCacheImageWidget(String? url, double height,
     {double? width, BoxFit? fit, Color? color}) {
   if (url.validate().startsWith('http')) {
@@ -78,9 +79,3 @@ Widget commonCacheImageWidget(String? url, double height,
     );
   }
 }
-
-Widget? Function(BuildContext, String) placeholderWidgetFn() =>
-    (_, s) => placeholderWidget();
-
-Widget placeholderWidget() =>
-    Image.asset('images/LikeButton/image/grey.jpg', fit: BoxFit.cover);
