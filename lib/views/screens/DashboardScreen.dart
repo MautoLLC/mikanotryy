@@ -207,7 +207,7 @@ class DashboardState extends State<Dashboard> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
                   height: 470,
-                  child: GridView.builder(
+                  child: state.popularProducts.length!=0?GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -221,7 +221,7 @@ class DashboardState extends State<Dashboard> {
                         return ItemElement(
                           product: temp,
                         );
-                      }),
+                      }):Center(child: CircularProgressIndicator()),
                 ),
               ),
               SizedBox(
@@ -279,7 +279,7 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                   height: 250,
-                  child: ListView.builder(
+                  child: state.flashsaleProducts.length!=0?ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.flashsaleProducts.length,
                       itemBuilder: (context, index) {
@@ -293,7 +293,7 @@ class DashboardState extends State<Dashboard> {
                             ),
                           ),
                         );
-                      })),
+                      }):Center(child: CircularProgressIndicator())),
               SizedBox(
                 height: 40,
               ),
@@ -346,7 +346,7 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView.builder(
+                child: state.trendingProducts.length!=0?ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: state.trendingProducts.length,
@@ -355,7 +355,7 @@ class DashboardState extends State<Dashboard> {
                       return HorizontalItemElement(
                         product: temp,
                       );
-                    }),
+                    }):Center(child: CircularProgressIndicator()),
               )
             ]),
           )),
