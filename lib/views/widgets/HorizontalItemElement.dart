@@ -34,7 +34,7 @@ class HorizontalItemElement extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 decoration: boxDecoration(
-                    radius: 33, showShadow: true, bgColor: Colors.white),
+                    radius: 0, showShadow: true, bgColor: Colors.white),
                 child: commonCacheImageWidget(
                   product.Image,
                   60,
