@@ -1,18 +1,19 @@
 class CarouselImageModel {
   int? id;
   String? url;
+  String? position;
 
-  CarouselImageModel({this.id, this.url});
+  CarouselImageModel({this.id, this.url, position});
 
-  CarouselImageModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    url = json['url'];
-  }
+  factory CarouselImageModel.fromJson(Map<String, dynamic> json) => CarouselImageModel(
+    id: json["id"],
+    url: json["url"],
+    position: json["position"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['url'] = this.url;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "url": url,
+    "position": position,
+  };
 }

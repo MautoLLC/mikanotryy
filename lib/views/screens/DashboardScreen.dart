@@ -96,7 +96,7 @@ class DashboardState extends State<Dashboard> {
                                 itemCount: snapshot.data!.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
-                                  return Padding(
+                                  return snapshot.data![index].position.toString()=="top"?Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: ClipRRect(
@@ -119,7 +119,7 @@ class DashboardState extends State<Dashboard> {
                                         },
                                       ),
                                     ),
-                                  );
+                                  ):Container(width: 0, height: 0,);
                                 });
                         else return Center(child: CircularProgressIndicator());
                     }),
@@ -231,13 +231,15 @@ class DashboardState extends State<Dashboard> {
                 height: 140,
                 child: FutureBuilder<List<CarouselImageModel>>(
                   future: ProductsService().getCarouselImages(),
-                  builder: (context, snapshot) => ListView.builder(
+                  builder: (context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.done)
+                     return ListView.builder(
                       itemCount:
                           snapshot.data!.length > 0 ? snapshot.data!.length : 0,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        if(snapshot.connectionState == ConnectionState.done)
-                          return Padding(
+                        
+                          return snapshot.data![index].position.toString()=="bottom"?Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
@@ -256,9 +258,10 @@ class DashboardState extends State<Dashboard> {
                                 },
                               ),
                             ),
-                          );
-                        else return Center(child: CircularProgressIndicator());
-                      }),
+                          ):Container(width: 0, height: 0,);
+                      });
+                      else return Center(child: CircularProgressIndicator());
+                  },
                 ),
               ),
               SizedBox(
