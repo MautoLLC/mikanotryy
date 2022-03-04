@@ -6,6 +6,7 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
+import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -29,11 +30,10 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: true,
-              child: Padding(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                 child: FutureBuilder<MaintenanceRequestsViewModel>(
                     future: ListMaintenanceRequestsViewModel()
@@ -83,7 +83,8 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                           snapshot.data!.mMaintenacerequest!
                                       .maintenanceRequestImagesFiles!.length !=
                                   0
-                              ? Expanded(
+                              ? SizedBox(
+                                  height: 175,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: snapshot
@@ -147,7 +148,9 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                           snapshot.data!.mMaintenacerequest!
                                       .maintenanceRequestRecordsFiles!.length !=
                                   0
-                              ? Expanded(
+                              ? SizedBox(
+                                height: double.parse((35*snapshot.data!.mMaintenacerequest!
+                                      .maintenanceRequestRecordsFiles!.length).toString()),
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(
                                         8.0, 0.0, 8.0, 0.0),
@@ -176,9 +179,9 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                                   child: Text("No Audio"),
                                 ),
                           SizedBox(
-                            height: 10,
+                            height: 30,
                           ),
-                          TitleText(title: lbl_Change_Status),
+                          SubTitleText(title: lbl_Change_Status),
                           SizedBox(
                             height: 10,
                           ),
@@ -233,8 +236,7 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                       );
                     }),
               ),
-            )
-          ],
+          ),
         ),
       ),
     );
