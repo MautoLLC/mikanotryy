@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
+import 'package:mymikano_app/services/RequestFormService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -11,6 +13,7 @@ import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:mymikano_app/views/widgets/list.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class RepairDetailsPage extends StatefulWidget {
   final int id;
@@ -24,6 +27,17 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+    String maintenanceState(String currentState){
+    String result = "-1";
+    switch (currentState) {
+      case "Inspection completion confirmed by admin. Awaiting user approval":
+        result = "10";
+        break;
+      default:
+    }
+    return result;
   }
 
   @override
@@ -220,18 +234,137 @@ class _RepairDetailsPageState extends State<RepairDetailsPage> {
                             ),
                           ),
                           SizedBox(
-                            height: 36,
+                            height: 30,
                           ),
-                          T13Button(
-                              textContent: snapshot
+                          if(snapshot
                                           .data!
                                           .mMaintenacerequest!
                                           .maintenaceRequestStatus!
-                                          .maintenanceStatusDescription ==
-                                      "Assigned"
-                                  ? lbl_Submit
-                                  : lbl_Revert_Status,
-                              onPressed: () {}),
+                                          .maintenanceStatusDescription == "Awaiting pricing approval by client")
+                            SubTitleText(title: lbl_Price),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          snapshot
+                                          .data!
+                                          .mMaintenacerequest!
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription == "Awaiting pricing approval by client"?
+                                         FutureBuilder(
+                                            future: MaintenanceRequestService().fetchMaintenanceRequestPriceByID(this.widget.id),
+                                            builder: (context, snapshot) {
+                                              if(snapshot.connectionState == ConnectionState.done){
+                                                return Container(
+                                                                      height: 55,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(20),
+                                                                          color: lightBorderColor),
+                                                                      child: TextFormField(
+                                                                        enabled: false,
+                                                                        textAlignVertical: TextAlignVertical.top,
+                                                                        expands: true,
+                                                                        cursorColor: Colors.black,
+                                                                        keyboardType: TextInputType.multiline,
+                                                                        maxLines: null,
+                                                                        decoration: InputDecoration(
+                                                                          filled: true,
+                                                                          fillColor: Colors.transparent,
+                                                                          hintText: snapshot
+                                                                              .data.toString()
+                                                                            ,
+                                                                          hintStyle: TextStyle(
+                                                                              height: 1.4, color: textFieldHintColor),
+                                                                          enabledBorder: OutlineInputBorder(
+                                                                            borderRadius: BorderRadius.circular(10),
+                                                                            borderSide: BorderSide(
+                                                                                color: Colors.white, width: 0.0),
+                                                                          ),
+                                                                          focusedBorder: OutlineInputBorder(
+                                                                            borderSide: BorderSide(
+                                                                                color: Colors.white, width: 0.0),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                              } else {
+                                                return Center(child: CircularProgressIndicator(),);
+                                              }
+                                            }
+                                          ):Container(),
+                                          SizedBox(height: 20,),
+                          snapshot
+                                          .data!
+                                          .mMaintenacerequest!
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription == "Awaiting pricing approval by client"?
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              T13Button(
+                              textContent: lbl_Decline,
+                              onPressed: () {
+                                                          RequestFormService()
+                                  .SubmitRequestForm(
+                                      this
+                                          .widget.id.toString(),
+                                      "5")
+                                  .then((value) {
+                                if (value) {
+                                  toast("Submitted Successfully");
+                                  Navigator.pop(context);
+                                } else {
+                                  toast("Error! please try again.");
+                                }
+                              });
+                              }),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              T13Button(
+                              textContent: lbl_Submit,
+                              onPressed: () {
+                                RequestFormService()
+                                  .SubmitRequestForm(
+                                      this
+                                          .widget.id.toString(),
+                                      "6")
+                                  .then((value) {
+                                if (value) {
+                                  toast("Submitted Successfully");
+                                  Navigator.pop(context);
+                                } else {
+                                  toast("Error! please try again.");
+                                }
+                              });
+                              }),
+                            ],
+                          ):Container(),
+                          maintenanceState(snapshot
+                                          .data!
+                                          .mMaintenacerequest!
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription)!="-1"?
+                                          T13Button(
+                              textContent: lbl_Submit,
+                              onPressed: () {
+                                RequestFormService()
+                                  .SubmitRequestForm(
+                                      this
+                                          .widget.id.toString(),
+                                      maintenanceState(snapshot
+                                          .data!
+                                          .mMaintenacerequest!
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription))
+                                  .then((value) {
+                                if (value) {
+                                  toast("Submitted Successfully");
+                                  Navigator.pop(context);
+                                } else {
+                                  toast("Error! please try again.");
+                                }
+                              });
+                              }):Container(),
                         ],
                       );
                     }),

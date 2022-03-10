@@ -43,6 +43,20 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
         .fetchCustomComponents(this.widget.mInspection.idInspection);
   }
 
+  String inspectionState(String currentState){
+    String result = "-1";
+    switch (currentState) {
+      case "Assigned":
+        result = "3";
+        break;
+      case "Pricing approved by admin. Inspection in progress by technician":
+        result = "8";
+        break;
+      default:
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<InspectionsState>(
@@ -176,11 +190,15 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TitleText(title: lbl_Components),
-                            IconButton(
+                            inspectionState(this
+                                                  .widget
+                                                  .Maintenance
+                                                  .maintenaceRequestStatus!
+                                                  .maintenanceStatusDescription) == "3"?IconButton(
                                 onPressed: () {
                                   bottomSheet(context);
                                 },
-                                icon: Icon(Icons.add))
+                                icon: Icon(Icons.add)):Container()
                           ],
                         ),
                         SizedBox(
@@ -204,7 +222,17 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                         mainAxisSpacing: 10),
                                 itemCount: state.allComponents.length,
                                 itemBuilder: (context, index) {
-                                  return state.allComponents[index];
+                                  if(inspectionState(this
+                                                  .widget
+                                                  .Maintenance
+                                                  .maintenaceRequestStatus!
+                                                  .maintenanceStatusDescription) != "3"){
+                                                    ComponentItem item = ComponentItem(Component: state.allComponents[index].Component, deletable: false);
+                                                    return item;
+                                                  } else {
+                                                    return state.allComponents[index];
+                                                  }
+                                  
                                 }),
                           ),
                         SizedBox(
@@ -251,15 +279,13 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 36,
                         ),
+                        inspectionState(this
+                                                  .widget
+                                                  .Maintenance
+                                                  .maintenaceRequestStatus!
+                                                  .maintenanceStatusDescription)!="-1"?
                         T13Button(
-                            textContent: this
-                                        .widget
-                                        .Maintenance
-                                        .maintenaceRequestStatus!
-                                        .maintenanceStatusDescription ==
-                                    "Assigned"
-                                ? lbl_Submit
-                                : lbl_Revert_Status,
+                            textContent: lbl_Submit,
                             onPressed: () {
                               RequestFormService()
                                   .SubmitRequestForm(
@@ -268,14 +294,11 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                           .mInspection
                                           .maintenanceRequestID
                                           .toString(),
-                                      this
+                                      inspectionState(this
                                                   .widget
                                                   .Maintenance
                                                   .maintenaceRequestStatus!
-                                                  .maintenanceStatusDescription ==
-                                              "Assigned"
-                                          ? "4"
-                                          : "2")
+                                                  .maintenanceStatusDescription))
                                   .then((value) {
                                 if (value) {
                                   toast("Submitted Successfully");
@@ -285,10 +308,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                   toast("Error! please try again.");
                                 }
                               });
-                            }),
-                        SizedBox(
-                          height: 10,
-                        ),
+                            }):T13Button(textContent: "Waiting for next step", onPressed: (){},),
                       ],
                     ),
                   )

@@ -69,4 +69,14 @@ class MaintenanceRequestService {
       throw Exception('Error fetching');
     }
   }
+
+  Future<dynamic> fetchMaintenanceRequestPriceByID(int id) async {
+    await PrepareCall();
+    final response = await dio.get(InspectionPriceURL.replaceAll("{maintenanceId}", id.toString()));
+    if (response.statusCode == 200) {
+      return response.data['price'];
+    } else {
+      throw Exception('Error fetching');
+    }
+  }
 }

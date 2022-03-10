@@ -87,7 +87,7 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: inspectionsState.inspections.length > 0
-                        ? inspectionsState.inspections.length - 1
+                        ? inspectionsState.inspections.length
                         : 0,
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
@@ -107,7 +107,10 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                   !inspectionsState.filters.contains(snapshot
                                       .data!
                                       .maintenaceRequestStatus!
-                                      .maintenanceStatusDescription))
+                                      .maintenanceStatusDescription) && snapshot
+                                      .data!
+                                      .maintenaceRequestStatus!
+                                      .maintenanceStatusDescription != "In Progress")
                                 return Container();
                               else
                                 return GestureDetector(
@@ -199,7 +202,13 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                                           .maintenanceStatusDescription),
                                                       radius: 16),
                                                   child: text(
-                                                      snapshot
+                                                          snapshot
+                                                          .data!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription != "Assigned" && snapshot
+                                                          .data!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription != "Done"?"In Progress":snapshot
                                                           .data!
                                                           .maintenaceRequestStatus!
                                                           .maintenanceStatusDescription,
@@ -261,15 +270,15 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                     children: [
                       FilterOption(
                         value: value,
-                        option: lbl_Pending,
-                      ),
-                      FilterOption(
-                        value: value,
                         option: lbl_Assigned,
                       ),
                       FilterOption(
                         value: value,
                         option: lbl_Done,
+                      ),
+                      FilterOption(
+                        value: value,
+                        option: lbl_In_Progress,
                       ),
                     ],
                   ),
@@ -315,7 +324,7 @@ class FilterOption extends StatelessWidget {
                 option,
                 style: TextStyle(color: contains ? Colors.white : Colors.black),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 9),
               Icon(
                 contains ? Icons.check : Icons.add,
                 color: contains ? Colors.white : Colors.black,
