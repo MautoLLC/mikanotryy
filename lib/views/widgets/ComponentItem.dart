@@ -3,6 +3,7 @@ import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/services/ComponentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/views/screens/ComponentDetailScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -12,14 +13,42 @@ class ComponentItem extends StatelessWidget {
   ComponentItem({Key? key, required this.Component, required this.deletable})
       : super(key: key);
 
+  List<String> statuses = [
+    "Good",
+    "Poor",
+    "Repair",
+    "Satisfactory",
+    "Replace",
+    "N/A",
+    "Awaiting"
+  ];
+
+  List<Color> statusesColors = [
+    Colors.green,
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.blue,
+    Colors.grey,
+    Colors.purple
+  ];
+
   switchColor(String status) {
     switch (status.toLowerCase()) {
+      case "good":
+        return Colors.green;
+      case "poor":
+        return Colors.red;
+      case "repair":
+        return Colors.orange;
       case "satisfactory":
-        return DoneColor;
-      case "Approved":
-        return AssignedColor;
-      case "Rejected":
-        return PendingColor;
+        return Colors.yellow;
+      case "Replace":
+        return Colors.blue;
+      case "N/A":
+        return Colors.grey;
+      case "awaiting":
+        return Colors.purple;
       default:
         return Colors.grey;
     }

@@ -171,3 +171,6 @@ const lbl_Back = 'Back';
 const lbl_Price = "Price";
 const lbl_Decline = "Decline";
 const lbl_In_Progress = "In Progress";
+const lbl_Name = "Name";
+const lbl_Provider = "Provider";
+const lbl_Component_Details = "Component Details";

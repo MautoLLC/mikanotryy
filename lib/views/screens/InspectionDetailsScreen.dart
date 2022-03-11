@@ -8,6 +8,7 @@ import 'package:mymikano_app/services/ComponentService.dart';
 import 'package:mymikano_app/services/RequestFormService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/screens/ComponentDetailScreen.dart';
 import 'package:mymikano_app/views/widgets/ComponentItem.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -43,7 +44,7 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
         .fetchCustomComponents(this.widget.mInspection.idInspection);
   }
 
-  String inspectionState(String currentState){
+  String inspectionState(String currentState) {
     String result = "-1";
     switch (currentState) {
       case "Assigned":
@@ -191,14 +192,17 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           children: [
                             TitleText(title: lbl_Components),
                             inspectionState(this
-                                                  .widget
-                                                  .Maintenance
-                                                  .maintenaceRequestStatus!
-                                                  .maintenanceStatusDescription) == "3"?IconButton(
-                                onPressed: () {
-                                  bottomSheet(context);
-                                },
-                                icon: Icon(Icons.add)):Container()
+                                        .widget
+                                        .Maintenance
+                                        .maintenaceRequestStatus!
+                                        .maintenanceStatusDescription) ==
+                                    "3"
+                                ? IconButton(
+                                    onPressed: () {
+                                      bottomSheet(context);
+                                    },
+                                    icon: Icon(Icons.add))
+                                : Container()
                           ],
                         ),
                         SizedBox(
@@ -222,17 +226,40 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                         mainAxisSpacing: 10),
                                 itemCount: state.allComponents.length,
                                 itemBuilder: (context, index) {
-                                  if(inspectionState(this
-                                                  .widget
-                                                  .Maintenance
-                                                  .maintenaceRequestStatus!
-                                                  .maintenanceStatusDescription) != "3"){
-                                                    ComponentItem item = ComponentItem(Component: state.allComponents[index].Component, deletable: false);
-                                                    return item;
-                                                  } else {
-                                                    return state.allComponents[index];
-                                                  }
-                                  
+                                  if (inspectionState(this
+                                          .widget
+                                          .Maintenance
+                                          .maintenaceRequestStatus!
+                                          .maintenanceStatusDescription) !=
+                                      "3") {
+                                    ComponentItem item = ComponentItem(
+                                        Component: state
+                                            .allComponents[index].Component,
+                                        deletable: false);
+                                    return GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      ComponentDetailScreen(
+                                                          item: item
+                                                              .Component, inspectionStatus: this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription,))));
+                                        },
+                                        child: item);
+                                  } else {
+                                    return GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: ((context) =>
+                                                      ComponentDetailScreen(
+                                                          item: state
+                                                              .allComponents[
+                                                                  index]
+                                                              .Component, inspectionStatus: this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription,))));
+                                        },
+                                        child: state.allComponents[index]);
+                                  }
                                 }),
                           ),
                         SizedBox(
@@ -280,35 +307,47 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           height: 36,
                         ),
                         inspectionState(this
-                                                  .widget
-                                                  .Maintenance
-                                                  .maintenaceRequestStatus!
-                                                  .maintenanceStatusDescription)!="-1"?
-                        T13Button(
-                            textContent: lbl_Submit,
-                            onPressed: () {
-                              RequestFormService()
-                                  .SubmitRequestForm(
-                                      this
-                                          .widget
-                                          .mInspection
-                                          .maintenanceRequestID
-                                          .toString(),
-                                      inspectionState(this
-                                                  .widget
-                                                  .Maintenance
-                                                  .maintenaceRequestStatus!
-                                                  .maintenanceStatusDescription))
-                                  .then((value) {
-                                if (value) {
-                                  toast("Submitted Successfully");
-                                  InsState.fetchInspectionByUser();
-                                  Navigator.pop(context);
-                                } else {
-                                  toast("Error! please try again.");
-                                }
-                              });
-                            }):T13Button(textContent: "Waiting for next step", onPressed: (){},),
+                                    .widget
+                                    .Maintenance
+                                    .maintenaceRequestStatus!
+                                    .maintenanceStatusDescription) !=
+                                "-1"
+                            ? T13Button(
+                                textContent: lbl_Submit,
+                                onPressed: () {
+                                  RequestFormService()
+                                      .SubmitRequestForm(
+                                          this
+                                              .widget
+                                              .mInspection
+                                              .maintenanceRequestID
+                                              .toString(),
+                                          inspectionState(this
+                                              .widget
+                                              .Maintenance
+                                              .maintenaceRequestStatus!
+                                              .maintenanceStatusDescription))
+                                      .then((value) {
+                                    if (value) {
+                                      toast("Submitted Successfully");
+                                      InsState.fetchInspectionByUser();
+                                      Navigator.pop(context);
+                                    } else {
+                                      toast("Error! please try again.");
+                                    }
+                                  });
+                                })
+                            : this
+                                        .widget
+                                        .Maintenance
+                                        .maintenaceRequestStatus!
+                                        .maintenanceStatusDescription !=
+                                    "Done"
+                                ? T13Button(
+                                    textContent: "Waiting for next step",
+                                    onPressed: () {},
+                                  )
+                                : Container(),
                       ],
                     ),
                   )

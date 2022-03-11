@@ -59,7 +59,10 @@ const GetPredefinedComponentsURL =
 const GetCustomComponentsURL =
     '$InspectionApiBaseUrl/api/Inspections/InspectionChecklist/custom/{inspectionID}';
 const ComponentsStatusURL = '$InspectionApiBaseUrl/api/ComponentStatus';
-const InspectionPriceURL = '$InspectionApiBaseUrl/api/PricingNegotiations/maintenance/{maintenanceId}';
+const InspectionPriceURL =
+    '$InspectionApiBaseUrl/api/PricingNegotiations/maintenance/{maintenanceId}';
+const ChangeComponentStatusURL =
+    '$InspectionApiBaseUrl/api/Inspections/InspectionChecklistItem?inspectionChecklistItemID={inspectionChecklistItemID}&componentStatusID={componentStatusID}';
 
 const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';

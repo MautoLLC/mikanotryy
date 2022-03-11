@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/InspectionsState.dart';
-import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
-import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/viewmodels/ListMaintenanceRequestsViewModel.dart';
 import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -107,10 +103,10 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                   !inspectionsState.filters.contains(snapshot
                                       .data!
                                       .maintenaceRequestStatus!
-                                      .maintenanceStatusDescription) && snapshot
-                                      .data!
-                                      .maintenaceRequestStatus!
-                                      .maintenanceStatusDescription != "In Progress")
+                                      .maintenanceStatusDescription) &&
+                                  snapshot.data!.maintenaceRequestStatus!
+                                          .maintenanceStatusDescription !=
+                                      "In Progress")
                                 return Container();
                               else
                                 return GestureDetector(
@@ -202,16 +198,19 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
                                                           .maintenanceStatusDescription),
                                                       radius: 16),
                                                   child: text(
-                                                          snapshot
-                                                          .data!
-                                                          .maintenaceRequestStatus!
-                                                          .maintenanceStatusDescription != "Assigned" && snapshot
-                                                          .data!
-                                                          .maintenaceRequestStatus!
-                                                          .maintenanceStatusDescription != "Done"?"In Progress":snapshot
-                                                          .data!
-                                                          .maintenaceRequestStatus!
-                                                          .maintenanceStatusDescription,
+                                                      snapshot.data!.maintenaceRequestStatus!
+                                                                      .maintenanceStatusDescription !=
+                                                                  "Assigned" &&
+                                                              snapshot
+                                                                      .data!
+                                                                      .maintenaceRequestStatus!
+                                                                      .maintenanceStatusDescription !=
+                                                                  "Done"
+                                                          ? "In Progress"
+                                                          : snapshot
+                                                              .data!
+                                                              .maintenaceRequestStatus!
+                                                              .maintenanceStatusDescription,
                                                       fontSize: 14.0,
                                                       textColor: Colors.white),
                                                 ),

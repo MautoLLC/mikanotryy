@@ -156,18 +156,25 @@ class MyRepairsScreen extends StatelessWidget {
                                           radius: 16),
                                       child: text(
                                           listmrequestsViewModel
-                                              .maintenanceRequests![index]
-                                              .mMaintenacerequest!
-                                              .maintenaceRequestStatus!
-                                              .maintenanceStatusDescription != "Assigned" && listmrequestsViewModel
-                                              .maintenanceRequests![index]
-                                              .mMaintenacerequest!
-                                              .maintenaceRequestStatus!
-                                              .maintenanceStatusDescription != "Done"?"In Progress":listmrequestsViewModel
-                                              .maintenanceRequests![index]
-                                              .mMaintenacerequest!
-                                              .maintenaceRequestStatus!
-                                              .maintenanceStatusDescription,
+                                                          .maintenanceRequests![
+                                                              index]
+                                                          .mMaintenacerequest!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription !=
+                                                      "Assigned" &&
+                                                  listmrequestsViewModel
+                                                          .maintenanceRequests![
+                                                              index]
+                                                          .mMaintenacerequest!
+                                                          .maintenaceRequestStatus!
+                                                          .maintenanceStatusDescription !=
+                                                      "Done"
+                                              ? "In Progress"
+                                              : listmrequestsViewModel
+                                                  .maintenanceRequests![index]
+                                                  .mMaintenacerequest!
+                                                  .maintenaceRequestStatus!
+                                                  .maintenanceStatusDescription,
                                           fontSize: 14.0,
                                           textColor: Colors.white),
                                     ),

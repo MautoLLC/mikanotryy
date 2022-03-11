@@ -91,37 +91,47 @@ class DashboardState extends State<Dashboard> {
                 child: FutureBuilder<List<CarouselImageModel>>(
                     future: ProductsService().getCarouselImages(),
                     builder: (context, snapshot) {
-                      if(snapshot.connectionState == ConnectionState.done)
+                      if (snapshot.connectionState == ConnectionState.done)
                         return ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  return snapshot.data![index].position.toString()=="top"?Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            snapshot.data![index].url.toString(),
-                                        height: 280,
-                                        memCacheHeight: 280,
-                                        memCacheWidth: 420,
-                                        progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
-                                            Center(
-                                                child: CircularProgressIndicator(
-                                                    value: downloadProgress
-                                                        .progress)),
-                                        errorWidget: (_, __, ___) {
-                                          return SizedBox(
-                                              height: 300, width: width);
-                                        },
+                            itemCount: snapshot.data!.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return snapshot.data![index].position
+                                          .toString() ==
+                                      "top"
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: CachedNetworkImage(
+                                          imageUrl: snapshot.data![index].url
+                                              .toString(),
+                                          height: 280,
+                                          memCacheHeight: 280,
+                                          memCacheWidth: 420,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (_, __, ___) {
+                                            return SizedBox(
+                                                height: 300, width: width);
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  ):Container(width: 0, height: 0,);
-                                });
-                        else return Center(child: CircularProgressIndicator());
+                                    )
+                                  : Container(
+                                      width: 0,
+                                      height: 0,
+                                    );
+                            });
+                      else
+                        return Center(child: CircularProgressIndicator());
                     }),
               ),
               SizedBox(
@@ -207,21 +217,24 @@ class DashboardState extends State<Dashboard> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
                   height: 470,
-                  child: state.popularProducts.length!=0?GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.8,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: state.popularProducts.length,
-                      itemBuilder: (context, index) {
-                        Product temp = state.popularProducts[index];
-                        return ItemElement(
-                          product: temp,
-                        );
-                      }):Center(child: CircularProgressIndicator()),
+                  child: state.popularProducts.length != 0
+                      ? GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.8,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: state.popularProducts.length,
+                          itemBuilder: (context, index) {
+                            Product temp = state.popularProducts[index];
+                            return ItemElement(
+                              product: temp,
+                            );
+                          })
+                      : Center(child: CircularProgressIndicator()),
                 ),
               ),
               SizedBox(
@@ -232,35 +245,48 @@ class DashboardState extends State<Dashboard> {
                 child: FutureBuilder<List<CarouselImageModel>>(
                   future: ProductsService().getCarouselImages(),
                   builder: (context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.done)
-                     return ListView.builder(
-                      itemCount:
-                          snapshot.data!.length > 0 ? snapshot.data!.length : 0,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        
-                          return snapshot.data![index].position.toString()=="bottom"?Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: CachedNetworkImage(
-                                imageUrl: snapshot.data![index].url.toString(),
-                                height: 280,
-                                useOldImageOnUrlChange: true,
-                                memCacheHeight: 280,
-                                memCacheWidth: 420,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) => Center(
-                                        child: CircularProgressIndicator(
-                                            value: downloadProgress.progress)),
-                                errorWidget: (_, __, ___) {
-                                  return SizedBox(height: 300, width: width);
-                                },
-                              ),
-                            ),
-                          ):Container(width: 0, height: 0,);
-                      });
-                      else return Center(child: CircularProgressIndicator());
+                    if (snapshot.connectionState == ConnectionState.done)
+                      return ListView.builder(
+                          itemCount: snapshot.data!.length > 0
+                              ? snapshot.data!.length
+                              : 0,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return snapshot.data![index].position.toString() ==
+                                    "bottom"
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: CachedNetworkImage(
+                                        imageUrl: snapshot.data![index].url
+                                            .toString(),
+                                        height: 280,
+                                        useOldImageOnUrlChange: true,
+                                        memCacheHeight: 280,
+                                        memCacheWidth: 420,
+                                        progressIndicatorBuilder: (context, url,
+                                                downloadProgress) =>
+                                            Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                        value: downloadProgress
+                                                            .progress)),
+                                        errorWidget: (_, __, ___) {
+                                          return SizedBox(
+                                              height: 300, width: width);
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    width: 0,
+                                    height: 0,
+                                  );
+                          });
+                    else
+                      return Center(child: CircularProgressIndicator());
                   },
                 ),
               ),
@@ -282,21 +308,24 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                   height: 250,
-                  child: state.flashsaleProducts.length!=0?ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: state.flashsaleProducts.length,
-                      itemBuilder: (context, index) {
-                        Product temp = state.flashsaleProducts[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: SizedBox(
-                            width: 140,
-                            child: ItemElement(
-                              product: temp,
-                            ),
-                          ),
-                        );
-                      }):Center(child: CircularProgressIndicator())),
+                  child: state.flashsaleProducts.length != 0
+                      ? ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.flashsaleProducts.length,
+                          itemBuilder: (context, index) {
+                            Product temp = state.flashsaleProducts[index];
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: SizedBox(
+                                width: 140,
+                                child: ItemElement(
+                                  product: temp,
+                                ),
+                              ),
+                            );
+                          })
+                      : Center(child: CircularProgressIndicator())),
               SizedBox(
                 height: 40,
               ),
@@ -349,16 +378,18 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: state.trendingProducts.length!=0?ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: state.trendingProducts.length,
-                    itemBuilder: (context, index) {
-                      Product temp = state.trendingProducts[index];
-                      return HorizontalItemElement(
-                        product: temp,
-                      );
-                    }):Center(child: CircularProgressIndicator()),
+                child: state.trendingProducts.length != 0
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: state.trendingProducts.length,
+                        itemBuilder: (context, index) {
+                          Product temp = state.trendingProducts[index];
+                          return HorizontalItemElement(
+                            product: temp,
+                          );
+                        })
+                    : Center(child: CircularProgressIndicator()),
               )
             ]),
           )),

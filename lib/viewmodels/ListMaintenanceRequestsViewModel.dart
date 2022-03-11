@@ -1,5 +1,5 @@
 import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
-import 'package:mymikano_app/services/FetchMaintenanceRequestsService.dart';
+import 'package:mymikano_app/services/MaintenanceRequestsService.dart';
 
 class ListMaintenanceRequestsViewModel {
   List<MaintenanceRequestsViewModel>? maintenanceRequests;

@@ -41,4 +41,12 @@ class RequestFormState extends ChangeNotifier {
     allComponents.removeWhere((element) => element.Component.idComponent == id);
     notifyListeners();
   }
+
+  void updateComponentStatus(int id, String status) {
+    allComponents
+        .firstWhere((element) => element.Component.idComponent == id)
+        .Component
+        .status = status;
+    notifyListeners();
+  }
 }

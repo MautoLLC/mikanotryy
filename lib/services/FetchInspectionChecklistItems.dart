@@ -62,7 +62,11 @@ class ChecklistItemsService {
       List<dynamic> listresult = [];
 
       for (var item in response.data) {
-        listresult.add(ComponentModel.fromJson(item));
+        ComponentModel model = ComponentModel.fromJson(
+            item['predefinedChecklistItem']['component']);
+        model.status = item['componentStatus']['componentStatusDescription'];
+        model.idChecklist = item['idInspectionChecklistItem'];
+        listresult.add(model);
       }
       return listresult;
     } else {
@@ -84,6 +88,7 @@ class ChecklistItemsService {
         print(item.toString());
         ComponentModel model = ComponentModel.fromJson(item['customComponent']);
         model.status = item['componentStatus']['componentStatusDescription'];
+        model.idChecklist = item['idInspectionChecklistItem'];
         listresult.add(model);
       }
       return listresult;

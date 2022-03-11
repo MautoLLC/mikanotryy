@@ -72,11 +72,29 @@ class MaintenanceRequestService {
 
   Future<dynamic> fetchMaintenanceRequestPriceByID(int id) async {
     await PrepareCall();
-    final response = await dio.get(InspectionPriceURL.replaceAll("{maintenanceId}", id.toString()));
+    final response = await dio
+        .get(InspectionPriceURL.replaceAll("{maintenanceId}", id.toString()));
     if (response.statusCode == 200) {
       return response.data['price'];
     } else {
       throw Exception('Error fetching');
+    }
+  }
+
+  Future<void> ChangeComponentStatusByID(int componentId, int statusId) async {
+    await PrepareCall();
+    String url = ChangeComponentStatusURL.replaceAll(
+            "{inspectionChecklistItemID}", componentId.toString())
+        .replaceAll("{componentStatusID}", statusId.toString());
+    try {
+      final response = await dio.put(url);
+      if (response.statusCode == 204) {
+        return;
+      } else {
+        throw Exception('Error fetching');
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 }
