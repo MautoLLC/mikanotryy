@@ -5,6 +5,8 @@ import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
 
+import 'LocalUserPositionService.dart';
+
 logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   try {
@@ -15,6 +17,9 @@ logout() async {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${prefs.getString("accessToken")}"
         });
+
+    if(!await prefs.getBool('GuestLogin')!)
+      gps.stopTimer();
     prefs.clear();
     await prefs.setBool('IsLoggedIn', false);
     await prefs.setBool('GuestLogin', false);

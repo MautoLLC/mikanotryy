@@ -155,10 +155,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                 SizedBox(height: spacing_large),
                 GestureDetector(
                   onTap: () async{
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    await prefs.setBool("GuestLogin", true);
                     bool response = await GuestLogin();
-                    print(response);
                     if(response)
                       Navigator.pushReplacement(
                           context,

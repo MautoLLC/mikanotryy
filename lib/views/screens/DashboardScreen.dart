@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:isolate';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
@@ -19,6 +23,7 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:mymikano_app/services/LocalUserPositionService.dart';
 
 import 'ListPage.dart';
 
@@ -36,9 +41,15 @@ class DashboardState extends State<Dashboard> {
   init() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
+    if(!guestLogin)
+      sendGpsCoord();
     setState(() {
       
     });
+  }
+
+  void sendGpsCoord(){
+    gps.StartTimer();
   }
 
   @override
@@ -47,6 +58,7 @@ class DashboardState extends State<Dashboard> {
     super.initState();
     Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
+    
   }
 
   @override

@@ -95,6 +95,7 @@ Login(String username, String password, BuildContext context) async {
         break;
       }
     }
+    await prefs.setBool('GuestLogin', false);
     return true;
   } on Exception catch (e) {
     print(e);
@@ -183,6 +184,7 @@ GuestLogin() async{
       return false;
     }
     SuccessToast();
+    await prefs.setBool("GuestLogin", true);
     prefs.setBool('IsLoggedIn', true);
     return true;
     } catch (e){
