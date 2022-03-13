@@ -4,25 +4,44 @@ import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/ProductDetailsPage.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'AppWidget.dart';
 
-class ItemElement extends StatelessWidget {
+class ItemElement extends StatefulWidget {
   final Product product;
   const ItemElement({Key? key, required this.product}) : super(key: key);
 
   @override
+  State<ItemElement> createState() => _ItemElementState();
+}
+
+class _ItemElementState extends State<ItemElement> {
+  bool guestLogin = true;
+
+  init() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    guestLogin = await prefs.getBool("GuestLogin")!;
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+    
+  }
+  @override
   Widget build(BuildContext context) {
     Product temp = Product(
-      id: int.parse(product.id.toString()),
-      Name: product.Name,
-      Price: double.parse(product.Price.toString()),
-      Description: product.Description,
-      Image: product.Image,
-      Code: product.Code,
-      Category: product.Category,
-      Rating: product.Rating,
+      id: int.parse(widget.product.id.toString()),
+      Name: widget.product.Name,
+      Price: double.parse(widget.product.Price.toString()),
+      Description: widget.product.Description,
+      Image: widget.product.Image,
+      Code: widget.product.Code,
+      Category: widget.product.Category,
+      Rating: widget.product.Rating,
     );
     return GestureDetector(
       onTap: () {
@@ -50,7 +69,7 @@ class ItemElement extends StatelessWidget {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0))),
-                          child: commonCacheImageWidget(product.Image, 106,
+                          child: commonCacheImageWidget(widget.product.Image, 106,
                               fit: BoxFit.cover)),
                     ),
                   ],
@@ -61,12 +80,10 @@ class ItemElement extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        product.Name,
+                        widget.product.Name,
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: "Poppins",
                           color: mainBlackColorTheme,
-                          // overflow: TextOverflow.ellipsis,
                         ),
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
@@ -82,10 +99,9 @@ class ItemElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      product.Code,
+                      widget.product.Code,
                       style: TextStyle(
                         fontSize: 14,
-                        fontFamily: "Poppins",
                         color: mainGreyColorTheme,
                       ),
                     ),
@@ -98,10 +114,9 @@ class ItemElement extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "\$${product.Price}",
+                      "\$${widget.product.Price}",
                       style: TextStyle(
                         fontSize: 14,
-                        fontFamily: "Poppins",
                         color: mainBlackColorTheme,
                       ),
                     ),
@@ -111,6 +126,7 @@ class ItemElement extends StatelessWidget {
               ],
             ),
           ),
+          guestLogin?Container():
           Consumer<ProductState>(
             builder: (context, state, child) => Padding(
               padding: const EdgeInsets.all(12.0),
@@ -118,11 +134,11 @@ class ItemElement extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: GestureDetector(
                   onTap: () {
-                    state.addorremoveProductToFavorite(product);
+                    state.addorremoveProductToFavorite(widget.product);
                   },
                   child: commonCacheImageWidget(ic_heart, 30,
                       color: state.allProducts
-                              .firstWhere((element) => element.id == product.id)
+                              .firstWhere((element) => element.id == widget.product.id)
                               .liked
                           ? mainColorTheme
                           : null),

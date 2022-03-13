@@ -17,6 +17,7 @@ import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/models/CategoryModel.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'ListPage.dart';
@@ -30,9 +31,19 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   List<CategoryModel>? mFavouriteList;
+  bool guestLogin = true;
+
+  init() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    guestLogin = await prefs.getBool("GuestLogin")!;
+    setState(() {
+      
+    });
+  }
 
   @override
   void initState() {
+    init();
     super.initState();
     Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
@@ -41,13 +52,10 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    final GlobalKey<ScaffoldState> _scaffoldKey =
-        new GlobalKey<ScaffoldState>();
     TextEditingController SearchController = new TextEditingController();
     return Consumer<ProductState>(
       builder: (context, state, child) => Scaffold(
           backgroundColor: Colors.white,
-          key: _scaffoldKey,
           body: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
               SafeArea(
@@ -60,10 +68,10 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: NotificationBell(),
-                      )
+                        !guestLogin?Align(
+                          alignment: Alignment.centerRight,
+                          child: NotificationBell(),
+                        ):Container()
                     ],
                   ),
                 ),

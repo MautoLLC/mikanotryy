@@ -15,14 +15,35 @@ import 'package:provider/provider.dart';
 
 int Quantity = 1;
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   Product product;
-  bool isFavorite = false;
-  RegExp exp = RegExp(r"<[^>]/*>", multiLine: true, caseSensitive: true);
-  RegExp exp2 = RegExp(r"<[^>]*/>", multiLine: true, caseSensitive: true);
-  RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
 
   ProductDetailsPage({Key? key, required this.product}) : super(key: key);
+
+  @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  bool isFavorite = false;
+  bool guestLogin = true;
+
+  RegExp exp = RegExp(r"<[^>]/*>", multiLine: true, caseSensitive: true);
+
+  RegExp exp2 = RegExp(r"<[^>]*/>", multiLine: true, caseSensitive: true);
+
+  RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
+
+  init() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    guestLogin = await prefs.getBool("GuestLogin")!;
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +68,7 @@ class ProductDetailsPage extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
                         child: CachedNetworkImage(
-                          imageUrl: '${product.Image}',
+                          imageUrl: '${widget.product.Image}',
                           height: 100,
                           fit: BoxFit.cover,
                           progressIndicatorBuilder:
@@ -68,15 +89,16 @@ class ProductDetailsPage extends StatelessWidget {
                     IconButton(
                         onPressed: () => finish(context),
                         icon: Icon(Icons.arrow_back_ios_new)),
+                    guestLogin?Container():
                     Consumer<ProductState>(
                       builder: (context, state, child) => GestureDetector(
                           onTap: () {
-                            state.addorremoveProductToFavorite(product);
+                            state.addorremoveProductToFavorite(widget.product);
                           },
                           child: commonCacheImageWidget(ic_heart, 30,
                               color: state.allProducts
                                       .firstWhere(
-                                          (element) => element.id == product.id)
+                                          (element) => element.id == widget.product.id)
                                       .liked
                                   ? mainColorTheme
                                   : null)),
@@ -88,7 +110,7 @@ class ProductDetailsPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(child: SubTitleText(title: product.Name)),
+                  Expanded(child: SubTitleText(title: widget.product.Name)),
                 ],
               ),
               SizedBox(height: 16),
@@ -99,7 +121,7 @@ class ProductDetailsPage extends StatelessWidget {
                     height: 18,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: product.Rating,
+                      itemCount: widget.product.Rating,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Icon(Icons.star, color: mainColorTheme);
@@ -112,9 +134,10 @@ class ProductDetailsPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  guestLogin?Container():
                   QuantityChooser(),
                   Text(
-                    '\$${product.Price}',
+                    '\$${widget.product.Price}',
                     style: TextStyle(fontSize: 20, fontFamily: PoppinsFamily),
                   ),
                 ],
@@ -126,7 +149,7 @@ class ProductDetailsPage extends StatelessWidget {
                   TitleText(title: lbl_About_the_product),
                   SizedBox(height: 11),
                   Text(
-                    product.Description.replaceAll(exp, "")
+                    widget.product.Description.replaceAll(exp, "")
                         .replaceAll(exp2, "\n")
                         .replaceAll(exp3, "\n"),
                     maxLines: 1000,
@@ -140,6 +163,7 @@ class ProductDetailsPage extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
+              guestLogin?Container():
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -168,9 +192,9 @@ class ProductDetailsPage extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         CartProduct p =
-                            CartProduct(product: product, quantity: Quantity);
+                            CartProduct(product: widget.product, quantity: Quantity);
                         state.addProduct(p);
-                        toast("${product.Name} added to cart");
+                        toast("${widget.product.Name} added to cart");
                       },
                       child: Container(
                         padding: EdgeInsets.fromLTRB(0, 10, 0, 10),

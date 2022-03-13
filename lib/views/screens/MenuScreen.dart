@@ -31,6 +31,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   SharedPreferences? prefs;
+  bool guestLogin = true;
   @override
   void initState() {
     super.initState();
@@ -44,6 +45,7 @@ class _MenuScreenState extends State<MenuScreen> {
     this.prefs = await SharedPreferences.getInstance();
     this.prefs?.setBool(
         'DashboardFirstTimeAccess', apiconfigstate.DashBoardFirstTimeAccess);
+    this.guestLogin = await prefs!.getBool("GuestLogin")!;
   }
 
   void notFirstTimeDashboardAccess() async {
@@ -57,32 +59,46 @@ class _MenuScreenState extends State<MenuScreen> {
     final user = Provider.of<UserState>(context, listen: false);
 
     List<String> MenuListNames = [
-      !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
-      "Generator Settings",
-      "Favorites",
-      "Address",
-      "Cards",
+      if(!guestLogin)
+        !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
+      if(!guestLogin)  
+        "Generator Settings",
+      if(!guestLogin)  
+        "Favorites",
+      if(!guestLogin)  
+        "Address",
+      if(!guestLogin)  
+        "Cards",
       "About Us",
       "Contact Us",
     ];
 
     List<Widget> MenuListScreens = [
-      !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
-      Dashboard_Index(),
-      // Dashboard_Test(),
-      FavoritesScreen(),
-      AddressScreen(),
-      CardsScreen(),
+      if(!guestLogin)
+        !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
+      if(!guestLogin)
+        Dashboard_Index(),
+      if(!guestLogin)
+        FavoritesScreen(),
+      if(!guestLogin)
+        AddressScreen(),
+      if(!guestLogin)
+        CardsScreen(),
       AboutUsScreen(),
       ContactUsScreen(),
     ];
 
     List<String> MenuListIcons = [
-      ic_Mainteance_and_Repair,
-      ic_Generator_Info,
-      ic_Favorites,
-      ic_Address,
-      ic_Cards,
+      if(!guestLogin)
+        ic_Mainteance_and_Repair,
+      if(!guestLogin)
+        ic_Generator_Info,
+      if(!guestLogin)
+        ic_Favorites,
+      if(!guestLogin)
+        ic_Address,
+      if(!guestLogin)
+        ic_Cards,
       ic_About_Us,
       ic_Contact_Us
     ];
@@ -107,7 +123,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: 7,
+                itemCount: MenuListScreens.length,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Padding(
@@ -136,7 +152,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                             color: index == 0
-                                ? mainColorTheme
+                                ? guestLogin==false?mainColorTheme:Colors.transparent
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(30)),
                         child: Padding(
@@ -197,47 +213,48 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
               Spacer(),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(),
+              if(!guestLogin)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProfileScreen(),
+                            ),
+                          );
+                        },
+                        child: Row(children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
                           ),
-                        );
-                      },
-                      child: Row(children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            userstate.getUser.username,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: PoppinsFamily),
+                          Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              userstate.getUser.username,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: PoppinsFamily),
+                            ),
                           ),
-                        ),
-                      ]),
-                    ),
-                    Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
-                      child: Icon(
-                        Icons.help,
-                        color: Colors.white,
+                        ]),
                       ),
-                    )
-                  ],
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
+                        child: Icon(
+                          Icons.help,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),

@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import 'EntryPage.dart';
 import 'ForgotPasswordScreen.dart';
+import 'MainDashboard.dart';
 import 'SignUpScreen.dart';
 
 class T13SignInScreen extends StatefulWidget {
@@ -150,6 +151,24 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                       flex: 2,
                     ),
                   ],
+                ),
+                SizedBox(height: spacing_large),
+                GestureDetector(
+                  onTap: () async{
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool("GuestLogin", true);
+                    bool response = await GuestLogin();
+                    print(response);
+                    if(response)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Theme5Dashboard()));
+                  },
+                  child: Text(lbl_Guest_Login,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: mainColorTheme)),
                 ),
                 SizedBox(height: spacing_large),
                 Row(

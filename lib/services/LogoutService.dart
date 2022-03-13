@@ -17,6 +17,7 @@ logout() async {
         });
     prefs.clear();
     await prefs.setBool('IsLoggedIn', false);
+    await prefs.setBool('GuestLogin', false);
     navigator.currentState!.popUntil((route) => route.isFirst);
     navigator.currentState!.pushReplacement(
       MaterialPageRoute(builder: (context) => T13SignInScreen()),

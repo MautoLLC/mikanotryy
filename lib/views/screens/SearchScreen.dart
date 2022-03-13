@@ -11,20 +11,37 @@ import 'package:provider/provider.dart';
 import 'SearchCategoriesSubPage.dart';
 import 'SearchItemsSubPage.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   SearchPage({Key? key}) : super(key: key);
+
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
   TextEditingController SearchController = new TextEditingController();
+  bool guestLogin = true;
 
   bool ifAlreadyInitialized = false;
+
+  init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    guestLogin = await prefs.getBool("GuestLogin")!;
+    setState(() {
+      
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductState>(
       builder: (context, state, child) {
-        // if(!ifAlreadyInitialized){
-        //   state.updateAllProductNumbers();
-        //   ifAlreadyInitialized = true;
-        // }
         return Scaffold(
             body: DefaultTabController(
           length: 2,
@@ -43,10 +60,11 @@ class SearchPage extends StatelessWidget {
                           title: lbl_Search,
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: NotificationBell(),
-                      )
+                      if(!guestLogin)
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: NotificationBell(),
+                        )
                     ],
                   ),
                   SizedBox(height: 16.0),

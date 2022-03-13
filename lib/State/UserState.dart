@@ -32,7 +32,7 @@ class UserState extends ChangeNotifier {
     fetchtermsState();
     fetchNotificationsState();
     fetchAddress();
-    notifyListeners();
+    // notifyListeners();
   }
 
   void fillUserInfo() async {

@@ -174,3 +174,4 @@ const lbl_In_Progress = "In Progress";
 const lbl_Name = "Name";
 const lbl_Provider = "Provider";
 const lbl_Component_Details = "Component Details";
+const lbl_Guest_Login = "Guest Login";
