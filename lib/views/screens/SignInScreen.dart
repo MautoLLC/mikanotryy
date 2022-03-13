@@ -160,7 +160,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     bool response = await GuestLogin();
                     print(response);
                     if(response)
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => Theme5Dashboard()));
