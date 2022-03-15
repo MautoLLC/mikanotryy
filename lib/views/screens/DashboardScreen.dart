@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mymikano_app/State/CarouselState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
@@ -108,15 +109,11 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                 height: 140,
-                child: FutureBuilder<List<CarouselImageModel>>(
-                    future: ProductsService().getCarouselImages(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done)
-                        return ListView.builder(
-                            itemCount: snapshot.data!.length,
+                child:  ListView.builder(
+                            itemCount: Provider.of<CarouselState>(context, listen: false).topImages.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              return snapshot.data![index].position
+                              return Provider.of<CarouselState>(context, listen: false).topImages[index].position
                                           .toString() ==
                                       "top"
                                   ? Padding(
@@ -125,7 +122,7 @@ class DashboardState extends State<Dashboard> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
                                         child: CachedNetworkImage(
-                                          imageUrl: snapshot.data![index].url
+                                          imageUrl: Provider.of<CarouselState>(context, listen: false).topImages[index].url
                                               .toString(),
                                           height: 280,
                                           memCacheHeight: 280,
@@ -149,10 +146,7 @@ class DashboardState extends State<Dashboard> {
                                       width: 0,
                                       height: 0,
                                     );
-                            });
-                      else
-                        return Center(child: CircularProgressIndicator());
-                    }),
+                            })
               ),
               SizedBox(
                 height: 40,
@@ -262,25 +256,17 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                 height: 140,
-                child: FutureBuilder<List<CarouselImageModel>>(
-                  future: ProductsService().getCarouselImages(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done)
-                      return ListView.builder(
-                          itemCount: snapshot.data!.length > 0
-                              ? snapshot.data!.length
-                              : 0,
+                child: ListView.builder(
+                          itemCount: Provider.of<CarouselState>(context, listen: false).bottomImages.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return snapshot.data![index].position.toString() ==
-                                    "bottom"
-                                ? Padding(
+                            return Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
                                       child: CachedNetworkImage(
-                                        imageUrl: snapshot.data![index].url
+                                        imageUrl: Provider.of<CarouselState>(context, listen: false).bottomImages[index].url
                                             .toString(),
                                         height: 280,
                                         useOldImageOnUrlChange: true,
@@ -299,14 +285,8 @@ class DashboardState extends State<Dashboard> {
                                         },
                                       ),
                                     ),
-                                  )
-                                : Container(
-                                    width: 0,
-                                    height: 0,
-                                  );
-                          });
-                    else
-                      return Center(child: CircularProgressIndicator());
+                                  
+                          );
                   },
                 ),
               ),
