@@ -242,8 +242,13 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                               MaterialPageRoute(
                                                   builder: ((context) =>
                                                       ComponentDetailScreen(
-                                                          item: item
-                                                              .Component, inspectionStatus: this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription,))));
+                                                        item: item.Component,
+                                                        inspectionStatus: this
+                                                            .widget
+                                                            .Maintenance
+                                                            .maintenaceRequestStatus!
+                                                            .maintenanceStatusDescription,
+                                                      ))));
                                         },
                                         child: item);
                                   } else {
@@ -253,10 +258,16 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                               MaterialPageRoute(
                                                   builder: ((context) =>
                                                       ComponentDetailScreen(
-                                                          item: state
-                                                              .allComponents[
-                                                                  index]
-                                                              .Component, inspectionStatus: this.widget.Maintenance.maintenaceRequestStatus!.maintenanceStatusDescription,))));
+                                                        item: state
+                                                            .allComponents[
+                                                                index]
+                                                            .Component,
+                                                        inspectionStatus: this
+                                                            .widget
+                                                            .Maintenance
+                                                            .maintenaceRequestStatus!
+                                                            .maintenanceStatusDescription,
+                                                      ))));
                                         },
                                         child: state.allComponents[index]);
                                   }

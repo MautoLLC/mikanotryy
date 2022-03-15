@@ -34,7 +34,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
 
-  init() async{
+  init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
   }
@@ -89,20 +89,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     IconButton(
                         onPressed: () => finish(context),
                         icon: Icon(Icons.arrow_back_ios_new)),
-                    guestLogin?Container():
-                    Consumer<ProductState>(
-                      builder: (context, state, child) => GestureDetector(
-                          onTap: () {
-                            state.addorremoveProductToFavorite(widget.product);
-                          },
-                          child: commonCacheImageWidget(ic_heart, 30,
-                              color: state.allProducts
-                                      .firstWhere(
-                                          (element) => element.id == widget.product.id)
-                                      .liked
-                                  ? mainColorTheme
-                                  : null)),
-                    )
+                    guestLogin
+                        ? Container()
+                        : Consumer<ProductState>(
+                            builder: (context, state, child) => GestureDetector(
+                                onTap: () {
+                                  state.addorremoveProductToFavorite(
+                                      widget.product);
+                                },
+                                child: commonCacheImageWidget(ic_heart, 30,
+                                    color: state.allProducts
+                                            .firstWhere((element) =>
+                                                element.id == widget.product.id)
+                                            .liked
+                                        ? mainColorTheme
+                                        : null)),
+                          )
                   ],
                 ),
               ]),
@@ -134,8 +136,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  guestLogin?Container():
-                  QuantityChooser(),
+                  guestLogin ? Container() : QuantityChooser(),
                   Text(
                     '\$${widget.product.Price}',
                     style: TextStyle(fontSize: 20, fontFamily: PoppinsFamily),
@@ -149,7 +150,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   TitleText(title: lbl_About_the_product),
                   SizedBox(height: 11),
                   Text(
-                    widget.product.Description.replaceAll(exp, "")
+                    widget.product.Description
+                        .replaceAll(exp, "")
                         .replaceAll(exp2, "\n")
                         .replaceAll(exp3, "\n"),
                     maxLines: 1000,
@@ -163,56 +165,59 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               SizedBox(
                 height: 50,
               ),
-              guestLogin?Container():
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO Buy Now
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          color: mainBlackColorTheme,
+              guestLogin
+                  ? Container()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              // TODO Buy Now
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                color: mainBlackColorTheme,
+                              ),
+                              child: Center(
+                                  child: Text(lbl_Buy_Now,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: PoppinsFamily))),
+                            ),
+                          ),
                         ),
-                        child: Center(
-                            child: Text(lbl_Buy_Now,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontFamily: PoppinsFamily))),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        CartProduct p =
-                            CartProduct(product: widget.product, quantity: Quantity);
-                        state.addProduct(p);
-                        toast("${widget.product.Name} added to cart");
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          color: mainColorTheme,
-                        ),
-                        child: Center(
-                            child: Text(lbl_Add_To_Cart,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontFamily: PoppinsFamily))),
-                      ),
-                    ),
-                  )
-                ],
-              )
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              CartProduct p = CartProduct(
+                                  product: widget.product, quantity: Quantity);
+                              state.addProduct(p);
+                              toast("${widget.product.Name} added to cart");
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                color: mainColorTheme,
+                              ),
+                              child: Center(
+                                  child: Text(lbl_Add_To_Cart,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: PoppinsFamily))),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
             ]),
           ),
         ),

@@ -154,18 +154,16 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                 ),
                 SizedBox(height: spacing_large),
                 GestureDetector(
-                  onTap: () async{
+                  onTap: () async {
                     bool response = await GuestLogin();
-                    if(response)
+                    if (response)
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => Theme5Dashboard()));
                   },
                   child: Text(lbl_Guest_Login,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: mainColorTheme)),
+                      style: TextStyle(fontSize: 15, color: mainColorTheme)),
                 ),
                 SizedBox(height: spacing_large),
                 Row(

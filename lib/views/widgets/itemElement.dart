@@ -20,7 +20,7 @@ class ItemElement extends StatefulWidget {
 class _ItemElementState extends State<ItemElement> {
   bool guestLogin = true;
 
-  init() async{
+  init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
   }
@@ -29,8 +29,8 @@ class _ItemElementState extends State<ItemElement> {
   void initState() {
     init();
     super.initState();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     Product temp = Product(
@@ -69,7 +69,8 @@ class _ItemElementState extends State<ItemElement> {
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0))),
-                          child: commonCacheImageWidget(widget.product.Image, 106,
+                          child: commonCacheImageWidget(
+                              widget.product.Image, 106,
                               fit: BoxFit.cover)),
                     ),
                   ],
@@ -126,26 +127,28 @@ class _ItemElementState extends State<ItemElement> {
               ],
             ),
           ),
-          guestLogin?Container():
-          Consumer<ProductState>(
-            builder: (context, state, child) => Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: GestureDetector(
-                  onTap: () {
-                    state.addorremoveProductToFavorite(widget.product);
-                  },
-                  child: commonCacheImageWidget(ic_heart, 30,
-                      color: state.allProducts
-                              .firstWhere((element) => element.id == widget.product.id)
-                              .liked
-                          ? mainColorTheme
-                          : null),
-                ),
-              ),
-            ),
-          )
+          guestLogin
+              ? Container()
+              : Consumer<ProductState>(
+                  builder: (context, state, child) => Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          state.addorremoveProductToFavorite(widget.product);
+                        },
+                        child: commonCacheImageWidget(ic_heart, 30,
+                            color: state.allProducts
+                                    .firstWhere((element) =>
+                                        element.id == widget.product.id)
+                                    .liked
+                                ? mainColorTheme
+                                : null),
+                      ),
+                    ),
+                  ),
+                )
         ]),
       ),
     );

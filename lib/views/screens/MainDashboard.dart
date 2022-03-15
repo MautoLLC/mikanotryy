@@ -19,21 +19,19 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   var pages = [];
   bool guestLogin = true;
 
-  init () async{
+  init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
     pages.add(MenuScreen());
     pages.add(SearchPage());
     pages.add(Dashboard());
-    if(!guestLogin){
+    if (!guestLogin) {
       pages.add(CartPage());
     }
-    if(!guestLogin){
+    if (!guestLogin) {
       pages.add(ProfileScreen());
     }
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -61,10 +59,8 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
           BankingBottomNavigationBarItem(icon: ic_menu),
           BankingBottomNavigationBarItem(icon: ic_search),
           BankingBottomNavigationBarItem(icon: ic_dog_house),
-          if(!guestLogin)
-            BankingBottomNavigationBarItem(icon: ic_handcart),
-          if(!guestLogin)
-            BankingBottomNavigationBarItem(icon: ic_customer),
+          if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_handcart),
+          if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_customer),
         ],
         currentIndex: selectedIndex,
         unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),

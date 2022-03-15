@@ -27,9 +27,7 @@ class _SearchPageState extends State<SearchPage> {
   init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -60,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
                           title: lbl_Search,
                         ),
                       ),
-                      if(!guestLogin)
+                      if (!guestLogin)
                         Align(
                           alignment: Alignment.centerRight,
                           child: NotificationBell(),

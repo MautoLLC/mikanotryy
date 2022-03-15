@@ -59,46 +59,33 @@ class _MenuScreenState extends State<MenuScreen> {
     final user = Provider.of<UserState>(context, listen: false);
 
     List<String> MenuListNames = [
-      if(!guestLogin)
+      if (!guestLogin)
         !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
-      if(!guestLogin)  
-        "Generator Settings",
-      if(!guestLogin)  
-        "Favorites",
-      if(!guestLogin)  
-        "Address",
-      if(!guestLogin)  
-        "Cards",
+      if (!guestLogin) "Generator Settings",
+      if (!guestLogin) "Favorites",
+      if (!guestLogin) "Address",
+      if (!guestLogin) "Cards",
       "About Us",
       "Contact Us",
     ];
 
     List<Widget> MenuListScreens = [
-      if(!guestLogin)
+      if (!guestLogin)
         !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
-      if(!guestLogin)
-        Dashboard_Index(),
-      if(!guestLogin)
-        FavoritesScreen(),
-      if(!guestLogin)
-        AddressScreen(),
-      if(!guestLogin)
-        CardsScreen(),
+      if (!guestLogin) Dashboard_Index(),
+      if (!guestLogin) FavoritesScreen(),
+      if (!guestLogin) AddressScreen(),
+      if (!guestLogin) CardsScreen(),
       AboutUsScreen(),
       ContactUsScreen(),
     ];
 
     List<String> MenuListIcons = [
-      if(!guestLogin)
-        ic_Mainteance_and_Repair,
-      if(!guestLogin)
-        ic_Generator_Info,
-      if(!guestLogin)
-        ic_Favorites,
-      if(!guestLogin)
-        ic_Address,
-      if(!guestLogin)
-        ic_Cards,
+      if (!guestLogin) ic_Mainteance_and_Repair,
+      if (!guestLogin) ic_Generator_Info,
+      if (!guestLogin) ic_Favorites,
+      if (!guestLogin) ic_Address,
+      if (!guestLogin) ic_Cards,
       ic_About_Us,
       ic_Contact_Us
     ];
@@ -152,7 +139,9 @@ class _MenuScreenState extends State<MenuScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                             color: index == 0
-                                ? guestLogin==false?mainColorTheme:Colors.transparent
+                                ? guestLogin == false
+                                    ? mainColorTheme
+                                    : Colors.transparent
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(30)),
                         child: Padding(
@@ -213,7 +202,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
               Spacer(),
-              if(!guestLogin)
+              if (!guestLogin)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 5.0),
                   child: Row(

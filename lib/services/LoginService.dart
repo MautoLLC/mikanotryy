@@ -126,14 +126,14 @@ FailedToast() {
       fontSize: 16.0);
 }
 
-GuestLogin() async{
+GuestLogin() async {
   Dio dio = new Dio();
   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
       (HttpClient client) {
     client.badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
   };
-    try {
+  try {
     Response response = await dio.post((authorizationEndpoint),
         options: Options(headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -187,8 +187,8 @@ GuestLogin() async{
     await prefs.setBool("GuestLogin", true);
     prefs.setBool('IsLoggedIn', true);
     return true;
-    } catch (e){
-      FailedToast();
-      return false;
-    }
+  } catch (e) {
+    FailedToast();
+    return false;
+  }
 }

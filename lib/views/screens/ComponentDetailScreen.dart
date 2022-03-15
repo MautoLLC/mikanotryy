@@ -104,13 +104,13 @@ class _ComponentDetailScreenState extends State<ComponentDetailScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      if(this.widget.inspectionStatus!="Done"){
+                      if (this.widget.inspectionStatus != "Done") {
                         MaintenanceRequestService().ChangeComponentStatusByID(
-                          this.widget.item.idChecklist!.toInt(), index + 1);
-                      Provider.of<RequestFormState>(context, listen: false)
-                          .updateComponentStatus(
-                              this.widget.item.idComponent!, statuses[index]);
-                      setState(() {});
+                            this.widget.item.idChecklist!.toInt(), index + 1);
+                        Provider.of<RequestFormState>(context, listen: false)
+                            .updateComponentStatus(
+                                this.widget.item.idComponent!, statuses[index]);
+                        setState(() {});
                       }
                     },
                     child: Container(
