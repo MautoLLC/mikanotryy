@@ -97,14 +97,14 @@ class _MenuScreenState extends State<MenuScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              SizedBox(
-                height: spacing_xlarge,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: t13EditTextStyle("Search", searchController,
-                    isPassword: false),
-              ),
+              // SizedBox(
+              //   height: spacing_xlarge,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              //   child: t13EditTextStyle("Search", searchController,
+              //       isPassword: false),
+              // ),
               SizedBox(
                 height: spacing_standard_new,
               ),
