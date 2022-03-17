@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
@@ -62,7 +64,31 @@ class ListPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  t13EditTextStyle(lbl_Search, seearchController, isPassword: false),
+                  TextFormField(
+                    style: TextStyle(
+                        fontSize: textSizeMedium, fontFamily: PoppinsFamily),
+                    obscureText: false,
+                    cursorColor: black,
+                    controller: seearchController,
+                    onChanged: state.fillListOfProductsToShow,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
+                      hintText: lbl_Search,
+                      hintStyle: primaryTextStyle(color: textFieldHintColor),
+                      filled: true,
+                      fillColor: lightBorderColor,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 0.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.transparent, width: 0.0),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 40,
                   ),
@@ -74,11 +100,11 @@ class ListPage extends StatelessWidget {
                         childAspectRatio: 0.8,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10),
-                    itemCount: state.ListOfProducts.length,
+                    itemCount: seearchController.text.length!=0? state.ListOfProductsToShow.length:state.ListOfProducts.length,
                     itemBuilder: (context, index) {
-                      if (state.ListOfProducts.length != 0) {
+                      if ((seearchController.text.length!=0? state.ListOfProductsToShow.length:state.ListOfProducts.length) != 0) {
                         return ItemElement(
-                          product: state.ListOfProducts[index],
+                          product: (seearchController.text.length!=0? state.ListOfProductsToShow:state.ListOfProducts)[index],
                         );
                       } else {
                         return Center(

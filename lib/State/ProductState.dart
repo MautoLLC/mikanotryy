@@ -24,6 +24,7 @@ class ProductState extends ChangeNotifier {
   int allProductNumbers = 0;
   int page = 0;
   bool ListOfProductsLoaded = false;
+  List<Product> ListOfProductsToShow = [];
 
   void clear() {
     selectMode = false;
@@ -80,6 +81,13 @@ class ProductState extends ChangeNotifier {
       flashsaleProducts.add(item);
     }
     await updateCart();
+    notifyListeners();
+  }
+
+  Future<void> fillListOfProductsToShow(String searchTerm) async {
+    ListOfProductsToShow.clear();
+    ListOfProductsToShow = allProducts.where((element) => element.Name.contains(searchTerm)).toList();
+    ListOfProductsLoaded = true;
     notifyListeners();
   }
 

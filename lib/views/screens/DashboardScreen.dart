@@ -33,17 +33,14 @@ class DashboardState extends State<Dashboard> {
   List<CategoryModel>? mFavouriteList;
   bool guestLogin = true;
 
-  init() async{
+  init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
-    if(!guestLogin)
-      sendGpsCoord();
-    setState(() {
-      
-    });
+    if (!guestLogin) sendGpsCoord();
+    setState(() {});
   }
 
-  void sendGpsCoord(){
+  void sendGpsCoord() {
     gps.StartTimer();
   }
 
@@ -53,7 +50,6 @@ class DashboardState extends State<Dashboard> {
     super.initState();
     Provider.of<UserState>(context, listen: false).update();
     mFavouriteList = getDItems();
-    
   }
 
   @override
@@ -74,10 +70,12 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
-                        !guestLogin?Align(
-                          alignment: Alignment.centerRight,
-                          child: NotificationBell(),
-                        ):Container()
+                      !guestLogin
+                          ? Align(
+                              alignment: Alignment.centerRight,
+                              child: NotificationBell(),
+                            )
+                          : Container()
                     ],
                   ),
                 ),
@@ -86,46 +84,53 @@ class DashboardState extends State<Dashboard> {
                 height: 20,
               ),
               SizedBox(
-                height: 140,
-                child:  ListView.builder(
-                            itemCount: Provider.of<CarouselState>(context, listen: false).topImages.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Provider.of<CarouselState>(context, listen: false).topImages[index].position
-                                          .toString() ==
-                                      "top"
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: CachedNetworkImage(
-                                          imageUrl: Provider.of<CarouselState>(context, listen: false).topImages[index].url
-                                              .toString(),
-                                          height: 280,
-                                          memCacheHeight: 280,
-                                          memCacheWidth: 420,
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress)),
-                                          errorWidget: (_, __, ___) {
-                                            return SizedBox(
-                                                height: 300, width: width);
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 0,
-                                      height: 0,
-                                    );
-                            })
-              ),
+                  height: 140,
+                  child: ListView.builder(
+                      itemCount:
+                          Provider.of<CarouselState>(context, listen: false)
+                              .topImages
+                              .length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Provider.of<CarouselState>(context,
+                                        listen: false)
+                                    .topImages[index]
+                                    .position
+                                    .toString() ==
+                                "top"
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: CachedNetworkImage(
+                                    imageUrl: Provider.of<CarouselState>(
+                                            context,
+                                            listen: false)
+                                        .topImages[index]
+                                        .url
+                                        .toString(),
+                                    height: 280,
+                                    memCacheHeight: 280,
+                                    memCacheWidth: 420,
+                                    progressIndicatorBuilder: (context, url,
+                                            downloadProgress) =>
+                                        Center(
+                                            child: CircularProgressIndicator(
+                                                value:
+                                                    downloadProgress.progress)),
+                                    errorWidget: (_, __, ___) {
+                                      return SizedBox(
+                                          height: 300, width: width);
+                                    },
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                width: 0,
+                                height: 0,
+                              );
+                      })),
               SizedBox(
                 height: 40,
               ),
@@ -235,36 +240,35 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 140,
                 child: ListView.builder(
-                          itemCount: Provider.of<CarouselState>(context, listen: false).bottomImages.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: CachedNetworkImage(
-                                        imageUrl: Provider.of<CarouselState>(context, listen: false).bottomImages[index].url
-                                            .toString(),
-                                        height: 280,
-                                        useOldImageOnUrlChange: true,
-                                        memCacheHeight: 280,
-                                        memCacheWidth: 420,
-                                        progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
-                                            Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                        value: downloadProgress
-                                                            .progress)),
-                                        errorWidget: (_, __, ___) {
-                                          return SizedBox(
-                                              height: 300, width: width);
-                                        },
-                                      ),
-                                    ),
-                                  
-                          );
+                  itemCount: Provider.of<CarouselState>(context, listen: false)
+                      .bottomImages
+                      .length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              Provider.of<CarouselState>(context, listen: false)
+                                  .bottomImages[index]
+                                  .url
+                                  .toString(),
+                          height: 280,
+                          useOldImageOnUrlChange: true,
+                          memCacheHeight: 280,
+                          memCacheWidth: 420,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress)),
+                          errorWidget: (_, __, ___) {
+                            return SizedBox(height: 300, width: width);
+                          },
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
