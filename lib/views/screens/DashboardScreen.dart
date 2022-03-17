@@ -1,15 +1,9 @@
-import 'dart:async';
-import 'dart:isolate';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:mymikano_app/State/CarouselState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
-import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
-import 'package:mymikano_app/services/StoreServices/ProductService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -65,7 +59,6 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    TextEditingController SearchController = new TextEditingController();
     return Consumer<ProductState>(
       builder: (context, state, child) => Scaffold(
           backgroundColor: Colors.white,
@@ -85,21 +78,6 @@ class DashboardState extends State<Dashboard> {
                           alignment: Alignment.centerRight,
                           child: NotificationBell(),
                         ):Container()
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: t13EditTextStyle(lbl_Search, SearchController,
-                              isPassword: false))
                     ],
                   ),
                 ),
