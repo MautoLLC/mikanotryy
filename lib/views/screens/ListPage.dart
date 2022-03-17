@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
@@ -15,7 +16,8 @@ import 'package:provider/provider.dart';
 
 class ListPage extends StatelessWidget {
   final String title;
-  ListPage({Key? key, required this.title}) : super(key: key);
+  bool fromNavigationBar;
+  ListPage({Key? key, required this.title, this.fromNavigationBar = false}) : super(key: key);
 
   TextEditingController seearchController = TextEditingController();
   bool isfirst = true;
@@ -45,20 +47,25 @@ class ListPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  Row(
+                  Stack(
                     children: <Widget>[
-                      IconButton(
-                          onPressed: () {
-                            finish(context);
-                          },
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            size: 32.0,
-                          )),
-                      Spacer(),
-                      TitleText(title: title),
-                      Spacer(),
-                      NotificationBell()
+                      !fromNavigationBar?Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                            onPressed: () {
+                              finish(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              size: 32.0,
+                            )),
+                      ):Container(),
+                      Align(
+                        alignment: Alignment.center,
+                        child: TitleText(title: title)),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: NotificationBell())
                     ],
                   ),
                   SizedBox(

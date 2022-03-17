@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'CartPage.dart';
 import 'DashboardScreen.dart';
+import 'ListPage.dart';
 import 'ProfileScreen.dart';
 import 'SearchScreen.dart';
 
@@ -23,7 +25,8 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
     pages.add(MenuScreen());
-    pages.add(SearchPage());
+    pages.add(ListPage(title: lbl_Search, fromNavigationBar: true,));
+    // pages.add(SearchPage());
     pages.add(Dashboard());
     if (!guestLogin) {
       pages.add(CartPage());

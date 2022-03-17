@@ -86,7 +86,7 @@ class ProductState extends ChangeNotifier {
 
   Future<void> fillListOfProductsToShow(String searchTerm) async {
     ListOfProductsToShow.clear();
-    ListOfProductsToShow = allProducts.where((element) => element.Name.contains(searchTerm)).toList();
+    ListOfProductsToShow = allProducts.where((element) => element.Name.toLowerCase().contains(searchTerm.toLowerCase())).toList();
     ListOfProductsLoaded = true;
     notifyListeners();
   }
