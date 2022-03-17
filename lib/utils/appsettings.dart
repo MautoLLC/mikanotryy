@@ -27,6 +27,7 @@ const GetAllCategoriesURL =
 const PostMaintenaceRequestURL =
     '$MaintenanceApiBaseUrl/api/MaintenanceRequests';
 const GetRealEstatesURL = '$MaintenanceApiBaseUrl/api/RealEstates';
+const GetRealEstatesByIdURL = '$MaintenanceApiBaseUrl/api/RealEstates/{id}';
 const GetMaintenaceRequestURL =
     '$MaintenanceApiBaseUrl/api/MaintenanceRequests';
 const GetMaintenaceRequestByUserIdURL =

@@ -9,6 +9,7 @@ import 'package:mymikano_app/services/RequestFormService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/ComponentDetailScreen.dart';
+import 'package:mymikano_app/views/screens/UserDetailsPage.dart';
 import 'package:mymikano_app/views/widgets/ComponentItem.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -77,7 +78,15 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                         SizedBox(
                           height: 40,
                         ),
-                        TitleText(title: lbl_Description),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TitleText(title: lbl_Description),
+                            IconButton(onPressed: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDetailsPage(realEstateId: this.widget.Maintenance.realEstateId)));
+                            }, icon: Icon(Icons.person))
+                          ],
+                        ),
                         SizedBox(
                           height: 10,
                         ),
