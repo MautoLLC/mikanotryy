@@ -23,4 +23,14 @@ class RealEstatesService {
     } else
       throw Exception('Error fetching');
   }
+
+  Future<RealEstate> fetchRealEstatesById(int id) async {
+    await PrepareCall();
+    final response = await dio.get((GetRealEstatesByIdURL).replaceAll("{id}", id.toString()));
+
+    if (response.statusCode == 200) {
+      return RealEstate.fromJson(response.data);
+    } else
+      throw Exception('Error fetching');
+  }
 }
