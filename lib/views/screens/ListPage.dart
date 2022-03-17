@@ -62,7 +62,7 @@ class ListPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  t13EditTextStyle(lbl_Search, seearchController),
+                  t13EditTextStyle(lbl_Search, seearchController, isPassword: false),
                   SizedBox(
                     height: 40,
                   ),
