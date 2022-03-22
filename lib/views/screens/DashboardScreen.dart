@@ -41,6 +41,7 @@ class DashboardState extends State<Dashboard> {
   }
 
   void sendGpsCoord() {
+    gps.canceled = false;
     gps.StartTimer();
   }
 

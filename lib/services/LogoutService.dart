@@ -18,7 +18,8 @@ logout() async {
           "Authorization": "Bearer ${prefs.getString("accessToken")}"
         });
 
-    if (!await prefs.getBool('GuestLogin')!) gps.stopTimer();
+    if (!await prefs.getBool('GuestLogin')!) 
+      gps.canceled = true;
     prefs.clear();
     await prefs.setBool('IsLoggedIn', false);
     await prefs.setBool('GuestLogin', false);

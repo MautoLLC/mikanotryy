@@ -4,17 +4,22 @@ import 'package:geolocator/geolocator.dart';
 
 class gps {
   static late Timer timer;
+  static bool canceled = false;
 
   static void StartTimer() {
     timer = Timer.periodic(Duration(seconds: 3), (timer) async {
+      if (canceled) {
+        stopTimer(timer);
+        return;
+      }
       Position position = await determinePosition();
       print("longitude: ${position.longitude}");
       print("latitude: ${position.latitude}");
     });
   }
 
-  static void stopTimer() {
-    timer.cancel();
+  static void stopTimer(Timer? timer) {
+    timer!.cancel();
   }
 
   /// Determine the current position of the device.
