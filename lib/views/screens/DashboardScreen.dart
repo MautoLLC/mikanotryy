@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/State/CarouselState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
@@ -9,7 +10,6 @@ import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
-import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
@@ -67,6 +67,13 @@ class DashboardState extends State<Dashboard> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              
+                            },
+                            child: SvgPicture.asset(ic_KVA, height: 50, width: 50))),
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
