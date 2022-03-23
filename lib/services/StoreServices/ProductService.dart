@@ -19,7 +19,8 @@ class ProductsService {
         queryParameters: params,
         options: Options(headers: {
           "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-        }));
+        })
+        );
     if (response.statusCode == 200) {
       List<Product> products = [];
       try {

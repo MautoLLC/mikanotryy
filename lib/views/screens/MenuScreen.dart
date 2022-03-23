@@ -6,9 +6,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
-import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -97,14 +95,6 @@ class _MenuScreenState extends State<MenuScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              // SizedBox(
-              //   height: spacing_xlarge,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              //   child: t13EditTextStyle("Search", searchController,
-              //       isPassword: false),
-              // ),
               SizedBox(
                 height: spacing_standard_new,
               ),
@@ -191,7 +181,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           logout();
                         },
                         child: Text(
-                          'Sign Out',
+                          !guestLogin?'Sign Out':'Sign In',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: PoppinsFamily,

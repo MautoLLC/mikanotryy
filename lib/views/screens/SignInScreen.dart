@@ -11,7 +11,6 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'EntryPage.dart';
@@ -157,6 +156,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                   onTap: () async {
                     bool response = await GuestLogin();
                     if (response)
+                    Navigator.popUntil(context, (route) => route.isFirst);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
