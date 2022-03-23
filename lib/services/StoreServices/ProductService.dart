@@ -7,7 +7,6 @@ import 'package:nb_utils/nb_utils.dart';
 class ProductsService {
   Dio dio = new Dio();
   Future<List<Product>> getProducts({int limit = -1, int page = -1}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -17,9 +16,6 @@ class ProductsService {
     }
     Response response = await dio.get(MikanoShopGetAllProductsURL,
         queryParameters: params,
-        options: Options(headers: {
-          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-        })
         );
     if (response.statusCode == 200) {
       List<Product> products = [];

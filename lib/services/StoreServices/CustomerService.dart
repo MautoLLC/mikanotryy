@@ -101,32 +101,37 @@ class CustomerService {
 
   Future<List<FavoriteProduct>> getAllFavoriteItemsforLoggedInUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.get(
-      MikanoFavoritAndCartItems,
-      queryParameters: {
-        "ShoppingCartType": "Wishlist",
-        "CustomerId": prefs.getString("StoreCustomerId").toString()
-      },
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      List<FavoriteProduct> products = [];
-      try {
-        var productsdata = response.data["shopping_carts"];
-        for (var item in productsdata) {
-          Product temp = Product.fromJson(item["product"]);
-          FavoriteProduct t = FavoriteProduct(product: temp, id: item["id"]);
-          products.add(t);
+    try{
+      Response response = await dio.get(
+        MikanoFavoritAndCartItems,
+        queryParameters: {
+          "ShoppingCartType": "Wishlist",
+          "CustomerId": prefs.getString("StoreCustomerId").toString()
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        List<FavoriteProduct> products = [];
+        try {
+          var productsdata = response.data["shopping_carts"];
+          for (var item in productsdata) {
+            Product temp = Product.fromJson(item["product"]);
+            FavoriteProduct t = FavoriteProduct(product: temp, id: item["id"]);
+            products.add(t);
+          }
+          return products;
+        } catch (e) {
+          print(e);
+          return products;
         }
-        return products;
-      } catch (e) {
-        print(e);
-        return products;
+      } else {
+        throw Exception('Failed to get shipping addresses');
       }
-    } else {
-      throw Exception('Failed to get shipping addresses');
+    } catch (e) {
+      print(e);
+      return [];
     }
   }
 
@@ -172,31 +177,36 @@ class CustomerService {
 
   Future<List<CartProduct>> getAllCartItemsforLoggedInUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.get(
-      MikanoFavoritAndCartItems,
-      queryParameters: {
-        "ShoppingCartType": "ShoppingCart",
-        "CustomerId": prefs.getString("StoreCustomerId").toInt()
-      },
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      List<CartProduct> products = [];
-      try {
-        var productsdata = response.data["shopping_carts"];
-        for (var item in productsdata) {
-          CartProduct temp = CartProduct.fromJson(item);
-          products.add(temp);
+    try{
+      Response response = await dio.get(
+        MikanoFavoritAndCartItems,
+        queryParameters: {
+          "ShoppingCartType": "ShoppingCart",
+          "CustomerId": prefs.getString("StoreCustomerId").toInt()
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        List<CartProduct> products = [];
+        try {
+          var productsdata = response.data["shopping_carts"];
+          for (var item in productsdata) {
+            CartProduct temp = CartProduct.fromJson(item);
+            products.add(temp);
+          }
+          return products;
+        } catch (e) {
+          print(e);
+          return products;
         }
-        return products;
-      } catch (e) {
-        print(e);
-        return products;
+      } else {
+        throw Exception('Failed to get cart Items');
       }
-    } else {
-      throw Exception('Failed to get cart Items');
+    }catch (e) {
+      print(e);
+      return [];
     }
   }
 

@@ -48,8 +48,8 @@ class ProductState extends ChangeNotifier {
     update();
   }
 
-  void update() async {
-    getFavorites();
+  update() async {
+    await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
       if (isInFavorite(item)) {

@@ -49,7 +49,10 @@ class DashboardState extends State<Dashboard> {
   void initState() {
     init();
     super.initState();
+    guestLogin?
+    null:
     Provider.of<UserState>(context, listen: false).update();
+    Provider.of<ProductState>(context, listen: false).update();
     mFavouriteList = getDItems();
   }
 

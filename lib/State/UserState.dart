@@ -27,7 +27,7 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void update() {
+  update() {
     fillUserInfo();
     fetchtermsState();
     fetchNotificationsState();
