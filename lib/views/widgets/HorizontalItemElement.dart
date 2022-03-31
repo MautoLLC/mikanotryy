@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/ProductDetailsPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
+import 'package:provider/provider.dart';
 
 class HorizontalItemElement extends StatelessWidget {
   Product product;
@@ -88,7 +90,20 @@ class HorizontalItemElement extends StatelessWidget {
                   SizedBox(
                     height: 7,
                   ),
-                  commonCacheImageWidget(ic_Cart, 24)
+                  Consumer<ProductState>(
+                            builder: (context, state, child) => GestureDetector(
+                                onTap: () {
+                                  state.addorremoveProductToFavorite(
+                                      product);
+                                },
+                                child: commonCacheImageWidget(ic_heart, 30,
+                                    color: state.allProducts
+                                            .firstWhere((element) =>
+                                                element.id == product.id)
+                                            .liked
+                                        ? mainColorTheme
+                                        : null)),
+                          )
                 ],
               ),
             )
