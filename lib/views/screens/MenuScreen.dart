@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
@@ -88,8 +89,7 @@ class _MenuScreenState extends State<MenuScreen> {
       ic_Contact_Us
     ];
 
-    return Consumer<UserState>(
-      builder: (context, userstate, child) => Scaffold(
+    return  Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: menuScreenColor,
         body: SafeArea(
@@ -194,52 +194,27 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
               Spacer(),
-              if (!guestLogin)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 5.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => ProfileScreen(),
-                            ),
-                          );
-                        },
-                        child: Row(children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              userstate.getUser.username,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontFamily: PoppinsFamily),
-                            ),
-                          ),
-                        ]),
-                      ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
-                        child: Icon(
-                          Icons.help,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Powered by: ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
+                  SvgPicture.asset(
+                    ic_KVA,
+                    color: Colors.white,
+                    height: 80,
+                  ),
+                ],
+              )
             ],
           ),
         ),
-      ),
     );
   }
 }
