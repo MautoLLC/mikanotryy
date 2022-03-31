@@ -51,3 +51,4 @@ const ic_Filter = "assets/icons8-conversion.png";
 const ic_sorting = "assets/icons8-sorting.png";
 
 const ic_KVA = "assets/KVA_icon.svg";
+const ic_Mauto = "assets/Mauto_Logo.svg";

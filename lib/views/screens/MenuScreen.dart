@@ -206,9 +206,9 @@ class _MenuScreenState extends State<MenuScreen> {
                     ),
                   ),
                   SvgPicture.asset(
-                    ic_KVA,
+                    ic_Mauto,
                     color: Colors.white,
-                    height: 80,
+                    height: 30,
                   ),
                 ],
               )
