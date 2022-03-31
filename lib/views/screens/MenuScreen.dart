@@ -128,11 +128,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            color: index == 0
-                                ? guestLogin == false
-                                    ? mainColorTheme
-                                    : Colors.transparent
-                                : Colors.transparent,
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.circular(30)),
                         child: Padding(
                           padding:
@@ -180,12 +176,18 @@ class _MenuScreenState extends State<MenuScreen> {
                         onTap: () {
                           logout();
                         },
-                        child: Text(
-                          !guestLogin?'Sign Out':'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: PoppinsFamily,
-                            fontSize: 18,
+                        child: Container(
+                          padding: EdgeInsetsDirectional.all(8),
+                          decoration: BoxDecoration(
+                              color: mainColorTheme,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Text(
+                            !guestLogin?'Sign Out':'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: PoppinsFamily,
+                              fontSize: 18,
+                            ),
                           ),
                         ))
                   ],
