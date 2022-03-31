@@ -27,8 +27,10 @@ Future<void> main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Future.delayed(Duration(milliseconds: 1)).then((value) =>
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.light,
           statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark)));
+          statusBarIconBrightness: Brightness.dark,
+          )));
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
