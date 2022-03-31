@@ -130,17 +130,34 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       },
                     ),
                   ),
+                  SizedBox(
+                    height: 18,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5 - widget.product.Rating,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Icon(Icons.star_border, color: mainColorTheme);
+                      },
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  guestLogin ? Container() : QuantityChooser(),
                   Text(
                     '\$${widget.product.Price}',
                     style: TextStyle(fontSize: 20, fontFamily: PoppinsFamily),
                   ),
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  guestLogin ? Container() : QuantityChooser(),
                 ],
               ),
               Column(
