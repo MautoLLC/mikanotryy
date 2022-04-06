@@ -4,10 +4,14 @@ import 'package:nb_utils/nb_utils.dart';
 class ApiConfigurationState extends ChangeNotifier {
   bool DashBoardFirstTimeAccess = true;
   bool isSuccess = false;
+  bool cloudModeValue = false;
   String option = 'lan';
   var chosenSSID;
   int RefreshRate = 60;
+  int cloudMode = 0;
   String password = '';
+  String cloudUsername = '';
+  String cloudPassword = '';
   List<String> ssidList = [];
 
   ApiConfigurationState() {
@@ -23,6 +27,13 @@ class ApiConfigurationState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void isNotFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.DashBoardFirstTimeAccess = false;
+    prefs.setBool("DashboardFirstTimeAccess", false);
+    notifyListeners();
+  }
+
   void update() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     DashBoardFirstTimeAccess = prefs.getBool('DashboardFirstTimeAccess')!;
@@ -30,6 +41,9 @@ class ApiConfigurationState extends ChangeNotifier {
     RefreshRate = prefs.getInt('RefreshRate')!;
     password = prefs.getString('Password')!;
     chosenSSID = prefs.getString('SSID');
+    cloudUsername = prefs.getString("CloudUsername")!;
+    cloudPassword = prefs.getString("CloudPassword")!;
+    cloudMode = prefs.getInt("CloudMode")!;
     notifyListeners();
   }
 
@@ -42,8 +56,29 @@ class ApiConfigurationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeRefreshRate(int rate) {
+  void changeRefreshRate(int rate) {
     RefreshRate = rate;
+    notifyListeners();
+  }
+
+  void changeCloudUsername(username) {
+    cloudUsername = username;
+    notifyListeners();
+  }
+
+  void changeCloudPassword(password) {
+    cloudPassword = password;
+    notifyListeners();
+  }
+
+  void changeCloudMode(bool? value) {
+    this.cloudModeValue = value!;
+    if (value == true) {
+      this.cloudMode = 1;
+    } else {
+      cloudMode = 0;
+    }
+    print(cloudMode);
     notifyListeners();
   }
 
@@ -91,10 +126,14 @@ class ApiConfigurationState extends ChangeNotifier {
   void clear() {
     DashBoardFirstTimeAccess = true;
     isSuccess = false;
+    cloudModeValue = false;
     option = 'lan';
     chosenSSID = null;
     RefreshRate = 60;
+    cloudMode = 0;
     password = '';
+    cloudUsername = '';
+    cloudPassword = '';
     ssidList = [];
     notifyListeners();
   }
@@ -106,14 +145,21 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.remove('SSID');
     prefs.remove('Password');
     prefs.remove('RefreshRate');
+    prefs.remove('CloudUsername');
+    prefs.remove('CloudPassword');
+    prefs.remove('CloudMode');
     ShowSSIDs();
     notifyListeners();
   }
 
-  void setpref(ssid, password, int refreshRate) async {
+  void setpref(ssid, password, int refreshRate, cloudUsername, cloudPassword,
+      int cloudMode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('SSID', ssid);
     prefs.setString('Password', password);
     prefs.setInt('RefreshRate', refreshRate);
+    prefs.setString('CloudUsername', cloudUsername);
+    prefs.setString('CloudPassword', cloudPassword);
+    prefs.setInt('CloudMode', cloudMode);
   }
 }

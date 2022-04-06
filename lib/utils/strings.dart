@@ -177,3 +177,6 @@ const lbl_Component_Details = "Component Details";
 const lbl_Guest_Login = "Guest Login";
 const lbl_User_Details = "User Details";
 const lbl_Email = "Email";
+const lbl_Cloud_Username = "Cloud Username";
+const lbl_Cloud_Password = "Cloud Password";
+

@@ -47,6 +47,13 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setInt("tokenDuration", temp['expires_in']);
     await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
     await prefs.setInt("tokenStartTime", jwtData['iat']);
+    if(prefs.getBool("DashboardFirstTimeAccess") == null){
+      await prefs.setBool("DashboardFirstTimeAccess", true);
+    }
+    if(prefs.getString("ApiConfigurationOption") == null){
+      await prefs.setString("ApiConfigurationOption", 'lan');
+    }
+    
 
     try {
       response = await dio.post(MikanoShopTokenURL, data: {
@@ -125,8 +132,8 @@ FailedToast() {
 }
 
 GuestLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("GuestLogin", true);
-    await prefs.setBool('IsLoggedIn', true);
-    return true;
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setBool("GuestLogin", true);
+  await prefs.setBool('IsLoggedIn', true);
+  return true;
 }

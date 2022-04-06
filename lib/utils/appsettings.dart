@@ -104,3 +104,6 @@ const spacing_xxLarge = 40.0;
 const logoAsset = 'assets/SplashScreenMikanoLogo.png';
 const ssidUrl = "http://192.168.4.1";
 const ssidRestartUrl = ssidUrl + '/restart';
+const cloudIotMautoUrl = "https://iotapi.mauto.co/api";
+const cloudIotMautoAuthUrl = cloudIotMautoUrl + "/User/token";
+const cloudIotMautoSensorsUrl = cloudIotMautoUrl + "/generators/values/";
