@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -13,6 +14,7 @@ import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 
 class CloudDashboard_Index extends StatefulWidget {
   //final String ApiEndPoint;
@@ -104,9 +106,15 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
-  //late CloudSensor MCBMode;
+  // CloudSensor MCBMode = CloudSensor(
+  //     sensorID: "Error",
+  //     sensorName: "Error",
+  //     value: "100",
+  //     unit: "Error",
+  //     timeStamp: "Error");
+  late CloudSensor MCBMode;
   bool ControllerModeStatus = false;
-  //late bool MCBModeStatus;
+  bool MCBModeStatus = false;
   bool PowerStatus = false;
 
   //This function is to fetch the data and await rest apis //
@@ -135,21 +143,22 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
       //GeneratorFrequency = await DashModelView.GetGeneratorFrequency();
       GeneratorLoad = DashModelView.GetGeneratorLoad();
       ControllerMode = DashModelView.GetControllerMode();
-      //MCBMode = await DashModelView.GetMCBMode();
+      MCBMode = DashModelView.GetMCBMode();
+
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
 
-      if (ControllerMode.value == "Auto")
+      if (ControllerMode.value == "AUTO")
         ControllerModeStatus = true;
       else
         ControllerModeStatus = false;
 
       //for testing purposes only
       //MCBMode.value="1";
-      //if (MCBMode.value =="1")
-      // MCBModeStatus = true;
-      // else
-      // MCBModeStatus = false;
+      if (MCBMode.value == "Close-Off")
+        MCBModeStatus = true;
+      else
+        MCBModeStatus = false;
 
       if (EngineState.value == "Loaded" || EngineState.value == "Running")
         PowerStatus = true;
@@ -193,332 +202,353 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   }
 
   late bool isAuto = ControllerModeStatus;
-  //late bool MCBisAuto = MCBModeStatus;
+  late bool MCBisAuto = MCBModeStatus;
   late bool isIO = false;
   //late bool isGCB = false;
 
   @override
   Widget build(BuildContext context) {
-    print("refreshing.. after " + widget.RefreshRate.toString() + " seconds");
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: FutureBuilder(
-                future: FetchData(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<bool> snapshot,
-                ) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SpinKitCircle(
-                            color: Colors.black,
-                            size: 65,
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Custom_Alert(
-                          Title: 'Error Has Occured',
-                          Description:
-                              "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
-                    } else {
-                      return Column(children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: backArrowColor,
+    // print("refreshing after: " +widget.RefreshRate.toString() +" seconds.");
+    return Consumer<ApiConfigurationState>(
+        builder: (context, value, child) => Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: FutureBuilder(
+                    future: FetchData(),
+                    builder: (
+                      BuildContext context,
+                      AsyncSnapshot<bool> snapshot,
+                    ) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SpinKitCircle(
+                                color: Colors.black,
+                                size: 65,
                               ),
-                              onPressed: () {
-                                finish(context);
-                              },
-                            ),
-                            Spacer(),
-                            TitleText(
-                              title: lbl_Generator,
-                            ),
-                            Spacer(),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          ApiConfigurationPage()));
-                                },
-                                icon: Icon(Icons.settings)),
-                            // GestureDetector(
-                            //     onTap: () {
-                            //       Navigator.of(context).push(MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               GeneratorAlertsPage()));
-                            //     },
-                            //     child: commonCacheImageWidget(ic_error, 22))
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: mainGreyColorTheme2,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            Column(
+                        );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
+                        } else {
+                          return Column(children: [
+                            Row(
                               children: [
-                                Container(
-                                    height: 160,
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      color: mainGreyColorTheme2,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: GaugeWidget(
-                                        title: lbl_RPM,
-                                        value:
-                                            (double.parse(Rpm.value) / 100))),
-                                SizedBox(height: 10),
-                                Container(
-                                    height: 160,
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      color: mainGreyColorTheme2,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: GaugeWidget(
-                                        title: lbl_Actual_Power,
-                                        value: (double.parse(Rpm.value) / 100),
-                                        needleColor: mainColorTheme)),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: backArrowColor,
+                                  ),
+                                  onPressed: () {
+                                    finish(context);
+                                  },
+                                ),
+                                Spacer(),
+                                TitleText(
+                                  title: lbl_Generator,
+                                ),
+                                Spacer(),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ApiConfigurationPage()));
+                                    },
+                                    icon: Icon(Icons.settings)),
+                                IconButton(
+                                    onPressed: () {
+                                      value.resetPreferences();
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ApiConfigurationPage()));
+                                    },
+                                    icon: Icon(Icons.refresh)),
+                                // GestureDetector(
+                                //     onTap: () {
+                                //       Navigator.of(context).push(MaterialPageRoute(
+                                //           builder: (context) =>
+                                //               GeneratorAlertsPage()));
+                                //     },
+                                //     child: commonCacheImageWidget(ic_error, 22))
                               ],
                             ),
-                            SizedBox(width: 10),
-                            Column(
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: mainGreyColorTheme2,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 4.0, 8.0, 4.0),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Row(
                               children: [
-                                Container(
-                                  width: 167,
-                                  height: 89,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                    color: mainGreyColorTheme2,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      SubTitleText(title: lbl_Mode),
-                                      Row(
+                                Column(
+                                  children: [
+                                    Container(
+                                        height: 160,
+                                        width: 160,
+                                        decoration: BoxDecoration(
+                                          color: mainGreyColorTheme2,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: GaugeWidget(
+                                            title: lbl_RPM,
+                                            value: (double.parse(Rpm.value) /
+                                                100))),
+                                    SizedBox(height: 10),
+                                    Container(
+                                        height: 160,
+                                        width: 160,
+                                        decoration: BoxDecoration(
+                                          color: mainGreyColorTheme2,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: GaugeWidget(
+                                            title: lbl_Actual_Power,
+                                            value:
+                                                (double.parse(Rpm.value) / 100),
+                                            needleColor: mainColorTheme)),
+                                  ],
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  children: [
+                                    Container(
+                                      width: 167,
+                                      height: 89,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 25),
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
                                         children: [
-                                          Text(
-                                            isAuto ? lbl_Auto : lbl_Manual,
-                                            style: TextStyle(
-                                                fontFamily: PoppinsFamily,
-                                                fontSize: 14,
-                                                color: mainGreyColorTheme),
-                                          ),
-                                          Spacer(),
-                                          Switch(
-                                              value: isAuto,
-                                              onChanged: (result) {
-                                                // TODO logic
+                                          SubTitleText(title: lbl_Mode),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                ControllerMode.value,
+                                                style: TextStyle(
+                                                    fontFamily: PoppinsFamily,
+                                                    fontSize: 14,
+                                                    color: mainGreyColorTheme),
+                                              ),
+                                              Spacer(),
+                                              Switch(
+                                                  value: isAuto,
+                                                  onChanged: (result) {
+                                                    // TODO logic
 
-                                                setState(() {
-                                                  isAuto = result;
-                                                  CloudDashBoard_ModelView m =
-                                                      new CloudDashBoard_ModelView(
-                                                          /*ApiEnd: this.widget.ApiEndPoint*/);
-                                                  m.SwitchControllerMode(
-                                                      result);
-                                                });
-                                              })
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  width: 167,
-                                  height: 89,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                    color: mainGreyColorTheme2,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      SubTitleText(title: lbl_IO),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            isIO ? lbl_ON : lbl_OFF,
-                                            style: TextStyle(
-                                                fontFamily: PoppinsFamily,
-                                                fontSize: 14,
-                                                color: mainGreyColorTheme),
-                                          ),
-                                          Spacer(),
-                                          Switch(
-                                              value: isIO,
-                                              onChanged: (result) {
-                                                // TODO logic
-                                                isIO = result;
-                                                setState(() {});
-                                              })
+                                                    setState(() {
+                                                      isAuto = result;
+                                                      CloudDashBoard_ModelView
+                                                          m =
+                                                          new CloudDashBoard_ModelView(
+                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
+                                                      m.SwitchControllerMode(
+                                                          result);
+                                                    });
+                                                  })
+                                            ],
+                                          )
                                         ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                      width: 167,
+                                      height: 89,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 25),
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SubTitleText(title: lbl_IO),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                isIO ? lbl_ON : lbl_OFF,
+                                                style: TextStyle(
+                                                    fontFamily: PoppinsFamily,
+                                                    fontSize: 14,
+                                                    color: mainGreyColorTheme),
+                                              ),
+                                              Spacer(),
+                                              Switch(
+                                                  value: isIO,
+                                                  onChanged: (result) {
+                                                    // TODO logic
+                                                    isIO = result;
+                                                    setState(() {});
+                                                  })
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(top: 15),
+                                          decoration: BoxDecoration(
+                                            color: mainGreyColorTheme2,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          height: 129,
+                                          width: 140,
+                                          child: Column(
+                                            children: [
+                                              SubTitleText(title: lbl_MCB),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(children: [
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  MCBMode.value,
+                                                  style: TextStyle(
+                                                      fontFamily: PoppinsFamily,
+                                                      fontSize: 14,
+                                                      color:
+                                                          mainGreyColorTheme),
+                                                ),
+                                                Spacer(),
+                                                Switch(
+                                                    value: MCBisAuto,
+                                                    onChanged: (result) {
+                                                      // TODO logic
+
+                                                      setState(() {
+                                                        MCBisAuto = result;
+                                                        CloudDashBoard_ModelView
+                                                            m =
+                                                            new CloudDashBoard_ModelView();
+                                                        m.SwitchMCBMode(result);
+                                                      });
+                                                    })
+                                              ]),
+                                            ],
+                                          ),
+                                        ),
+                                        //     SizedBox(
+                                        //       width: 10,
+                                        //     ),
+                                        //     // Container(
+                                        //     //   padding: EdgeInsets.only(top: 15),
+                                        //     //   decoration: BoxDecoration(
+                                        //     //     color: mainGreyColorTheme2,
+                                        //     //     borderRadius: BorderRadius.circular(10),
+                                        //     //   ),
+                                        //     //   height: 129,
+                                        //     //   width: 79,
+                                        //     //   child: Column(
+                                        //     //     children: [
+                                        //     //       SubTitleText(title: lbl_GCB),
+                                        //     //       Spacer(),
+                                        //     //       Switch(
+                                        //     //           value: isGCB,
+                                        //     //           onChanged: (result) {
+                                        //     //             // TODO logic
+                                        //     //             isGCB = result;
+                                        //     //             setState(() {});
+                                        //     //           })
+                                        //     //     ],
+                                        //     //   ),
+                                        //     // ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                // Row(
-                                //   children: [
-                                //     Container(
-                                //       padding: EdgeInsets.only(top: 15),
-                                //       decoration: BoxDecoration(
-                                //         color: mainGreyColorTheme2,
-                                //         borderRadius: BorderRadius.circular(10),
-                                //       ),
-                                //       height: 129,
-                                //       width: 79,
-                                //       child: Column(
-                                //         children: [
-                                //           SubTitleText(title: lbl_MCB),
-                                //           SizedBox(
-                                //             height: 20,
-                                //           ),
-                                //       // Row(
-                                //       //   children: [
-                                //       //     SizedBox(
-                                //       //       width: 5,
-                                //       //     ),
-                                //       //     Text(
-                                //       //       MCBisAuto ? 'A' : 'M',
-                                //       //       style: TextStyle(
-                                //       //           fontFamily: PoppinsFamily,
-                                //       //           fontSize: 14,
-                                //       //           color: mainGreyColorTheme),
-                                //       //     ),
-                                //       //     Spacer(),
-                                //       //     Switch(
-                                //       //         value: MCBisAuto,
-                                //       //         onChanged: (result) {
-                                //       //           // TODO logic
-                                //       //           MCBisAuto = result;
-                                //       //           setState(() {
-                                //       //             CloudDashBoard_ModelView m=new CloudDashBoard_ModelView(ApiEnd: this.widget.ApiEndPoint);
-                                //       //             m.SwitchMCBMode(result);
-                                //       //           });
-                                //       //         })]),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 10,
-                                //     ),
-                                //     // Container(
-                                //     //   padding: EdgeInsets.only(top: 15),
-                                //     //   decoration: BoxDecoration(
-                                //     //     color: mainGreyColorTheme2,
-                                //     //     borderRadius: BorderRadius.circular(10),
-                                //     //   ),
-                                //     //   height: 129,
-                                //     //   width: 79,
-                                //     //   child: Column(
-                                //     //     children: [
-                                //     //       SubTitleText(title: lbl_GCB),
-                                //     //       Spacer(),
-                                //     //       Switch(
-                                //     //           value: isGCB,
-                                //     //           onChanged: (result) {
-                                //     //             // TODO logic
-                                //     //             isGCB = result;
-                                //     //             setState(() {});
-                                //     //           })
-                                //     //     ],
-                                //     //   ),
-                                //     // ),
-                                //   ],
-                                // ),
                               ],
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          children: [
-                            infotile(
-                              title: lbl_Engine,
-                              value: EngineState.value.toString(),
+                            SizedBox(
+                              height: 20,
                             ),
-                            infotile(
-                              title: lbl_Breaker,
-                              value: BreakState.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Running_Hours,
-                              value: RunningHours.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Battery,
-                              value: (double.parse(BatteryVoltage.value))
-                                  .toString(),
-                            ),
-                            infotile(
-                              title: lbl_Pressure,
-                              value:
-                                  (double.parse(OilPressure.value)).toString(),
-                            ),
-                            infotile(
-                              title: lbl_Temperature,
-                              value: CoolantTemp.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Gas,
-                              value: EngineState.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Load,
-                              value: GeneratorLoad.value.toString(),
-                            ),
-                          ],
-                        )
-                      ]);
-                    }
-                  } else {
-                    return Custom_Alert(
-                        Title: 'Error Has Occured',
-                        Description:
-                            "Something Went Wrong! it seems that no generator is assigned.");
-                  }
-                }),
-          ),
-        ));
+                            Column(
+                              children: [
+                                infotile(
+                                  title: lbl_Engine,
+                                  value: EngineState.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Breaker,
+                                  value: BreakState.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Running_Hours,
+                                  value: RunningHours.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Battery,
+                                  value: (double.parse(BatteryVoltage.value))
+                                      .toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Pressure,
+                                  value: (double.parse(OilPressure.value))
+                                      .toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Temperature,
+                                  value: CoolantTemp.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Gas,
+                                  value: EngineState.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Load,
+                                  value: GeneratorLoad.value.toString(),
+                                ),
+                              ],
+                            )
+                          ]);
+                        }
+                      } else {
+                        return Custom_Alert(
+                            Title: 'Error Has Occured',
+                            Description:
+                                "Something Went Wrong! it seems that no generator is assigned.");
+                      }
+                    }),
+              ),
+            )));
   }
 }
 

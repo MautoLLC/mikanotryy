@@ -2,7 +2,7 @@ class CloudSensor {
   final String sensorID;
   final String sensorName;
   late final dynamic value;
-  final String unit;
+  late final dynamic unit;
   final String timeStamp;
   CloudSensor(
       {

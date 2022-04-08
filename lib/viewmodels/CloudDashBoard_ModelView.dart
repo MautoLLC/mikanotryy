@@ -6,7 +6,7 @@ import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 class CloudDashBoard_ModelView {
   //final String ApiEnd;
   late List<CloudSensor> cloudsensors=[];
-  late CloudDashBorad_Service DashBoardService;
+  late CloudDashBoard_Service DashBoardService;
 
   Future<void> GetListCloudSensors() async{
     cloudsensors= await DashBoardService.FetchData();
@@ -20,7 +20,7 @@ CloudSensor FindSensor(String param){
 
 
   CloudDashBoard_ModelView(/*{required this.ApiEnd}*/){
-    DashBoardService= new CloudDashBorad_Service();
+    DashBoardService= new CloudDashBoard_Service();
 
   }
 
@@ -82,10 +82,12 @@ CloudSensor FindSensor(String param){
     //return await DashBoardService.FetchSensorData(dotenv.env['Controller_Mode'].toString());
     return FindSensor(dotenv.env['ControllerMode_id'].toString());
   }
-  // Future<Sensor> GetMCBMode() {
-  //   //return await DashBoardService.FetchSensorData(dotenv.env['Controller_Mode'].toString());
-  //   return DashBoardService.FetchSensorData("MCB");
-  // }
+
+  CloudSensor GetMCBMode() {
+    //return await DashBoardService.FetchSensorData(dotenv.env['Controller_Mode'].toString());
+    // return DashBoardService.FetchSensorData("MCB");
+    return FindSensor(dotenv.env['MCBMode_id'].toString());
+  }
 
   Future<String> SwitchControllerMode(bool status) async {
     return await DashBoardService.SwitchControllerMode(status);
