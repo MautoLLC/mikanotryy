@@ -6,6 +6,7 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
+import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -20,31 +21,31 @@ class ApiConfigurationPage extends StatelessWidget {
   final passwordController = TextEditingController();
   bool isFirstTimeInThisPage = true;
 
-  Future<String> Connecttossid(String id, String pass, String cloudUsername,
-      String cloudPassword, String cloudMode) async {
-    final response = await http.get(Uri.parse(ssidUrl +
-        '/setting?ssid=' +
-        id +
-        '&pass=' +
-        pass +
-        '&clouduserN=' +
-        cloudUsername +
-        '&cloudpassw=' +
-        cloudPassword +
-        '&cmode=' +
-        cloudMode));
-    if (response.statusCode == 200) {
-      print(response.body.toString());
-      return (response.body.toString());
-    } else {
-      return (response.body.toString());
-    }
-  }
+  // Future<String> Connecttossid(String id, String pass, String cloudUsername,
+  //     String cloudPassword, String cloudMode) async {
+  //   final response = await http.get(Uri.parse(ssidUrl +
+  //       '/setting?ssid=' +
+  //       id +
+  //       '&pass=' +
+  //       pass +
+  //       '&clouduserN=' +
+  //       cloudUsername +
+  //       '&cloudpassw=' +
+  //       cloudPassword +
+  //       '&cmode=' +
+  //       cloudMode));
+  //   if (response.statusCode == 200) {
+  //     print(response.body.toString());
+  //     return (response.body.toString());
+  //   } else {
+  //     return (response.body.toString());
+  //   }
+  // }
 
-  String RestartESP() {
-    final response = http.get(Uri.parse(ssidRestartUrl));
-    return "";
-  }
+  // String RestartESP() {
+  //   final response = http.get(Uri.parse(ssidRestartUrl));
+  //   return "";
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -272,34 +273,14 @@ class ApiConfigurationPage extends StatelessWidget {
                         t13EditTextStyle(
                             lbl_Cloud_Password, cloudPasswordController),
                         SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Cloud Mode',
-                              style: TextStyle(fontSize: 17.0),
-                            ), //Text
-                            SizedBox(width: 10),
-                            Checkbox(
-                              value: value.cloudModeValue,
-                              onChanged: (bool? option) {
-                                value.changeCloudMode(option);
-                              },
-                            ),
-                          ],
-                        ),
+
                         SizedBox(height: 30),
                         T13Button(
-                            textContent: lbl_Connect,
+                            textContent: lbl_Fetch_Generator_Ids,
                             onPressed: () async {
-                              isFirstTimeInThisPage = false;
-                              value.setpref(
-                                  value.chosenSSID,
-                                  passwordController.text,
-                                  int.parse(refreshRateController.text),
+                              value.getGeneratorIds(
                                   cloudUsernameController.text,
-                                  cloudPasswordController.text,
-                                  value.cloudMode);
+                                  cloudPasswordController.text);
                               // await Connecttossid(
                               //     value.chosenSSID,
                               //     passwordController.text,
@@ -308,9 +289,24 @@ class ApiConfigurationPage extends StatelessWidget {
                               //     value.cloudMode.toString());
                               // RestartESP();
                             }),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       'Cloud Mode',
+                        //       style: TextStyle(fontSize: 17.0),
+                        //     ), //Text
+                        //     SizedBox(width: 10),
+                        //     Checkbox(
+                        //       value: value.cloudModeValue,
+                        //       onChanged: (bool? option) {
+                        //         value.changeCloudMode(option);
+                        //       },
+                        //     ),
+                        //   ],
+                        // ),
+                        SizedBox(height: 30),
+
                         if (value.isSuccess && !isFirstTimeInThisPage)
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
@@ -363,6 +359,40 @@ class ApiConfigurationPage extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: mainGreyColorTheme)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                                isExpanded: true,
+                                hint: Text(
+                                  lbl_Generator_ID,
+                                  style: TextStyle(
+                                      color: mainGreyColorTheme,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: mainGreyColorTheme,
+                                ),
+                                items: value.generatorIdList
+                                    .map(buildMenuItem)
+                                    .toList(),
+                                value: value.chosenGeneratorId,
+                                onChanged: (item) {
+                                  String string = item.toString();
+                                  final splitted = string.split('(');
+                                  value.ChooseGenerator(splitted[0]);
+                                }),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         TextFormField(
                           onChanged: (rate) =>
                               value.changeRefreshRate(int.parse(rate)),
@@ -410,11 +440,18 @@ class ApiConfigurationPage extends StatelessWidget {
                               int.parse(refreshRateController.text),
                               cloudUsernameController.text,
                               cloudPasswordController.text,
-                              value.cloudMode);
+                              value.cloudMode,
+                              value.chosenGeneratorId);
                         }
 
-                        value.isNotFirstTime();
-                        prefs.setBool('DashboardFirstTimeAccess', false);
+                        // await value.service.Connecttossid(
+                        //     value.chosenSSID,
+                        //     passwordController.text,
+                        //     cloudUsernameController.text,
+                        //     cloudPasswordController.text,
+                        //     value.cloudMode.toString(),
+                        //     value.chosenGeneratorId);
+                        // value.service.RestartESP();
 
                         if (value.option == 'cloud') {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -427,8 +464,13 @@ class ApiConfigurationPage extends StatelessWidget {
                               builder: (context) => Dashboard_Index()));
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Dashboard_Test()));
+                              builder: (context) => LanDashboard_Index(
+                                    RefreshRate: value.RefreshRate,
+                                  )));
+                        
                         }
+                        value.isNotFirstTime();
+                        prefs.setBool(prefs_DashboardFirstTimeAccess, false);
                       }),
                   SizedBox(
                     height: 25,

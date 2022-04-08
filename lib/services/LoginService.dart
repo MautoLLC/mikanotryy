@@ -3,6 +3,7 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,11 +48,17 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setInt("tokenDuration", temp['expires_in']);
     await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
     await prefs.setInt("tokenStartTime", jwtData['iat']);
-    if(prefs.getBool("DashboardFirstTimeAccess") == null){
-      await prefs.setBool("DashboardFirstTimeAccess", true);
+
+    if(prefs.getBool(prefs_DashboardFirstTimeAccess) == null){
+      await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
     }
-    if(prefs.getString("ApiConfigurationOption") == null){
-      await prefs.setString("ApiConfigurationOption", 'lan');
+
+    if(prefs.getString(prefs_ApiConfigurationOption) == null){
+      await prefs.setString(prefs_ApiConfigurationOption, 'lan');
+    }
+
+    if(prefs.getInt(prefs_RefreshRate) == null){
+      await prefs.setInt(prefs_RefreshRate, 60);
     }
     
 

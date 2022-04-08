@@ -106,7 +106,7 @@ class DashBoard_ModelView {
       return Sensor(
           name: "Restricted",
           valueGuid: "Error",
-          value: "0.0",
+          value: 0.0,
           unit: "Error",
           highLimit: "Error",
           lowLimit: "Error",
@@ -121,7 +121,7 @@ class DashBoard_ModelView {
       return Sensor(
           name: "Restricted",
           valueGuid: "Error",
-          value: "0.0",
+          value: 0.0,
           unit: "Error",
           highLimit: "Error",
           lowLimit: "Error",

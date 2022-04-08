@@ -6,9 +6,11 @@ import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
+import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +36,7 @@ class _MenuScreenState extends State<MenuScreen> {
   SharedPreferences? prefs;
   bool guestLogin = true;
   bool DashboardFirstTimeAccess = true;
+  int RefreshRate = 60;
 
   @override
   void initState() {
@@ -47,7 +50,8 @@ class _MenuScreenState extends State<MenuScreen> {
     this.prefs = await SharedPreferences.getInstance();
     this.guestLogin = await prefs!.getBool("GuestLogin")!;
     this.DashboardFirstTimeAccess =
-        await prefs!.getBool("DashboardFirstTimeAccess")!;
+        await prefs!.getBool(prefs_DashboardFirstTimeAccess)!;
+    this.RefreshRate = await prefs!.getInt(prefs_RefreshRate)!;
   }
 
   // void notFirstTimeDashboardAccess() async {
@@ -56,14 +60,17 @@ class _MenuScreenState extends State<MenuScreen> {
   // }
 
   Widget getPage() {
-    if (this.prefs?.getString("ApiConfigurationOption") == 'cloud') {
+    if (this.prefs?.getString(prefs_ApiConfigurationOption) == 'cloud') {
       return CloudDashboard_Index(
           /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/ RefreshRate:
-              prefs!.getInt("RefreshRate")!);
-    } else if (this.prefs?.getString("ApiConfigurationOption") == 'comap') {
+              this.RefreshRate);
+    } else if (this.prefs?.getString(prefs_ApiConfigurationOption) == 'comap') {
       return Dashboard_Index();
+    } else {
+      return LanDashboard_Index(
+        RefreshRate: this.RefreshRate,
+      );
     }
-    return Dashboard_Test();
   }
 
   @override
