@@ -307,7 +307,7 @@ class ApiConfigurationPage extends StatelessWidget {
                         // ),
                         SizedBox(height: 30),
 
-                        if (value.isSuccess && !isFirstTimeInThisPage)
+                        if (value.isSuccess  == true && value.Message != "")
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
                               height: 40,
@@ -334,10 +334,10 @@ class ApiConfigurationPage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Text(lbl_Test_Success)
+                                  Text(value.Message)
                                 ],
                               )),
-                        if (!value.isSuccess && !isFirstTimeInThisPage)
+                        if (value.isSuccess == false && value.Message != "")
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
                               height: 40,
@@ -353,7 +353,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                           EdgeInsets.symmetric(horizontal: 10),
                                       child: Icon(Icons.error,
                                           color: mainColorTheme, size: 20)),
-                                  Text(lbl_Test_Failed)
+                                  Text(value.Message)
                                 ],
                               )),
                         SizedBox(

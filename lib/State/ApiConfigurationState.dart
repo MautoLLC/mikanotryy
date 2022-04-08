@@ -8,6 +8,7 @@ class ApiConfigurationState extends ChangeNotifier {
   bool isSuccess = false;
   bool cloudModeValue = false;
   String option = 'lan';
+  String Message = '';
   var chosenSSID;
   var chosenGeneratorId;
   int RefreshRate = 60;
@@ -64,15 +65,14 @@ class ApiConfigurationState extends ChangeNotifier {
   void getGeneratorIds(clouduser, cloudpass) async {
     generatorIdList.clear();
     generatorIdList = await service.getGeneratorsOfUser(clouduser, cloudpass);
-    notifyListeners();
-  }
-
-  void ChangeSuccessState(String ssid, String password) {
-    if (ssid == '' && password == '') {
+    if (generatorIdList.isEmpty) {
       isSuccess = false;
-    } else
-      isSuccess = true;
-
+      Message = 'Invalid input, try again.';
+    }
+    else{
+    isSuccess = true;
+    Message = 'Generators fetched successfully.';
+    }
     notifyListeners();
   }
 

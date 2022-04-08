@@ -6,8 +6,6 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 
-
-
 class ApiConfigurationService {
   void resetESP() async {
     final response = await http.get(Uri.parse(resetESPUrl));
@@ -78,6 +76,11 @@ class ApiConfigurationService {
           'email': cloudUsername,
           'password': cloudPassword,
         }));
+
+    final isAuthenticated = jsonDecode((responseAuth.body))['isAuthenticated'];
+    if (isAuthenticated == false) {
+      return [];
+    }
 
     final token = jsonDecode((responseAuth.body))['token'];
     final userID = jsonDecode((responseAuth.body))['id'];
