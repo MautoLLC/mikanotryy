@@ -3,8 +3,10 @@ import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
+import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -14,24 +16,36 @@ import 'package:http/http.dart' as http;
 class ApiConfigurationPage extends StatelessWidget {
   ApiConfigurationPage({Key? key}) : super(key: key);
   final refreshRateController = TextEditingController();
+  final cloudUsernameController = TextEditingController();
+  final cloudPasswordController = TextEditingController();
   final passwordController = TextEditingController();
   bool isFirstTimeInThisPage = true;
 
-  Future<String> Connecttossid(String id, String pass) async {
-    final response = await http
-        .get(Uri.parse(ssidUrl + '/setting?ssid=' + id + '&pass=' + pass));
-    if (response.statusCode == 200) {
-      print(response.body.toString());
-      return (response.body.toString());
-    } else {
-      return (response.body.toString());
-    }
-  }
+  // Future<String> Connecttossid(String id, String pass, String cloudUsername,
+  //     String cloudPassword, String cloudMode) async {
+  //   final response = await http.get(Uri.parse(ssidUrl +
+  //       '/setting?ssid=' +
+  //       id +
+  //       '&pass=' +
+  //       pass +
+  //       '&clouduserN=' +
+  //       cloudUsername +
+  //       '&cloudpassw=' +
+  //       cloudPassword +
+  //       '&cmode=' +
+  //       cloudMode));
+  //   if (response.statusCode == 200) {
+  //     print(response.body.toString());
+  //     return (response.body.toString());
+  //   } else {
+  //     return (response.body.toString());
+  //   }
+  // }
 
-  String RestartESP() {
-    final response = http.get(Uri.parse(ssidRestartUrl));
-    return "";
-  }
+  // String RestartESP() {
+  //   final response = http.get(Uri.parse(ssidRestartUrl));
+  //   return "";
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +205,7 @@ class ApiConfigurationPage extends StatelessWidget {
                     height: 55,
                   ),
                   Spacer(),
-                  if (value.DashBoardFirstTimeAccess == true)
+                  if (value.DashBoardFirstTimeAccess == true) ...[
                     Column(
                       children: [
                         Container(
@@ -226,23 +240,74 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         t13EditTextStyle(lbl_hint_password, passwordController),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          onChanged: (username) =>
+                              value.changeCloudUsername(username),
+                          style: TextStyle(
+                              fontSize: textSizeMedium,
+                              fontFamily: PoppinsFamily),
+                          obscureText: false,
+                          cursorColor: black,
+                          controller: cloudUsernameController,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
+                            hintText: lbl_Cloud_Username,
+                            hintStyle:
+                                primaryTextStyle(color: textFieldHintColor),
+                            filled: true,
+                            fillColor: lightBorderColor,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              // borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide(
+                                  color: Colors.transparent, width: 0.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        t13EditTextStyle(
+                            lbl_Cloud_Password, cloudPasswordController),
+                        SizedBox(height: 20),
+
                         SizedBox(height: 30),
                         T13Button(
-                            textContent: lbl_Connect,
+                            textContent: lbl_Fetch_Generator_Ids,
                             onPressed: () async {
-                              isFirstTimeInThisPage = false;
-                              value.setpref(
-                                  value.chosenSSID,
-                                  passwordController.text,
-                                  int.parse(refreshRateController.text));
-                              await Connecttossid(
-                                  value.chosenSSID, passwordController.text);
-                              RestartESP();
+                              value.getGeneratorIds(
+                                  cloudUsernameController.text,
+                                  cloudPasswordController.text);
+                              // await Connecttossid(
+                              //     value.chosenSSID,
+                              //     passwordController.text,
+                              //     cloudUsernameController.text,
+                              //     cloudPasswordController.text,
+                              //     value.cloudMode.toString());
+                              // RestartESP();
                             }),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        if (value.isSuccess && !isFirstTimeInThisPage)
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       'Cloud Mode',
+                        //       style: TextStyle(fontSize: 17.0),
+                        //     ), //Text
+                        //     SizedBox(width: 10),
+                        //     Checkbox(
+                        //       value: value.cloudModeValue,
+                        //       onChanged: (bool? option) {
+                        //         value.changeCloudMode(option);
+                        //       },
+                        //     ),
+                        //   ],
+                        // ),
+                        SizedBox(height: 30),
+
+                        if (value.isSuccess  == true && value.Message != "")
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
                               height: 40,
@@ -269,10 +334,10 @@ class ApiConfigurationPage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Text(lbl_Test_Success)
+                                  Text(value.Message)
                                 ],
                               )),
-                        if (!value.isSuccess && !isFirstTimeInThisPage)
+                        if (value.isSuccess == false && value.Message != "")
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
                               height: 40,
@@ -288,11 +353,45 @@ class ApiConfigurationPage extends StatelessWidget {
                                           EdgeInsets.symmetric(horizontal: 10),
                                       child: Icon(Icons.error,
                                           color: mainColorTheme, size: 20)),
-                                  Text(lbl_Test_Failed)
+                                  Text(value.Message)
                                 ],
                               )),
                         SizedBox(
                           height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: mainGreyColorTheme)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                                isExpanded: true,
+                                hint: Text(
+                                  lbl_Generator_ID,
+                                  style: TextStyle(
+                                      color: mainGreyColorTheme,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: mainGreyColorTheme,
+                                ),
+                                items: value.generatorIdList
+                                    .map(buildMenuItem)
+                                    .toList(),
+                                value: value.chosenGeneratorId,
+                                onChanged: (item) {
+                                  String string = item.toString();
+                                  final splitted = string.split('(');
+                                  value.ChooseGenerator(splitted[0]);
+                                }),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         TextFormField(
                           onChanged: (rate) =>
@@ -326,6 +425,7 @@ class ApiConfigurationPage extends StatelessWidget {
                         SizedBox(height: 10)
                       ],
                     ),
+                  ],
                   Spacer(),
                   T13Button(
                       textContent: lbl_Save,
@@ -337,15 +437,40 @@ class ApiConfigurationPage extends StatelessWidget {
                           value.setpref(
                               value.chosenSSID,
                               passwordController.text,
-                              int.parse(refreshRateController.text));
+                              int.parse(refreshRateController.text),
+                              cloudUsernameController.text,
+                              cloudPasswordController.text,
+                              value.cloudMode,
+                              value.chosenGeneratorId);
                         }
 
-                        value.DashBoardFirstTimeAccess = false;
-                        prefs.setBool('DashboardFirstTimeAccess',
-                            value.DashBoardFirstTimeAccess);
+                        // await value.service.Connecttossid(
+                        //     value.chosenSSID,
+                        //     passwordController.text,
+                        //     cloudUsernameController.text,
+                        //     cloudPasswordController.text,
+                        //     value.cloudMode.toString(),
+                        //     value.chosenGeneratorId);
+                        // value.service.RestartESP();
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Dashboard_Index()));
+                        if (value.option == 'cloud') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CloudDashboard_Index(
+                                  /* ApiEndPoint:
+                                      "https//iotapi.mauto.co/api/generators/values/",*/
+                                  RefreshRate: value.RefreshRate)));
+                        } else if (value.option == 'comap') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Dashboard_Index()));
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LanDashboard_Index(
+                                    RefreshRate: value.RefreshRate,
+                                  )));
+                        
+                        }
+                        value.isNotFirstTime();
+                        prefs.setBool(prefs_DashboardFirstTimeAccess, false);
                       }),
                   SizedBox(
                     height: 25,
