@@ -155,10 +155,9 @@ class CloudDashBoard_Service {
             dotenv.env['EngineState_id'].toString().toUpperCase(),
         'value': Command.toString(),
         //'timeStamp':DateTime.now().toString()
-        'timeStamp': '2022-03-10T19:51:32.073Z',
+        'timeStamp': DateTime.now().toIso8601String(),
       }),
     );
-    String now = DateTime.now().toString();
     if (response.statusCode == 201) {
       return response.toString();
     } else {
