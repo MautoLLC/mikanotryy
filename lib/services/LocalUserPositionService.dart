@@ -17,8 +17,7 @@ class gps {
         return;
       }
       Position position = await determinePosition();
-      print("longitude: ${position.longitude}");
-      print("latitude: ${position.latitude}");
+      updateLocation(position.longitude, position.latitude);
     });
   }
 
@@ -67,27 +66,35 @@ class gps {
     return await Geolocator.getCurrentPosition();
   }
 
-  // Future<void> updateLocation(double longitude, double latitude) async {
-  //   Position position = await determinePosition();
-  //   Dio dio = Dio();
-  //   final response = await dio.post(LocationSettingsUrl,
-  //   data: {
-  //     "refreshRate": 0,
-  //     "startTime": "string",
-  //     "endTime": "string"
-  //   },
-  //   options: Options(
-  //     headers: {
-  //       "Authorization": "Bearer ${AppSettings.getString("token")}",
-  //       "Content-Type": "application/json"
-  //     }
-  //   ));
+  static Future<void> updateLocation(double longitude, double latitude) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    try{
+      final response = await dio.post(LocationByDeviceUrl.replaceAll("{deviceToken}", prefs.getString("DeviceToken").toString()),
+      data: {
+        "longitude": longitude,
+        "latitude": latitude
+      },
+      options: Options(
+        headers: {
+          "Authorization": "Bearer ${prefs.getString("accessToken")}",
+          "Content-Type": "application/json"
+        }
+      ));
+      if(response.statusCode == 200){
+        print("Location updated");
+        return;
+      } else {
+        print("Location not updated");
+        return;
+      }
+    }catch(e){
+      print(e);
+      throw Exception(e);
+    }
+  }
 
-    
-  // }
-
-  Future<LocationSettingsModel> GetLocationSettings() async {
-    // Position position = await determinePosition();
+    Future<LocationSettingsModel> GetLocationSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     try{
