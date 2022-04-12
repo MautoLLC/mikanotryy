@@ -10,6 +10,7 @@ import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'State/CarouselState.dart';
 import 'State/InspectionsState.dart';
+import 'State/LocationState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
 import 'package:flutter/services.dart';
@@ -55,6 +56,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => RequestFormState())),
         ChangeNotifierProvider<CarouselState>(
             create: ((context) => CarouselState())),
+        ChangeNotifierProvider<LocationState>(
+            create: ((context) => LocationState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

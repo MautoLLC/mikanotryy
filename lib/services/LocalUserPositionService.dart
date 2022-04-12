@@ -1,14 +1,18 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mymikano_app/models/LocationSettingsModel.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class gps {
   static late Timer timer;
   static bool canceled = false;
 
-  static void StartTimer() {
-    timer = Timer.periodic(Duration(seconds: 3), (timer) async {
-      if (canceled) {
+  static void StartTimer(int refreshRate, DateTime start, DateTime end) {
+    timer = Timer.periodic(Duration(seconds: refreshRate), (timer) async {
+      if (canceled || !(DateTime.now().isBefore(end) && DateTime.now().isAfter(start))) {
         stopTimer(timer);
         return;
       }
@@ -61,5 +65,47 @@ class gps {
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return await Geolocator.getCurrentPosition();
+  }
+
+  // Future<void> updateLocation(double longitude, double latitude) async {
+  //   Position position = await determinePosition();
+  //   Dio dio = Dio();
+  //   final response = await dio.post(LocationSettingsUrl,
+  //   data: {
+  //     "refreshRate": 0,
+  //     "startTime": "string",
+  //     "endTime": "string"
+  //   },
+  //   options: Options(
+  //     headers: {
+  //       "Authorization": "Bearer ${AppSettings.getString("token")}",
+  //       "Content-Type": "application/json"
+  //     }
+  //   ));
+
+    
+  // }
+
+  Future<LocationSettingsModel> GetLocationSettings() async {
+    // Position position = await determinePosition();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Dio dio = Dio();
+    try{
+      final response = await dio.get(LocationSettingsUrl,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer ${prefs.getString("accessToken")}",
+            "Content-Type": "application/json"
+          }
+        ));
+    if(response.statusCode == 200) {
+      return LocationSettingsModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to load location settings');
+    }
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to load location settings');
+    }
   }
 }

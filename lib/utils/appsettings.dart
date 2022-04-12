@@ -110,3 +110,6 @@ const cloudIotMautoSensorsUrl = cloudIotMautoUrl + "/generators/values/";
 const cloudIotMautoUserGeneratorsUrl = cloudIotMautoUrl + "/generators/list/";
 const lanESPUrl = "http://espapiendpoint";
 const resetESPUrl = lanESPUrl + "/reset";
+
+const LocationUrl = 'http://dev.codepickles.com:8094';
+const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
