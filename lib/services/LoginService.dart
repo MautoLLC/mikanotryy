@@ -49,9 +49,9 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
     await prefs.setInt("tokenStartTime", jwtData['iat']);
 
-    if(prefs.getBool(prefs_DashboardFirstTimeAccess) == null){
-      await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
-    }
+
+    await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
+
 
     if(prefs.getString(prefs_ApiConfigurationOption) == null){
       await prefs.setString(prefs_ApiConfigurationOption, 'lan');
