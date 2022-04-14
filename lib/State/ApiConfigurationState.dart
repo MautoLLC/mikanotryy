@@ -68,10 +68,9 @@ class ApiConfigurationState extends ChangeNotifier {
     if (generatorIdList.isEmpty) {
       isSuccess = false;
       Message = 'Invalid input, try again.';
-    }
-    else{
-    isSuccess = true;
-    Message = 'Generators fetched successfully.';
+    } else {
+      isSuccess = true;
+      Message = 'Generators fetched successfully.';
     }
     notifyListeners();
   }
@@ -120,6 +119,7 @@ class ApiConfigurationState extends ChangeNotifier {
   void clear() {
     DashBoardFirstTimeAccess = true;
     isSuccess = false;
+    Message = '';
     cloudModeValue = false;
     option = 'lan';
     chosenSSID = null;
