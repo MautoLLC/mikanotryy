@@ -39,10 +39,10 @@ class ApiConfigurationService {
     }
   }
 
-  String RestartESP() {
-    final response = http.get(Uri.parse(ssidRestartUrl));
-    return "";
-  }
+  // String RestartESP() {
+  //   final response = http.get(Uri.parse(ssidRestartUrl));
+  //   return "";
+  // }
 
   Future<List<String>> getSSIDList() async {
     final response = await http.get(Uri.parse("http://192.168.4.1"));
@@ -65,9 +65,9 @@ class ApiConfigurationService {
     }
   }
 
-  Future<List<String>> getGeneratorsOfUser(
+  Future<List<Generator>> getGeneratorsOfUser(
       String cloudUsername, String cloudPassword) async {
-    List<String> generatorIDs = [];
+    List<Generator> generators = [];
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
           'Content-Type': 'application/json',
@@ -90,16 +90,12 @@ class ApiConfigurationService {
         headers: {'Authorization': 'Bearer ' + token.toString()});
 
     if (response.statusCode == 200) {
-      List<Generator> generators = List<Generator>.from(
+      generators = List<Generator>.from(
           json.decode(response.body).map((x) => Generator.fromJson(x)));
-
-      for (Generator generator in generators) {
-        generatorIDs.add(generator.generatorId);
-      }
-      return generatorIDs;
+      return generators;
     } else {
       print(response.body.toString());
-      return generatorIDs;
+      return generators;
     }
   }
 }

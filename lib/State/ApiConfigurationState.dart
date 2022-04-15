@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/services/ApiConfigurationService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,22 +8,28 @@ class ApiConfigurationState extends ChangeNotifier {
   bool DashBoardFirstTimeAccess = true;
   bool isSuccess = false;
   bool cloudModeValue = false;
+  bool loading = false;
   String option = 'lan';
   String Message = '';
+  String chosenGeneratorId = '';
   var chosenSSID;
-  var chosenGeneratorId;
+  var chosenGeneratorName;
   int RefreshRate = 60;
   int cloudMode = 0;
   String password = '';
   String cloudUsername = '';
   String cloudPassword = '';
   List<String> ssidList = [];
-  List<String> generatorIdList = [];
+  List<String> generatorNameList = [];
   ApiConfigurationService service = new ApiConfigurationService();
 
   ApiConfigurationState() {
     update();
-    ShowSSIDs();
+  }
+
+  void startLoading(value) {
+    loading = true;
+    notifyListeners();
   }
 
   void ChangeMode(String value) async {
@@ -63,9 +70,13 @@ class ApiConfigurationState extends ChangeNotifier {
   }
 
   void getGeneratorIds(clouduser, cloudpass) async {
-    generatorIdList.clear();
-    generatorIdList = await service.getGeneratorsOfUser(clouduser, cloudpass);
-    if (generatorIdList.isEmpty) {
+    generatorNameList.clear();
+    List<Generator> generators =
+        await service.getGeneratorsOfUser(clouduser, cloudpass);
+    generators.forEach((element) {
+      generatorNameList.add(element.name);
+    });
+    if (generatorNameList.isEmpty) {
       isSuccess = false;
       Message = 'Invalid input, try again.';
     } else {
@@ -90,19 +101,16 @@ class ApiConfigurationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void ShowSSIDs() {
+  void ShowSSIDs() async {
     ssidList.clear();
-    List<String> l = [
-      'ssid1',
-      'ssid2',
-      'ssid3',
-      'ssid4',
-      'ssid5',
-    ];
-
-    l.forEach((element) {
-      ssidList.add(element);
-    });
+    ssidList = await service.getSSIDList();
+    // ssidList = [
+    //   'ssid1',
+    //   'ssid2',
+    //   'ssid3',
+    //   'ssid4',
+    //   'ssid5',
+    // ];
     notifyListeners();
   }
 
@@ -111,26 +119,33 @@ class ApiConfigurationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void ChooseGenerator(String splitted) {
-    chosenGeneratorId = splitted;
+  void ChooseGeneratorName(String splitted) {
+    chosenGeneratorName = splitted;
+    notifyListeners();
+  }
+
+  void setChosenGeneratorId(String id) {
+    chosenGeneratorId = id;
     notifyListeners();
   }
 
   void clear() {
     DashBoardFirstTimeAccess = true;
     isSuccess = false;
+    loading = false;
     Message = '';
     cloudModeValue = false;
     option = 'lan';
     chosenSSID = null;
-    chosenGeneratorId = null;
+    chosenGeneratorId = '';
+    chosenGeneratorName = null;
     RefreshRate = 60;
     cloudMode = 0;
     password = '';
     cloudUsername = '';
     cloudPassword = '';
     ssidList = [];
-    generatorIdList = [];
+    generatorNameList = [];
     notifyListeners();
   }
 
@@ -145,8 +160,7 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.remove(prefs_CloudPassword);
     prefs.remove(prefs_CloudMode);
     prefs.remove(prefs_GeneratorId);
-    //service.resetESP();
-    ShowSSIDs();
+    service.resetESP();
     notifyListeners();
   }
 
