@@ -189,3 +189,6 @@ const prefs_CloudPassword = "CloudPassword";
 const prefs_CloudMode = "CloudMode";
 const prefs_GeneratorId = "GeneratorId";
 const prefs_RefreshRate = "RefreshRate";
+const lbl_Fetch = "Fetch";
+const lbl_Fetch_Generators = "Fetch Generators";
+const lbl_Reset = "Reset";

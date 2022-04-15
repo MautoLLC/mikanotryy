@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
+import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -21,32 +25,6 @@ class ApiConfigurationPage extends StatelessWidget {
   final passwordController = TextEditingController();
   bool isFirstTimeInThisPage = true;
 
-  // Future<String> Connecttossid(String id, String pass, String cloudUsername,
-  //     String cloudPassword, String cloudMode) async {
-  //   final response = await http.get(Uri.parse(ssidUrl +
-  //       '/setting?ssid=' +
-  //       id +
-  //       '&pass=' +
-  //       pass +
-  //       '&clouduserN=' +
-  //       cloudUsername +
-  //       '&cloudpassw=' +
-  //       cloudPassword +
-  //       '&cmode=' +
-  //       cloudMode));
-  //   if (response.statusCode == 200) {
-  //     print(response.body.toString());
-  //     return (response.body.toString());
-  //   } else {
-  //     return (response.body.toString());
-  //   }
-  // }
-
-  // String RestartESP() {
-  //   final response = http.get(Uri.parse(ssidRestartUrl));
-  //   return "";
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ApiConfigurationState>(
@@ -64,7 +42,6 @@ class ApiConfigurationPage extends StatelessWidget {
                   SizedBox(
                     height: 35,
                   ),
-                  Spacer(),
                   Container(
                     alignment: Alignment.center,
                     width: 120,
@@ -74,22 +51,21 @@ class ApiConfigurationPage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
-                    height: 27,
-                  ),
-                  Spacer(),
-                  SizedBox(
-                    width: (MediaQuery.of(context).size.height) - 16,
-                    child: Text(
-                      txt_API_Configuration,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Spacer(),
+                  // SizedBox(
+                  //   height: 27,
+                  // ),
+                  // Spacer(),
+                  // SizedBox(
+                  //   width: (MediaQuery.of(context).size.height) - 16,
+                  //   child: Text(
+                  //     txt_API_Configuration,
+                  //     textAlign: TextAlign.center,
+                  //     style: TextStyle(fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 30,
+                  // ),
                   Row(
                     children: [
                       Expanded(
@@ -110,6 +86,12 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('lan');
+                          if (value.DashBoardFirstTimeAccess == false) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => LanDashboard_Index(
+                                      RefreshRate: value.RefreshRate,
+                                    )));
+                          }
                         },
                         child: Center(
                           child: Padding(
@@ -146,6 +128,12 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('cloud');
+                          if (value.DashBoardFirstTimeAccess == false) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => CloudDashboard_Index(
+                                      RefreshRate: value.RefreshRate,
+                                    )));
+                          }
                         },
                         child: Center(
                           child: Padding(
@@ -182,6 +170,10 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('comap');
+                          if (value.DashBoardFirstTimeAccess == false) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Dashboard_Index()));
+                          }
                         },
                         child: Center(
                           child: Padding(
@@ -204,43 +196,9 @@ class ApiConfigurationPage extends StatelessWidget {
                   SizedBox(
                     height: 55,
                   ),
-                  Spacer(),
                   if (value.DashBoardFirstTimeAccess == true) ...[
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: mainGreyColorTheme)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                                isExpanded: true,
-                                hint: Text(
-                                  lbl_SSID,
-                                  style: TextStyle(
-                                      color: mainGreyColorTheme,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: mainGreyColorTheme,
-                                ),
-                                items:
-                                    value.ssidList.map(buildMenuItem).toList(),
-                                value: value.chosenSSID,
-                                onChanged: (item) {
-                                  String string = item.toString();
-                                  final splitted = string.split('(');
-                                  value.ComboBoxState(splitted[0]);
-                                }),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        t13EditTextStyle(lbl_hint_password, passwordController),
-                        SizedBox(height: 20),
+                    Expanded(
+                      child: Column(children: [
                         TextFormField(
                           onChanged: (username) =>
                               value.changeCloudUsername(username),
@@ -273,22 +231,6 @@ class ApiConfigurationPage extends StatelessWidget {
                         t13EditTextStyle(
                             lbl_Cloud_Password, cloudPasswordController),
                         SizedBox(height: 20),
-
-                        SizedBox(height: 30),
-                        T13Button(
-                            textContent: lbl_Fetch_Generator_Ids,
-                            onPressed: () async {
-                              value.getGeneratorIds(
-                                  cloudUsernameController.text,
-                                  cloudPasswordController.text);
-                              // await Connecttossid(
-                              //     value.chosenSSID,
-                              //     passwordController.text,
-                              //     cloudUsernameController.text,
-                              //     cloudPasswordController.text,
-                              //     value.cloudMode.toString());
-                              // RestartESP();
-                            }),
                         // Row(
                         //   mainAxisAlignment: MainAxisAlignment.center,
                         //   children: [
@@ -305,9 +247,9 @@ class ApiConfigurationPage extends StatelessWidget {
                         //     ),
                         //   ],
                         // ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 10),
 
-                        if (value.isSuccess  == true && value.Message != "")
+                        if (value.isSuccess == true && value.Message != "")
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
                               height: 40,
@@ -359,122 +301,223 @@ class ApiConfigurationPage extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: mainGreyColorTheme)),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                                isExpanded: true,
-                                hint: Text(
-                                  lbl_Generator_ID,
-                                  style: TextStyle(
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 25),
+                              width: MediaQuery.of(context).size.width / 2,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border:
+                                      Border.all(color: mainGreyColorTheme)),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Text(
+                                      lbl_Generator_ID,
+                                      style: TextStyle(
+                                          color: mainGreyColorTheme,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
                                       color: mainGreyColorTheme,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: mainGreyColorTheme,
-                                ),
-                                items: value.generatorIdList
-                                    .map(buildMenuItem)
-                                    .toList(),
-                                value: value.chosenGeneratorId,
-                                onChanged: (item) {
-                                  String string = item.toString();
-                                  final splitted = string.split('(');
-                                  value.ChooseGenerator(splitted[0]);
-                                }),
-                          ),
+                                    ),
+                                    items: value.generatorNameList
+                                        .map(buildMenuItem)
+                                        .toList(),
+                                    value: value.chosenGeneratorName,
+                                    onChanged: (item) {
+                                      String string = item.toString();
+                                      final splitted = string.split('(');
+                                      value.ChooseGeneratorName(splitted[0]);
+                                    }),
+                              ),
+                            ),
+                            Spacer(),
+                            Container(
+                              height: 50,
+                              child: T13Button(
+                                  textContent: lbl_Fetch_Generators,
+                                  onPressed: () async {
+                                    value.getGeneratorIds(
+                                        cloudUsernameController.text,
+                                        cloudPasswordController.text);
+                                  }),
+                            ),
+                          ],
                         ),
+
                         SizedBox(
-                          height: 20,
+                          height: 25,
                         ),
-                        TextFormField(
-                          onChanged: (rate) =>
-                              value.changeRefreshRate(int.parse(rate)),
-                          style: TextStyle(
-                              fontSize: textSizeMedium,
-                              fontFamily: PoppinsFamily),
-                          obscureText: false,
-                          cursorColor: black,
-                          controller: refreshRateController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
-                            hintText: lbl_Default_Refresh_Rate,
-                            hintStyle:
-                                primaryTextStyle(color: textFieldHintColor),
-                            filled: true,
-                            fillColor: lightBorderColor,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              // borderRadius: BorderRadius.circular(24),
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0.0),
+                        if (value.isSuccess == true) ...[
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                width: MediaQuery.of(context).size.width / 1.5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border:
+                                        Border.all(color: mainGreyColorTheme)),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      hint: Text(
+                                        lbl_SSID,
+                                        style: TextStyle(
+                                            color: mainGreyColorTheme,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      icon: Icon(
+                                        Icons.arrow_drop_down,
+                                        color: mainGreyColorTheme,
+                                      ),
+                                      items: value.ssidList
+                                          .map(buildMenuItem)
+                                          .toList(),
+                                      value: value.chosenSSID,
+                                      onChanged: (item) {
+                                        String string = item.toString();
+                                        final splitted = string.split('(');
+                                        value.ComboBoxState(splitted[0]);
+                                      }),
+                                ),
+                              ),
+                              Spacer(),
+                              Container(
+                                height: 50,
+                                child: T13Button(
+                                    textContent: lbl_Fetch,
+                                    onPressed: () async {
+                                      value.ShowSSIDs();
+                                    }),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          t13EditTextStyle(
+                              lbl_hint_password, passwordController),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            onChanged: (rate) =>
+                                value.changeRefreshRate(int.parse(rate)),
+                            style: TextStyle(
+                                fontSize: textSizeMedium,
+                                fontFamily: PoppinsFamily),
+                            obscureText: false,
+                            cursorColor: black,
+                            controller: refreshRateController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(26, 14, 4, 14),
+                              hintText: lbl_Default_Refresh_Rate,
+                              hintStyle:
+                                  primaryTextStyle(color: textFieldHintColor),
+                              filled: true,
+                              fillColor: lightBorderColor,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // borderRadius: BorderRadius.circular(24),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0.0),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 10)
-                      ],
+                          SizedBox(height: 10),
+                          Spacer(),
+                          T13Button(
+                              textContent: lbl_Save,
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+
+                                String generatorId = "";
+                                List<Generator> generators = await value.service
+                                    .getGeneratorsOfUser(
+                                        cloudUsernameController.text,
+                                        cloudPasswordController.text);
+
+                                generators.forEach((element) {
+                                  if (element.name ==
+                                      value.chosenGeneratorName) {
+                                    generatorId = element.generatorId;
+                                    value.setChosenGeneratorId(generatorId);
+                                  }
+                                });
+                                value.startLoading(true);
+                                if (value.DashBoardFirstTimeAccess == true) {
+                                  value.setpref(
+                                      value.chosenSSID,
+                                      passwordController.text,
+                                      int.parse(refreshRateController.text),
+                                      cloudUsernameController.text,
+                                      cloudPasswordController.text,
+                                      value.cloudMode,
+                                      value.chosenGeneratorId);
+                                }
+
+                                await value.service.Connecttossid(
+                                    value.chosenSSID,
+                                    passwordController.text,
+                                    cloudUsernameController.text,
+                                    cloudPasswordController.text,
+                                    value.cloudMode.toString(),
+                                    value.chosenGeneratorId);
+
+                                // value.service.RestartESP();
+                                Timer(Duration(seconds: 15), () {
+                                  // to add before this switch to cloud mode as get request to the esp
+                                  if (value.option == 'cloud') {
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => CloudDashboard_Index(
+                                            /* ApiEndPoint:
+                                        "https//iotapi.mauto.co/api/generators/values/",*/
+                                            RefreshRate: value.RefreshRate)));
+                                  } else if (value.option == 'comap') {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Dashboard_Index()));
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LanDashboard_Index(
+                                                  RefreshRate:
+                                                      value.RefreshRate,
+                                                )));
+                                  }
+                                  value.isNotFirstTime();
+                                  prefs.setBool(
+                                      prefs_DashboardFirstTimeAccess, false);
+                                });
+                              }),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          if (value.loading == true)
+                            SpinKitCircle(
+                              color: Colors.black,
+                              size: 65,
+                            ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                        ],
+                      ]),
                     ),
                   ],
-                  Spacer(),
-                  T13Button(
-                      textContent: lbl_Save,
-                      onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-
-                        if (value.DashBoardFirstTimeAccess == true) {
-                          value.setpref(
-                              value.chosenSSID,
-                              passwordController.text,
-                              int.parse(refreshRateController.text),
-                              cloudUsernameController.text,
-                              cloudPasswordController.text,
-                              value.cloudMode,
-                              value.chosenGeneratorId);
-                        }
-
-                        // await value.service.Connecttossid(
-                        //     value.chosenSSID,
-                        //     passwordController.text,
-                        //     cloudUsernameController.text,
-                        //     cloudPasswordController.text,
-                        //     value.cloudMode.toString(),
-                        //     value.chosenGeneratorId);
-                        // value.service.RestartESP();
-
-                        if (value.option == 'cloud') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CloudDashboard_Index(
-                                  /* ApiEndPoint:
-                                      "https//iotapi.mauto.co/api/generators/values/",*/
-                                  RefreshRate: value.RefreshRate)));
-                        } else if (value.option == 'comap') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Dashboard_Index()));
-                        } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LanDashboard_Index(
-                                    RefreshRate: value.RefreshRate,
-                                  )));
-                        
-                        }
-                        value.isNotFirstTime();
-                        prefs.setBool(prefs_DashboardFirstTimeAccess, false);
-                      }),
-                  SizedBox(
-                    height: 25,
-                  )
                 ]),
               ),
             )

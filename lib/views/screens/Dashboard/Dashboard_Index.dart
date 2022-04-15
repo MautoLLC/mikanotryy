@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/models/Sensor_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -10,12 +11,14 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/DashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
+import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 
 import 'ApiConfigurationPage.dart';
 
@@ -189,7 +192,8 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<ApiConfigurationState>(
+        builder: (context, value, child) => Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -232,7 +236,10 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                 color: backArrowColor,
                               ),
                               onPressed: () {
-                                finish(context);
+                                Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Theme5Dashboard()));
                               },
                             ),
                             Spacer(),
@@ -247,6 +254,39 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                           ApiConfigurationPage()));
                                 },
                                 icon: Icon(Icons.settings)),
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    SizedBox.fromSize(
+                                      size: Size(40, 50),
+                                      child: ClipOval(
+                                        child: Material(
+                                          color: Colors.white,
+                                          child: InkWell(
+                                            onTap: () {
+                                              value.resetPreferences();
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ApiConfigurationPage()));
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Icon(Icons.refresh), // <-- Icon
+                                                Text(lbl_Reset), // <-- Text
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                    SizedBox(width: 5),
                             GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
@@ -520,7 +560,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                   }
                 }),
           ),
-        ));
+        )));
   }
 }
 

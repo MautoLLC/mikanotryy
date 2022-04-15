@@ -10,6 +10,7 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/LanDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
+import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -264,7 +265,10 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     color: backArrowColor,
                                   ),
                                   onPressed: () {
-                                    finish(context);
+                                    Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Theme5Dashboard()));
                                   },
                                 ),
                                 Spacer(),
@@ -281,15 +285,38 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     },
                                     icon: Icon(Icons.settings)),
 
-                                IconButton(
-                                    onPressed: () {
-                                      value.resetPreferences();
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ApiConfigurationPage()));
-                                    },
-                                    icon: Icon(Icons.refresh)),
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    SizedBox.fromSize(
+                                      size: Size(40, 50),
+                                      child: ClipOval(
+                                        child: Material(
+                                          color: Colors.white,
+                                          child: InkWell(
+                                            onTap: () {
+                                              value.resetPreferences();
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ApiConfigurationPage()));
+                                            },
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Icon(Icons.refresh), // <-- Icon
+                                                Text(lbl_Reset), // <-- Text
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                                 // GestureDetector(
                                 //     onTap: () {
                                 //       Navigator.of(context).push(MaterialPageRoute(
