@@ -19,6 +19,7 @@ class ApiConfigurationState extends ChangeNotifier {
   String password = '';
   String cloudUsername = '';
   String cloudPassword = '';
+  String apiLanEndpoint = '';
   List<String> ssidList = [];
   List<String> generatorNameList = [];
   ApiConfigurationService service = new ApiConfigurationService();
@@ -27,8 +28,8 @@ class ApiConfigurationState extends ChangeNotifier {
     update();
   }
 
-  void startLoading(value) {
-    loading = true;
+  void Loading(value) {
+    loading = value;
     notifyListeners();
   }
 
@@ -66,6 +67,7 @@ class ApiConfigurationState extends ChangeNotifier {
     cloudPassword = prefs.getString(prefs_CloudPassword)!;
     cloudMode = prefs.getInt(prefs_CloudMode)!;
     chosenGeneratorId = prefs.getString(prefs_GeneratorId)!;
+    apiLanEndpoint = prefs.getString(prefs_ApiLanEndpoint)!;
     notifyListeners();
   }
 
@@ -93,6 +95,11 @@ class ApiConfigurationState extends ChangeNotifier {
 
   void changeCloudUsername(username) {
     cloudUsername = username;
+    notifyListeners();
+  }
+
+  void changeApiLanEndpoint(apiendpoint) {
+    apiLanEndpoint = apiendpoint;
     notifyListeners();
   }
 
@@ -143,6 +150,7 @@ class ApiConfigurationState extends ChangeNotifier {
     cloudMode = 0;
     password = '';
     cloudUsername = '';
+    apiLanEndpoint = '';
     cloudPassword = '';
     ssidList = [];
     generatorNameList = [];
@@ -160,6 +168,7 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.remove(prefs_CloudPassword);
     prefs.remove(prefs_CloudMode);
     prefs.remove(prefs_GeneratorId);
+    prefs.remove(prefs_ApiLanEndpoint);
     service.resetESP();
     notifyListeners();
   }
@@ -174,5 +183,10 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.setString(prefs_CloudPassword, cloudPassword);
     prefs.setInt(prefs_CloudMode, cloudMode);
     prefs.setString(prefs_GeneratorId, generatorId);
+  }
+
+  void setApiLanEndpoint(String apiEndpoint) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(prefs_ApiLanEndpoint, apiEndpoint);
   }
 }

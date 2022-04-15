@@ -265,10 +265,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     color: backArrowColor,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Theme5Dashboard()));
+                                    finish(context);
                                   },
                                 ),
                                 Spacer(),

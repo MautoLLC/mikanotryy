@@ -254,10 +254,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     color: backArrowColor,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Theme5Dashboard()));
+                                    finish(context);
                                   },
                                 ),
                                 Spacer(),
