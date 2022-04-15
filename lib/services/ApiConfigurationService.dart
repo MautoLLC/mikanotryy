@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -7,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 
 class ApiConfigurationService {
+
   void resetESP() async {
     final response = await http.get(Uri.parse(resetESPUrl));
     if (response.statusCode == 200) {
@@ -45,11 +49,19 @@ class ApiConfigurationService {
   // }
 
   Future<List<String>> getSSIDList() async {
-    final response = await http.get(Uri.parse("http://192.168.4.1"));
+      Dio dio = Dio();
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (HttpClient client) {
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  };
+  try{
+
+    final response = await dio.get(("http://192.168.4.1"));
     List<String> ssids = [];
     if (response.statusCode == 200) {
-      print(response.body.toString());
-      dom.Document document = parse(response.body);
+      print(response.data.toString());
+      dom.Document document = parse(response.data);
 
       document
           .getElementsByTagName('li')
@@ -60,42 +72,66 @@ class ApiConfigurationService {
       });
       return ssids;
     } else {
-      print(response.body.toString());
+      print(response.data.toString());
       return ssids;
     }
+    
+  }catch(e){
+    print(e);
+    return [];
+  }
   }
 
   Future<List<Generator>> getGeneratorsOfUser(
       String cloudUsername, String cloudPassword) async {
     List<Generator> generators = [];
-    final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
-        headers: {
+  Dio dio = Dio();
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (HttpClient client) {
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  };
+  try{
+
+    final responseAuth = await dio.post(cloudIotMautoAuthUrl,
+    options: Options(
+      headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(<String, String>{
+        
+    ),
+        data: {
           'email': cloudUsername,
           'password': cloudPassword,
-        }));
+        });
 
-    final isAuthenticated = jsonDecode((responseAuth.body))['isAuthenticated'];
+    final isAuthenticated = (responseAuth.data)['isAuthenticated'];
     if (isAuthenticated == false) {
       return [];
     }
 
-    final token = jsonDecode((responseAuth.body))['token'];
-    final userID = jsonDecode((responseAuth.body))['id'];
+    final token = (responseAuth.data)['token'];
+    final userID = (responseAuth.data)['id'];
 
-    final response = await http.get(
-        Uri.parse(cloudIotMautoUserGeneratorsUrl + userID),
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+    final response = await dio.get(
+        (cloudIotMautoUserGeneratorsUrl + userID),
+        options: Options(
+          headers: {'Authorization': 'Bearer ' + token.toString()}
+        ),
+        );
 
     if (response.statusCode == 200) {
       generators = List<Generator>.from(
-          json.decode(response.body).map((x) => Generator.fromJson(x)));
+          response.data.map((x) => Generator.fromJson(x)));
       return generators;
     } else {
-      print(response.body.toString());
+      print(response.data.toString());
       return generators;
     }
+      }
+  catch(e){
+    print(e);
+    return generators;
+  }
   }
 }

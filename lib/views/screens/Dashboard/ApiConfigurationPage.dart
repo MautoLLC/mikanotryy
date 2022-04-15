@@ -306,7 +306,7 @@ class ApiConfigurationPage extends StatelessWidget {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 25),
-                              width: MediaQuery.of(context).size.width / 2,
+                              width: MediaQuery.of(context).size.width / 2.3,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   border:
