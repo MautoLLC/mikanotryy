@@ -192,3 +192,7 @@ const prefs_RefreshRate = "RefreshRate";
 const lbl_Fetch = "Fetch";
 const lbl_Fetch_Generators = "Fetch Generators";
 const lbl_Reset = "Reset";
+const prefs_ApiLanEndpoint = "ApiLanEndpoint";
+const lbl_Save_Settings = "Save Settings";
+const lbl_Submit_Settings = "Submit Settings";
+const lbl_Api_Endpoint = "Api Endpoint";

@@ -194,66 +194,65 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
   Widget build(BuildContext context) {
     return Consumer<ApiConfigurationState>(
         builder: (context, value, child) => Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: FutureBuilder(
-                future: FetchData(),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<bool> snapshot,
-                ) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SpinKitCircle(
-                            color: Colors.black,
-                            size: 65,
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Custom_Alert(
-                          Title: 'Error Has Occured',
-                          Description:
-                              "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
-                    } else {
-                      print("Done");
-                      return Column(children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: backArrowColor,
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: FutureBuilder(
+                    future: FetchData(),
+                    builder: (
+                      BuildContext context,
+                      AsyncSnapshot<bool> snapshot,
+                    ) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SpinKitCircle(
+                                color: Colors.black,
+                                size: 65,
                               ),
-                              onPressed: () {
-                                Navigator.of(context).push(
+                            ],
+                          ),
+                        );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
+                        } else {
+                          print("Done");
+                          return Column(children: [
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: backArrowColor,
+                                  ),
+                                  onPressed: () {
+                                    finish(context);
+                                  },
+                                ),
+                                Spacer(),
+                                TitleText(
+                                  title: lbl_Generator,
+                                ),
+                                Spacer(),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  Theme5Dashboard()));
-                              },
-                            ),
-                            Spacer(),
-                            TitleText(
-                              title: lbl_Generator,
-                            ),
-                            Spacer(),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          ApiConfigurationPage()));
-                                },
-                                icon: Icon(Icons.settings)),
+                                                  ApiConfigurationPage()));
+                                    },
+                                    icon: Icon(Icons.settings)),
                                 Column(
                                   children: [
                                     SizedBox(
@@ -286,281 +285,288 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                     )
                                   ],
                                 ),
-                                    SizedBox(width: 5),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          GeneratorAlertsPage()));
-                                },
-                                child: commonCacheImageWidget(ic_error, 22))
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: mainGreyColorTheme2,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-                            child: DropdownButton(
-                              onChanged: (value) {},
-                              underline: Divider(
-                                thickness: 0.0,
-                                color: Colors.transparent,
+                                SizedBox(width: 5),
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GeneratorAlertsPage()));
+                                    },
+                                    child: commonCacheImageWidget(ic_error, 22))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: mainGreyColorTheme2,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 4.0, 8.0, 4.0),
+                                child: DropdownButton(
+                                  onChanged: (value) {},
+                                  underline: Divider(
+                                    thickness: 0.0,
+                                    color: Colors.transparent,
+                                  ),
+                                  isExpanded: true,
+                                  hint: lbl_Generator == ""
+                                      ? Text(
+                                          lbl_Generator,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: PoppinsFamily,
+                                              color: DropDownHintTextColor),
+                                        )
+                                      : Text(
+                                          lbl_Generator,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: PoppinsFamily,
+                                              color: DropDownHintTextColor),
+                                        ),
+                                  icon: Icon(Icons.keyboard_arrow_down),
+                                  iconEnabledColor: mainGreyColorTheme,
+                                  iconDisabledColor: mainGreyColorTheme,
+                                  items: [
+                                    DropdownMenuItem(
+                                        value: lbl_Generator,
+                                        child: new Text(lbl_Generator)),
+                                    DropdownMenuItem(
+                                        value: lbl_Generator,
+                                        child: new Text(lbl_Generator))
+                                  ],
+                                  // onChanged: (Entry? value) {
+                                  //   setState(() {
+                                  //     selectedSubCateg = value!.title;
+                                  //     selectedSubCategId = value.idEntry;
+                                  //   });
+                                  // },
+                                ),
                               ),
-                              isExpanded: true,
-                              hint: lbl_Generator == ""
-                                  ? Text(
-                                      lbl_Generator,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontFamily: PoppinsFamily,
-                                          color: DropDownHintTextColor),
-                                    )
-                                  : Text(
-                                      lbl_Generator,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontFamily: PoppinsFamily,
-                                          color: DropDownHintTextColor),
-                                    ),
-                              icon: Icon(Icons.keyboard_arrow_down),
-                              iconEnabledColor: mainGreyColorTheme,
-                              iconDisabledColor: mainGreyColorTheme,
-                              items: [
-                                DropdownMenuItem(
-                                    value: lbl_Generator,
-                                    child: new Text(lbl_Generator)),
-                                DropdownMenuItem(
-                                    value: lbl_Generator,
-                                    child: new Text(lbl_Generator))
-                              ],
-                              // onChanged: (Entry? value) {
-                              //   setState(() {
-                              //     selectedSubCateg = value!.title;
-                              //     selectedSubCategId = value.idEntry;
-                              //   });
-                              // },
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                    height: 160,
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      color: mainGreyColorTheme2,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: GaugeWidget(
-                                        title: lbl_RPM,
-                                        value: ((Rpm.value) / 100))),
-                                SizedBox(height: 10),
-                                Container(
-                                    height: 160,
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      color: mainGreyColorTheme2,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: GaugeWidget(
-                                        title: lbl_Actual_Power,
-                                        value: ((Rpm.value) / 100),
-                                        needleColor: mainColorTheme)),
-                              ],
+                            SizedBox(
+                              height: 30,
                             ),
-                            SizedBox(width: 10),
-                            Column(
+                            Row(
                               children: [
-                                Container(
-                                  width: 167,
-                                  height: 89,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                    color: mainGreyColorTheme2,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      SubTitleText(title: lbl_Mode),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            isManual ? lbl_Manual : lbl_Auto,
-                                            style: TextStyle(
-                                                fontFamily: PoppinsFamily,
-                                                fontSize: 14,
-                                                color: mainGreyColorTheme),
-                                          ),
-                                          Spacer(),
-                                          Switch(
-                                              value: isManual,
-                                              onChanged: (result) {
-                                                // TODO logic
-                                                isManual = result;
-                                                setState(() {});
-                                              })
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  width: 167,
-                                  height: 89,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                    color: mainGreyColorTheme2,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      SubTitleText(title: lbl_IO),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            isIO ? lbl_ON : lbl_OFF,
-                                            style: TextStyle(
-                                                fontFamily: PoppinsFamily,
-                                                fontSize: 14,
-                                                color: mainGreyColorTheme),
-                                          ),
-                                          Spacer(),
-                                          Switch(
-                                              value: isIO,
-                                              onChanged: (result) {
-                                                // TODO logic
-                                                isIO = result;
-                                                setState(() {});
-                                              })
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
+                                Column(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.only(top: 15),
+                                        height: 160,
+                                        width: 160,
+                                        decoration: BoxDecoration(
+                                          color: mainGreyColorTheme2,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: GaugeWidget(
+                                            title: lbl_RPM,
+                                            value: ((Rpm.value) / 100))),
+                                    SizedBox(height: 10),
+                                    Container(
+                                        height: 160,
+                                        width: 160,
+                                        decoration: BoxDecoration(
+                                          color: mainGreyColorTheme2,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: GaugeWidget(
+                                            title: lbl_Actual_Power,
+                                            value: ((Rpm.value) / 100),
+                                            needleColor: mainColorTheme)),
+                                  ],
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  children: [
+                                    Container(
+                                      width: 167,
+                                      height: 89,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 25),
                                       decoration: BoxDecoration(
                                         color: mainGreyColorTheme2,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      height: 129,
-                                      width: 79,
                                       child: Column(
                                         children: [
-                                          SubTitleText(title: lbl_MCB),
-                                          Spacer(),
-                                          Switch(
-                                              value: isMCB,
-                                              onChanged: (result) {
-                                                // TODO logic
-                                                isMCB = result;
-                                                setState(() {});
-                                              })
+                                          SubTitleText(title: lbl_Mode),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                isManual
+                                                    ? lbl_Manual
+                                                    : lbl_Auto,
+                                                style: TextStyle(
+                                                    fontFamily: PoppinsFamily,
+                                                    fontSize: 14,
+                                                    color: mainGreyColorTheme),
+                                              ),
+                                              Spacer(),
+                                              Switch(
+                                                  value: isManual,
+                                                  onChanged: (result) {
+                                                    // TODO logic
+                                                    isManual = result;
+                                                    setState(() {});
+                                                  })
+                                            ],
+                                          )
                                         ],
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 10,
+                                      height: 10,
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(top: 15),
+                                      width: 167,
+                                      height: 89,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 25),
                                       decoration: BoxDecoration(
                                         color: mainGreyColorTheme2,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      height: 129,
-                                      width: 79,
                                       child: Column(
                                         children: [
-                                          SubTitleText(title: lbl_GCB),
-                                          Spacer(),
-                                          Switch(
-                                              value: isGCB,
-                                              onChanged: (result) {
-                                                // TODO logic
-                                                isGCB = result;
-                                                setState(() {});
-                                              })
+                                          SubTitleText(title: lbl_IO),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                isIO ? lbl_ON : lbl_OFF,
+                                                style: TextStyle(
+                                                    fontFamily: PoppinsFamily,
+                                                    fontSize: 14,
+                                                    color: mainGreyColorTheme),
+                                              ),
+                                              Spacer(),
+                                              Switch(
+                                                  value: isIO,
+                                                  onChanged: (result) {
+                                                    // TODO logic
+                                                    isIO = result;
+                                                    setState(() {});
+                                                  })
+                                            ],
+                                          ),
                                         ],
                                       ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(top: 15),
+                                          decoration: BoxDecoration(
+                                            color: mainGreyColorTheme2,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          height: 129,
+                                          width: 79,
+                                          child: Column(
+                                            children: [
+                                              SubTitleText(title: lbl_MCB),
+                                              Spacer(),
+                                              Switch(
+                                                  value: isMCB,
+                                                  onChanged: (result) {
+                                                    // TODO logic
+                                                    isMCB = result;
+                                                    setState(() {});
+                                                  })
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(top: 15),
+                                          decoration: BoxDecoration(
+                                            color: mainGreyColorTheme2,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          height: 129,
+                                          width: 79,
+                                          child: Column(
+                                            children: [
+                                              SubTitleText(title: lbl_GCB),
+                                              Spacer(),
+                                              Switch(
+                                                  value: isGCB,
+                                                  onChanged: (result) {
+                                                    // TODO logic
+                                                    isGCB = result;
+                                                    setState(() {});
+                                                  })
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          children: [
-                            infotile(
-                              title: lbl_Engine,
-                              value: EngineState.value.toString(),
+                            SizedBox(
+                              height: 20,
                             ),
-                            infotile(
-                              title: lbl_Breaker,
-                              value: BreakState.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Running_Hours,
-                              value: RunningHours.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Battery,
-                              value: BatteryVoltage.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Pressure,
-                              value: OilPressure.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Temperature,
-                              value: CoolantTemp.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Gas,
-                              value: EngineState.value.toString(),
-                            ),
-                            infotile(
-                              title: lbl_Load,
-                              value: GeneratorLoad.value.toString(),
-                            ),
-                          ],
-                        )
-                      ]);
-                    }
-                  } else {
-                    return Custom_Alert(
-                        Title: 'Error Has Occured',
-                        Description:
-                            "Something Went Wrong! it seems that no generator is assigned.");
-                  }
-                }),
-          ),
-        )));
+                            Column(
+                              children: [
+                                infotile(
+                                  title: lbl_Engine,
+                                  value: EngineState.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Breaker,
+                                  value: BreakState.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Running_Hours,
+                                  value: RunningHours.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Battery,
+                                  value: BatteryVoltage.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Pressure,
+                                  value: OilPressure.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Temperature,
+                                  value: CoolantTemp.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Gas,
+                                  value: EngineState.value.toString(),
+                                ),
+                                infotile(
+                                  title: lbl_Load,
+                                  value: GeneratorLoad.value.toString(),
+                                ),
+                              ],
+                            )
+                          ]);
+                        }
+                      } else {
+                        return Custom_Alert(
+                            Title: 'Error Has Occured',
+                            Description:
+                                "Something Went Wrong! it seems that no generator is assigned.");
+                      }
+                    }),
+              ),
+            )));
   }
 }
 

@@ -23,6 +23,7 @@ class ApiConfigurationPage extends StatelessWidget {
   final cloudUsernameController = TextEditingController();
   final cloudPasswordController = TextEditingController();
   final passwordController = TextEditingController();
+  final apiEndpointLanController = TextEditingController(text: lanESPUrl);
   bool isFirstTimeInThisPage = true;
 
   @override
@@ -436,8 +437,14 @@ class ApiConfigurationPage extends StatelessWidget {
                           ),
                           SizedBox(height: 10),
                           Spacer(),
+                          if (value.loading == true)
+                            SpinKitCircle(
+                              color: Colors.black,
+                              size: 65,
+                            ),
+                            SizedBox(height: 20),
                           T13Button(
-                              textContent: lbl_Save,
+                              textContent: lbl_Save_Settings,
                               onPressed: () async {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
@@ -455,7 +462,8 @@ class ApiConfigurationPage extends StatelessWidget {
                                     value.setChosenGeneratorId(generatorId);
                                   }
                                 });
-                                value.startLoading(true);
+                                value.Loading(true);
+
                                 if (value.DashBoardFirstTimeAccess == true) {
                                   value.setpref(
                                       value.chosenSSID,
@@ -478,39 +486,70 @@ class ApiConfigurationPage extends StatelessWidget {
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {
                                   // to add before this switch to cloud mode as get request to the esp
-                                  if (value.option == 'cloud') {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => CloudDashboard_Index(
-                                            /* ApiEndPoint:
-                                        "https//iotapi.mauto.co/api/generators/values/",*/
-                                            RefreshRate: value.RefreshRate)));
-                                  } else if (value.option == 'comap') {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Dashboard_Index()));
-                                  } else {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LanDashboard_Index(
-                                                  RefreshRate:
-                                                      value.RefreshRate,
-                                                )));
-                                  }
-                                  value.isNotFirstTime();
-                                  prefs.setBool(
-                                      prefs_DashboardFirstTimeAccess, false);
+                                  value.Loading(false);
                                 });
                               }),
                           SizedBox(
                             height: 20,
                           ),
-                          if (value.loading == true)
-                            SpinKitCircle(
-                              color: Colors.black,
-                              size: 65,
+                          TextFormField(
+                            onChanged: (apiendpoint) =>
+                                value.changeApiLanEndpoint(apiendpoint),
+                            style: TextStyle(
+                                fontSize: textSizeMedium,
+                                fontFamily: PoppinsFamily),
+                            obscureText: false,
+                            cursorColor: black,
+                            controller: apiEndpointLanController,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(26, 14, 4, 14),
+                              hintText: lbl_Api_Endpoint,
+                              hintStyle:
+                                  primaryTextStyle(color: textFieldHintColor),
+                              filled: true,
+                              fillColor: lightBorderColor,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // borderRadius: BorderRadius.circular(24),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0.0),
+                              ),
                             ),
+                          ),
+                          SizedBox(height: 20),
+                          T13Button(
+                              textContent: lbl_Submit_Settings,
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+
+                                value.setApiLanEndpoint(apiEndpointLanController.text);
+                                if (value.option == 'cloud') {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CloudDashboard_Index(
+                                          /* ApiEndPoint:
+                                        "https//iotapi.mauto.co/api/generators/values/",*/
+                                          RefreshRate: value.RefreshRate)));
+                                } else if (value.option == 'comap') {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => Dashboard_Index()));
+                                } else {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LanDashboard_Index(
+                                            RefreshRate: value.RefreshRate,
+                                          )));
+                                }
+                                value.isNotFirstTime();
+                                prefs.setBool(
+                                    prefs_DashboardFirstTimeAccess, false);
+                              }),
+                              SizedBox(height: 20),
+                          
                           SizedBox(
                             height: 25,
                           ),
