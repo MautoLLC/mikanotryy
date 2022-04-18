@@ -7,7 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 class LanDashBoard_Service {
   //final String ApiEndPoint;
-  String apiLanEndpoint = lanESPUrl;
+  String apiLanEndpoint = "http://"+lanESPUrl;
   LanDashBoard_Service(/*{required this.ApiEndPoint}*/);
   Future<LANSensor> FetchSensorData(String param) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
