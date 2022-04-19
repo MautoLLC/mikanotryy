@@ -383,7 +383,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                       value: value.chosenSSID,
                                       onChanged: (item) {
                                         String string = item.toString();
-                                        final splitted = string.split('(');
+                                        final splitted = string.split(' (');
                                         value.ComboBoxState(splitted[0]);
                                       }),
                                 ),
@@ -481,7 +481,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                     cloudUsernameController.text,
                                     cloudPasswordController.text,
                                     value.cloudMode.toString(),
-                                    value.chosenGeneratorId);
+                                    value.chosenGeneratorName);
 
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {
