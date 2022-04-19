@@ -70,8 +70,9 @@ class gps {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
     try{
-      final response = await dio.post(LocationByDeviceUrl.replaceAll("{deviceToken}", prefs.getString("DeviceToken").toString()),
+      final response = await dio.post(LocationByDeviceUrl,
       data: {
+        "deviceToken": prefs.getString("DeviceToken").toString(),
         "longitude": longitude,
         "latitude": latitude
       },

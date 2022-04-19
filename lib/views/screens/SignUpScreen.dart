@@ -85,64 +85,64 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                             passwController.text.toString(),
                             this.context);
                       }),
-                  SizedBox(height: spacing_large),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.0,
-                            color: mainGreyColorTheme,
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-                          child: Text(
-                            'or continue with',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Poppins',
-                                color: mainGreyColorTheme),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.0,
-                            color: mainGreyColorTheme,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 3.0,
-                        crossAxisSpacing: spacing_standard_new,
-                        mainAxisSpacing: spacing_standard_new),
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xFFF1F1F1)),
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.white),
-                        child: commonCacheImageWidget(ic_google, 80,
-                            width: width * 0.4),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xFFF1F1F1)),
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.white),
-                        child: commonCacheImageWidget(ic_facebook, 80,
-                            width: width * 0.4),
-                      )
-                    ],
-                  ),
+                  // SizedBox(height: spacing_large),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: Divider(
+                  //           thickness: 1.0,
+                  //           color: mainGreyColorTheme,
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding:
+                  //             const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                  //         child: Text(
+                  //           'or continue with',
+                  //           style: TextStyle(
+                  //               fontSize: 15,
+                  //               fontFamily: 'Poppins',
+                  //               color: mainGreyColorTheme),
+                  //         ),
+                  //       ),
+                  //       Expanded(
+                  //         child: Divider(
+                  //           thickness: 1.0,
+                  //           color: mainGreyColorTheme,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // GridView(
+                  //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //       crossAxisCount: 2,
+                  //       childAspectRatio: 3.0,
+                  //       crossAxisSpacing: spacing_standard_new,
+                  //       mainAxisSpacing: spacing_standard_new),
+                  //   physics: NeverScrollableScrollPhysics(),
+                  //   shrinkWrap: true,
+                  //   children: [
+                  //     Container(
+                  //       decoration: BoxDecoration(
+                  //           border: Border.all(color: Color(0xFFF1F1F1)),
+                  //           borderRadius: BorderRadius.circular(8.0),
+                  //           color: Colors.white),
+                  //       child: commonCacheImageWidget(ic_google, 80,
+                  //           width: width * 0.4),
+                  //     ),
+                  //     Container(
+                  //       decoration: BoxDecoration(
+                  //           border: Border.all(color: Color(0xFFF1F1F1)),
+                  //           borderRadius: BorderRadius.circular(8.0),
+                  //           color: Colors.white),
+                  //       child: commonCacheImageWidget(ic_facebook, 80,
+                  //           width: width * 0.4),
+                  //     )
+                  //   ],
+                  // ),
                   SizedBox(height: spacing_large),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -9,10 +9,11 @@ import 'LocalUserPositionService.dart';
 
 logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString("DeviceToken").toString();
   try {
     var response = await http.delete(
         Uri.parse(deleteDeviceUrl +
-            '/${prefs.get("UserID")}?deviceToken=${prefs.getString("DeviceToken")}"'),
+            '/${prefs.get("UserID")}?deviceToken=${token}"'),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${prefs.getString("accessToken")}"
@@ -21,6 +22,7 @@ logout() async {
     if (!await prefs.getBool('GuestLogin')!) 
       gps.canceled = true;
     prefs.clear();
+    await prefs.setString("DeviceToken", token.toString());
     await prefs.setBool('IsLoggedIn', false);
     await prefs.setBool('GuestLogin', false);
     navigator.currentState!.popUntil((route) => route.isFirst);
