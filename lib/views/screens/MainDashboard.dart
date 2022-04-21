@@ -17,30 +17,30 @@ class Theme5Dashboard extends StatefulWidget {
 }
 
 class _Theme5DashboardState extends State<Theme5Dashboard> {
-  var selectedIndex = 0;
+  var selectedIndex = 2;
   var pages = [];
   bool guestLogin = true;
 
   init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    guestLogin = await prefs.getBool("GuestLogin")!;
     pages.add(MenuScreen());
     pages.add(ListPage(title: lbl_Search, fromNavigationBar: true,));
     // pages.add(SearchPage());
     pages.add(Dashboard());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    guestLogin = prefs.getBool("GuestLogin")!;
     if (!guestLogin) {
       pages.add(CartPage());
     }
     if (!guestLogin) {
       pages.add(ProfileScreen());
     }
+    selectedIndex = 2;
     setState(() {});
   }
 
   @override
   void initState() {
-    init();
-    selectedIndex = 2;
+    init(); 
     super.initState();
   }
 
