@@ -10,7 +10,7 @@ class PushNotificationService {
   PushNotificationService(this._fcm);
 
   Future initialise(BuildContext context) async {
-    _fcm.requestPermission();
+    // _fcm.requestPermission();
 
     // If you want to test the push notification locally,
     // you need to get the token and input to the Firebase console

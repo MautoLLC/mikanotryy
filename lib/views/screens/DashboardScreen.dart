@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/State/CarouselState.dart';
-import 'package:mymikano_app/State/LocationState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
@@ -50,9 +49,7 @@ class DashboardState extends State<Dashboard> {
 
   void sendGpsCoord() async {
     gps.canceled = false;
-    var provider = Provider.of<LocationState>(context, listen: false);
-    await provider.update();
-    gps.StartTimer(provider.locationSettingsModel.refreshRate!, DateTime.parse(provider.locationSettingsModel.startTime!), DateTime.parse(provider.locationSettingsModel.endTime!));
+    gps.StartTimer();
   }
 
   @override
