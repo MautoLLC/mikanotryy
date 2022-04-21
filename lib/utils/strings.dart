@@ -138,7 +138,7 @@ const lbl_Assigned = 'Assigned';
 const lbl_Done = 'Done';
 const lbl_Show_Result = 'Show Result';
 const lbl_API_Configuration = 'API Configuration';
-const lbl_LAN = 'LAN';
+const lbl_LAN = 'WLAN';
 const lbl_Cloud = 'Cloud';
 const txt_API_Configuration =
     "Make sure that the first time you launch the app you must connect manually to the ESP Access point. once done hit the proceed button to get the list of SSIDs";
@@ -161,7 +161,7 @@ const lbl_Api_End_Point_Url = 'Api End Point Url';
 const lbl_Default_Refresh_Rate = 'Default Refresh Rate(in seconds)';
 const txt_App_Proceeds_Alone =
     'Application will proceed alone if you dont tape the proceed button with the configuration that is shown in TextFields';
-const lbl_Comap = "Comap";
+const lbl_Comap = "WSV";
 const lbl_Ip = "IP";
 const lbl_Fetch_Generator_Ids = "Fetch Generator Ids";
 const lbl_Generator_ID = "Generator ID";

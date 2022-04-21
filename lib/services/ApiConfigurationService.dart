@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
@@ -10,8 +11,8 @@ import 'package:html/dom.dart' as dom;
 
 class ApiConfigurationService {
 
-  void resetESP() async {
-    final response = await http.get(Uri.parse(resetESPUrl));
+  void resetESP(String url) async {
+    final response = await http.get(Uri.parse("http://"+url+"/reset"));
     if (response.statusCode == 200) {
       print(response.body.toString());
     } else {
@@ -21,32 +22,19 @@ class ApiConfigurationService {
 
   Future<String> Connecttossid(String id, String pass, String cloudUsername,
       String cloudPassword, String cloudMode, String generatorId) async {
-    // Codec<String, String> stringToBase64 = utf8.fuse(base64);
-    // generatorId = stringToBase64.encode(generatorId);
-    var queryParameters = {
-      'ssid': id,
-      'pass': pass,
-      'clouduserN': cloudUsername,
-      'cloudpassw': cloudPassword,
-      'GeneratorId': generatorId,
-      'cmode': cloudMode
-    };
-    final uri = Uri.http(ssidUri , '/setting', queryParameters);
-    //print("the uri is "+uri.toString());
-    final response = await http.get(uri);
-    // final response = await http.get(Uri.parse(ssidUrl +
-    //     '/setting?ssid=' +
-    //     id +
-    //     '&pass=' +
-    //     pass +
-    //     '&clouduserN=' +
-    //     cloudUsername +
-    //     '&cloudpassw=' +
-    //     cloudPassword +
-    //     '&GeneratorId=' +
-    //     generatorId +
-    //     '&cmode=' +
-    //     cloudMode));
+    final response = await http.get(Uri.parse(ssidUrl +
+        '/setting?ssid=' +
+        id +
+        '&pass=' +
+        pass +
+        '&clouduserN=' +
+        cloudUsername +
+        '&cloudpassw=' +
+        cloudPassword +
+        '&cmode=' +
+        cloudMode +
+        '&GeneratorId=' +
+        generatorId));
     if (response.statusCode == 200) {
       print(response.body.toString());
       return (response.body.toString());
@@ -80,7 +68,9 @@ class ApiConfigurationService {
           .map((e) => e.innerHtml)
           .forEach((element) {
         print(element);
-        ssids.add(element);
+        String ssidName = element.toString();
+        final splitted = ssidName.split(' (');
+        ssids.add(splitted[0]);
       });
       return ssids;
     } else {
