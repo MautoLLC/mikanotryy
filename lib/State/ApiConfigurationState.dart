@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/services/ApiConfigurationService.dart';
@@ -22,6 +24,7 @@ class ApiConfigurationState extends ChangeNotifier {
   String apiLanEndpoint = '';
   List<String> ssidList = [];
   List<String> generatorNameList = [];
+  List<Generator> gens = [];
   ApiConfigurationService service = new ApiConfigurationService();
 
   ApiConfigurationState() {
@@ -75,9 +78,11 @@ class ApiConfigurationState extends ChangeNotifier {
     generatorNameList.clear();
     List<Generator> generators =
         await service.getGeneratorsOfUser(clouduser, cloudpass);
-    generators.forEach((element) {
-      generatorNameList.add(element.name);
-    });
+    // generators.forEach((element) {
+    //   generatorNameList.add(element.name);
+    // });
+    gens=generators;
+    generatorNameList.add(generators.elementAt(0).name);
     if (generatorNameList.isEmpty) {
       isSuccess = false;
       Message = 'Invalid input, try again.';
@@ -86,6 +91,7 @@ class ApiConfigurationState extends ChangeNotifier {
       Message = 'Generators fetched successfully.';
     }
     notifyListeners();
+
   }
 
   void changeRefreshRate(int rate) {
@@ -168,12 +174,12 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.remove(prefs_CloudPassword);
     prefs.remove(prefs_CloudMode);
     prefs.remove(prefs_GeneratorId);
+    service.resetESP(prefs.getString(prefs_ApiLanEndpoint).toString());
     prefs.remove(prefs_ApiLanEndpoint);
-    service.resetESP();
     notifyListeners();
   }
 
-  void setpref(ssid, password, int refreshRate, cloudUsername, cloudPassword,
+  Future<void> setpref(ssid, password, int refreshRate, cloudUsername, cloudPassword,
       int cloudMode, generatorId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(prefs_SSID, ssid);

@@ -103,7 +103,6 @@ const spacing_xxLarge = 40.0;
 
 const logoAsset = 'assets/SplashScreenMikanoLogo.png';
 const ssidUrl = "http://192.168.4.1";
-const ssidUri = "192.168.4.1";
 const ssidRestartUrl = ssidUrl + '/restart';
 const cloudIotMautoUrl = "https://iotapi.mauto.co/api";
 const cloudIotMautoAuthUrl = cloudIotMautoUrl + "/User/token";
@@ -114,4 +113,4 @@ const resetESPUrl = "http://"+lanESPUrl + "/reset";
 
 const LocationUrl = 'http://dev.codepickles.com:8094';
 const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
-const LocationByDeviceUrl = '$LocationUrl/api/TrackedUsers/Location';
+const LocationByDeviceUrl = '$LocationUrl/api/TrackedUsers/Location/{deviceToken}';
