@@ -14,21 +14,33 @@ import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
-class ListPage extends StatelessWidget {
+class ListPage extends StatefulWidget {
   final String title;
   bool fromNavigationBar;
   ListPage({Key? key, required this.title, this.fromNavigationBar = false}) : super(key: key);
 
+  @override
+  State<ListPage> createState() => _ListPageState();
+}
+
+class _ListPageState extends State<ListPage> {
   TextEditingController seearchController = TextEditingController();
+
   bool isfirst = true;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Provider.of<ProductState>(context, listen: false).clearListOfProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductState>(builder: (context, state, child) {
       if (isfirst) {
         state.clearListOfProducts();
-        state.page = 0;
-        state.Paginate();
+        state.page = 1;
+        state.getListOfProducts();
         isfirst = false;
       }
       return Scaffold(
@@ -41,67 +53,110 @@ class ListPage extends StatelessWidget {
             }
             return true;
           },
-          child: SingleChildScrollView(
-            child: SafeArea(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  Stack(
-                    children: <Widget>[
-                      !fromNavigationBar?Align(
-                        alignment: Alignment.centerLeft,
-                        child: IconButton(
-                            onPressed: () {
-                              finish(context);
-                            },
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              size: 32.0,
-                            )),
-                      ):Container(),
-                      Align(
-                        alignment: Alignment.center,
-                        child: TitleText(title: title)),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: NotificationBell())
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    style: TextStyle(
-                        fontSize: textSizeMedium, fontFamily: PoppinsFamily),
-                    obscureText: false,
-                    cursorColor: black,
-                    controller: seearchController,
-                    onChanged: state.fillListOfProductsToShow,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
-                      hintText: lbl_Search,
-                      hintStyle: primaryTextStyle(color: textFieldHintColor),
-                      filled: true,
-                      fillColor: lightBorderColor,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide:
-                            BorderSide(color: Colors.transparent, width: 0.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.transparent, width: 0.0),
-                      ),
+          child: SafeArea(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                Stack(
+                  children: <Widget>[
+                    !widget.fromNavigationBar?Align(
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                          onPressed: () {
+                            finish(context);
+                          },
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            size: 32.0,
+                          )),
+                    ):Container(),
+                    Align(
+                      alignment: Alignment.center,
+                      child: TitleText(title: widget.title)),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: NotificationBell())
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  style: TextStyle(
+                      fontSize: textSizeMedium, fontFamily: PoppinsFamily),
+                  obscureText: false,
+                  cursorColor: black,
+                  controller: seearchController,
+                  onChanged: state.fillListOfProductsToShow,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
+                    hintText: lbl_Search,
+                    hintStyle: primaryTextStyle(color: textFieldHintColor),
+                    filled: true,
+                    fillColor: lightBorderColor,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide:
+                          BorderSide(color: Colors.transparent, width: 0.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.transparent, width: 0.0),
                     ),
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  GridView.builder(
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    DropdownButton(
+                      icon: Icon(Icons.sort, color: black, size: 25),
+                      items: [
+                      DropdownMenuItem(
+                        child: Text('Sort By Price Low to High'),
+                        value: 'price_low_to_high',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Sort By Price High to Low'),
+                        value: 'price_high_to_low',
+                      ),
+                      DropdownMenuItem(
+                        child: Text('A to Z'),
+                        value: 'a_to_z',
+                        ),
+                      DropdownMenuItem(
+                        child: Text('Z to A'),
+                        value: 'z_to_a',
+                        ),
+                    ], onChanged: (value){
+                      switch(value){
+                        case 'price_low_to_high':
+                          state.sortByPriceLowToHigh();
+                          break;
+                        case 'price_high_to_low':
+                          state.sortByPriceHighToLow();
+                          break;
+                        case 'a_to_z':
+                          state.sortByPriceAToZ();
+                          break;
+                        case 'z_to_a':
+                          state.sortByPriceZToA();
+                          break;
+                      }
+                    }),
+                    IconButton(onPressed: (){
+                      showModalBottomSheet(context: context, builder: (context) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                        );
+                      });
+                    }, icon: Icon(Icons.filter_1, size: 25, color: black)),
+                  ],
+                ),
+                Expanded(
+                  child: GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 0.8,
@@ -120,18 +175,10 @@ class ListPage extends StatelessWidget {
                       }
                     },
                   ),
-                  state.ListOfProductsLoaded
-                      ? Container()
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                ],
-              ),
-            )),
-          ),
+                ),
+              ],
+            ),
+          )),
         ),
       );
     });
