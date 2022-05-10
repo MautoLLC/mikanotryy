@@ -478,13 +478,13 @@ class ApiConfigurationPage extends StatelessWidget {
                                       value.chosenGeneratorId);
                                 }
 
-                                // await value.service.Connecttossid(
-                                //     value.chosenSSID,
-                                //     passwordController.text,
-                                //     cloudUsernameController.text,
-                                //     cloudPasswordController.text,
-                                //     value.cloudMode.toString(),
-                                //     value.chosenGeneratorId);
+                                await value.service.Connecttossid(
+                                    value.chosenSSID,
+                                    passwordController.text,
+                                    cloudUsernameController.text,
+                                    cloudPasswordController.text,
+                                    value.cloudMode.toString(),
+                                    value.chosenGeneratorId);
 
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {

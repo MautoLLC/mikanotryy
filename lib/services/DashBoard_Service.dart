@@ -188,7 +188,7 @@ class DashBorad_Service {
     }
   }
 
-  Future<String> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(bool status) async {
     await PrepareCall();
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -197,6 +197,7 @@ class DashBorad_Service {
       Mode = "auto";
     else
       Mode = "man";
+    bool isSuccess = false;
 
     var response = await dio.post(
         (UnitsEndPoint + prefs.getString("UnitGuid").toString() + '/command'),
@@ -210,12 +211,13 @@ class DashBorad_Service {
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
-      return (response.data)['status'];
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to send command.');
     }
+    return isSuccess;
   }
 
   Future<String> TurnGeneratorOnOff(bool status) async {

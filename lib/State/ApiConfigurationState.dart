@@ -116,14 +116,14 @@ class ApiConfigurationState extends ChangeNotifier {
 
   void ShowSSIDs() async {
     ssidList.clear();
-    // ssidList = await service.getSSIDList();
-    ssidList = [
-      'ssid1',
-      'ssid2',
-      'ssid3',
-      'ssid4',
-      'ssid5',
-    ];
+    ssidList = await service.getSSIDList();
+    // ssidList = [
+    //   'ssid1',
+    //   'ssid2',
+    //   'ssid3',
+    //   'ssid4',
+    //   'ssid5',
+    // ];
     notifyListeners();
   }
 

@@ -6,6 +6,7 @@ import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
+import 'package:mymikano_app/State/WSVGeneratorState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
@@ -61,6 +62,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => CloudGeneratorState())),
         ChangeNotifierProvider<LanGeneratorState>(
             create: ((context) => LanGeneratorState())),
+        ChangeNotifierProvider<WSVGeneratorState>(
+            create: ((context) => WSVGeneratorState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

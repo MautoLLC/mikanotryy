@@ -90,7 +90,7 @@ class DashBoard_ModelView {
     return GetSensor(dotenv.env['Controller_Mode'].toString());
   }
 
-  Future<String> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(bool status) async {
     return await DashBoardService.SwitchControllerMode(status);
   }
 
