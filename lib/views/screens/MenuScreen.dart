@@ -221,13 +221,13 @@ class _MenuScreenState extends State<MenuScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                 ),
                 SvgPicture.asset(
                   ic_Mauto,
                   color: Colors.white,
-                  height: 30,
+                  height: 22.5,
                 ),
               ],
             )
