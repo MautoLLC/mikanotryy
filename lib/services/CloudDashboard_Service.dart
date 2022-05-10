@@ -44,12 +44,13 @@ class CloudDashBoard_Service {
     }
   }
 
-  Future<String> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     GeneratorID = prefs.getString(prefs_GeneratorId)!;
     String Mode;
+    bool isSuccess = false;
 
     if (status)
       Mode = "AUTO";
@@ -83,20 +84,22 @@ class CloudDashBoard_Service {
     );
 
     if (response.statusCode == 200) {
-      return response.toString();
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to update sensor');
     }
+    return isSuccess;
   }
 
-  Future<String> SwitchMCBMode(bool status) async {
+  Future<bool> SwitchMCBMode(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     GeneratorID = prefs.getString(prefs_GeneratorId)!;
     String Mode;
+    bool isSuccess = false;
 
     if (status)
       Mode = "Close-Off";
@@ -129,12 +132,13 @@ class CloudDashBoard_Service {
     );
 
     if (response.statusCode == 200) {
-      return response.toString();
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to update sensor');
     }
+    return isSuccess;
   }
 
   Future<String> TurnGeneratorOnOff(bool status) async {

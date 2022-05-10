@@ -89,10 +89,10 @@ CloudSensor FindSensor(String param){
     return FindSensor(dotenv.env['MCBMode_id'].toString());
   }
 
-  Future<String> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(bool status) async {
     return await DashBoardService.SwitchControllerMode(status);
   }
-  Future<String> SwitchMCBMode(bool status) async {
+  Future<bool> SwitchMCBMode(bool status) async {
     return await DashBoardService.SwitchMCBMode(status);
   }
 
