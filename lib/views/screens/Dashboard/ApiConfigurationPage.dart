@@ -330,9 +330,12 @@ class ApiConfigurationPage extends StatelessWidget {
                                         .toList(),
                                     value: value.chosenGeneratorName,
                                     onChanged: (item) {
-                                      String string = item.toString();
-                                      final splitted = string.split('(');
-                                      value.ChooseGeneratorName(splitted[0]);
+                                      // String string = item.toString();
+                                      // final splitted = string.split('(');
+                                      value.ChooseGeneratorName(item.toString());
+                                      int i = (value.gens).indexWhere((element) =>
+                                      element.name == item.toString());
+                                      value.setChosenGeneratorId(value.gens.elementAt(i).generatorId);
                                     }),
                               ),
                             ),
@@ -382,9 +385,9 @@ class ApiConfigurationPage extends StatelessWidget {
                                           .toList(),
                                       value: value.chosenSSID,
                                       onChanged: (item) {
-                                        String string = item.toString();
-                                        final splitted = string.split(' (');
-                                        value.ComboBoxState(splitted[0]);
+                                        // String string = item.toString();
+                                        // final splitted = string.split(' (');
+                                        value.ComboBoxState(item.toString());
                                       }),
                                 ),
                               ),
@@ -449,23 +452,23 @@ class ApiConfigurationPage extends StatelessWidget {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
 
-                                String generatorId = "";
-                                List<Generator> generators = await value.service
-                                    .getGeneratorsOfUser(
-                                        cloudUsernameController.text,
-                                        cloudPasswordController.text);
-
-                                generators.forEach((element) {
-                                  if (element.name ==
-                                      value.chosenGeneratorName) {
-                                    generatorId = element.generatorId;
-                                    value.setChosenGeneratorId(generatorId);
-                                  }
-                                });
+                                // String generatorId = "";
+                                // List<Generator> generators = await value.service
+                                //     .getGeneratorsOfUser(
+                                //         cloudUsernameController.text,
+                                //         cloudPasswordController.text);
+                                //
+                                // generators.forEach((element) {
+                                //   if (element.name ==
+                                //       value.chosenGeneratorName) {
+                                //     generatorId = element.generatorId;
+                                //     value.setChosenGeneratorId(generatorId);
+                                //   }
+                                // });
                                 value.Loading(true);
 
                                 if (value.DashBoardFirstTimeAccess == true) {
-                                  value.setpref(
+                                  await value.setpref(
                                       value.chosenSSID,
                                       passwordController.text,
                                       int.parse(refreshRateController.text),
@@ -481,7 +484,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                     cloudUsernameController.text,
                                     cloudPasswordController.text,
                                     value.cloudMode.toString(),
-                                    value.chosenGeneratorName);
+                                    value.chosenGeneratorId);
 
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {
@@ -528,7 +531,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
 
-                                value.setApiLanEndpoint(apiEndpointLanController.text);
+                                value.setApiLanEndpoint("http://"+apiEndpointLanController.text);
                                 if (value.option == 'cloud') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => CloudDashboard_Index(
