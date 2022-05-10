@@ -23,6 +23,9 @@ class _ItemElementState extends State<ItemElement> {
   init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
+    setState(() {
+      
+    });
   }
 
   @override
