@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
+import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -58,6 +59,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => CarouselState())),
         ChangeNotifierProvider<CloudGeneratorState>(
             create: ((context) => CloudGeneratorState())),
+        ChangeNotifierProvider<LanGeneratorState>(
+            create: ((context) => LanGeneratorState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,
