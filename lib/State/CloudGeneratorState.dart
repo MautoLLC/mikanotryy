@@ -86,9 +86,22 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
+  CloudSensor GCBMode = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor Engine = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
   bool ControllerModeStatus = false;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
+  bool isGCB = false;
   bool isIO = false;
 
   changeControllerModeStatus(value) async {
@@ -99,9 +112,21 @@ class CloudGeneratorState extends ChangeNotifier {
     }
   }
 
-  changeIsIO(value) {
-    isIO = value;
-    notifyListeners();
+  changeIsIO(value) async{
+    bool isSuccess = await cloudService.TurnGeneratorEngineOnOff(value);
+    if(isSuccess == true){
+      isIO = value;
+      notifyListeners();
+    }
+  }
+
+  changeIsGCB(value) async {
+    bool isSuccess = await cloudService.SwitchGCBMode(value);
+    if(isSuccess == true){
+      isGCB = value;
+      notifyListeners();
+    }
+    
   }
 
   changeMCBModeStatus(value) async {
@@ -150,6 +175,8 @@ class CloudGeneratorState extends ChangeNotifier {
       ControllerMode =
           FindSensor(cloudsensors, dotenv.env['ControllerMode_id'].toString());
       MCBMode = FindSensor(cloudsensors, dotenv.env['MCBMode_id'].toString());
+      GCBMode = FindSensor(cloudsensors, dotenv.env['GCB_id'].toString());
+      Engine = FindSensor(cloudsensors, dotenv.env['EngineOnOff_id'].toString());
 
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
@@ -161,10 +188,20 @@ class CloudGeneratorState extends ChangeNotifier {
 
       //for testing purposes only
       //MCBMode.value="1";
-      if (MCBMode.value == "Close-Off")
+      if (MCBMode.value == "Close-On")
         MCBModeStatus = true;
       else
         MCBModeStatus = false;
+
+      if (GCBMode.value == "Close-On")
+        isGCB = true;
+      else
+        isGCB = false;
+
+      if (Engine.value == "ON")
+        isIO = true;
+      else
+        isIO = false;
 
       if (EngineState.value == "Loaded" || EngineState.value == "Running")
         PowerStatus = true;

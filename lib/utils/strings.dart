@@ -71,12 +71,12 @@ const lbl_Mode = 'Mode';
 const lbl_Manual = 'MAN';
 const lbl_Auto = 'AUTO';
 const lbl_IO = 'IO';
-const lbl_ON = 'On';
-const lbl_OFF = 'Off';
+const lbl_ON = 'ON';
+const lbl_OFF = 'OFF';
 const lbl_MCB = 'MCB';
 const lbl_GCB = 'GCB';
-const lbl_Close_Off = "Close-Off";
-const lbl_Close_On = "Close-On";
+const lbl_Close_Off = "OFF";
+const lbl_Close_On = "ON";
 
 const lbl_Engine = 'Engine';
 const lbl_Breaker = 'Breaker';

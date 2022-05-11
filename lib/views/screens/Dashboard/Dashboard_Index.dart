@@ -49,7 +49,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Column(
                       children: [
-                        if (isFetched == true) ...[
+                        if (isFetched == true || isFetched == false) ...[
                           Column(children: [
                             Row(
                               children: [
@@ -292,17 +292,37 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 79,
+                                          width: 100,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_MCB),
-                                              Spacer(),
-                                              Switch(
-                                                  value: wsv.isMCB,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    wsv.changeIsMCB(result);
-                                                  })
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(width: 5),
+                                                  Text(
+                                                    wsv.isMCB
+                                                        ? lbl_ON
+                                                        : lbl_OFF,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        fontSize: 14,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Switch(
+                                                      value: wsv.isMCB,
+                                                      onChanged: (result) {
+                                                        wsv.changeIsMCB(result);
+                                                      })
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),
@@ -317,17 +337,37 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 79,
+                                          width: 100,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_GCB),
-                                              Spacer(),
-                                              Switch(
-                                                  value: wsv.isGCB,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    wsv.changeIsGCB(result);
-                                                  })
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(width: 5),
+                                                  Text(
+                                                    wsv.isGCB
+                                                        ? lbl_ON
+                                                        : lbl_OFF,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        fontSize: 14,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Switch(
+                                                      value: wsv.isGCB,
+                                                      onChanged: (result) {
+                                                        wsv.changeIsGCB(result);
+                                                      })
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),
@@ -378,12 +418,12 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             )
                           ]),
                         ],
-                        if (isFetched == false) ...[
-                          Custom_Alert(
-                              Title: 'Error Has Occured',
-                              Description:
-                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
-                        ],
+                        // if (isFetched == false) ...[
+                        //   Custom_Alert(
+                        //       Title: 'Error Has Occured',
+                        //       Description:
+                        //           "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                        // ],
                         if (isFetched == null) ...[
                           SizedBox(
                             height: MediaQuery.of(context).size.height,

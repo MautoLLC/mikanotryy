@@ -81,24 +81,51 @@ class LanDashBoard_Service {
     return isSuccess;
   }
 
-  Future<String> TurnGeneratorOnOff(bool status) async {
+  Future<bool> SwitchGCBMode(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
-    int Command;
+    int Mode;
     if (status)
-      Command = 0;
+      Mode = 1;
     else
-      Command = 1;
-    final response = await http.get(Uri.parse(
-        apiLanEndpoint + '/setEngineMode?params=' + Command.toString()));
+      Mode = 0;
+
+    bool isSuccess = false;
+    final response = await http.get(
+        Uri.parse(apiLanEndpoint + '/setGCBMode?params=' + Mode.toString()));
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
-      return (response.body);
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to send command.');
     }
+
+    return isSuccess;
+  }
+
+  Future<bool> TurnGeneratorEngineOnOff(bool status) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    int Command;
+    if (status)
+      Command = 1;
+    else
+      Command = 0;
+    bool isSuccess = false;
+    final response = await http.get(Uri.parse(
+        apiLanEndpoint + '/setEngineMode?params=' + Command.toString()));
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      isSuccess = true;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to send command.');
+    }
+    return isSuccess;
   }
 }

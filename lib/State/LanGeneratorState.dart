@@ -120,6 +120,18 @@ class LanGeneratorState extends ChangeNotifier {
       name: "Error",
       hardware: "Error",
       connected: "Error");
+  LANSensor GCBMode = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
+  LANSensor Engine = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
   bool ControllerModeStatus = false;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
@@ -136,14 +148,20 @@ class LanGeneratorState extends ChangeNotifier {
     }
   }
 
-  changeIsIO(value) {
-    isIO = value;
-    notifyListeners();
+  changeIsIO(value) async {
+    bool isSuccess = await LanService.TurnGeneratorEngineOnOff(value);
+    if (isSuccess == true) {
+      isIO = value;
+      notifyListeners();
+    }
   }
 
-  changeIsGCB(value) {
-    isGCB = value;
-    notifyListeners();
+  changeIsGCB(value) async {
+    bool isSuccess = await LanService.SwitchGCBMode(value);
+    if (isSuccess == true) {
+      isGCB = value;
+      notifyListeners();
+    }
   }
 
   changeMCBModeStatus(value) async {
@@ -177,6 +195,8 @@ class LanGeneratorState extends ChangeNotifier {
       GeneratorLoad = await LanService.FetchSensorData("Load");
       ControllerMode = await LanService.FetchSensorData("ControllerMode");
       MCBMode = await LanService.FetchSensorData("MCB");
+      GCBMode = await LanService.FetchSensorData("GCB");
+      Engine = await LanService.FetchSensorData("Engine");
       if (ControllerMode.return_value == 2)
         ControllerModeStatus = true;
       else
@@ -187,6 +207,15 @@ class LanGeneratorState extends ChangeNotifier {
       else
         MCBModeStatus = false;
 
+      if (GCBMode.return_value == 1)
+        isGCB = true;
+      else
+        isGCB = false;
+
+      if (Engine.return_value == 1)
+        isIO = true;
+      else
+        isIO = false;
       if (EngineState.return_value == 8 || EngineState.return_value == 7)
         PowerStatus = true;
       else

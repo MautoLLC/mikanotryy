@@ -72,7 +72,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
                     children: [
-                      if (isFetched == true) ...[
+                      if (isFetched == true || isFetched == false) ...[
                         Column(children: [
                           Row(
                             children: [
@@ -215,9 +215,12 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             ),
                                             Spacer(),
                                             Switch(
-                                                value: cloud.ControllerModeStatus,
+                                                value:
+                                                    cloud.ControllerModeStatus,
                                                 onChanged: (result) {
-                                                  cloud.changeControllerModeStatus(result);
+                                                  cloud
+                                                      .changeControllerModeStatus(
+                                                          result);
                                                 })
                                           ],
                                         )
@@ -273,7 +276,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               BorderRadius.circular(10),
                                         ),
                                         height: 129,
-                                        width: 140,
+                                        width: 100,
                                         child: Column(
                                           children: [
                                             SubTitleText(title: lbl_MCB),
@@ -286,14 +289,16 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               ),
                                               Text(
                                                 cloud.MCBModeStatus
-                                                    ? lbl_Close_Off
-                                                    : lbl_Close_On,
+                                                    ? lbl_Close_On
+                                                    : lbl_Close_Off,
                                                 style: TextStyle(
                                                     fontFamily: PoppinsFamily,
                                                     fontSize: 14,
                                                     color: mainGreyColorTheme),
                                               ),
-                                              Spacer(),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
                                               Switch(
                                                   value: cloud.MCBModeStatus,
                                                   onChanged: (result) {
@@ -304,31 +309,50 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           ],
                                         ),
                                       ),
-                                      //     SizedBox(
-                                      //       width: 10,
-                                      //     ),
-                                      //     // Container(
-                                      //     //   padding: EdgeInsets.only(top: 15),
-                                      //     //   decoration: BoxDecoration(
-                                      //     //     color: mainGreyColorTheme2,
-                                      //     //     borderRadius: BorderRadius.circular(10),
-                                      //     //   ),
-                                      //     //   height: 129,
-                                      //     //   width: 79,
-                                      //     //   child: Column(
-                                      //     //     children: [
-                                      //     //       SubTitleText(title: lbl_GCB),
-                                      //     //       Spacer(),
-                                      //     //       Switch(
-                                      //     //           value: isGCB,
-                                      //     //           onChanged: (result) {
-                                      //     //             // TODO logic
-                                      //     //             isGCB = result;
-                                      //     //             setState(() {});
-                                      //     //           })
-                                      //     //     ],
-                                      //     //   ),
-                                      //     // ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(top: 15),
+                                        decoration: BoxDecoration(
+                                          color: mainGreyColorTheme2,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        height: 129,
+                                        width: 100,
+                                        child: Column(
+                                          children: [
+                                            SubTitleText(title: lbl_GCB),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              children: [
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  cloud.isGCB
+                                                      ? lbl_ON
+                                                      : lbl_OFF,
+                                                  style: TextStyle(
+                                                      fontFamily: PoppinsFamily,
+                                                      fontSize: 14,
+                                                      color:
+                                                          mainGreyColorTheme),
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Switch(
+                                                    value: cloud.isGCB,
+                                                    onChanged: (result) {
+                                                      cloud.changeIsGCB(result);
+                                                    })
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -379,12 +403,12 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                           )
                         ]),
                       ],
-                      if (isFetched == false) ...[
-                        Custom_Alert(
-                            Title: 'Error Has Occured',
-                            Description:
-                                "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
-                      ],
+                      // if (isFetched == false) ...[
+                      //   Custom_Alert(
+                      //       Title: 'Error Has Occured',
+                      //       Description:
+                      //           "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                      // ],
                       if (isFetched == null) ...[
                         SizedBox(
                           height: MediaQuery.of(context).size.height,

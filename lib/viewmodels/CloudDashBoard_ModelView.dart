@@ -96,8 +96,8 @@ CloudSensor FindSensor(String param){
     return await DashBoardService.SwitchMCBMode(status);
   }
 
-  Future<String> SwitchOnOff(bool status) async {
-    return await DashBoardService.TurnGeneratorOnOff(status);
+  Future<bool> SwitchOnOff(bool status) async {
+    return await DashBoardService.TurnGeneratorEngineOnOff(status);
   }
 
 }

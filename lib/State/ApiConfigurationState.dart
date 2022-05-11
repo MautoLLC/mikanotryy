@@ -81,7 +81,7 @@ class ApiConfigurationState extends ChangeNotifier {
     // generators.forEach((element) {
     //   generatorNameList.add(element.name);
     // });
-    gens=generators;
+    gens = generators;
     generatorNameList.add(generators.elementAt(0).name);
     if (generatorNameList.isEmpty) {
       isSuccess = false;
@@ -91,7 +91,6 @@ class ApiConfigurationState extends ChangeNotifier {
       Message = 'Generators fetched successfully.';
     }
     notifyListeners();
-
   }
 
   void changeRefreshRate(int rate) {
@@ -179,8 +178,8 @@ class ApiConfigurationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setpref(ssid, password, int refreshRate, cloudUsername, cloudPassword,
-      int cloudMode, generatorId) async {
+  Future<void> setpref(ssid, password, int refreshRate, cloudUsername,
+      cloudPassword, int cloudMode, generatorId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(prefs_SSID, ssid);
     prefs.setString(prefs_Password, password);
