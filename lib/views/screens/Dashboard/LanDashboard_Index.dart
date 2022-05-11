@@ -76,7 +76,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Column(
                       children: [
-                        if (isFetched == true || isFetched == false) ...[
+                        if (isFetched == true) ...[
                           Column(children: [
                             Row(
                               children: [
@@ -279,7 +279,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 100,
+                                          width: 80,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_MCB),
@@ -288,7 +288,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               Row(children: [
                                                 SizedBox(
-                                                  width: 5,
+                                                  width: 2,
                                                 ),
                                                 Text(
                                                   lan.MCBModeStatus
@@ -296,11 +296,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                       : lbl_OFF,
                                                   style: TextStyle(
                                                       fontFamily: PoppinsFamily,
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       color:
                                                           mainGreyColorTheme),
                                                 ),
-                                                Spacer(),
+                                                SizedBox(
+                                                  width: 2,
+                                                ),
                                                 Switch(
                                                     value: lan.MCBModeStatus,
                                                     onChanged: (result) {
@@ -312,7 +314,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 10,
+                                          width: 5,
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(top: 15),
@@ -322,7 +324,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 100,
+                                          width: 80,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_GCB),
@@ -331,7 +333,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               Row(
                                                 children: [
-                                                  SizedBox(width: 5),
+                                                  SizedBox(width: 2),
                                                   Text(
                                                     lan.isGCB
                                                         ? lbl_ON
@@ -339,11 +341,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                     style: TextStyle(
                                                         fontFamily:
                                                             PoppinsFamily,
-                                                        fontSize: 14,
+                                                        fontSize: 12,
                                                         color:
                                                             mainGreyColorTheme),
                                                   ),
-                                                  Spacer(),
+                                                  SizedBox(
+                                                  width: 2,
+                                                ),
                                                   Switch(
                                                       value: lan.isGCB,
                                                       onChanged: (result) {
@@ -415,12 +419,12 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                             )
                           ]),
                         ],
-                        // if (isFetched == false) ...[
-                        //   Custom_Alert(
-                        //       Title: 'Error Has Occured',
-                        //       Description:
-                        //           "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
-                        // ],
+                        if (isFetched == false) ...[
+                          Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                        ],
                         if (isFetched == null) ...[
                           SizedBox(
                             height: MediaQuery.of(context).size.height,

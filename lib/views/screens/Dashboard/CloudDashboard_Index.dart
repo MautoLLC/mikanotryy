@@ -72,7 +72,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
                     children: [
-                      if (isFetched == true || isFetched == false) ...[
+                      if (isFetched == true) ...[
                         Column(children: [
                           Row(
                             children: [
@@ -276,7 +276,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               BorderRadius.circular(10),
                                         ),
                                         height: 129,
-                                        width: 100,
+                                        width: 80,
                                         child: Column(
                                           children: [
                                             SubTitleText(title: lbl_MCB),
@@ -285,19 +285,19 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             ),
                                             Row(children: [
                                               SizedBox(
-                                                width: 5,
+                                                width: 2,
                                               ),
                                               Text(
                                                 cloud.MCBModeStatus
-                                                    ? lbl_Close_On
-                                                    : lbl_Close_Off,
+                                                    ? lbl_ON
+                                                    : lbl_OFF,
                                                 style: TextStyle(
                                                     fontFamily: PoppinsFamily,
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     color: mainGreyColorTheme),
                                               ),
                                               SizedBox(
-                                                width: 5,
+                                                width: 2,
                                               ),
                                               Switch(
                                                   value: cloud.MCBModeStatus,
@@ -310,7 +310,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: 10,
+                                        width: 5,
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(top: 15),
@@ -320,7 +320,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               BorderRadius.circular(10),
                                         ),
                                         height: 129,
-                                        width: 100,
+                                        width: 84,
                                         child: Column(
                                           children: [
                                             SubTitleText(title: lbl_GCB),
@@ -329,19 +329,19 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             ),
                                             Row(
                                               children: [
-                                                SizedBox(width: 5),
+                                                SizedBox(width: 2),
                                                 Text(
                                                   cloud.isGCB
                                                       ? lbl_ON
                                                       : lbl_OFF,
                                                   style: TextStyle(
                                                       fontFamily: PoppinsFamily,
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       color:
                                                           mainGreyColorTheme),
                                                 ),
                                                 SizedBox(
-                                                  width: 5,
+                                                  width: 2,
                                                 ),
                                                 Switch(
                                                     value: cloud.isGCB,
@@ -403,12 +403,12 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                           )
                         ]),
                       ],
-                      // if (isFetched == false) ...[
-                      //   Custom_Alert(
-                      //       Title: 'Error Has Occured',
-                      //       Description:
-                      //           "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
-                      // ],
+                      if (isFetched == false) ...[
+                        Custom_Alert(
+                            Title: 'Error Has Occured',
+                            Description:
+                                "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                      ],
                       if (isFetched == null) ...[
                         SizedBox(
                           height: MediaQuery.of(context).size.height,
