@@ -86,9 +86,9 @@ class LanDashBoard_Service {
     apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
     int Mode;
     if (status)
-      Mode = 1;
-    else
       Mode = 0;
+    else
+      Mode = 1;
 
     bool isSuccess = false;
     final response = await http.get(
