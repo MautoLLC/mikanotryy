@@ -18,11 +18,10 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 class CloudDashboard_Index extends StatefulWidget {
-  //final String ApiEndPoint;
   final int RefreshRate;
 
   CloudDashboard_Index(
-      {Key? key, /*required this.ApiEndPoint,*/ required this.RefreshRate})
+      {Key? key, required this.RefreshRate})
       : super(key: key);
 
   @override
@@ -42,7 +41,6 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     });
 
     timer = Timer.periodic(Duration(seconds: widget.RefreshRate), (Timer t) {
-      print("refreshing...");
       isDataFetched().whenComplete(() {
         setState(() {});
       });
@@ -59,8 +57,6 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     timer.cancel();
     super.dispose();
   }
-
-  //late bool isGCB = false;
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +251,6 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             Switch(
                                                 value: cloud.isIO,
                                                 onChanged: (result) {
-                                                  // TODO logic
                                                   cloud.changeIsIO(result);
                                                 })
                                           ],

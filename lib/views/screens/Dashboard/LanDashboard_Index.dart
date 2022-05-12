@@ -19,10 +19,9 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 class LanDashboard_Index extends StatefulWidget {
-  // final String ApiEndPoint;
   final int RefreshRate;
   LanDashboard_Index(
-      {Key? key, /*required this.ApiEndPoint,*/ required this.RefreshRate})
+      {Key? key, required this.RefreshRate})
       : super(key: key);
 
   @override
@@ -35,7 +34,6 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isDataFetched().whenComplete(() {
       setState(() {});
@@ -43,7 +41,6 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
     timer =
         Timer.periodic(Duration(seconds: this.widget.RefreshRate), (Timer t) {
-      print("refreshing...");
       isDataFetched().whenComplete(() {
         setState(() {});
       });
@@ -60,11 +57,6 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
     timer.cancel();
     super.dispose();
   }
-
-  // late bool isAuto = ControllerModeStatus;
-  // late bool MCBisAuto = MCBModeStatus;
-  // late bool isIO = false;
-  // late bool isGCB = false;
 
   @override
   Widget build(BuildContext context) {
