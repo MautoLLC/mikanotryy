@@ -3,19 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
-import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
-import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Test.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class ApiConfigurationPage extends StatelessWidget {
   ApiConfigurationPage({Key? key}) : super(key: key);
@@ -52,21 +49,6 @@ class ApiConfigurationPage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 27,
-                  // ),
-                  // Spacer(),
-                  // SizedBox(
-                  //   width: (MediaQuery.of(context).size.height) - 16,
-                  //   child: Text(
-                  //     txt_API_Configuration,
-                  //     textAlign: TextAlign.center,
-                  //     style: TextStyle(fontWeight: FontWeight.bold),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 30,
-                  // ),
                   Row(
                     children: [
                       Expanded(
@@ -232,24 +214,7 @@ class ApiConfigurationPage extends StatelessWidget {
                         t13EditTextStyle(
                             lbl_Cloud_Password, cloudPasswordController),
                         SizedBox(height: 20),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Text(
-                        //       'Cloud Mode',
-                        //       style: TextStyle(fontSize: 17.0),
-                        //     ), //Text
-                        //     SizedBox(width: 10),
-                        //     Checkbox(
-                        //       value: value.cloudModeValue,
-                        //       onChanged: (bool? option) {
-                        //         value.changeCloudMode(option);
-                        //       },
-                        //     ),
-                        //   ],
-                        // ),
                         SizedBox(height: 10),
-
                         if (value.isSuccess == true && value.Message != "")
                           Container(
                               width: MediaQuery.of(context).size.width - 16,
@@ -330,12 +295,13 @@ class ApiConfigurationPage extends StatelessWidget {
                                         .toList(),
                                     value: value.chosenGeneratorName,
                                     onChanged: (item) {
-                                      // String string = item.toString();
-                                      // final splitted = string.split('(');
-                                      value.ChooseGeneratorName(item.toString());
-                                      int i = (value.gens).indexWhere((element) =>
-                                      element.name == item.toString());
-                                      value.setChosenGeneratorId(value.gens.elementAt(i).generatorId);
+                                      value.ChooseGeneratorName(
+                                          item.toString());
+                                      int i = (value.gens).indexWhere(
+                                          (element) =>
+                                              element.name == item.toString());
+                                      value.setChosenGeneratorId(
+                                          value.gens.elementAt(i).generatorId);
                                     }),
                               ),
                             ),
@@ -352,7 +318,6 @@ class ApiConfigurationPage extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         SizedBox(
                           height: 25,
                         ),
@@ -445,26 +410,12 @@ class ApiConfigurationPage extends StatelessWidget {
                               color: Colors.black,
                               size: 65,
                             ),
-                            SizedBox(height: 20),
+                          SizedBox(height: 20),
                           T13Button(
                               textContent: lbl_Save_Settings,
                               onPressed: () async {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
-
-                                // String generatorId = "";
-                                // List<Generator> generators = await value.service
-                                //     .getGeneratorsOfUser(
-                                //         cloudUsernameController.text,
-                                //         cloudPasswordController.text);
-                                //
-                                // generators.forEach((element) {
-                                //   if (element.name ==
-                                //       value.chosenGeneratorName) {
-                                //     generatorId = element.generatorId;
-                                //     value.setChosenGeneratorId(generatorId);
-                                //   }
-                                // });
                                 value.Loading(true);
 
                                 if (value.DashBoardFirstTimeAccess == true) {
@@ -530,14 +481,13 @@ class ApiConfigurationPage extends StatelessWidget {
                               onPressed: () async {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
-
-                                value.setApiLanEndpoint("http://"+apiEndpointLanController.text);
+                                value.setApiLanEndpoint(
+                                    "http://" + apiEndpointLanController.text);
                                 if (value.option == 'cloud') {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CloudDashboard_Index(
-                                          /* ApiEndPoint:
-                                        "https//iotapi.mauto.co/api/generators/values/",*/
-                                          RefreshRate: value.RefreshRate)));
+                                      builder: (context) =>
+                                          CloudDashboard_Index(
+                                              RefreshRate: value.RefreshRate)));
                                 } else if (value.option == 'comap') {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => Dashboard_Index()));
@@ -551,8 +501,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                 prefs.setBool(
                                     prefs_DashboardFirstTimeAccess, false);
                               }),
-                              SizedBox(height: 20),
-                          
+                          SizedBox(height: 20),
                           SizedBox(
                             height: 25,
                           ),

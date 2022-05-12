@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
@@ -44,12 +45,13 @@ class CloudDashBoard_Service {
     }
   }
 
-  Future<String> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     GeneratorID = prefs.getString(prefs_GeneratorId)!;
     String Mode;
+    bool isSuccess = false;
 
     if (status)
       Mode = "AUTO";
@@ -83,25 +85,27 @@ class CloudDashBoard_Service {
     );
 
     if (response.statusCode == 200) {
-      return response.toString();
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to update sensor');
     }
+    return isSuccess;
   }
 
-  Future<String> SwitchMCBMode(bool status) async {
+  Future<bool> SwitchMCBMode(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     GeneratorID = prefs.getString(prefs_GeneratorId)!;
     String Mode;
+    bool isSuccess = false;
 
     if (status)
-      Mode = "Close-Off";
-    else
       Mode = "Close-On";
+    else
+      Mode = "Close-Off";
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
           'Content-Type': 'application/json',
@@ -129,41 +133,107 @@ class CloudDashBoard_Service {
     );
 
     if (response.statusCode == 200) {
-      return response.toString();
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to update sensor');
     }
+    return isSuccess;
   }
 
-  Future<String> TurnGeneratorOnOff(bool status) async {
+  Future<bool> SwitchGCBMode(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cloudUsername = prefs.getString(prefs_CloudUsername)!;
+    String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     GeneratorID = prefs.getString(prefs_GeneratorId)!;
-    int Command;
+    String Mode;
+    bool isSuccess = false;
+
     if (status)
-      Command = 0;
+      Mode = "Close-On";
     else
-      Command = 1;
+      Mode = "Close-Off";
+    final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'email': cloudUsername,
+          'password': cloudPassword,
+        }));
+    final token = jsonDecode((responseAuth.body))['token'];
+
     final response = await http.post(
       Uri.parse(cloudIotMautoSensorsUrl + GeneratorID),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token.toString()
       },
-      body: jsonEncode(<String, String>{
-        'generatorSensorID':
-            dotenv.env['EngineState_id'].toString().toUpperCase(),
-        'value': Command.toString(),
-        //'timeStamp':DateTime.now().toString()
-        'timeStamp': DateTime.now().toIso8601String(),
-      }),
+      body: jsonEncode([
+        <String, String>{
+          'generatorSensorID': dotenv.env['GCB_id'].toString(),
+          'value': Mode.toString(),
+          //'timeStamp':DateTime.now().toString()
+          'timeStamp': DateTime.now().toIso8601String()
+        }
+      ]),
     );
-    if (response.statusCode == 201) {
-      return response.toString();
+
+    if (response.statusCode == 200) {
+      isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
       throw Exception('Failed to update sensor');
     }
+    return isSuccess;
+  }
+
+  Future<bool> TurnGeneratorEngineOnOff(bool status) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cloudUsername = prefs.getString(prefs_CloudUsername)!;
+    String cloudPassword = prefs.getString(prefs_CloudPassword)!;
+    GeneratorID = prefs.getString(prefs_GeneratorId)!;
+    String Command;
+    bool isSuccess = false;
+    if (status)
+      Command = "ON";
+    else
+      Command = "OFF";
+
+    final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'email': cloudUsername,
+          'password': cloudPassword,
+        }));
+    final token = jsonDecode((responseAuth.body))['token'];
+
+    final response = await http.post(
+      Uri.parse(cloudIotMautoSensorsUrl + GeneratorID),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token.toString()
+      },
+      body: jsonEncode([
+        <String, String>{
+          'generatorSensorID': dotenv.env['EngineOnOff_id'].toString(),
+          'value': Command.toString(),
+          //'timeStamp':DateTime.now().toString()
+          'timeStamp': DateTime.now().toIso8601String(),
+        }
+      ]),
+    );
+    if (response.statusCode == 200) {
+      isSuccess = true;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to update sensor');
+    }
+    return isSuccess;
   }
 }

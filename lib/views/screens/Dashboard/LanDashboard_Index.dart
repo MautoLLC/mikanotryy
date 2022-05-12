@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
+import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/models/LanSensor_Model.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -18,10 +19,9 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 class LanDashboard_Index extends StatefulWidget {
-  // final String ApiEndPoint;
   final int RefreshRate;
   LanDashboard_Index(
-      {Key? key, /*required this.ApiEndPoint,*/ required this.RefreshRate})
+      {Key? key, required this.RefreshRate})
       : super(key: key);
 
   @override
@@ -29,183 +29,27 @@ class LanDashboard_Index extends StatefulWidget {
 }
 
 class _LanDashboard_IndexState extends State<LanDashboard_Index> {
-  final Map EnState = {
-    'Init': 0,
-    'Ready': 1,
-    'NotReady': 2,
-    'Prestart': 3,
-    'Cranking': 4,
-    'Pause': 5,
-    'Satrting': 6,
-    'Running': 7,
-    'Loaded': 8,
-    'Softunld': 9,
-    'Cooling': 10,
-    'Stop': 11,
-    'Shutdown': 12,
-    'Ventil': 13,
-    'EmergMan': 14,
-    'Softload': 15,
-    'WaitStop': 16,
-    'SDVentil': 17
-  };
-  final Map BrState = {
-    'Init': 0,
-    'BrksOff': 1,
-    'IslOper': 2,
-    'MainsOper': 3,
-    'ParalOper': 4,
-    'RevSync': 5,
-    'Synchro': 6,
-    'MainsFlt': 7,
-    'ValidFlt': 8,
-    'MainsRet': 9,
-    'MultIslOp': 10,
-    'MultParOp': 11,
-    'EmergMan': 12
-  };
   late Timer timer;
-  LANSensor EngineState = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor BreakState = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor RunningHours = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  late String Hours;
-  late String Minutes;
-  LANSensor Rpm = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor BatteryVoltage = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor OilPressure = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor CoolantTemp = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor FuelLevel = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor GeneratorVoltage = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor GeneratorFrequency = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor GeneratorLoad = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor ControllerMode = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  LANSensor MCBMode = LANSensor(
-      return_value: 10,
-      id: "Error",
-      name: "Error",
-      hardware: "Error",
-      connected: "Error");
-  bool ControllerModeStatus = false;
-  bool MCBModeStatus = false;
-  bool PowerStatus = false;
-
-  //This function is to fetch the data and await rest apis //
-  Future<bool> FetchData() async {
-    try {
-      LanDashBoard_ModelView DashModelView =
-          new LanDashBoard_ModelView(/*ApiEnd: this.widget.ApiEndPoint*/);
-      EngineState = await DashModelView.GetEngineState();
-      BreakState = await DashModelView.GetBreakerState();
-      RunningHours = await DashModelView.GetRunningHours();
-      Hours = RunningHours.return_value.toString();
-      Minutes = RunningHours.return_value.toString() != "Restricted"
-          ? ((double.parse(RunningHours.return_value.toString()) -
-                      double.parse(Hours)) *
-                  60)
-              .round()
-              .toString()
-          : "Restricted";
-      Rpm = await DashModelView.GetRPM();
-      BatteryVoltage = await DashModelView.GetBattryVoltage();
-      OilPressure = await DashModelView.GetOilPressure();
-      CoolantTemp = await DashModelView.GetCoolantTemp();
-      FuelLevel = await DashModelView.GetFuelLevel();
-      GeneratorVoltage = await DashModelView.GetGeneratorVoltage();
-      GeneratorFrequency = await DashModelView.GetGeneratorFrequency();
-      GeneratorLoad = await DashModelView.GetGeneratorLoad();
-      ControllerMode = await DashModelView.GetControllerMode();
-      MCBMode = await DashModelView.GetMCBMode();
-      if (ControllerMode.return_value == 2)
-        ControllerModeStatus = true;
-      else
-        ControllerModeStatus = false;
-
-      if (MCBMode.return_value == 1)
-        MCBModeStatus = true;
-      else
-        MCBModeStatus = false;
-
-      if (EngineState.return_value == 8 || EngineState.return_value == 7)
-        PowerStatus = true;
-      else
-        PowerStatus = false;
-
-      return true;
-    } on Exception {
-      return false;
-    }
-  }
+  bool? isFetched;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    FetchData();
-    timer = Timer.periodic(
-        Duration(seconds: this.widget.RefreshRate),
-        (Timer t) => setState(() {
-              // change state according to result of request
-            }));
+    isDataFetched().whenComplete(() {
+      setState(() {});
+    });
+
+    timer =
+        Timer.periodic(Duration(seconds: this.widget.RefreshRate), (Timer t) {
+      isDataFetched().whenComplete(() {
+        setState(() {});
+      });
+    });
+  }
+
+  Future<void> isDataFetched() async {
+    isFetched = await Provider.of<LanGeneratorState>(context, listen: false)
+        .FetchData();
   }
 
   @override
@@ -214,49 +58,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
     super.dispose();
   }
 
-  late bool isAuto = ControllerModeStatus;
-  late bool MCBisAuto = MCBModeStatus;
-  late bool isIO = false;
-  late bool isGCB = false;
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<ApiConfigurationState>(
-        builder: (context, value, child) => Scaffold(
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: FutureBuilder(
-                    future: FetchData(),
-                    builder: (
-                      BuildContext context,
-                      AsyncSnapshot<bool> snapshot,
-                    ) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SpinKitCircle(
-                                color: Colors.black,
-                                size: 65,
-                              ),
-                            ],
-                          ),
-                        );
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (snapshot.hasError) {
-                          return Custom_Alert(
-                              Title: 'Error Has Occured',
-                              Description:
-                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
-                        } else {
-                          return Column(children: [
+    return Consumer2<ApiConfigurationState, LanGeneratorState>(
+        builder: (context, value, lan, child) => Scaffold(
+              backgroundColor: Colors.white,
+              body: SafeArea(
+                child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        if (isFetched == true) ...[
+                          Column(children: [
                             Row(
                               children: [
                                 IconButton(
@@ -352,7 +165,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         ),
                                         child: GaugeWidget(
                                             title: lbl_RPM,
-                                            value: ((Rpm.return_value) / 100))),
+                                            value: ((lan.Rpm.return_value) /
+                                                100))),
                                     SizedBox(height: 10),
                                     Container(
                                         height: 160,
@@ -364,7 +178,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         ),
                                         child: GaugeWidget(
                                             title: lbl_Actual_Power,
-                                            value: ((GeneratorLoad.return_value)
+                                            value: ((lan
+                                                    .GeneratorLoad.return_value)
                                                 .toDouble()),
                                             needleColor: mainColorTheme)),
                                   ],
@@ -387,7 +202,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           Row(
                                             children: [
                                               Text(
-                                                isAuto ? lbl_Auto : lbl_Manual,
+                                                lan.ControllerModeStatus
+                                                    ? lbl_Auto
+                                                    : lbl_Manual,
                                                 style: TextStyle(
                                                     fontFamily: PoppinsFamily,
                                                     fontSize: 14,
@@ -395,20 +212,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               Spacer(),
                                               Switch(
-                                                  value: isAuto,
+                                                  value:
+                                                      lan.ControllerModeStatus,
                                                   onChanged: (result) {
-                                                    // TODO logic
-                                                    isAuto = result;
-                                                    setState(() {
-                                                      LanDashBoard_ModelView m =
-                                                          new LanDashBoard_ModelView(
-                                                              /*ApiEnd: this
-                                                              .widget
-                                                              .ApiEndPoint*/
-                                                              );
-                                                      m.SwitchControllerMode(
-                                                          result);
-                                                    });
+                                                    lan.changeControllerModeStatus(
+                                                        result);
                                                   })
                                             ],
                                           )
@@ -433,7 +241,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           Row(
                                             children: [
                                               Text(
-                                                isIO ? lbl_ON : lbl_OFF,
+                                                lan.isIO ? lbl_ON : lbl_OFF,
                                                 style: TextStyle(
                                                     fontFamily: PoppinsFamily,
                                                     fontSize: 14,
@@ -441,11 +249,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               Spacer(),
                                               Switch(
-                                                  value: isIO,
+                                                  value: lan.isIO,
                                                   onChanged: (result) {
-                                                    // TODO logic
-                                                    isIO = result;
-                                                    setState(() {});
+                                                    lan.changeIsIO(result);
                                                   })
                                             ],
                                           ),
@@ -465,7 +271,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 79,
+                                          width: 80,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_MCB),
@@ -474,39 +280,33 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               Row(children: [
                                                 SizedBox(
-                                                  width: 5,
+                                                  width: 2,
                                                 ),
                                                 Text(
-                                                  MCBisAuto ? 'A' : 'M',
+                                                  lan.MCBModeStatus
+                                                      ? lbl_ON
+                                                      : lbl_OFF,
                                                   style: TextStyle(
                                                       fontFamily: PoppinsFamily,
-                                                      fontSize: 14,
+                                                      fontSize: 12,
                                                       color:
                                                           mainGreyColorTheme),
                                                 ),
-                                                Spacer(),
+                                                SizedBox(
+                                                  width: 2,
+                                                ),
                                                 Switch(
-                                                    value: MCBisAuto,
+                                                    value: lan.MCBModeStatus,
                                                     onChanged: (result) {
-                                                      // TODO logic
-                                                      MCBisAuto = result;
-                                                      setState(() {
-                                                        LanDashBoard_ModelView
-                                                            m =
-                                                            new LanDashBoard_ModelView(
-                                                                /* ApiEnd: this
-                                                                .widget
-                                                                .ApiEndPoint*/
-                                                                );
-                                                        m.SwitchMCBMode(result);
-                                                      });
+                                                      lan.changeMCBModeStatus(
+                                                          result);
                                                     })
                                               ]),
                                             ],
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 10,
+                                          width: 5,
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(top: 15),
@@ -516,18 +316,37 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 79,
+                                          width: 80,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_GCB),
-                                              Spacer(),
-                                              Switch(
-                                                  value: isGCB,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    isGCB = result;
-                                                    setState(() {});
-                                                  })
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(width: 2),
+                                                  Text(
+                                                    lan.isGCB
+                                                        ? lbl_ON
+                                                        : lbl_OFF,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        fontSize: 12,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                  SizedBox(
+                                                  width: 2,
+                                                ),
+                                                  Switch(
+                                                      value: lan.isGCB,
+                                                      onChanged: (result) {
+                                                        lan.changeIsGCB(result);
+                                                      })
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),
@@ -544,59 +363,80 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                               children: [
                                 infotile(
                                   title: lbl_Engine,
-                                  value: EnState.keys
-                                      .elementAt(EngineState.return_value)
+                                  value: lan.EnState.keys
+                                      .elementAt(lan.EngineState.return_value)
                                       .toString(),
                                 ),
                                 infotile(
                                   title: lbl_Breaker,
-                                  value: BrState.keys
-                                      .elementAt(BreakState.return_value)
+                                  value: lan.BrState.keys
+                                      .elementAt(lan.BreakState.return_value)
                                       .toString(),
                                 ),
                                 infotile(
                                   title: lbl_Running_Hours,
-                                  value: RunningHours.return_value.toString(),
+                                  value:
+                                      lan.RunningHours.return_value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Battery,
-                                  value: ((BatteryVoltage.return_value
+                                  value: ((lan.BatteryVoltage.return_value
                                               .toDouble()) /
                                           10)
                                       .toString(),
                                 ),
                                 infotile(
                                   title: lbl_Pressure,
-                                  value:
-                                      ((OilPressure.return_value.toDouble()) /
-                                              10)
-                                          .toString(),
+                                  value: ((lan.OilPressure.return_value
+                                              .toDouble()) /
+                                          10)
+                                      .toString(),
                                 ),
                                 infotile(
                                   title: lbl_Temperature,
-                                  value: CoolantTemp.return_value.toString(),
+                                  value:
+                                      lan.CoolantTemp.return_value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Gas,
-                                  value: EngineState.return_value.toString(),
+                                  value:
+                                      lan.EngineState.return_value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Load,
-                                  value: GeneratorLoad.return_value.toString(),
+                                  value:
+                                      lan.GeneratorLoad.return_value.toString(),
                                 ),
                               ],
                             )
-                          ]);
-                        }
-                      } else {
-                        return Custom_Alert(
-                            Title: 'Error Has Occured',
-                            Description:
-                                "Something Went Wrong! it seems that no generator is assigned.");
-                      }
-                    }),
+                          ]),
+                        ],
+                        if (isFetched == false) ...[
+                          Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                        ],
+                        if (isFetched == null) ...[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 65,
+                                ),
+                              ],
+                            ),
+                          )
+                        ]
+                      ],
+                    )),
               ),
-            )));
+            ));
   }
 }
 

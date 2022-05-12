@@ -1,22 +1,17 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
-import 'package:mymikano_app/models/Sensor_Model.dart';
-import 'package:mymikano_app/models/Token_Model.dart';
+import 'package:mymikano_app/State/WSVGeneratorState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/viewmodels/DashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
-import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -28,207 +23,34 @@ class Dashboard_Index extends StatefulWidget {
 }
 
 class _Dashboard_IndexState extends State<Dashboard_Index> {
-  late Token UserToken;
-  Sensor EngineState = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor BreakState = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor RunningHours = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  late String Hours;
-  late String Minutes;
-  Sensor Rpm = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor BatteryVoltage = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor OilPressure = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor CoolantTemp = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor FuelLevel = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor GeneratorVoltage = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor GeneratorFrequency = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor GeneratorLoad = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  Sensor ControllerMode = Sensor(
-      name: "Restricted",
-      valueGuid: "Error",
-      value: 100,
-      unit: "Error",
-      highLimit: "Error",
-      lowLimit: "Error",
-      decimalPlaces: "Error",
-      timeStamp: "Error");
-  bool ControllerModeStatus = false;
-  bool PowerStatus = false;
-  late DashBoard_ModelView DashModelView;
-  //This function is to fetch the data and await rest apis //
-  Future<bool> FetchData() async {
-    try {
-      DashModelView = new DashBoard_ModelView();
-      await DashModelView.GetUserToken();
-      await DashModelView.getListGuid();
-      await DashModelView.GetUnitValues();
-      EngineState = DashModelView.GetEngineState();
-      BreakState = DashModelView.GetBreakerState();
-      RunningHours = DashModelView.GetRunningHours();
-      Hours = RunningHours.value.toString();
-      Minutes = RunningHours.value.toString() != "Restricted"
-          ? ((double.parse(RunningHours.value.toString()) -
-                      double.parse(Hours)) *
-                  60)
-              .round()
-              .toString()
-          : "Restricted";
-      Rpm = DashModelView.GetRPM();
-      BatteryVoltage = DashModelView.GetBattryVoltage();
-      OilPressure = DashModelView.GetOilPressure();
-      CoolantTemp = DashModelView.GetCoolantTemp();
-      FuelLevel = DashModelView.GetFuelLevel();
-      GeneratorVoltage = DashModelView.GetGeneratorVoltage();
-      GeneratorFrequency = DashModelView.GetGeneratorFrequency();
-      GeneratorLoad = DashModelView.GetGeneratorLoad();
-      ControllerMode = DashModelView.GetControllerMode();
-      if (ControllerMode.value == "AUTO")
-        ControllerModeStatus = true;
-      else
-        ControllerModeStatus = false;
+  bool? isFetched;
 
-      if (EngineState.value == "Loaded" || EngineState.value == "Running")
-        PowerStatus = true;
-      else
-        PowerStatus = false;
-
-      return true;
-    } on Exception {
-      return false;
-    }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isDataFetched().whenComplete(() {
+      setState(() {});
+    });
   }
 
-  late bool isManual = ControllerModeStatus;
-  bool isIO = false;
-  bool isMCB = false;
-  bool isGCB = false;
+  Future<void> isDataFetched() async {
+    isFetched = await Provider.of<WSVGeneratorState>(context, listen: false)
+        .FetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ApiConfigurationState>(
-        builder: (context, value, child) => Scaffold(
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: FutureBuilder(
-                    future: FetchData(),
-                    builder: (
-                      BuildContext context,
-                      AsyncSnapshot<bool> snapshot,
-                    ) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SpinKitCircle(
-                                color: Colors.black,
-                                size: 65,
-                              ),
-                            ],
-                          ),
-                        );
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (snapshot.hasError) {
-                          return Custom_Alert(
-                              Title: 'Error Has Occured',
-                              Description:
-                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.");
-                        } else {
-                          print("Done");
-                          return Column(children: [
+    return Consumer2<ApiConfigurationState, WSVGeneratorState>(
+        builder: (context, value, wsv, child) => Scaffold(
+              backgroundColor: Colors.white,
+              body: SafeArea(
+                child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        if (isFetched == true) ...[
+                          Column(children: [
                             Row(
                               children: [
                                 IconButton(
@@ -365,7 +187,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                         ),
                                         child: GaugeWidget(
                                             title: lbl_RPM,
-                                            value: ((Rpm.value) / 100))),
+                                            value: ((wsv.Rpm.value) / 100))),
                                     SizedBox(height: 10),
                                     Container(
                                         height: 160,
@@ -377,7 +199,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                         ),
                                         child: GaugeWidget(
                                             title: lbl_Actual_Power,
-                                            value: ((Rpm.value) / 100),
+                                            value: ((wsv.Rpm.value) / 100),
                                             needleColor: mainColorTheme)),
                                   ],
                                 ),
@@ -399,7 +221,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                           Row(
                                             children: [
                                               Text(
-                                                isManual
+                                                wsv.ControllerModeStatus
                                                     ? lbl_Manual
                                                     : lbl_Auto,
                                                 style: TextStyle(
@@ -409,11 +231,12 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                               ),
                                               Spacer(),
                                               Switch(
-                                                  value: isManual,
+                                                  value:
+                                                      wsv.ControllerModeStatus,
                                                   onChanged: (result) {
                                                     // TODO logic
-                                                    isManual = result;
-                                                    setState(() {});
+                                                    wsv.changeControllerModeStatus(
+                                                        result);
                                                   })
                                             ],
                                           )
@@ -438,7 +261,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                           Row(
                                             children: [
                                               Text(
-                                                isIO ? lbl_ON : lbl_OFF,
+                                                wsv.isIO ? lbl_ON : lbl_OFF,
                                                 style: TextStyle(
                                                     fontFamily: PoppinsFamily,
                                                     fontSize: 14,
@@ -446,11 +269,10 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                               ),
                                               Spacer(),
                                               Switch(
-                                                  value: isIO,
+                                                  value: wsv.isIO,
                                                   onChanged: (result) {
                                                     // TODO logic
-                                                    isIO = result;
-                                                    setState(() {});
+                                                    wsv.changeIsIO(result);
                                                   })
                                             ],
                                           ),
@@ -470,23 +292,42 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 79,
+                                          width: 80,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_MCB),
-                                              Spacer(),
-                                              Switch(
-                                                  value: isMCB,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    isMCB = result;
-                                                    setState(() {});
-                                                  })
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(width: 2),
+                                                  Text(
+                                                    wsv.isMCB
+                                                        ? lbl_ON
+                                                        : lbl_OFF,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        fontSize: 12,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Switch(
+                                                      value: wsv.isMCB,
+                                                      onChanged: (result) {
+                                                        wsv.changeIsMCB(result);
+                                                      })
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 10,
+                                          width: 5,
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(top: 15),
@@ -496,18 +337,37 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           height: 129,
-                                          width: 79,
+                                          width: 80,
                                           child: Column(
                                             children: [
                                               SubTitleText(title: lbl_GCB),
-                                              Spacer(),
-                                              Switch(
-                                                  value: isGCB,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    isGCB = result;
-                                                    setState(() {});
-                                                  })
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  SizedBox(width: 2),
+                                                  Text(
+                                                    wsv.isGCB
+                                                        ? lbl_ON
+                                                        : lbl_OFF,
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                            PoppinsFamily,
+                                                        fontSize: 12,
+                                                        color:
+                                                            mainGreyColorTheme),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Switch(
+                                                      value: wsv.isGCB,
+                                                      onChanged: (result) {
+                                                        wsv.changeIsGCB(result);
+                                                      })
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ),
@@ -524,49 +384,66 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                               children: [
                                 infotile(
                                   title: lbl_Engine,
-                                  value: EngineState.value.toString(),
+                                  value: wsv.EngineState.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Breaker,
-                                  value: BreakState.value.toString(),
+                                  value: wsv.BreakState.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Running_Hours,
-                                  value: RunningHours.value.toString(),
+                                  value: wsv.RunningHours.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Battery,
-                                  value: BatteryVoltage.value.toString(),
+                                  value: wsv.BatteryVoltage.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Pressure,
-                                  value: OilPressure.value.toString(),
+                                  value: wsv.OilPressure.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Temperature,
-                                  value: CoolantTemp.value.toString(),
+                                  value: wsv.CoolantTemp.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Gas,
-                                  value: EngineState.value.toString(),
+                                  value: wsv.EngineState.value.toString(),
                                 ),
                                 infotile(
                                   title: lbl_Load,
-                                  value: GeneratorLoad.value.toString(),
+                                  value: wsv.GeneratorLoad.value.toString(),
                                 ),
                               ],
                             )
-                          ]);
-                        }
-                      } else {
-                        return Custom_Alert(
-                            Title: 'Error Has Occured',
-                            Description:
-                                "Something Went Wrong! it seems that no generator is assigned.");
-                      }
-                    }),
+                          ]),
+                        ],
+                        if (isFetched == false) ...[
+                          Custom_Alert(
+                              Title: 'Error Has Occured',
+                              Description:
+                                  "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                        ],
+                        if (isFetched == null) ...[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 65,
+                                ),
+                              ],
+                            ),
+                          )
+                        ]
+                      ],
+                    )),
               ),
-            )));
+            ));
   }
 }
 
