@@ -25,6 +25,7 @@ class ProductState extends ChangeNotifier {
   int page = 0;
   List<Product> ListOfProductsToShow = [];
   List<String> filters = [];
+  int ItemsPerPage = 6;
 
   void clear() {
     selectMode = false;
@@ -123,7 +124,7 @@ class ProductState extends ChangeNotifier {
   }
 
   void Paginate() async {
-    if(!(page+1>allProducts.length/8)){
+    if(!(page+1>allProducts.length/ItemsPerPage)){
       page++;
       await getListOfProducts();
     }
@@ -137,7 +138,7 @@ class ProductState extends ChangeNotifier {
 
   Future<void> getListOfProducts() async {
     ListOfProducts.addAll(
-        await ProductsService().getProducts(limit: 8, page: page));
+        await ProductsService().getProducts(limit: ItemsPerPage, page: page));
     notifyListeners();
   }
 

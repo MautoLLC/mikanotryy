@@ -14,6 +14,7 @@ class ProductsService {
     if (page != -1) {
       params["page"] = page;
     }
+    params['Fields'] = "full_description, name, id, price, images, sku, Category, approved_rating_sum";
     Response response = await dio.get(MikanoShopGetAllProductsURL,
         queryParameters: params,
         );
