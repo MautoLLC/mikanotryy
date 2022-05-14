@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -26,7 +27,6 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool isFavorite = false;
-  bool guestLogin = true;
 
   RegExp exp = RegExp(r"<[^>]/*>", multiLine: true, caseSensitive: true);
 
@@ -34,23 +34,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
 
-  init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    guestLogin = await prefs.getBool("GuestLogin")!;
-  }
-
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Quantity = 1;
-    return Consumer<ProductState>(
-      builder: (context, state, child) => Scaffold(
+    return Consumer2<ProductState, UserState>(
+      builder: (context, state, userState, child) => Scaffold(
           body: SafeArea(
             child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -91,7 +80,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       IconButton(
                           onPressed: () => finish(context),
                           icon: Icon(Icons.arrow_back_ios_new)),
-                      guestLogin
+                      userState.guestLogin
                           ? Container()
                           : Consumer<ProductState>(
                               builder: (context, state, child) => GestureDetector(
@@ -159,7 +148,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    guestLogin ? Container() : QuantityChooser(),
+                    userState.guestLogin ? Container() : QuantityChooser(),
                   ],
                 ),
                 Column(
@@ -187,7 +176,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           
                           ]),
               ),
-              guestLogin
+              userState.guestLogin
                 ? Container()
                 : Align(
                   alignment: Alignment.bottomCenter,

@@ -63,8 +63,8 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Consumer<ProductState>(
-      builder: (context, state, child) => Scaffold(
+    return Consumer2<ProductState, UserState>(
+      builder: (context, state, userState, child) => Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
