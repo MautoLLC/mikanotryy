@@ -134,7 +134,7 @@ class LanGeneratorState extends ChangeNotifier {
       connected: "Error");
   bool ControllerModeStatus = false;
   bool MCBModeStatus = false;
-  bool PowerStatus = false;
+  // bool PowerStatus = false;
 
   late bool MCBisAuto = MCBModeStatus;
   bool isIO = false;
@@ -196,7 +196,7 @@ class LanGeneratorState extends ChangeNotifier {
       ControllerMode = await LanService.FetchSensorData("ControllerMode");
       MCBMode = await LanService.FetchSensorData("MCB");
       GCBMode = await LanService.FetchSensorData("GCB");
-      Engine = await LanService.FetchSensorData("Engine");
+      Engine = await LanService.FetchSensorData("EngineState");
       if (ControllerMode.return_value == 2)
         ControllerModeStatus = true;
       else
@@ -212,15 +212,15 @@ class LanGeneratorState extends ChangeNotifier {
       else
         isGCB = false;
 
-      if (Engine.return_value == 1)
+      if (Engine.return_value == 8 || Engine.return_value == 7)
         isIO = true;
       else
         isIO = false;
-
-      if (EngineState.return_value == 8 || EngineState.return_value == 7)
-        PowerStatus = true;
-      else
-        PowerStatus = false;
+        
+      // if (EngineState.return_value == 8 || EngineState.return_value == 7)
+      //   PowerStatus = true;
+      // else
+      //   PowerStatus = false;
       notifyListeners();
       return true;
     } on Exception {
