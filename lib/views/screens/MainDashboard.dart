@@ -23,7 +23,10 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
 
   init() async {
     pages.add(MenuScreen());
-    pages.add(ListPage(title: lbl_Search, fromNavigationBar: true,));
+    pages.add(ListPage(
+      title: lbl_Search,
+      fromNavigationBar: true,
+    ));
     // pages.add(SearchPage());
     pages.add(Dashboard());
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -40,7 +43,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
 
   @override
   void initState() {
-    init(); 
+    init();
     super.initState();
   }
 

@@ -101,7 +101,7 @@ class CustomerService {
 
   Future<List<FavoriteProduct>> getAllFavoriteItemsforLoggedInUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
+    try {
       Response response = await dio.get(
         MikanoFavoritAndCartItems,
         queryParameters: {
@@ -177,7 +177,7 @@ class CustomerService {
 
   Future<List<CartProduct>> getAllCartItemsforLoggedInUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
+    try {
       Response response = await dio.get(
         MikanoFavoritAndCartItems,
         queryParameters: {
@@ -204,7 +204,7 @@ class CustomerService {
       } else {
         throw Exception('Failed to get cart Items');
       }
-    }catch (e) {
+    } catch (e) {
       print(e);
       return [];
     }

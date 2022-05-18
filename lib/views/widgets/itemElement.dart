@@ -23,9 +23,7 @@ class _ItemElementState extends State<ItemElement> {
   init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -36,21 +34,11 @@ class _ItemElementState extends State<ItemElement> {
 
   @override
   Widget build(BuildContext context) {
-    Product temp = Product(
-      id: int.parse(widget.product.id.toString()),
-      Name: widget.product.Name,
-      Price: double.parse(widget.product.Price.toString()),
-      Description: widget.product.Description,
-      Image: widget.product.Image,
-      Code: widget.product.Code,
-      Category: widget.product.Category,
-      Rating: widget.product.Rating,
-    );
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ProductDetailsPage(
-                  product: temp,
+                  product: widget.product,
                 )));
       },
       child: Container(

@@ -109,8 +109,9 @@ const cloudIotMautoAuthUrl = cloudIotMautoUrl + "/User/token";
 const cloudIotMautoSensorsUrl = cloudIotMautoUrl + "/generators/values/";
 const cloudIotMautoUserGeneratorsUrl = cloudIotMautoUrl + "/generators/list/";
 const lanESPUrl = "espapiendpoint";
-const resetESPUrl = "http://"+lanESPUrl + "/reset";
+const resetESPUrl = "http://" + lanESPUrl + "/reset";
 
 const LocationUrl = 'http://dev.codepickles.com:8094';
 const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
-const LocationByDeviceUrl = '$LocationUrl/api/TrackedUsers/Location/{deviceToken}';
+const LocationByDeviceUrl =
+    '$LocationUrl/api/TrackedUsers/Location/{deviceToken}';

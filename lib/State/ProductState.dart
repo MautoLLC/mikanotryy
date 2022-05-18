@@ -88,22 +88,30 @@ class ProductState extends ChangeNotifier {
     ListOfProducts.sort(((a, b) => a.Price > b.Price ? 1 : -1));
     notifyListeners();
   }
+
   sortByPriceHighToLow() {
     ListOfProducts.sort(((a, b) => a.Price < b.Price ? 1 : -1));
     notifyListeners();
   }
+
   sortByPriceAToZ() {
-    ListOfProducts.sort(((a, b) => a.Name.toString().compareTo(b.Name.toString())));
+    ListOfProducts.sort(
+        ((a, b) => a.Name.toString().compareTo(b.Name.toString())));
     notifyListeners();
   }
+
   sortByPriceZToA() {
-    ListOfProducts.sort(((a, b) => b.Name.toString().compareTo(a.Name.toString())));
+    ListOfProducts.sort(
+        ((a, b) => b.Name.toString().compareTo(a.Name.toString())));
     notifyListeners();
   }
 
   Future<void> fillListOfProductsToShow(String searchTerm) async {
     ListOfProductsToShow.clear();
-    ListOfProductsToShow = allProducts.where((element) => element.Name.toLowerCase().contains(searchTerm.toLowerCase())).toList();
+    ListOfProductsToShow = allProducts
+        .where((element) =>
+            element.Name.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 
@@ -124,7 +132,7 @@ class ProductState extends ChangeNotifier {
   }
 
   void Paginate() async {
-    if(!(page+1>allProducts.length/ItemsPerPage)){
+    if (!(page + 1 > allProducts.length / ItemsPerPage)) {
       page++;
       await getListOfProducts();
     }

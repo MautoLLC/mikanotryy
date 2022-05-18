@@ -12,15 +12,14 @@ logout() async {
   String token = prefs.getString("DeviceToken").toString();
   try {
     var response = await http.delete(
-        Uri.parse(deleteDeviceUrl +
-            '/${prefs.get("UserID")}?deviceToken=${token}"'),
+        Uri.parse(
+            deleteDeviceUrl + '/${prefs.get("UserID")}?deviceToken=${token}"'),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer ${prefs.getString("accessToken")}"
         });
 
-    if (!await prefs.getBool('GuestLogin')!) 
-      gps.canceled = true;
+    if (!await prefs.getBool('GuestLogin')!) gps.canceled = true;
     prefs.clear();
     await prefs.setString("DeviceToken", token.toString());
     await prefs.setBool('IsLoggedIn', false);

@@ -136,8 +136,8 @@ class WSVGeneratorState extends ChangeNotifier {
   changeControllerModeStatus(value) async {
     // bool isSuccess = await wsvService.SwitchControllerMode(value);
     // if (isSuccess == true) {
-      ControllerModeStatus = value;
-      notifyListeners();
+    ControllerModeStatus = value;
+    notifyListeners();
     // }
   }
 
@@ -152,8 +152,8 @@ class WSVGeneratorState extends ChangeNotifier {
   }
 
   changeIsMCB(value) {
-      isMCB = value;
-      notifyListeners();
+    isMCB = value;
+    notifyListeners();
   }
 
   Future<bool> FetchData() async {

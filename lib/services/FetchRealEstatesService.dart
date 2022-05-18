@@ -26,7 +26,8 @@ class RealEstatesService {
 
   Future<RealEstate> fetchRealEstatesById(int id) async {
     await PrepareCall();
-    final response = await dio.get((GetRealEstatesByIdURL).replaceAll("{id}", id.toString()));
+    final response = await dio
+        .get((GetRealEstatesByIdURL).replaceAll("{id}", id.toString()));
 
     if (response.statusCode == 200) {
       return RealEstate.fromJson(response.data);

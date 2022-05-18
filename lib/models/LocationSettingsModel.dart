@@ -6,10 +6,14 @@ class LocationSettingsModel {
   LocationSettingsModel({this.refreshRate, this.startTime, this.endTime});
 
   LocationSettingsModel.fromJson(Map<String, dynamic> json) {
-    String month = DateTime.now().month<10?"0${DateTime.now().month}":DateTime.now().month.toString();
+    String month = DateTime.now().month < 10
+        ? "0${DateTime.now().month}"
+        : DateTime.now().month.toString();
     refreshRate = json['refreshRate'];
-    startTime = "${DateTime.now().year.toString()}-${month}-${DateTime.now().day.toString()} ${json['startTime']}";
-    endTime = "${DateTime.now().year.toString()}-${month}-${DateTime.now().day.toString()} ${json['endTime']}";
+    startTime =
+        "${DateTime.now().year.toString()}-${month}-${DateTime.now().day.toString()} ${json['startTime']}";
+    endTime =
+        "${DateTime.now().year.toString()}-${month}-${DateTime.now().day.toString()} ${json['endTime']}";
   }
 
   Map<String, dynamic> toJson() {

@@ -10,7 +10,7 @@ class CarouselState extends ChangeNotifier {
     update();
   }
 
-  update() async{
+  update() async {
     fillImages();
   }
 

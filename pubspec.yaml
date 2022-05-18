@@ -43,6 +43,8 @@ dependencies:
   http: ^0.13.3
   dio: ^4.0.0-prev3
   geolocator: ^8.2.0
+  syncfusion_flutter_pdfviewer: ^19.2.56-beta
+  file_picker: ^4.5.1
 
 #  flutter_absolute_path:
 #    git:

@@ -112,9 +112,9 @@ class CloudGeneratorState extends ChangeNotifier {
     }
   }
 
-  changeIsIO(value) async{
+  changeIsIO(value) async {
     bool isSuccess = await cloudService.TurnGeneratorEngineOnOff(value);
-    if(isSuccess == true){
+    if (isSuccess == true) {
       isIO = value;
       notifyListeners();
     }
@@ -122,11 +122,10 @@ class CloudGeneratorState extends ChangeNotifier {
 
   changeIsGCB(value) async {
     bool isSuccess = await cloudService.SwitchGCBMode(value);
-    if(isSuccess == true){
+    if (isSuccess == true) {
       isGCB = value;
       notifyListeners();
     }
-    
   }
 
   changeMCBModeStatus(value) async {
@@ -176,7 +175,8 @@ class CloudGeneratorState extends ChangeNotifier {
           FindSensor(cloudsensors, dotenv.env['ControllerMode_id'].toString());
       MCBMode = FindSensor(cloudsensors, dotenv.env['MCBMode_id'].toString());
       GCBMode = FindSensor(cloudsensors, dotenv.env['GCB_id'].toString());
-      Engine = FindSensor(cloudsensors, dotenv.env['EngineOnOff_id'].toString());
+      Engine =
+          FindSensor(cloudsensors, dotenv.env['EngineOnOff_id'].toString());
 
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();

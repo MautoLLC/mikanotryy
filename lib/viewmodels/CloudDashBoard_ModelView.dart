@@ -1,27 +1,25 @@
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 
 class CloudDashBoard_ModelView {
   //final String ApiEnd;
-  late List<CloudSensor> cloudsensors=[];
+  late List<CloudSensor> cloudsensors = [];
   late CloudDashBoard_Service DashBoardService;
 
-  Future<void> GetListCloudSensors() async{
-    cloudsensors= await DashBoardService.FetchData();
+  Future<void> GetListCloudSensors() async {
+    cloudsensors = await DashBoardService.FetchData();
   }
-CloudSensor FindSensor(String param){
-    final index = cloudsensors.indexWhere((element) =>
-    element.sensorID == param);
-  CloudSensor sensor=cloudsensors.elementAt(index);
-  return sensor;
-}
 
+  CloudSensor FindSensor(String param) {
+    final index =
+        cloudsensors.indexWhere((element) => element.sensorID == param);
+    CloudSensor sensor = cloudsensors.elementAt(index);
+    return sensor;
+  }
 
-  CloudDashBoard_ModelView(/*{required this.ApiEnd}*/){
-    DashBoardService= new CloudDashBoard_Service();
-
+  CloudDashBoard_ModelView(/*{required this.ApiEnd}*/) {
+    DashBoardService = new CloudDashBoard_Service();
   }
 
   CloudSensor GetEngineState() {
@@ -92,6 +90,7 @@ CloudSensor FindSensor(String param){
   Future<bool> SwitchControllerMode(bool status) async {
     return await DashBoardService.SwitchControllerMode(status);
   }
+
   Future<bool> SwitchMCBMode(bool status) async {
     return await DashBoardService.SwitchMCBMode(status);
   }
@@ -99,5 +98,4 @@ CloudSensor FindSensor(String param){
   Future<bool> SwitchOnOff(bool status) async {
     return await DashBoardService.TurnGeneratorEngineOnOff(status);
   }
-
 }

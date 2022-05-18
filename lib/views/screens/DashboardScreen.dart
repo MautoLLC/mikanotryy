@@ -34,15 +34,12 @@ class DashboardState extends State<Dashboard> {
   bool guestLogin = true;
 
   init() async {
-    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
-    if (!guestLogin){
+    if (!guestLogin) {
       sendGpsCoord();
-    } 
-    guestLogin?
-    null:
-    Provider.of<UserState>(context, listen: false).update();
+    }
+    guestLogin ? null : Provider.of<UserState>(context, listen: false).update();
     Provider.of<ProductState>(context, listen: false).update();
     setState(() {});
   }
@@ -78,10 +75,9 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: GestureDetector(
-                            onTap: () {
-                              
-                            },
-                            child: SvgPicture.asset(ic_KVA, height: 50, width: 50))),
+                              onTap: () {},
+                              child: SvgPicture.asset(ic_KVA,
+                                  height: 50, width: 50))),
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),

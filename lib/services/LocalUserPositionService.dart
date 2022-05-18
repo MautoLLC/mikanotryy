@@ -12,8 +12,11 @@ class gps {
 
   static void StartTimer() async {
     LocationSettingsModel settings = await gps().GetLocationSettings();
-    timer = Timer.periodic(Duration(seconds: settings.refreshRate!), (timer) async {
-      if (canceled || !(DateTime.now().isBefore(DateTime.parse(settings.endTime!)) && DateTime.now().isAfter(DateTime.parse(settings.startTime!)))) {
+    timer =
+        Timer.periodic(Duration(seconds: settings.refreshRate!), (timer) async {
+      if (canceled ||
+          !(DateTime.now().isBefore(DateTime.parse(settings.endTime!)) &&
+              DateTime.now().isAfter(DateTime.parse(settings.startTime!)))) {
         stopTimer(timer);
         return;
       }
@@ -70,49 +73,45 @@ class gps {
   static Future<void> updateLocation(double longitude, double latitude) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
-    try{
+    try {
       final response = await dio.post(LocationByDeviceUrl,
-      data: {
-        "userId": prefs.getString("UserID").toString(),
-        "deviceToken": prefs.getString("DeviceToken").toString(),
-        "longitude": longitude,
-        "latitude": latitude
-      },
-      options: Options(
-        headers: {
-          "Authorization": "Bearer ${prefs.getString("accessToken")}",
-          "Content-Type": "application/json"
-        }
-      ));
-      if(response.statusCode == 200){
+          data: {
+            "userId": prefs.getString("UserID").toString(),
+            "deviceToken": prefs.getString("DeviceToken").toString(),
+            "longitude": longitude,
+            "latitude": latitude
+          },
+          options: Options(headers: {
+            "Authorization": "Bearer ${prefs.getString("accessToken")}",
+            "Content-Type": "application/json"
+          }));
+      if (response.statusCode == 200) {
         print("Location updated");
         return;
       } else {
         print("Location not updated");
         return;
       }
-    }catch(e){
+    } catch (e) {
       print(e);
       throw Exception(e);
     }
   }
 
-    Future<LocationSettingsModel> GetLocationSettings() async {
+  Future<LocationSettingsModel> GetLocationSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
-    try{
+    try {
       final response = await dio.get(LocationSettingsUrl,
-        options: Options(
-          headers: {
+          options: Options(headers: {
             "Authorization": "Bearer ${prefs.getString("accessToken")}",
             "Content-Type": "application/json"
-          }
-        ));
-    if(response.statusCode == 200) {
-      return LocationSettingsModel.fromJson(response.data);
-    } else {
-      throw Exception('Failed to load location settings');
-    }
+          }));
+      if (response.statusCode == 200) {
+        return LocationSettingsModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load location settings');
+      }
     } catch (e) {
       print(e);
       throw Exception('Failed to load location settings');
