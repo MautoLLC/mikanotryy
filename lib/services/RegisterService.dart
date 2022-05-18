@@ -27,16 +27,15 @@ Register(String username, String firstname, String lastname, String email,
       });
 
   if (response.statusCode == 201) {
-    
-    if(prefs.getBool(prefs_DashboardFirstTimeAccess) == null){
+    if (prefs.getBool(prefs_DashboardFirstTimeAccess) == null) {
       await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
     }
 
-    if(prefs.getString(prefs_ApiConfigurationOption) == null){
+    if (prefs.getString(prefs_ApiConfigurationOption) == null) {
       await prefs.setString(prefs_ApiConfigurationOption, 'lan');
     }
 
-    if(prefs.getInt(prefs_RefreshRate) == null){
+    if (prefs.getInt(prefs_RefreshRate) == null) {
       await prefs.setInt(prefs_RefreshRate, 60);
     }
 

@@ -91,19 +91,18 @@ class HorizontalItemElement extends StatelessWidget {
                     height: 7,
                   ),
                   Consumer<ProductState>(
-                            builder: (context, state, child) => GestureDetector(
-                                onTap: () {
-                                  state.addorremoveProductToFavorite(
-                                      product);
-                                },
-                                child: commonCacheImageWidget(ic_heart, 30,
-                                    color: state.allProducts
-                                            .firstWhere((element) =>
-                                                element.id == product.id)
-                                            .liked
-                                        ? mainColorTheme
-                                        : null)),
-                          )
+                    builder: (context, state, child) => GestureDetector(
+                        onTap: () {
+                          state.addorremoveProductToFavorite(product);
+                        },
+                        child: commonCacheImageWidget(ic_heart, 30,
+                            color: state.allProducts
+                                    .firstWhere(
+                                        (element) => element.id == product.id)
+                                    .liked
+                                ? mainColorTheme
+                                : null)),
+                  )
                 ],
               ),
             )

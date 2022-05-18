@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -12,6 +13,8 @@ import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+
+import 'PDFViewScreen.dart';
 
 int Quantity = 1;
 
@@ -26,7 +29,6 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   bool isFavorite = false;
-  bool guestLogin = true;
 
   RegExp exp = RegExp(r"<[^>]/*>", multiLine: true, caseSensitive: true);
 
@@ -34,209 +36,232 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
 
-  init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    guestLogin = await prefs.getBool("GuestLogin")!;
-  }
-
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Quantity = 1;
-    return Consumer<ProductState>(
-      builder: (context, state, child) => Scaffold(
-          body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(children: [
-              Stack(children: [
-                Row(
+    return Consumer2<ProductState, UserState>(
+      builder: (context, state, userState, child) => Scaffold(
+          body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Stack(children: [
+            SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: size.height / 2,
-                        padding: EdgeInsets.fromLTRB(45.0, 0.0, 45.0, 0.0),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: CachedNetworkImage(
-                          imageUrl: '${widget.product.Image}',
-                          height: 100,
-                          fit: BoxFit.cover,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(
-                                      value: downloadProgress.progress)),
-                          errorWidget: (_, __, ___) {
-                            return SizedBox(height: 85, width: 85);
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                        onPressed: () => finish(context),
-                        icon: Icon(Icons.arrow_back_ios_new)),
-                    guestLogin
-                        ? Container()
-                        : Consumer<ProductState>(
-                            builder: (context, state, child) => GestureDetector(
-                                onTap: () {
-                                  state.addorremoveProductToFavorite(
-                                      widget.product);
+                    Stack(children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: size.height / 2,
+                              padding:
+                                  EdgeInsets.fromLTRB(45.0, 0.0, 45.0, 0.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              child: CachedNetworkImage(
+                                imageUrl: '${widget.product.Image}',
+                                height: 100,
+                                fit: BoxFit.cover,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => Center(
+                                        child: CircularProgressIndicator(
+                                            value: downloadProgress.progress)),
+                                errorWidget: (_, __, ___) {
+                                  return SizedBox(height: 85, width: 85);
                                 },
-                                child: commonCacheImageWidget(ic_heart, 30,
-                                    color: state.allProducts
-                                            .firstWhere((element) =>
-                                                element.id == widget.product.id)
-                                            .liked
-                                        ? mainColorTheme
-                                        : null)),
+                              ),
+                            ),
                           )
-                  ],
-                ),
-              ]),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(child: SubTitleText(title: widget.product.Name)),
-                ],
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 18,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.product.Rating,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Icon(Icons.star, color: mainColorTheme);
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 18,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 5 - widget.product.Rating,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Icon(Icons.star_border, color: mainColorTheme);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    '\$${widget.product.Price}',
-                    style: TextStyle(fontSize: 20, fontFamily: PoppinsFamily),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  guestLogin ? Container() : QuantityChooser(),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 30),
-                  TitleText(title: lbl_About_the_product),
-                  SizedBox(height: 11),
-                  Text(
-                    widget.product.Description
-                        .replaceAll(exp, "")
-                        .replaceAll(exp2, "\n")
-                        .replaceAll(exp3, "\n"),
-                    maxLines: 1000,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: PoppinsFamily,
-                        color: mainGreyColorTheme),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              guestLogin
-                  ? Container()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () => finish(context),
+                              icon: Icon(Icons.arrow_back_ios_new)),
+                          userState.guestLogin
+                              ? Container()
+                              : Consumer<ProductState>(
+                                  builder: (context, state, child) =>
+                                      GestureDetector(
+                                          onTap: () {
+                                            state.addorremoveProductToFavorite(
+                                                widget.product);
+                                          },
+                                          child: commonCacheImageWidget(
+                                              ic_heart, 30,
+                                              color: state.allProducts
+                                                      .firstWhere((element) =>
+                                                          element.id ==
+                                                          widget.product.id)
+                                                      .liked
+                                                  ? mainColorTheme
+                                                  : null)),
+                                )
+                        ],
+                      ),
+                    ]),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              // TODO Buy Now
+                            child: SubTitleText(title: widget.product.Name)),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 18,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget.product.Rating,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Icon(Icons.star, color: mainColorTheme);
                             },
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0)),
-                                color: mainBlackColorTheme,
-                              ),
-                              child: Center(
-                                  child: Text(lbl_Buy_Now,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontFamily: PoppinsFamily))),
-                            ),
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              CartProduct p = CartProduct(
-                                  product: widget.product, quantity: Quantity);
-                              state.addProduct(p);
-                              toast("${widget.product.Name} added to cart");
+                        SizedBox(
+                          height: 18,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 5 - widget.product.Rating,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return Icon(Icons.star_border,
+                                  color: mainColorTheme);
                             },
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0)),
-                                color: mainColorTheme,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          '\$${widget.product.Price}',
+                          style: TextStyle(
+                              fontSize: 20, fontFamily: PoppinsFamily),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        userState.guestLogin ? Container() : QuantityChooser(),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30),
+                        TitleText(title: lbl_About_the_product),
+                        SizedBox(height: 11),
+                        Text(
+                          widget.product.Description,
+                          maxLines: 1000,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: PoppinsFamily,
+                              color: mainGreyColorTheme),
+                        ),
+                        SizedBox(height: 30),
+                        TitleText(title: lbl_Data_Sheet),
+                        SizedBox(height: 11),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PDFViewScreen(
+                                    Path: widget.product.dataSheet.toString(),
+                                    Code: widget.product.Code)));
+                          },
+                          child: Text(
+                            widget.product.dataSheetLabel.toString(),
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: PoppinsFamily,
+                                color: Colors.lightBlue),
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                  ]),
+            ),
+            userState.guestLogin
+                ? Container()
+                : Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // TODO Buy Now
+                              },
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
+                                  color: mainBlackColorTheme,
+                                ),
+                                child: Center(
+                                    child: Text(lbl_Buy_Now,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontFamily: PoppinsFamily))),
                               ),
-                              child: Center(
-                                  child: Text(lbl_Add_To_Cart,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontFamily: PoppinsFamily))),
                             ),
                           ),
-                        )
-                      ],
-                    )
-            ]),
-          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                CartProduct p = CartProduct(
+                                    product: widget.product,
+                                    quantity: Quantity);
+                                state.addProduct(p);
+                                toast("${widget.product.Name} added to cart");
+                              },
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
+                                  color: mainColorTheme,
+                                ),
+                                child: Center(
+                                    child: Text(lbl_Add_To_Cart,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontFamily: PoppinsFamily))),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+          ]),
         ),
       )),
     );

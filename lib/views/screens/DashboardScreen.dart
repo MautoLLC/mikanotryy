@@ -34,15 +34,12 @@ class DashboardState extends State<Dashboard> {
   bool guestLogin = true;
 
   init() async {
-    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
-    if (!guestLogin){
+    if (!guestLogin) {
       sendGpsCoord();
-    } 
-    guestLogin?
-    null:
-    Provider.of<UserState>(context, listen: false).update();
+    }
+    guestLogin ? null : Provider.of<UserState>(context, listen: false).update();
     Provider.of<ProductState>(context, listen: false).update();
     setState(() {});
   }
@@ -63,8 +60,8 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Consumer<ProductState>(
-      builder: (context, state, child) => Scaffold(
+    return Consumer2<ProductState, UserState>(
+      builder: (context, state, userState, child) => Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -78,10 +75,9 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: GestureDetector(
-                            onTap: () {
-                              
-                            },
-                            child: SvgPicture.asset(ic_KVA, height: 50, width: 50))),
+                              onTap: () {},
+                              child: SvgPicture.asset(ic_KVA,
+                                  height: 50, width: 50))),
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
@@ -151,11 +147,14 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SubTitleText(title: lbl_Top_Categories),
-                  ],
+                child: Container(
+                  color: Colors.red,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SubTitleText(title: lbl_Top_Categories),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -217,18 +216,21 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Popular_Products),
-                    ViewMoreBtn(title: lbl_Popular_Products),
-                  ],
+                child: Container(
+                  color: Colors.grey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SubTitleText(title: lbl_Popular_Products),
+                      ViewMoreBtn(title: lbl_Popular_Products),
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
-                  height: 470,
+                  height: 500,
                   child: state.popularProducts.length != 0
                       ? GridView.builder(
                           physics: NeverScrollableScrollPhysics(),
@@ -292,12 +294,15 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Flash_Sale),
-                    ViewMoreBtn(title: lbl_Flash_Sale),
-                  ],
+                child: Container(
+                  color: Colors.red,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SubTitleText(title: lbl_Flash_Sale),
+                      ViewMoreBtn(title: lbl_Flash_Sale),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -328,11 +333,14 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Top_Brands),
-                  ],
+                child: Container(
+                  color: Colors.grey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SubTitleText(title: lbl_Top_Brands),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -365,12 +373,15 @@ class DashboardState extends State<Dashboard> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Trending_Now),
-                    ViewMoreBtn(title: lbl_Trending_Now)
-                  ],
+                child: Container(
+                  color: Colors.red,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SubTitleText(title: lbl_Trending_Now),
+                      ViewMoreBtn(title: lbl_Trending_Now)
+                    ],
+                  ),
                 ),
               ),
               Padding(

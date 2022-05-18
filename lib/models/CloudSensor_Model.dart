@@ -5,11 +5,10 @@ class CloudSensor {
   late final dynamic unit;
   final String timeStamp;
   CloudSensor(
-      {
-      required this.sensorID,
+      {required this.sensorID,
       required this.sensorName,
-        required this.value,
-        required this.unit,
+      required this.value,
+      required this.unit,
       required this.timeStamp});
 
   factory CloudSensor.fromJson(Map<String, dynamic> JsonData) {

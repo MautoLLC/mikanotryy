@@ -49,18 +49,15 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
     await prefs.setInt("tokenStartTime", jwtData['iat']);
 
-
     await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
 
-
-    if(prefs.getString(prefs_ApiConfigurationOption) == null){
+    if (prefs.getString(prefs_ApiConfigurationOption) == null) {
       await prefs.setString(prefs_ApiConfigurationOption, 'lan');
     }
 
-    if(prefs.getInt(prefs_RefreshRate) == null){
+    if (prefs.getInt(prefs_RefreshRate) == null) {
       await prefs.setInt(prefs_RefreshRate, 60);
     }
-    
 
     try {
       response = await dio.post(MikanoShopTokenURL, data: {

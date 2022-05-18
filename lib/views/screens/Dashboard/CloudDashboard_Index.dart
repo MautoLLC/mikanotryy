@@ -20,9 +20,7 @@ import 'package:provider/provider.dart';
 class CloudDashboard_Index extends StatefulWidget {
   final int RefreshRate;
 
-  CloudDashboard_Index(
-      {Key? key, required this.RefreshRate})
-      : super(key: key);
+  CloudDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
 
   @override
   _CloudDashboard_IndexState createState() => _CloudDashboard_IndexState();

@@ -60,11 +60,6 @@ Widget commonCacheImageWidget(String? url, double height,
         fit: fit,
         memCacheWidth: height.toInt() + 100,
         memCacheHeight: height.toInt() + 100,
-        progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-            child: CircularProgressIndicator(value: downloadProgress.progress)),
-        errorWidget: (_, __, ___) {
-          return SizedBox(height: height, width: width);
-        },
       );
     } catch (e) {
       return Container(height: height);

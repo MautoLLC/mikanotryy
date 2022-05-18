@@ -82,9 +82,16 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TitleText(title: lbl_Description),
-                            IconButton(onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserDetailsPage(realEstateId: this.widget.Maintenance.realEstateId)));
-                            }, icon: Icon(Icons.person))
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => UserDetailsPage(
+                                          realEstateId: this
+                                              .widget
+                                              .Maintenance
+                                              .realEstateId)));
+                                },
+                                icon: Icon(Icons.person))
                           ],
                         ),
                         SizedBox(

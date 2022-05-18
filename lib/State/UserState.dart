@@ -12,6 +12,7 @@ class UserState extends ChangeNotifier {
   bool NotificationsEnabled = true;
   Address ChosenAddress = Address();
   bool checkedValueForOrder = false;
+  bool guestLogin = true;
 
   UserState() {
     update();
@@ -27,12 +28,14 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  update() {
+  update() async {
     fillUserInfo();
     fetchtermsState();
     fetchNotificationsState();
     fetchAddress();
-    // notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    guestLogin = await prefs.getBool("GuestLogin")!;
+    notifyListeners();
   }
 
   void fillUserInfo() async {

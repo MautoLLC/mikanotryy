@@ -23,8 +23,9 @@ class ProductState extends ChangeNotifier {
   List<Product> ListOfProducts = [];
   int allProductNumbers = 0;
   int page = 0;
-  bool ListOfProductsLoaded = false;
   List<Product> ListOfProductsToShow = [];
+  List<String> filters = [];
+  int ItemsPerPage = 6;
 
   void clear() {
     selectMode = false;
@@ -40,7 +41,6 @@ class ProductState extends ChangeNotifier {
     ListOfProducts.clear();
     allProductNumbers = 0;
     page = 0;
-    ListOfProductsLoaded = false;
     notifyListeners();
   }
 
@@ -84,10 +84,34 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  sortByPriceLowToHigh() {
+    ListOfProducts.sort(((a, b) => a.Price > b.Price ? 1 : -1));
+    notifyListeners();
+  }
+
+  sortByPriceHighToLow() {
+    ListOfProducts.sort(((a, b) => a.Price < b.Price ? 1 : -1));
+    notifyListeners();
+  }
+
+  sortByPriceAToZ() {
+    ListOfProducts.sort(
+        ((a, b) => a.Name.toString().compareTo(b.Name.toString())));
+    notifyListeners();
+  }
+
+  sortByPriceZToA() {
+    ListOfProducts.sort(
+        ((a, b) => b.Name.toString().compareTo(a.Name.toString())));
+    notifyListeners();
+  }
+
   Future<void> fillListOfProductsToShow(String searchTerm) async {
     ListOfProductsToShow.clear();
-    ListOfProductsToShow = allProducts.where((element) => element.Name.toLowerCase().contains(searchTerm.toLowerCase())).toList();
-    ListOfProductsLoaded = true;
+    ListOfProductsToShow = allProducts
+        .where((element) =>
+            element.Name.toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 
@@ -107,16 +131,11 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleisLoading() {
-    ListOfProductsLoaded = !ListOfProductsLoaded;
-    notifyListeners();
-  }
-
   void Paginate() async {
-    page++;
-    toggleisLoading();
-    await getListOfProducts();
-    toggleisLoading();
+    if (!(page + 1 > allProducts.length / ItemsPerPage)) {
+      page++;
+      await getListOfProducts();
+    }
     notifyListeners();
   }
 
@@ -127,7 +146,7 @@ class ProductState extends ChangeNotifier {
 
   Future<void> getListOfProducts() async {
     ListOfProducts.addAll(
-        await ProductsService().getProducts(limit: 8, page: page));
+        await ProductsService().getProducts(limit: ItemsPerPage, page: page));
     notifyListeners();
   }
 

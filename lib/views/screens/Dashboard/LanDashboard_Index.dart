@@ -20,9 +20,7 @@ import 'package:provider/provider.dart';
 
 class LanDashboard_Index extends StatefulWidget {
   final int RefreshRate;
-  LanDashboard_Index(
-      {Key? key, required this.RefreshRate})
-      : super(key: key);
+  LanDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
 
   @override
   _LanDashboard_IndexState createState() => _LanDashboard_IndexState();
@@ -338,8 +336,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                             mainGreyColorTheme),
                                                   ),
                                                   SizedBox(
-                                                  width: 2,
-                                                ),
+                                                    width: 2,
+                                                  ),
                                                   Switch(
                                                       value: lan.isGCB,
                                                       onChanged: (result) {

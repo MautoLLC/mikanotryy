@@ -48,7 +48,8 @@ class _MenuScreenState extends State<MenuScreen> {
 
   Future<void> initializePreference() async {
     this.prefs = await SharedPreferences.getInstance();
-    this.guestLogin = await prefs!.getBool("GuestLogin")!;
+    // this.guestLogin = await prefs!.getBool("GuestLogin")!;
+    this.guestLogin = Provider.of<UserState>(context, listen: false).guestLogin;
     this.DashboardFirstTimeAccess =
         await prefs!.getBool(prefs_DashboardFirstTimeAccess)!;
     this.RefreshRate = await prefs!.getInt(prefs_RefreshRate)!;
@@ -221,13 +222,13 @@ class _MenuScreenState extends State<MenuScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 12,
+                    fontSize: 10,
                   ),
                 ),
                 SvgPicture.asset(
                   ic_Mauto,
                   color: Colors.white,
-                  height: 30,
+                  height: 22.5,
                 ),
               ],
             )

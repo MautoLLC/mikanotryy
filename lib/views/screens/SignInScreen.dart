@@ -156,11 +156,11 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                   onTap: () async {
                     bool response = await GuestLogin();
                     if (response)
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Theme5Dashboard()));
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Theme5Dashboard()));
                   },
                   child: Text(lbl_Guest_Login,
                       style: TextStyle(fontSize: 15, color: mainColorTheme)),
