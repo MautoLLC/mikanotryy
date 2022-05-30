@@ -5,7 +5,6 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
-import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:provider/provider.dart';
 import 'PrivacyPolicyScreen.dart';
 import 'ProfileEditScreen.dart';

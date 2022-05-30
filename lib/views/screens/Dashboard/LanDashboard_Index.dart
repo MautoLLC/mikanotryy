@@ -1,17 +1,12 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
-import 'package:mymikano_app/models/LanSensor_Model.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/viewmodels/LanDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -98,8 +93,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    SizedBox.fromSize(
-                                      size: Size(40, 50),
+                                    SizedBox(
+                                      width: 40,
+                                      height: 50,
                                       child: ClipOval(
                                         child: Material(
                                           color: Colors.white,

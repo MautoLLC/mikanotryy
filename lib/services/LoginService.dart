@@ -15,6 +15,7 @@ Login(String username, String password, BuildContext context) async {
       (HttpClient client) {
     client.badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
+    return null;
   };
   try {
     Response response = await dio.post((authorizationEndpoint),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/State/InspectionsState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/services/MaintenanceRequestsService.dart';

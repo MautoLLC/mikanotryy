@@ -96,7 +96,7 @@ class ComponentService {
       } else {
         return false;
       }
-    } on Exception catch (e) {
+    } on Exception {
       return false;
     }
   }

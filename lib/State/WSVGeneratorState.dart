@@ -4,7 +4,6 @@ import 'package:mymikano_app/models/Sensor_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';
 import 'package:mymikano_app/models/Unit_Model.dart';
 import 'package:mymikano_app/services/DashBoard_Service.dart';
-import 'package:mymikano_app/viewmodels/DashBoard_ModelView.dart';
 
 class WSVGeneratorState extends ChangeNotifier {
   DashBorad_Service wsvService = DashBorad_Service();

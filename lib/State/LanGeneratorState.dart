@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/LanSensor_Model.dart';
 import 'package:mymikano_app/services/LanDashboard_Service.dart';
-import 'package:mymikano_app/viewmodels/LanDashBoard_ModelView.dart';
 
 class LanGeneratorState extends ChangeNotifier {
   LanDashBoard_Service LanService = LanDashBoard_Service();

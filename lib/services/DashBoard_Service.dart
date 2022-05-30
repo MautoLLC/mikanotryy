@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/Sensor_Model.dart';
 import 'package:mymikano_app/models/Sensors_Model.dart';
 import 'package:mymikano_app/models/Token_Model.dart';

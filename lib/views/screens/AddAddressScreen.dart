@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/UserState.dart';
-import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/screens/AddressScreen.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 class AddAddressScreen extends StatefulWidget {

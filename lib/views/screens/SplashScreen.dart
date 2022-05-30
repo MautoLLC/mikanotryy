@@ -3,7 +3,6 @@ import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/EntryPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'MainDashboard.dart';
 

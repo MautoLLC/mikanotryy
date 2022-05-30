@@ -6,7 +6,6 @@ import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:http/http.dart' as http;
 
 class CustomerService {
   Dio dio = new Dio();

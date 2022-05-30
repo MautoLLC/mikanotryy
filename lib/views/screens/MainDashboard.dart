@@ -9,7 +9,6 @@ import 'CartPage.dart';
 import 'DashboardScreen.dart';
 import 'ListPage.dart';
 import 'ProfileScreen.dart';
-import 'SearchScreen.dart';
 
 class Theme5Dashboard extends StatefulWidget {
   @override

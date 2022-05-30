@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
@@ -53,6 +52,7 @@ class ApiConfigurationService {
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
+      return null;
     };
     try {
       final response = await dio.get(("http://192.168.4.1"));
@@ -89,6 +89,7 @@ class ApiConfigurationService {
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
+      return null;
     };
     try {
       final responseAuth = await dio.post(cloudIotMautoAuthUrl,

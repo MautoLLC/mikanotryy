@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/NotificationModel.dart';
-import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/widgets/NotificationItem.dart';
 
 class NotificationPage extends StatelessWidget {

@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:mymikano_app/views/screens/MainDashboard.dart';
 
 import 'SignInScreen.dart';
 import 'SignUpScreen.dart';
