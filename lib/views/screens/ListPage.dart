@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -110,6 +109,8 @@ class _ListPageState extends State<ListPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     DropdownButton(
+                        elevation: 0,
+                        underline: Container(),
                         icon: Icon(Icons.sort, color: black, size: 25),
                         items: [
                           DropdownMenuItem(
@@ -156,7 +157,7 @@ class _ListPageState extends State<ListPage> {
                                 );
                               });
                         },
-                        icon: Icon(Icons.filter_1, size: 25, color: black)),
+                        icon: Icon(Icons.filter, size: 25, color: black)),
                   ],
                 ),
                 Expanded(

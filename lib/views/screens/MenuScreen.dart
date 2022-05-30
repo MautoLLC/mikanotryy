@@ -79,7 +79,7 @@ class _MenuScreenState extends State<MenuScreen> {
     List<String> MenuListNames = [
       if (!guestLogin)
         !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
-      if (!guestLogin) "Generator Settings",
+      if (!guestLogin) "Generator Dashboard",
       if (!guestLogin) "Favorites",
       if (!guestLogin) "Address",
       if (!guestLogin) "Cards",

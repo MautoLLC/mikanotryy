@@ -215,7 +215,7 @@ class LanGeneratorState extends ChangeNotifier {
         isIO = true;
       else
         isIO = false;
-        
+
       // if (EngineState.return_value == 8 || EngineState.return_value == 7)
       //   PowerStatus = true;
       // else

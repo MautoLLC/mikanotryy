@@ -145,14 +145,17 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  color: Colors.red,
+              Container(
+                color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SubTitleText(title: lbl_Top_Categories),
+                      SubTitleText(
+                        title: lbl_Top_Categories,
+                        color: Colors.white,
+                      ),
                     ],
                   ),
                 ),
@@ -214,15 +217,16 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 41,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  color: Colors.grey,
+              Container(
+                color: Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(title: lbl_Popular_Products),
-                      ViewMoreBtn(title: lbl_Popular_Products),
+                      SubTitleText(
+                          title: lbl_Popular_Products, color: Colors.white),
+                      //ViewMoreBtn(title: lbl_Popular_Products),
                     ],
                   ),
                 ),
@@ -292,15 +296,15 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  color: Colors.red,
+              Container(
+                color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(title: lbl_Flash_Sale),
-                      ViewMoreBtn(title: lbl_Flash_Sale),
+                      SubTitleText(title: lbl_Flash_Sale, color: Colors.white),
+                      //ViewMoreBtn(title: lbl_Flash_Sale),
                     ],
                   ),
                 ),
@@ -331,14 +335,14 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  color: Colors.grey,
+              Container(
+                color: Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(title: lbl_Top_Brands),
+                      SubTitleText(title: lbl_Top_Brands, color: Colors.white),
                     ],
                   ),
                 ),
@@ -371,15 +375,16 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                 height: 40,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  color: Colors.red,
+              Container(
+                color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(title: lbl_Trending_Now),
-                      ViewMoreBtn(title: lbl_Trending_Now)
+                      SubTitleText(
+                          title: lbl_Trending_Now, color: Colors.white),
+                      //ViewMoreBtn(title: lbl_Trending_Now)
                     ],
                   ),
                 ),

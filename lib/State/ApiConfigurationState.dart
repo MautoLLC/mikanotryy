@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/services/ApiConfigurationService.dart';

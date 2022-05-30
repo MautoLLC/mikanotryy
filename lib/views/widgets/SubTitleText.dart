@@ -3,7 +3,10 @@ import 'package:mymikano_app/utils/AppColors.dart';
 
 class SubTitleText extends StatelessWidget {
   final String title;
-  const SubTitleText({Key? key, required this.title}) : super(key: key);
+  final Color color;
+  const SubTitleText(
+      {Key? key, required this.title, this.color = mainBlackColorTheme})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class SubTitleText extends StatelessWidget {
       style: TextStyle(
         fontSize: 18,
         fontFamily: "Poppins",
-        color: mainBlackColorTheme,
+        color: color,
       ),
     );
   }
