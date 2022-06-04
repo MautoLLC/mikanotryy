@@ -4,6 +4,8 @@ import 'package:mymikano_app/services/ApiConfigurationService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../views/screens/Dashboard/ApiConfigurationPage.dart';
+
 class ApiConfigurationState extends ChangeNotifier {
   bool DashBoardFirstTimeAccess = true;
   bool isSuccess = false;
@@ -18,6 +20,7 @@ class ApiConfigurationState extends ChangeNotifier {
   int cloudMode = 0;
   String password = '';
   String cloudUsername = '';
+  bool cloudConfigValue=false;
   String cloudPassword = '';
   String apiLanEndpoint = '';
   List<String> ssidList = [];
@@ -80,11 +83,12 @@ class ApiConfigurationState extends ChangeNotifier {
     //   generatorNameList.add(element.name);
     // });
     gens = generators;
-    generatorNameList.add(generators.elementAt(0).name);
-    if (generatorNameList.isEmpty) {
+    //generatorNameList.add(generators.elementAt(0).name);
+    if (gens.isEmpty) {
       isSuccess = false;
       Message = 'Invalid input, try again.';
     } else {
+      generatorNameList.add(gens.elementAt(0).name);
       isSuccess = true;
       Message = 'Generators fetched successfully.';
     }
@@ -99,6 +103,11 @@ class ApiConfigurationState extends ChangeNotifier {
   void changeCloudUsername(username) {
     cloudUsername = username;
     notifyListeners();
+  }
+  void changeCloudConfigValue(val) {
+    cloudConfigValue = val;
+    notifyListeners();
+    //return cloudConfigValue;
   }
 
   void changeApiLanEndpoint(apiendpoint) {
@@ -187,6 +196,7 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.setInt(prefs_CloudMode, cloudMode);
     prefs.setString(prefs_GeneratorId, generatorId);
   }
+
 
   void setApiLanEndpoint(String apiEndpoint) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
