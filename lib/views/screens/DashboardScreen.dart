@@ -225,31 +225,33 @@ class DashboardState extends State<Dashboard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SubTitleText(
-                          title: lbl_Popular_Products, color: Colors.white),
+                          title: "Top Deals", color: Colors.white),
                       //ViewMoreBtn(title: lbl_Popular_Products),
                     ],
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
-                  height: 500,
-                  child: state.popularProducts.length != 0
-                      ? GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.8,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                          ),
-                          itemCount: state.popularProducts.length,
+                  height: 250,
+                  child: state.topDealProducts.length != 0
+                      ? ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.topDealProducts.length,
                           itemBuilder: (context, index) {
-                            Product temp = state.popularProducts[index];
-                            return ItemElement(
-                              product: temp,
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: SizedBox(
+                                width: 140,
+                                child: ItemElement(
+                                  product: state.topDealProducts[index],
+                                ),
+                              ),
                             );
                           })
                       : Center(child: CircularProgressIndicator()),

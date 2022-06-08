@@ -6,7 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 class ProductsService {
   Dio dio = new Dio();
-  Future<List<Product>> getProducts({int limit = -1, int page = -1}) async {
+  Future<List<Product>> getProducts({int limit = -1, int page = -1, bool topDeals = false, bool byOrder = false}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -14,8 +14,14 @@ class ProductsService {
     if (page != -1) {
       params["page"] = page;
     }
+    if (topDeals) {
+      params["IsTopDeal"] = true;
+    }
+    if (byOrder) {
+      params["OrderByDisplayOrder"] = true;
+    }
     params['Fields'] =
-        "full_description, name, id, price, images, sku, Category, approved_rating_sum";
+        "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
     Response response = await dio.get(
       MikanoShopGetAllProductsURL,
       queryParameters: params,

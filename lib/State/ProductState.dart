@@ -17,7 +17,7 @@ class ProductState extends ChangeNotifier {
   List<FavoriteProduct> favoriteProducts = [];
   List<Product> purchasedProducts = [];
   List<Product> trendingProducts = [];
-  List<Product> popularProducts = [];
+  List<Product> topDealProducts = [];
   List<Product> flashsaleProducts = [];
   List<Product> allProducts = [];
   List<Product> ListOfProducts = [];
@@ -35,7 +35,7 @@ class ProductState extends ChangeNotifier {
     favoriteProducts.clear();
     purchasedProducts.clear();
     trendingProducts.clear();
-    popularProducts.clear();
+    topDealProducts.clear();
     flashsaleProducts.clear();
     allProducts.clear();
     ListOfProducts.clear();
@@ -68,12 +68,8 @@ class ProductState extends ChangeNotifier {
       Product item = allProducts[random.nextInt(allProducts.length)];
       trendingProducts.add(item);
     }
-    popularProducts = [];
-    for (var i = 0; i < 4; i++) {
-      Random random = new Random();
-      Product item = allProducts[random.nextInt(allProducts.length)];
-      popularProducts.add(item);
-    }
+    topDealProducts = [];
+    await getTopDeals();
     flashsaleProducts = [];
     for (var i = 0; i < 3; i++) {
       Random random = new Random();
@@ -123,6 +119,11 @@ class ProductState extends ChangeNotifier {
 
   Future<void> getAllProducts() async {
     allProducts = await ProductsService().getProducts();
+    notifyListeners();
+  }
+
+  Future<void> getTopDeals() async {
+    topDealProducts = await ProductsService().getProducts(topDeals: true, byOrder: true);
     notifyListeners();
   }
 

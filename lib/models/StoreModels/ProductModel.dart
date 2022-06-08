@@ -12,6 +12,7 @@ class Product {
   String dataSheet;
   String dataSheetLabel;
   bool liked;
+  bool isTopDeal;
   Product(
       {required this.Name,
       required this.Price,
@@ -23,7 +24,8 @@ class Product {
       this.liked = false,
       this.dataSheet = "",
       this.dataSheetLabel = "",
-      this.id = 0});
+      this.id = 0,
+      this.isTopDeal = false});
 
   // From json
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -52,7 +54,8 @@ class Product {
         Category: json['Category'] == null ? '' : json['Category'],
         dataSheet: data_Sheet,
         dataSheetLabel: dataSheetLabel,
-        Rating: json['approved_rating_sum']);
+        Rating: json['approved_rating_sum'],
+        isTopDeal: json['is_top_deal']);
   }
 
   // To json
