@@ -67,7 +67,7 @@ const InspectionPriceURL =
 const ChangeComponentStatusURL =
     '$InspectionApiBaseUrl/api/Inspections/InspectionChecklistItem?inspectionChecklistItemID={inspectionChecklistItemID}&componentStatusID={componentStatusID}';
 
-const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
+const MikanoShopMainURl = 'Https://shop.mikano-intl.com/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 const MikanoShopAddShippingAddress =
