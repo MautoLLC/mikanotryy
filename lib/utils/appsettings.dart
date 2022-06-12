@@ -69,6 +69,8 @@ const ChangeComponentStatusURL =
 const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
+const MikanoShopGetTopDealsProductsURL = '$MikanoShopMainURl/products/topDeals';
+const MikanoShopGetFeaturedProductsURL = '$MikanoShopMainURl/products/featured';
 const MikanoShopAddShippingAddress =
     '$MikanoShopMainURl/customers/{customerId}/shippingaddress';
 const MikanoShopGetUserById = '$MikanoShopMainURl/customers/{customerId}';

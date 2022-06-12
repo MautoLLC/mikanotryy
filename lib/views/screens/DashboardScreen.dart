@@ -316,12 +316,12 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                   height: 250,
-                  child: state.flashsaleProducts.length != 0
+                  child: state.featuredProducts.length != 0
                       ? ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: state.flashsaleProducts.length,
+                          itemCount: state.featuredProducts.length,
                           itemBuilder: (context, index) {
-                            Product temp = state.flashsaleProducts[index];
+                            Product temp = state.featuredProducts[index];
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
