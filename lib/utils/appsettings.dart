@@ -9,6 +9,7 @@ const userApiUrl = 'http://dev.codepickles.com:8083';
 const userEditInfoUrl = '$userApiUrl/api/Users/{id}';
 const userGetInfoUrl = '$userApiUrl/api/Users/{id}';
 const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
+const DeviceUrl = "$userApiUrl/api/Users/Devices/{sub}?deviceToken={token}";
 const MikanoShopGetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 const MikanoShopSetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 const MikanoShopGetNotificationsState =

@@ -80,7 +80,7 @@ Login(String username, String password, BuildContext context) async {
     try {
       await http.post(
           Uri.parse(
-              "http://dev.codepickles.com:8083/api/Users/Devices/${jwtData['sub']}?deviceToken=${prefs.getString("DeviceToken")}"),
+              DeviceUrl.replaceAll("{sub}", jwtData['sub']).replaceAll("{token}", prefs.getString("DeviceToken").toString())),
           headers: {
             "Authorization": "Bearer ${prefs.getString("accessToken")}",
             "Content-Type": "application/json"
