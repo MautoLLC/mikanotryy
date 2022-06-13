@@ -1,16 +1,15 @@
-const KeyCloakBaseUrl = 'https://authorization.mikano-intl.com';
+const KeyCloakBaseUrl = 'https://dev.mauto.co';
 const identifier = 'MymikanoApp';
 const secret = '45475923-b3ef-46c5-aa70-79475824d3f9';
 const authorizationEndpoint =
     '$KeyCloakBaseUrl/auth/realms/master/protocol/openid-connect/token';
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 
-const userApiUrl = 'https://services.mikano-intl.com/users-api';
+const userApiUrl = 'http://dev.codepickles.com:8083';
 const userEditInfoUrl = '$userApiUrl/api/Users/{id}';
-const userEndpoint = '$userApiUrl/api/Users';
 const userGetInfoUrl = '$userApiUrl/api/Users/{id}';
 const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
-const DeviceUrl = '$userApiUrl/api/Users/Devices/{sub}?deviceToken={token}';
+const DeviceUrl = "$userApiUrl/api/Users/Devices/{sub}?deviceToken={token}";
 const MikanoShopGetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 const MikanoShopSetTermsState = '$userApiUrl/api/Users/TermsOfService/{id}';
 const MikanoShopGetNotificationsState =
@@ -19,7 +18,7 @@ const MikanoShopSetNotificationsState =
     '$userApiUrl/api/Users/NotificationsEnabled/{id}';
 const MikanoShopResetPassword = '$userApiUrl/api/Users/reset-credentials';
 
-const MaintenanceApiBaseUrl = 'https://services.mikano-intl.com/maintenance-api';
+const MaintenanceApiBaseUrl = 'http://dev.codepickles.com:8085';
 const GetMainCategoriesURL =
     '$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';
 const GetSubCategoriesURL =
@@ -41,7 +40,7 @@ const MikanoFoundersUrl = '$MaintenanceApiBaseUrl/api/about-us/founders';
 const MikanoCompanyInfoUrl = '$MaintenanceApiBaseUrl/api/Company';
 const MikanoCarouselImagesUrl = '$MaintenanceApiBaseUrl/api/carousel-images';
 
-const InspectionApiBaseUrl = 'https://services.mikano-intl.com/inspection-api';
+const InspectionApiBaseUrl = 'http://dev.codepickles.com:8087';
 const GetInspectionURL = '$InspectionApiBaseUrl/api/Inspections/';
 const GetTechnicianInspectionURL =
     '$InspectionApiBaseUrl/api/Inspections/TechnicianInspections/';
@@ -67,7 +66,7 @@ const InspectionPriceURL =
 const ChangeComponentStatusURL =
     '$InspectionApiBaseUrl/api/Inspections/InspectionChecklistItem?inspectionChecklistItemID={inspectionChecklistItemID}&componentStatusID={componentStatusID}';
 
-const MikanoShopMainURl = 'Https://shop.mikano-intl.com/api';
+const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 const MikanoShopGetTopDealsProductsURL = '$MikanoShopMainURl/products/topDeals';
@@ -115,7 +114,7 @@ const cloudIotMautoUserGeneratorsUrl = cloudIotMautoUrl + "/generators/list/";
 const lanESPUrl = "espapiendpoint";
 const resetESPUrl = "http://" + lanESPUrl + "/reset";
 
-const LocationUrl = 'https://services.mikano-intl.com/location-tracking-api';
+const LocationUrl = 'http://dev.codepickles.com:8094';
 const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
 const LocationByDeviceUrl =
     '$LocationUrl/api/TrackedUsers/Location/{deviceToken}';
