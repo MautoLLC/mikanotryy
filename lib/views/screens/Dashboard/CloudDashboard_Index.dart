@@ -160,8 +160,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: GaugeWidget(
                                           title: lbl_RPM,
                                           value:
-                                              (double.parse(cloud.Rpm.value) /
-                                                  100))),
+                                              (double.parse(cloud.Rpm.value)))),
                                   SizedBox(height: 10),
                                   Container(
                                       height: 160,

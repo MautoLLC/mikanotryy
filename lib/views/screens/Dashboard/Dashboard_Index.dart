@@ -187,7 +187,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                         ),
                                         child: GaugeWidget(
                                             title: lbl_RPM,
-                                            value: ((wsv.Rpm.value) / 100))),
+                                            value: ((wsv.Rpm.value)))),
                                     SizedBox(height: 10),
                                     Container(
                                         height: 160,
