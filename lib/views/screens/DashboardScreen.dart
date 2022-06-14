@@ -226,7 +226,7 @@ class DashboardState extends State<Dashboard> {
                     children: [
                       SubTitleText(
                           title: "Top Deals", color: Colors.white),
-                      //ViewMoreBtn(title: lbl_Popular_Products),
+                      ViewMoreBtn(title: lbl_Popular_Products),
                     ],
                   ),
                 ),
@@ -305,8 +305,8 @@ class DashboardState extends State<Dashboard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(title: lbl_Flash_Sale, color: Colors.white),
-                      //ViewMoreBtn(title: lbl_Flash_Sale),
+                      SubTitleText(title: lbl_Featured_Products, color: Colors.white),
+                      ViewMoreBtn(title: lbl_Featured_Products),
                     ],
                   ),
                 ),
@@ -386,7 +386,7 @@ class DashboardState extends State<Dashboard> {
                     children: [
                       SubTitleText(
                           title: lbl_Trending_Now, color: Colors.white),
-                      //ViewMoreBtn(title: lbl_Trending_Now)
+                      ViewMoreBtn(title: lbl_Trending_Now)
                     ],
                   ),
                 ),
