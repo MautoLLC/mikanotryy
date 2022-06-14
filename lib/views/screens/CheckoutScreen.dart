@@ -9,6 +9,7 @@ import 'package:mymikano_app/views/widgets/ImageBox.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'AddressScreen.dart';
@@ -250,7 +251,7 @@ class CheckoutScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Text(
-                                  productState.selectedProducts.length
+                                  productState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() +  product.quantity)
                                       .toString(),
                                   style: TextStyle(fontSize: 14),
                                 ),
