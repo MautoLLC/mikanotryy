@@ -70,6 +70,8 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('lan');
+                          //added by youssef//
+                          value.changeCloudConfigValue(true);
                           if (value.DashBoardFirstTimeAccess == false) {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => LanDashboard_Index(
@@ -112,6 +114,8 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('cloud');
+                          //added by youssef
+                          value.changeCloudConfigValue(false);
                           if (value.DashBoardFirstTimeAccess == false) {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => CloudDashboard_Index(

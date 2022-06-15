@@ -20,7 +20,7 @@ class ApiConfigurationState extends ChangeNotifier {
   int cloudMode = 0;
   String password = '';
   String cloudUsername = '';
-  bool cloudConfigValue=false;
+  bool cloudConfigValue=true;
   String cloudPassword = '';
   String apiLanEndpoint = '';
   List<String> ssidList = [];
