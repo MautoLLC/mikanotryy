@@ -17,7 +17,6 @@ import 'package:mymikano_app/views/widgets/view.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/models/EntryModel.dart';
-import 'package:path_provider/path_provider.dart';
 
 class MaintenanceRequestScreen extends StatefulWidget {
   static String tag = '/T13DescriptionScreen';
@@ -154,6 +153,8 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
   int selectedMinute = -1;
   String selectedAmPm = "";
 
+  bool disabled = false;
+
   @override
   void initState() {
     init();
@@ -190,13 +191,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     });
   }
 
-  Future<void> _deleteCacheDir() async {
-    final cacheDir = await getTemporaryDirectory();
-
-    if (cacheDir.existsSync()) {
-      cacheDir.deleteSync(recursive: true);
-    }
-  }
 
   bool leapYear(int year) {
     bool leapYear = false;
@@ -235,19 +229,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     now = DateTime.now();
     datetime = DateTime.now().add(Duration(hours: 1));
     records = [];
-    await _deleteCacheDir();
-    getTemporaryDirectory().then((value) {
-      appDir = value;
-      Directory appDirec = Directory("${appDir!.path}/Audiorecords/");
-      appDir = appDirec;
-      appDir!.list().listen((onData) {
-        records!.add(onData.path);
-      }).onDone(() {
-        records = records!.reversed.toList();
-        print(records!);
-        setState(() {});
-      });
-    });
 
     selectedAddressValue = "";
     setState(() {});
@@ -775,7 +756,9 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                           SizedBox(height: 40),
                           T13Button(
                             textContent: lbl_lbl_request,
-                            onPressed: () {
+                            onPressed: () async {
+                              disabled = true;
+                              setState(() { });
                               if (selectedSubCategId != 0) {
                                 datetime = new DateTime(
                                     SelectedYear,
@@ -804,8 +787,29 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                         maintenanceRequestImagesFiles: images,
                                         maintenanceRequestRecordsFiles:
                                             records);
-                                SubmitMaintenanceRequest(
-                                    mMaintenanceRequest, context);
+                                if(await SubmitMaintenanceRequest(
+                                    mMaintenanceRequest, context)){
+                                      Fluttertoast.showToast(
+          msg: "Request submitted successfully ! ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black87,
+          fontSize: 16.0);
+                                  Navigator.pop(context);
+                                    } else {
+                                      Fluttertoast.showToast(
+          msg: "Error in submitting request ! ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black87,
+          fontSize: 16.0);
+                                      disabled = false;
+                                      setState(() {});
+                                    }
                               }
 
                               if (selectedSubCategId == 0)
@@ -882,14 +886,18 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     );
   }
 
-  _onFinish() {
-    records!.clear();
+  _onFinish(String? path) {
+    appDir = Directory("${path!}");
+    appDir!.exists().then((value) {
+      records!.clear();
     appDir!.list().listen((onData) {
-      records!.add(onData.path);
+      if(onData.path.contains("audio"))
+        records!.add(onData.path);
     }).onDone(() {
-      records!.sort();
-      records = records!.reversed.toList();
-      setState(() {});
+      setState(() { });
     });
+    });
+    
+    
   }
 }

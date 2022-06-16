@@ -89,7 +89,8 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                           realEstateId: this
                                               .widget
                                               .Maintenance
-                                              .realEstateId)));
+                                              .realEstateId,
+                                              userId: this.widget.Maintenance.userId,)));
                                 },
                                 icon: Icon(Icons.person))
                           ],
