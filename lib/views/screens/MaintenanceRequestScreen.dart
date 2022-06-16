@@ -891,7 +891,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     appDir!.exists().then((value) {
       records!.clear();
     appDir!.list().listen((onData) {
-      if(onData.path.contains("audio"))
+      if(onData.path.contains("audio.wav"))
         records!.add(onData.path);
     }).onDone(() {
       setState(() { });
