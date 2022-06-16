@@ -7,7 +7,8 @@ import 'package:nb_utils/nb_utils.dart';
 class ProductsService {
   Dio dio = new Dio();
 
-  String Params = "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
+  String Params =
+      "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
   Future<List<Product>> getProducts({int limit = -1, int page = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
@@ -38,7 +39,8 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> getTopDealsProducts({int limit = -1, int page = -1}) async {
+  Future<List<Product>> getTopDealsProducts(
+      {int limit = -1, int page = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -68,7 +70,8 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> getFeaturedProducts({int limit = -1, int page = -1}) async {
+  Future<List<Product>> getFeaturedProducts(
+      {int limit = -1, int page = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;

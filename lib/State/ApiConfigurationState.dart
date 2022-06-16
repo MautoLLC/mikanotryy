@@ -20,7 +20,7 @@ class ApiConfigurationState extends ChangeNotifier {
   int cloudMode = 0;
   String password = '';
   String cloudUsername = '';
-  bool cloudConfigValue=true;
+  bool cloudConfigValue = true;
   String cloudPassword = '';
   String apiLanEndpoint = '';
   List<String> ssidList = [];
@@ -104,6 +104,7 @@ class ApiConfigurationState extends ChangeNotifier {
     cloudUsername = username;
     notifyListeners();
   }
+
   void changeCloudConfigValue(val) {
     cloudConfigValue = val;
     notifyListeners();
@@ -196,7 +197,6 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.setInt(prefs_CloudMode, cloudMode);
     prefs.setString(prefs_GeneratorId, generatorId);
   }
-
 
   void setApiLanEndpoint(String apiEndpoint) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

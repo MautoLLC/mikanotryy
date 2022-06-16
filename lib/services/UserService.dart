@@ -58,8 +58,7 @@ class UserService {
 
   Future<TechnicianModel> GetUserInfoByID(String userID) async {
     await PrepareCall();
-    String url =
-        userGetInfoUrl.replaceAll("{id}", userID);
+    String url = userGetInfoUrl.replaceAll("{id}", userID);
     try {
       Response response = await dio.get(
         (url),

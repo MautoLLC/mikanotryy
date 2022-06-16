@@ -251,7 +251,12 @@ class CheckoutScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Text(
-                                  productState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() +  product.quantity)
+                                  productState.selectedProducts
+                                      .fold(
+                                          0,
+                                          (total, product) =>
+                                              (total.toString()).toDouble() +
+                                              product.quantity)
                                       .toString(),
                                   style: TextStyle(fontSize: 14),
                                 ),

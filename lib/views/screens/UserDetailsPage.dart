@@ -17,65 +17,66 @@ class UserDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TechnicianModel>(
-      future: UserService().GetUserInfoByID(userId),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done){
-          return Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: SafeArea(
-                child: Column(
-              children: [
-                TopRowBar(title: lbl_User_Details),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        future: UserService().GetUserInfoByID(userId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              body: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: SafeArea(
+                    child: Column(
                   children: [
-                    SubTitleText(title: lbl_UserName),
-                    Text(snapshot.data!.username.toString())
+                    TopRowBar(title: lbl_User_Details),
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SubTitleText(title: lbl_UserName),
+                        Text(snapshot.data!.username.toString())
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SubTitleText(title: lbl_Phone_Number),
+                        Text(snapshot.data!.phoneNumber)
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SubTitleText(title: lbl_Email),
+                        Text(snapshot.data!.email)
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SubTitleText(title: lbl_Address),
+                        FutureBuilder<RealEstate>(
+                            future: RealEstatesService()
+                                .fetchRealEstatesById(this.realEstateId),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return Text(snapshot.data!.realEstateAddress);
+                              } else {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            })
+                      ],
+                    )
                   ],
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Phone_Number),
-                    Text(snapshot.data!.phoneNumber)
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Email),
-                    Text(snapshot.data!.email)
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SubTitleText(title: lbl_Address),
-                    FutureBuilder<RealEstate>(
-                        future: RealEstatesService()
-                            .fetchRealEstatesById(this.realEstateId),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return Text(snapshot.data!.realEstateAddress);
-                          } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        })
-                  ],
-                )
-              ],
-            )),
-          ),
-        );
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      }
-    );
+                )),
+              ),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }

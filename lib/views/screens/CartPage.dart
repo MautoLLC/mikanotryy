@@ -109,7 +109,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Item_Selected, style: TextStyle(fontSize: 14)),
                     Text(
-                      "${ProductState.selectedProducts.length!=0?ProductState.selectedProducts.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity)):ProductState.productsInCart.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity))}",
+                      "${ProductState.selectedProducts.length != 0 ? ProductState.selectedProducts.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity)) : ProductState.productsInCart.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity))}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -119,8 +119,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
-                      "\$${ProductState.selectedProducts.length!=0?ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity):
-                      ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)}",
+                      "\$${ProductState.selectedProducts.length != 0 ? ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity) : ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],

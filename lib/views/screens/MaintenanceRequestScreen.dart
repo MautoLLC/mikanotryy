@@ -191,7 +191,6 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     });
   }
 
-
   bool leapYear(int year) {
     bool leapYear = false;
 
@@ -758,7 +757,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                             textContent: lbl_lbl_request,
                             onPressed: () async {
                               disabled = true;
-                              setState(() { });
+                              setState(() {});
                               if (selectedSubCategId != 0) {
                                 datetime = new DateTime(
                                     SelectedYear,
@@ -787,29 +786,29 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                                         maintenanceRequestImagesFiles: images,
                                         maintenanceRequestRecordsFiles:
                                             records);
-                                if(await SubmitMaintenanceRequest(
-                                    mMaintenanceRequest, context)){
-                                      Fluttertoast.showToast(
-          msg: "Request submitted successfully ! ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.white,
-          textColor: Colors.black87,
-          fontSize: 16.0);
+                                if (await SubmitMaintenanceRequest(
+                                    mMaintenanceRequest, context)) {
+                                  Fluttertoast.showToast(
+                                      msg: "Request submitted successfully ! ",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black87,
+                                      fontSize: 16.0);
                                   Navigator.pop(context);
-                                    } else {
-                                      Fluttertoast.showToast(
-          msg: "Error in submitting request ! ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.white,
-          textColor: Colors.black87,
-          fontSize: 16.0);
-                                      disabled = false;
-                                      setState(() {});
-                                    }
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Error in submitting request ! ",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.white,
+                                      textColor: Colors.black87,
+                                      fontSize: 16.0);
+                                  disabled = false;
+                                  setState(() {});
+                                }
                               }
 
                               if (selectedSubCategId == 0)
@@ -890,14 +889,11 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     appDir = Directory("${path!}");
     appDir!.exists().then((value) {
       records!.clear();
-    appDir!.list().listen((onData) {
-      if(onData.path.contains("audio.wav"))
-        records!.add(onData.path);
-    }).onDone(() {
-      setState(() { });
+      appDir!.list().listen((onData) {
+        if (onData.path.contains("audio.wav")) records!.add(onData.path);
+      }).onDone(() {
+        setState(() {});
+      });
     });
-    });
-    
-    
   }
 }

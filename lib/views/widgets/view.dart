@@ -96,7 +96,7 @@ class _RecorderState extends State<Recorder> {
                 ],
               ),
         Text(
-          duration.length>7?duration.substring(2, 7):duration,
+          duration.length > 7 ? duration.substring(2, 7) : duration,
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ],
@@ -104,15 +104,14 @@ class _RecorderState extends State<Recorder> {
   }
 
   Future<void> _onRecordButtonPressed() async {
-    if(await audioRecorder.isPaused()){
+    if (await audioRecorder.isPaused()) {
       _resume();
-    } else if(await audioRecorder.isRecording()){
+    } else if (await audioRecorder.isRecording()) {
       _pause();
     } else {
       _recordo();
     }
   }
-
 
   _start() async {
     Directory? d = await getTemporaryDirectory();
@@ -125,8 +124,7 @@ class _RecorderState extends State<Recorder> {
       setState(() {
         duration = Time.toString();
       });
-      if(canRecord)
-        Time++;
+      if (canRecord) Time++;
     });
   }
 
@@ -153,7 +151,8 @@ class _RecorderState extends State<Recorder> {
   _stop() async {
     String? resultPath = await audioRecorder.stop();
     Time = 0;
-    widget.save(resultPath.toString().substring(0, resultPath.toString().length-10));
+    widget.save(
+        resultPath.toString().substring(0, resultPath.toString().length - 10));
     timer.cancel();
     Fluttertoast.showToast(msg: "Stop Recording , File Saved");
     _recordIcon = Icons.mic;
@@ -163,8 +162,7 @@ class _RecorderState extends State<Recorder> {
   }
 
   Future<void> _recordo() async {
-    if (await audioRecorder.hasPermission() ||
-        canRecord) {
+    if (await audioRecorder.hasPermission() || canRecord) {
       await _start();
       Fluttertoast.showToast(msg: "Start Recording");
       setState(() {

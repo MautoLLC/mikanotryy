@@ -116,5 +116,4 @@ const resetESPUrl = "http://" + lanESPUrl + "/reset";
 
 const LocationUrl = 'http://dev.codepickles.com:8094';
 const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
-const LocationByDeviceUrl =
-    '$LocationUrl/api/TrackedUsers/Location';
+const LocationByDeviceUrl = '$LocationUrl/api/TrackedUsers/Location';
