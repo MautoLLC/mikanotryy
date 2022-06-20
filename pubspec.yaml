@@ -46,6 +46,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^19.2.56-beta
   file_picker: ^4.5.1
   record: ^4.1.1
+  isw_mobile_sdk:
 
 #  flutter_absolute_path:
 #    git:
