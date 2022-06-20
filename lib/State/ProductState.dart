@@ -286,21 +286,17 @@ class ProductState extends ChangeNotifier {
     }
   }
 
-  Future<bool> checkout(Address add, bool checkBox) async {
-    if (!checkBox) {
-      toast("Check the checkbox to agree to the terms of user");
+  Future<bool> checkout(Address add) async {
+    bool success = await CustomerService().Checkout(add, selectedProducts);
+    if (success) {
+      List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
+      await CustomerService().deleteCartItemsforLoggedInUser(ids);
+      removecheckedProducts();
+      update();
+      toast("Checkout Successful");
+      return true;
     } else {
-      bool success = await CustomerService().Checkout(add, selectedProducts);
-      if (success) {
-        List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
-        await CustomerService().deleteCartItemsforLoggedInUser(ids);
-        removecheckedProducts();
-        update();
-        toast("Checkout Successful");
-        return true;
-      } else {
-        toast("Checkout Failed");
-      }
+      toast("Checkout Failed");
     }
     notifyListeners();
     return false;

@@ -4,6 +4,8 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/models/TechnicianModel.dart';
+import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -212,8 +214,33 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         children: [
                           Expanded(
                             child: GestureDetector(
-                              onTap: () {
-                                // TODO Buy Now
+                              onTap: () async {
+                                TechnicianModel user = userState.User;
+                                if (await PaymentService().pay(
+                                    user.id,
+                                    user.username,
+                                    user.email,
+                                    user.phoneNumber,
+                                    (Quantity * widget.product.Price)
+                                        .toInt())) {
+                                  Fluttertoast.showToast(
+                                      msg: "Payment Successful",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.green,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                } else {
+                                  Fluttertoast.showToast(
+                                      msg: "Payment Failed",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                }
                               },
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),

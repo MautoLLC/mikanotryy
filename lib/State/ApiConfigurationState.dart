@@ -4,7 +4,6 @@ import 'package:mymikano_app/services/ApiConfigurationService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-
 class ApiConfigurationState extends ChangeNotifier {
   bool DashBoardFirstTimeAccess = true;
   bool isSuccess = false;

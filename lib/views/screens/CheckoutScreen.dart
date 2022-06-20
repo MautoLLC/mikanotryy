@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
+import 'package:mymikano_app/models/TechnicianModel.dart';
+import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -315,15 +317,55 @@ class CheckoutScreen extends StatelessWidget {
                             SizedBox(height: 20.0),
                             T13Button(
                                 textContent: lbl_Pay,
-                                onPressed: () {
-                                  productState
-                                      .checkout(state.ChosenAddress,
-                                          state.checkedValueForOrder)
-                                      .then((value) {
-                                    if (value) {
-                                      Navigator.pop(context);
+                                onPressed: () async {
+                                  if (state.checkedValueForOrder) {
+                                    TechnicianModel user = state.User;
+                                    if (!productState.getCashOnDelivery) {
+                                      if (await PaymentService().pay(
+                                          user.id,
+                                          user.username,
+                                          user.email,
+                                          user.phoneNumber,
+                                          (productState.selectedProducts.fold(
+                                                      0,
+                                                      (total, product) =>
+                                                          (total.toString())
+                                                              .toDouble() +
+                                                          product.quantity) *
+                                                  productState
+                                                      .selectedProductsPrice)
+                                              .toInt())) {
+                                        Fluttertoast.showToast(
+                                            msg: "Payment Successful",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.green,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Payment Failed",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      }
                                     }
-                                  });
+
+                                    productState
+                                        .checkout(state.ChosenAddress)
+                                        .then((value) {
+                                      if (value) {
+                                        Navigator.pop(context);
+                                      }
+                                    });
+                                  } else {
+                                    toast(
+                                        "Terms and services checkbox is unchecked");
+                                  }
                                 }),
                             SizedBox(height: 20.0),
                           ],
