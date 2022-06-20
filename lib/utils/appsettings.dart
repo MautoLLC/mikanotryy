@@ -1,4 +1,4 @@
-const bool isProduction = false;
+const bool isProduction = true;
 
 
 const KeyCloakBaseUrl = isProduction?'https://authorization.mikano-intl.com':'https://dev.mauto.co';
@@ -69,7 +69,7 @@ const InspectionPriceURL =
 const ChangeComponentStatusURL =
     '$InspectionApiBaseUrl/api/Inspections/InspectionChecklistItem?inspectionChecklistItemID={inspectionChecklistItemID}&componentStatusID={componentStatusID}';
 
-const MikanoShopMainURl = 'http://mikanoshop.mauto.co/api';
+const MikanoShopMainURl = isProduction?'Https://shop.mikano-intl.com/api':'http://mikanoshop.mauto.co/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 const MikanoShopGetTopDealsProductsURL = '$MikanoShopMainURl/products/topDeals';
