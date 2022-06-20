@@ -1,7 +1,7 @@
 const bool isProduction = false;
 
 
-const KeyCloakBaseUrl = 'https://dev.mauto.co';
+const KeyCloakBaseUrl = isProduction?'https://authorization.mikano-intl.com':'https://dev.mauto.co';
 const identifier = 'MymikanoApp';
 const secret = '45475923-b3ef-46c5-aa70-79475824d3f9';
 const authorizationEndpoint =
