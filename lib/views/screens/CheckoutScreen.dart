@@ -326,15 +326,8 @@ class CheckoutScreen extends StatelessWidget {
                                           user.username,
                                           user.email,
                                           user.phoneNumber,
-                                          (productState.selectedProducts.fold(
-                                                      0,
-                                                      (total, product) =>
-                                                          (total.toString())
-                                                              .toDouble() +
-                                                          product.quantity) *
                                                   productState
-                                                      .selectedProductsPrice)
-                                              .toInt())) {
+                                                      .selectedProductsPrice.toInt())) {
                                         Fluttertoast.showToast(
                                             msg: "Payment Successful",
                                             toastLength: Toast.LENGTH_SHORT,
@@ -343,6 +336,13 @@ class CheckoutScreen extends StatelessWidget {
                                             backgroundColor: Colors.green,
                                             textColor: Colors.white,
                                             fontSize: 16.0);
+                                            productState
+                                        .checkout(state.ChosenAddress)
+                                        .then((value) {
+                                      if (value) {
+                                        Navigator.pop(context);
+                                      }
+                                    });
                                       } else {
                                         Fluttertoast.showToast(
                                             msg: "Payment Failed",
@@ -353,15 +353,17 @@ class CheckoutScreen extends StatelessWidget {
                                             textColor: Colors.white,
                                             fontSize: 16.0);
                                       }
-                                    }
-
-                                    productState
+                                    } else {
+                                      productState
                                         .checkout(state.ChosenAddress)
                                         .then((value) {
                                       if (value) {
                                         Navigator.pop(context);
                                       }
                                     });
+                                    }
+
+                                    
                                   } else {
                                     toast(
                                         "Terms and services checkbox is unchecked");

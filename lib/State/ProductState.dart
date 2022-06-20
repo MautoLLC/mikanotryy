@@ -259,9 +259,8 @@ class ProductState extends ChangeNotifier {
   }
 
   void removecheckedProducts() async {
-    for (var item in selectedProducts) {
-      productsInCart.remove(item);
-    }
+    productsInCart.clear();
+    selectedProducts.clear();
     notifyListeners();
   }
 

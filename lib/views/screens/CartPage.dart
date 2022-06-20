@@ -36,33 +36,34 @@ class _CartPageState extends State<CartPage> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.transparent,
-                      ),
-                      onPressed: () {
-                        // finish(context);
-                      },
-                    ),
-                    Spacer(),
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.arrow_back_ios,
+                    //     color: Colors.transparent,
+                    //   ),
+                    //   onPressed: () {
+                    //     // finish(context);
+                    //   },
+                    // ),
+                    // Spacer(),
                     TitleText(
                       title: lbl_My_Cart,
                     ),
-                    Spacer(),
-                    GestureDetector(
-                        onTap: () {
-                          ProductState.toggleSelectMode();
-                        },
-                        child: Text(
-                          lbl_Select,
-                          style: TextStyle(
-                              color: ProductState.selectMode
-                                  ? mainColorTheme
-                                  : mainGreyColorTheme,
-                              fontSize: 15),
-                        ))
+                    // Spacer(),
+                    // GestureDetector(
+                    //     onTap: () {
+                    //       ProductState.toggleSelectMode();
+                    //     },
+                    //     child: Text(
+                    //       lbl_Select,
+                    //       style: TextStyle(
+                    //           color: ProductState.selectMode
+                    //               ? mainColorTheme
+                    //               : mainGreyColorTheme,
+                    //           fontSize: 15),
+                    //     ))
                   ],
                 ),
                 SizedBox(
@@ -109,7 +110,11 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Item_Selected, style: TextStyle(fontSize: 14)),
                     Text(
-                      "${ProductState.selectedProducts.length != 0 ? ProductState.selectedProducts.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity)) : ProductState.productsInCart.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity))}",
+                      "${ProductState.selectedProducts.length != 0 ?
+                       ProductState.selectedProducts.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity)) 
+                       : ProductState.productsInCart.length!=0?
+                        ProductState.productsInCart.fold(0, (previousValue, element) => previousValue.toString().toDouble() + (element.quantity))
+                        :0}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -119,7 +124,11 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
-                      "\$${ProductState.selectedProducts.length != 0 ? ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity) : ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)}",
+                      "\$${ProductState.selectedProducts.length != 0 ?
+                       ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity) 
+                       : ProductState.productsInCart.length!=0?
+                        ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)
+                        :0}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],

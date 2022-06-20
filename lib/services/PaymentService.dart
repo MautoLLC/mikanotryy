@@ -52,10 +52,19 @@ class PaymentService {
     var iswPaymentInfo = new IswPaymentInfo(customerId, customerName,
         customerEmail, customerMobile, reference, amountInKobo);
 
-    // trigger payment
-    var result = await IswMobileSdk.pay(iswPaymentInfo);
+    try{
+      // trigger payment
+      var result = await IswMobileSdk.pay(iswPaymentInfo);
+
+      return result.value.isSuccessful;
+    } catch (e){
+      print(e);
+      return false;
+    }
+
+    
 
     // process result
-    return result.value.isSuccessful;
+    
   }
 }
