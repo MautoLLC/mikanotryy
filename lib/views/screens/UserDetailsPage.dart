@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/RealEstateModel.dart';
 import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/FetchRealEstatesService.dart';
@@ -7,7 +6,6 @@ import 'package:mymikano_app/services/UserService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
-import 'package:provider/provider.dart';
 
 class UserDetailsPage extends StatelessWidget {
   int realEstateId;
