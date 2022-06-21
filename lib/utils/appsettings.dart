@@ -1,4 +1,4 @@
-const bool isProduction = true;
+const bool isProduction = false;
 
 
 const KeyCloakBaseUrl = isProduction?'https://authorization.mikano-intl.com':'https://dev.mauto.co';
@@ -84,6 +84,7 @@ const MikanoDeleteFavoritAndCartItems =
 const MikanoChangeQuantityCartItem =
     '$MikanoShopMainURl/shopping_cart_items/incrementqty';
 const MikanoShopPlaceOrder = '$MikanoShopMainURl/orders';
+const MikanoShopPrimaryCurrency = '$MikanoShopMainURl/currencies/primary';
 
 const mainAppName = 'My Mikano App';
 

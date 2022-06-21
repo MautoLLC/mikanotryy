@@ -1,10 +1,36 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:isw_mobile_sdk/isw_mobile_sdk.dart';
+import 'package:mymikano_app/models/Currency.dart';
 
 class PaymentService {
   PaymentService();
+
+  // generate Map of the top 100 currency codes as NGN is 566
+  static Map<String, String> currencyCodes = {
+    "NGN": "566",
+    "USD": "840",
+    "EUR": "978",
+    "GBP": "826",
+    "AUD": "036",
+    "CAD": "124",
+    "CHF": "756",
+    "CNY": "156",
+    "DKK": "208",
+    "HKD": "344",
+    "JPY": "392",
+    "MXN": "484",
+    "NOK": "578",
+    "NZD": "554",
+    "SEK": "752",
+    "SGD": "702",
+    "THB": "764",
+    "ZAR": "710",
+    "XAF": "950",
+    "XCD": "951",
+  };
 
   static const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -14,13 +40,14 @@ class PaymentService {
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   // messages to SDK are asynchronous, so we initialize in an async method.
-  Future<void> initSdk() async {
+  Future<void> initSdk(Currency? currency) async {
     // messages may fail, so we use a try/catch PlatformException.
     try {
+      String Code = currencyCodes[currency!.currencyCode!.toUpperCase().toString()].toString();
       String merchantId = "IKIA4CC6EB8D10397B7361C0DE33FBE4A852F2147614",
           merchantCode = "MX90186",
           merchantSecret = "28yytagm991ulDt",
-          currencyCode = "840"; // e.g  566 for NGN
+          currencyCode = Code; // e.g  566 for NGN
 
       var config = new IswSdkConfig(
           merchantId, merchantSecret, merchantCode, currencyCode);

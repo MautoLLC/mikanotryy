@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -80,7 +81,7 @@ class HorizontalItemElement extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "\$${product.Price}",
+                    "${Provider.of<CurrencyState>(context, listen: false).currency!.currencyCode} ${product.Price}",
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "Poppins",

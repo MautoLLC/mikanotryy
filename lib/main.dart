@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/State/WSVGeneratorState.dart';
+import 'package:mymikano_app/services/CurrencyService.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
@@ -64,6 +66,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => LanGeneratorState())),
         ChangeNotifierProvider<WSVGeneratorState>(
             create: ((context) => WSVGeneratorState())),
+        ChangeNotifierProvider<CurrencyState>(
+            create: ((context) => CurrencyState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

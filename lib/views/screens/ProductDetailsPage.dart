@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
@@ -150,7 +151,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '\$${widget.product.Price}',
+                          '${Provider.of<CurrencyState>(context, listen: false).currency!.currencyCode} ${widget.product.Price}',
                           style: TextStyle(
                               fontSize: 20, fontFamily: PoppinsFamily),
                         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/EntryPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
@@ -20,14 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return (prefs.getBool('IsLoggedIn') == true);
   }
 
-  init() async {
-    await PaymentService().initSdk();
-  }
+
 
   @override
   void initState() {
     super.initState();
-    init();
     Future.delayed(Duration(seconds: 3), () {
       checkIfLoggedIn().then((value) {
         if (value) {
