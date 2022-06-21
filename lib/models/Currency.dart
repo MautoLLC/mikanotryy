@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:intl/intl.dart';
+
 class Currency {
   String? name;
   String? currencyCode;
@@ -12,6 +16,7 @@ class Currency {
   String? roundingType;
   List<int>? storeIds;
   int? id;
+  String? currencySymbol;
 
   Currency(
       {this.name,
@@ -26,7 +31,13 @@ class Currency {
       this.updatedOnUtc,
       this.roundingType,
       this.storeIds,
-      this.id});
+      this.id,
+      this.currencySymbol});
+
+  String getCurrency(String currencyName) {
+    var format = NumberFormat.simpleCurrency(name: currencyName);
+    return format.currencySymbol;
+  }
 
   Currency.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -42,6 +53,7 @@ class Currency {
     roundingType = json['rounding_type'];
     storeIds = json['store_ids'].cast<int>();
     id = json['id'];
+    currencySymbol = getCurrency(json['currency_code']);
   }
 
   Map<String, dynamic> toJson() {
