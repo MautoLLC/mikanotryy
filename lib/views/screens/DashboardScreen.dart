@@ -225,7 +225,7 @@ class DashboardState extends State<Dashboard> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SubTitleText(title: "Top Deals", color: Colors.white),
-                      ViewMoreBtn(title: lbl_Popular_Products),
+                      ViewMoreBtn(title: "Top Deals"),
                     ],
                   ),
                 ),
