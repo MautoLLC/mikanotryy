@@ -82,7 +82,7 @@ class _MenuScreenState extends State<MenuScreen> {
       if (!guestLogin) "Generator Dashboard",
       if (!guestLogin) "Favorites",
       if (!guestLogin) "Address",
-      if (!guestLogin) "Cards",
+      // if (!guestLogin) "Cards",
       "About Us",
       "Contact Us",
     ];
@@ -93,7 +93,7 @@ class _MenuScreenState extends State<MenuScreen> {
       if (!guestLogin) getPage(),
       if (!guestLogin) FavoritesScreen(),
       if (!guestLogin) AddressScreen(),
-      if (!guestLogin) CardsScreen(),
+      // if (!guestLogin) CardsScreen(),
       AboutUsScreen(),
       ContactUsScreen(),
     ];
@@ -103,7 +103,7 @@ class _MenuScreenState extends State<MenuScreen> {
       if (!guestLogin) ic_Generator_Info,
       if (!guestLogin) ic_Favorites,
       if (!guestLogin) ic_Address,
-      if (!guestLogin) ic_Cards,
+      // if (!guestLogin) ic_Cards,
       ic_About_Us,
       ic_Contact_Us
     ];
