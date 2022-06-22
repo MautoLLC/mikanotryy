@@ -213,7 +213,7 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addProduct(CartProduct product) async {
+  Future<void> addProduct(CartProduct product) async {
     product = await CustomerService().addCartItemsforLoggedInUser(product);
     productsInCart.add(product);
     notifyListeners();
@@ -274,7 +274,7 @@ class ProductState extends ChangeNotifier {
   double get selectedProductsPrice => selectedProducts.fold(
       0, (total, product) => total + product.product.Price* product.quantity);
 
-  void increaseCartItemQuantity(CartProduct product) async {
+  Future<void> increaseCartItemQuantity(CartProduct product) async {
     product.quantity++;
     await CustomerService()
         .ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
@@ -305,4 +305,5 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
     return false;
   }
+
 }

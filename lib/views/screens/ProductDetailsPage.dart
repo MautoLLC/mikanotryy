@@ -11,6 +11,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/screens/CartPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -215,32 +216,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           Expanded(
                             child: GestureDetector(
                               onTap: () async {
-                                TechnicianModel user = userState.User;
-                                if (await PaymentService().pay(
-                                    user.id,
-                                    user.username,
-                                    user.email,
-                                    user.phoneNumber,
-                                    (Quantity * widget.product.Price)
-                                        .toInt())) {
-                                  Fluttertoast.showToast(
-                                      msg: "Payment Successful",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.green,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0);
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Payment Failed",
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0);
-                                }
+                                CartProduct p = CartProduct(
+                                    product: widget.product,
+                                    quantity: Quantity);
+                                state.addProduct(p);
+
+                                Navigator.push(context, MaterialPageRoute(builder: ((context) => CartPage())));
                               },
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
