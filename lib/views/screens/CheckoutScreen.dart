@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/TechnicianModel.dart';
@@ -21,9 +22,8 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserState>(
-        builder: (context, state, child) => Consumer<ProductState>(
-              builder: (context, productState, child) => Scaffold(
+    return Consumer3<UserState, ProductState, CurrencyState>(
+        builder: (context, state, productState, currencyState, child) => Scaffold(
                 body: SafeArea(
                   child: CustomScrollView(slivers: [
                     SliverFillRemaining(
@@ -273,7 +273,7 @@ class CheckoutScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Text(
-                                  '\$' + "0.00",
+                                  '${currencyState.currency!.currencySymbol}' + "0.00",
                                   style: TextStyle(fontSize: 14),
                                 ),
                               ],
@@ -307,7 +307,7 @@ class CheckoutScreen extends StatelessWidget {
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 Text(
-                                  '\$' +
+                                  '${currencyState.currency!.currencySymbol}' +
                                       "${productState.selectedProductsPrice}",
                                   style: TextStyle(
                                       fontSize: 14, color: mainColorTheme),
@@ -377,6 +377,6 @@ class CheckoutScreen extends StatelessWidget {
                   ]),
                 ),
               ),
-            ));
+            );
   }
 }

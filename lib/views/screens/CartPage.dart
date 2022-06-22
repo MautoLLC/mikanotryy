@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -23,7 +24,7 @@ class _CartPageState extends State<CartPage> {
   bool isFirst = true;
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductState>(builder: (context, ProductState, child) {
+    return Consumer2<ProductState, CurrencyState>(builder: (context, ProductState, currencyState, child) {
       if (isFirst) {
         ProductState.updateCart();
         isFirst = false;
@@ -124,7 +125,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
-                      "\$${ProductState.selectedProducts.length != 0 ?
+                      "${currencyState.currency!.currencySymbol} ${ProductState.selectedProducts.length != 0 ?
                        ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price* product.quantity) 
                        : ProductState.productsInCart.length!=0?
                         ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price* product.quantity)
@@ -164,7 +165,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductState>(builder: (context, ProductState, child) {
+    return Consumer2<ProductState, CurrencyState>(builder: (context, ProductState, currencyState, child) {
       return Dismissible(
           behavior: HitTestBehavior.deferToChild,
           background: Container(
@@ -263,7 +264,7 @@ class CartItem extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "\$${product.product.Price}",
+                                      "${currencyState.currency!.currencySymbol} ${product.product.Price}",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: "Poppins",
