@@ -4,13 +4,14 @@ import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CustomerService {
   Dio dio = new Dio();
-  Future<bool> addShippingAddress(Address address) async {
+  Future<bool> addShippingAddress(Address address, TechnicianModel User) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       Response response = await dio.post(
@@ -22,13 +23,13 @@ class CustomerService {
           data: {
             "city": address.city,
             "address1": address.address1,
-            "first_name": "f1",
-            "last_name": "l1",
-            "email": "email@hotmail.com",
+            "first_name": User.username,
+            "last_name": User.username,
+            "email": User.email,
             "country_id": 2,
             "state_province_id": 2,
             "zip_postal_code": "1001",
-            "phone_number": "01234567",
+            "phone_number": User.phoneNumber,
           });
       if (response.statusCode == 200) {
         toast("Address Added Successfully");
@@ -59,7 +60,7 @@ class CustomerService {
         return chosenAddress;
       } catch (e) {
         print(e);
-        return chosenAddress;
+      return Address();
       }
     } else {
       throw Exception('Failed to get shipping addresses');

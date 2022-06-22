@@ -64,7 +64,7 @@ class UserState extends ChangeNotifier {
   Future<void> addAddress(String address, String city) async {
     Address newAddress = Address(address1: address, city: city);
     ChosenAddress = newAddress;
-    await CustomerService().addShippingAddress(newAddress);
+    await CustomerService().addShippingAddress(newAddress, User);
     notifyListeners();
   }
 
