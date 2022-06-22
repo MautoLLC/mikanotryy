@@ -100,7 +100,8 @@ class HorizontalItemElement extends StatelessWidget {
                             color: state.allProducts
                                     .firstWhere(
                                         (element) => element.id == product.id)
-                                    .liked? mainColorTheme
+                                    .liked
+                                ? mainColorTheme
                                 : null)),
                   )
                 ],

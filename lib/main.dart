@@ -8,7 +8,6 @@ import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/State/WSVGeneratorState.dart';
-import 'package:mymikano_app/services/CurrencyService.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';

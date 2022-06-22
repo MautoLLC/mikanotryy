@@ -43,7 +43,8 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     selectedIndex = 2;
     setState(() {});
     Future.delayed(Duration(seconds: 5), () async {
-      await PaymentService().initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
+      await PaymentService()
+          .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
     });
   }
 

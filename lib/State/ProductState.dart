@@ -57,12 +57,6 @@ class ProductState extends ChangeNotifier {
         item.liked = true;
       }
     }
-    // purchasedProducts = [];
-    // for (var i = 0; i < 8; i++) {
-    //   Random random = new Random();
-    //   Product item = allProducts[random.nextInt(allProducts.length)];
-    //   purchasedProducts.add(item);
-    // }
     trendingProducts = [];
     for (var i = 0; i < 4; i++) {
       Random random = new Random();
@@ -72,11 +66,6 @@ class ProductState extends ChangeNotifier {
     topDealProducts = [];
     await getTopDeals();
     flashsaleProducts = [];
-    // for (var i = 0; i < 3; i++) {
-    //   Random random = new Random();
-    //   Product item = allProducts[random.nextInt(allProducts.length)];
-    //   flashsaleProducts.add(item);
-    // }
     await getFeatured();
     await updateCart();
     notifyListeners();
@@ -88,12 +77,12 @@ class ProductState extends ChangeNotifier {
   }
 
   sortByPriceLowToHigh() {
-    ListOfProducts.sort(((a, b) => a.Price> b.Price? 1 : -1));
+    ListOfProducts.sort(((a, b) => a.Price > b.Price ? 1 : -1));
     notifyListeners();
   }
 
   sortByPriceHighToLow() {
-    ListOfProducts.sort(((a, b) => a.Price< b.Price? 1 : -1));
+    ListOfProducts.sort(((a, b) => a.Price < b.Price ? 1 : -1));
     notifyListeners();
   }
 
@@ -272,7 +261,7 @@ class ProductState extends ChangeNotifier {
   int get selectedProductsCount => selectedProducts.length;
 
   double get selectedProductsPrice => selectedProducts.fold(
-      0, (total, product) => total + product.product.Price* product.quantity);
+      0, (total, product) => total + product.product.Price * product.quantity);
 
   Future<void> increaseCartItemQuantity(CartProduct product) async {
     product.quantity++;
@@ -305,5 +294,4 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
     return false;
   }
-
 }

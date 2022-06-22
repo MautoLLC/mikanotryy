@@ -10,14 +10,15 @@ class CurrencyService {
   Future<void> PrepareCall() async {
     dio = await DioClass.getDio();
   }
-  Future<Currency?> getPrimaryCurrency() async{
+
+  Future<Currency?> getPrimaryCurrency() async {
     await PrepareCall();
     Response response;
     Currency? currency;
-    try{
+    try {
       response = await dio.get(MikanoShopPrimaryCurrency);
       currency = Currency.fromJson(response.data);
-    } catch (e){
+    } catch (e) {
       print(e);
     }
     return currency;

@@ -5,8 +5,6 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
-import 'package:mymikano_app/models/TechnicianModel.dart';
-import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -103,7 +101,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                       .firstWhere((element) =>
                                                           element.id ==
                                                           widget.product.id)
-                                                      .liked? mainColorTheme
+                                                      .liked
+                                                  ? mainColorTheme
                                                   : null)),
                                 )
                         ],
@@ -221,7 +220,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     quantity: Quantity);
                                 state.addProduct(p);
 
-                                Navigator.push(context, MaterialPageRoute(builder: ((context) => CartPage())));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => CartPage())));
                               },
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),

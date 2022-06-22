@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
@@ -43,7 +42,9 @@ class PaymentService {
   Future<void> initSdk(Currency? currency) async {
     // messages may fail, so we use a try/catch PlatformException.
     try {
-      String Code = currencyCodes[currency!.currencyCode!.toUpperCase().toString()].toString();
+      String Code =
+          currencyCodes[currency!.currencyCode!.toUpperCase().toString()]
+              .toString();
       String merchantId = "IKIA4CC6EB8D10397B7361C0DE33FBE4A852F2147614",
           merchantCode = "MX90186",
           merchantSecret = "28yytagm991ulDt",
@@ -79,19 +80,16 @@ class PaymentService {
     var iswPaymentInfo = new IswPaymentInfo(customerId, customerName,
         customerEmail, customerMobile, reference, amountInKobo);
 
-    try{
+    try {
       // trigger payment
       var result = await IswMobileSdk.pay(iswPaymentInfo);
 
       return result.value.isSuccessful;
-    } catch (e){
+    } catch (e) {
       print(e);
       return false;
     }
 
-    
-
     // process result
-    
   }
 }

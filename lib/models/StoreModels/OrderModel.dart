@@ -421,7 +421,6 @@ class ProductAttributes {
   }
 }
 
-
 class Images {
   var id;
   var pictureId;

@@ -9,11 +9,11 @@ class CurrencyState extends ChangeNotifier {
     update();
   }
 
-  update(){
+  update() {
     updateCurrency();
   }
 
-  updateCurrency() async{
+  updateCurrency() async {
     currency = await CurrencyService().getPrimaryCurrency();
     notifyListeners();
   }

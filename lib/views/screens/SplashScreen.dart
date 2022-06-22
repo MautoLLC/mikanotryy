@@ -19,8 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return (prefs.getBool('IsLoggedIn') == true);
   }
 
-
-
   @override
   void initState() {
     super.initState();

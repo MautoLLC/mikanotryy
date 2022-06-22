@@ -15,8 +15,7 @@ class PurchasesScreen extends StatefulWidget {
 }
 
 class _PurchasesScreenState extends State<PurchasesScreen> {
-
-  init() async{
+  init() async {
     await Provider.of<ProductState>(context, listen: false).fetchPurchases();
   }
 
@@ -26,6 +25,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
     super.initState();
     init();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<ProductState, UserState>(

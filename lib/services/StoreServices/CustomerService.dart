@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/StoreModels/OrderModel.dart' as orderLib;
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
@@ -508,10 +507,10 @@ class CustomerService {
     }
     return true;
   }
-  
+
   Future<List<Product>> getOrdersByCustomerID(
       {int limit = -1, int page = -1}) async {
-        List<Product> products = [];
+    List<Product> products = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> params = {};
     if (limit != -1) {
@@ -521,36 +520,33 @@ class CustomerService {
       params["page"] = page;
     }
     // params['Fields'] = Params;
-    try{
-
-
-    Response response = await dio.get(
-      MikanoShopGetOrdersByCustomerIdURL.replaceAll('{customerID}', prefs.getString("StoreCustomerId").toString()),
-      queryParameters: params,
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      try {
-        
-
-        for (var item in response.data['orders']) {
-          orderLib.Order order = orderLib.Order.fromJson(item);
-          for (var p in order.orderItems!) {
-            Product temp = (p.product!);
-            products.add(temp);
+    try {
+      Response response = await dio.get(
+        MikanoShopGetOrdersByCustomerIdURL.replaceAll(
+            '{customerID}', prefs.getString("StoreCustomerId").toString()),
+        queryParameters: params,
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        try {
+          for (var item in response.data['orders']) {
+            orderLib.Order order = orderLib.Order.fromJson(item);
+            for (var p in order.orderItems!) {
+              Product temp = (p.product!);
+              products.add(temp);
+            }
           }
+          return products;
+        } catch (e) {
+          print(e);
+          return products;
         }
-        return products;
-      } catch (e) {
-        print(e);
-        return products;
+      } else {
+        throw Exception('Failed to load products');
       }
-    } else {
-      throw Exception('Failed to load products');
-    }
-        } catch (e){
+    } catch (e) {
       print(e);
       return products;
     }
