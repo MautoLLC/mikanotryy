@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -14,10 +15,21 @@ class PurchasesScreen extends StatefulWidget {
 }
 
 class _PurchasesScreenState extends State<PurchasesScreen> {
+
+  init() async{
+    await Provider.of<ProductState>(context, listen: false).fetchPurchases();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
+  }
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductState>(
-      builder: (context, state, child) => Scaffold(
+    return Consumer2<ProductState, UserState>(
+      builder: (context, state, userState, child) => Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Padding(
@@ -42,7 +54,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                                   crossAxisSpacing: 10.0,
                                   mainAxisSpacing: 20.0,
                                   childAspectRatio: 0.8),
-                          itemCount: 4,
+                          itemCount: state.purchasedProducts.length,
                           itemBuilder: (context, index) {
                             Product temp = state.purchasedProducts[index];
                             return ItemElement(

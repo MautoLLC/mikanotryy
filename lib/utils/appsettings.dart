@@ -85,6 +85,7 @@ const MikanoChangeQuantityCartItem =
     '$MikanoShopMainURl/shopping_cart_items/incrementqty';
 const MikanoShopPlaceOrder = '$MikanoShopMainURl/orders';
 const MikanoShopPrimaryCurrency = '$MikanoShopMainURl/currencies/primary';
+const MikanoShopGetOrdersByCustomerIdURL = '$MikanoShopMainURl/orders/customer/{customerID}';
 
 const mainAppName = 'My Mikano App';
 

@@ -134,8 +134,7 @@ class _ItemElementState extends State<ItemElement> {
                             color: state.allProducts
                                     .firstWhere((element) =>
                                         element.id == widget.product.id)
-                                    .liked
-                                ? mainColorTheme
+                                    .liked? mainColorTheme
                                 : null),
                       ),
                     ),

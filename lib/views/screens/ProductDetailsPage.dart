@@ -102,8 +102,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                       .firstWhere((element) =>
                                                           element.id ==
                                                           widget.product.id)
-                                                      .liked
-                                                  ? mainColorTheme
+                                                      .liked? mainColorTheme
                                                   : null)),
                                 )
                         ],

@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
+import 'package:mymikano_app/models/StoreModels/OrderModel.dart' as orderLib;
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
@@ -505,5 +507,52 @@ class CustomerService {
       throw Exception('Failed to checkout');
     }
     return true;
+  }
+  
+  Future<List<Product>> getOrdersByCustomerID(
+      {int limit = -1, int page = -1}) async {
+        List<Product> products = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> params = {};
+    if (limit != -1) {
+      params["limit"] = limit;
+    }
+    if (page != -1) {
+      params["page"] = page;
+    }
+    // params['Fields'] = Params;
+    try{
+
+
+    Response response = await dio.get(
+      MikanoShopGetOrdersByCustomerIdURL.replaceAll('{customerID}', prefs.getString("StoreCustomerId").toString()),
+      queryParameters: params,
+      options: Options(headers: {
+        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+      }),
+    );
+    if (response.statusCode == 200) {
+      try {
+        
+
+        for (var item in response.data['orders']) {
+          orderLib.Order order = orderLib.Order.fromJson(item);
+          for (var p in order.orderItems!) {
+            Product temp = (p.product!);
+            products.add(temp);
+          }
+        }
+        return products;
+      } catch (e) {
+        print(e);
+        return products;
+      }
+    } else {
+      throw Exception('Failed to load products');
+    }
+        } catch (e){
+      print(e);
+      return products;
+    }
   }
 }

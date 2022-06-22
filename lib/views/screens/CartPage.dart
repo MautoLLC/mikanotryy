@@ -125,9 +125,9 @@ class _CartPageState extends State<CartPage> {
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
                       "\$${ProductState.selectedProducts.length != 0 ?
-                       ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity) 
+                       ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price* product.quantity) 
                        : ProductState.productsInCart.length!=0?
-                        ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)
+                        ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price* product.quantity)
                         :0}",
                       style: TextStyle(fontSize: 14),
                     ),
