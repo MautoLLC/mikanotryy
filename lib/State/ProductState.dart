@@ -176,7 +176,7 @@ class ProductState extends ChangeNotifier {
       }
       allProducts.firstWhere((element) => element.id == product.id).liked =
           false;
-      toast("Product removed to favorites");
+      toast("Product removed from favorites");
     } else {
       FavoriteProduct t =
           await CustomerService().addFavoriteItemsforLoggedInUser(product);

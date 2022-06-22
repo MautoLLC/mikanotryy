@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
@@ -138,6 +139,9 @@ class CustomerService {
 
   Future<void> deleteFavoriteItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    try{
+
+    
     Response response = await dio.post(
       MikanoDeleteFavoritAndCartItems,
       queryParameters: {
@@ -153,6 +157,9 @@ class CustomerService {
       return;
     } else {
       throw Exception('Failed to delete item from favorites');
+    }
+    }catch(e){
+      debugPrint(e.toString());
     }
   }
 

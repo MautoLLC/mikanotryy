@@ -173,8 +173,7 @@ class CartItem extends StatelessWidget {
           onDismissed: (direction) {
             OnPressed();
             // Then show a snackbar.
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("${product.product.Name} removed from cart")));
+            toast("${product.product.Name} removed from cart");
           },
           child: Padding(
             padding: const EdgeInsets.only(bottom: 9.0),

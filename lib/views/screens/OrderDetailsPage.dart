@@ -29,6 +29,7 @@ class OrderDetailsPage extends StatelessWidget {
                     children: [
                       Text("OrderID: ${order.id}"),
                       Text("Item Count: ${order.orderItems!.fold(0, (previousValue, element) => int.parse(previousValue.toString()) + element.quantity)}"),
+                      Text("Date: ${DateTime.parse(order.createdOnUtc).year}-${DateTime.parse(order.createdOnUtc).month}-${DateTime.parse(order.createdOnUtc).day}"),
                     ],
                   ),
                   Column(
