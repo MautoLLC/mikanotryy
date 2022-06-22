@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
-import 'package:mymikano_app/models/StoreModels/OrderModel.dart' as orderLib;
+import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
@@ -508,9 +508,9 @@ class CustomerService {
     return true;
   }
 
-  Future<List<Product>> getOrdersByCustomerID(
+  Future<List<Order>> getOrdersByCustomerID(
       {int limit = -1, int page = -1}) async {
-    List<Product> products = [];
+    List<Order> orders = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> params = {};
     if (limit != -1) {
@@ -532,23 +532,20 @@ class CustomerService {
       if (response.statusCode == 200) {
         try {
           for (var item in response.data['orders']) {
-            orderLib.Order order = orderLib.Order.fromJson(item);
-            for (var p in order.orderItems!) {
-              Product temp = (p.product!);
-              products.add(temp);
-            }
+            Order order = Order.fromJson(item);
+            orders.add(order);
           }
-          return products;
+          return orders;
         } catch (e) {
           print(e);
-          return products;
+          return orders;
         }
       } else {
         throw Exception('Failed to load products');
       }
     } catch (e) {
       print(e);
-      return products;
+      return orders;
     }
   }
 }

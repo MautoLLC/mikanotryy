@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
-import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/screens/CartPage.dart';
+import 'package:mymikano_app/views/screens/OrderDetailsPage.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
-import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:provider/provider.dart';
 
 class PurchasesScreen extends StatefulWidget {
@@ -28,44 +30,51 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ProductState, UserState>(
-      builder: (context, state, userState, child) => Scaffold(
+    return Consumer3<ProductState, UserState, CurrencyState>(
+      builder: (context, state, userState, currencyState, child) => Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Column(
-              children: [
-                TopRowBar(title: lbl_Purchases),
-                SizedBox(
-                  height: 30,
-                ),
-                Expanded(
-                  child: LayoutBuilder(
-                    builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                      return GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      (constraints.constrainWidth() ~/ 310)
-                                              .toInt() +
-                                          1,
-                                  crossAxisSpacing: 10.0,
-                                  mainAxisSpacing: 20.0,
-                                  childAspectRatio: 0.8),
-                          itemCount: state.purchasedProducts.length,
-                          itemBuilder: (context, index) {
-                            Product temp = state.purchasedProducts[index];
-                            return ItemElement(
-                              product: temp,
-                            );
-                          });
-                    },
-                  ),
-                )
-              ],
-            ),
+            child: Column(children: [
+              TopRowBar(title: lbl_Purchases),
+              SizedBox(
+                height: 30,
+              ),
+              Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) {
+    return Divider();
+  },
+                      itemCount: state.ordersHistory.length,
+                      itemBuilder: (context, index) {
+                        Order temp = state.ordersHistory[index];
+                        return ListTile(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => OrderDetailsPage(order: temp,)))),
+                          title: Row(
+                            children: [
+                              Text("Order ${temp.id.toString()}"),
+                              Spacer(),
+                              Text(
+                              "${temp.orderTotal.toString()} ${currencyState.currency!.currencySymbol}")
+                            ],
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          isThreeLine: false,
+                          subtitle: Row(
+                            children: [
+                              Text(temp.billingAddress!.city.toString()),
+                              Spacer(),
+                              Text("${temp.orderStatus.toString()}")
+                            ],
+                          ),
+                          
+                        );
+                      }))
+            ]),
           ),
         ),
       ),

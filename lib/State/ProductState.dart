@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
+import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
@@ -16,6 +17,7 @@ class ProductState extends ChangeNotifier {
   List<CartProduct> selectedProducts = [];
   List<FavoriteProduct> favoriteProducts = [];
   List<Product> purchasedProducts = [];
+  List<Order> ordersHistory = [];
   List<Product> trendingProducts = [];
   List<Product> topDealProducts = [];
   List<Product> featuredProducts = [];
@@ -72,7 +74,7 @@ class ProductState extends ChangeNotifier {
   }
 
   fetchPurchases() async {
-    purchasedProducts = await CustomerService().getOrdersByCustomerID();
+    ordersHistory = await CustomerService().getOrdersByCustomerID();
     notifyListeners();
   }
 
