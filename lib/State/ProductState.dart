@@ -135,6 +135,12 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  clearCart(){
+    productsInCart.clear();
+    selectedProducts.clear();
+    notifyListeners();
+  }
+
   void Paginate() async {
     if (!(page + 1 > allProducts.length / ItemsPerPage)) {
       page++;

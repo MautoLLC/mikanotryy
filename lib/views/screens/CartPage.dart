@@ -22,6 +22,13 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   bool isFirst = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<ProductState>(context, listen: false).clearCart();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer2<ProductState, CurrencyState>(
