@@ -11,7 +11,8 @@ class ProductsService {
 
   String Params =
       "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
-  Future<List<Product>> getProducts({int limit = -1, int page = -1, int categoryID = -1}) async {
+  Future<List<Product>> getProducts(
+      {int limit = -1, int page = -1, int categoryID = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -19,7 +20,7 @@ class ProductsService {
     if (page != -1) {
       params["page"] = page;
     }
-    if(categoryID != -1){
+    if (categoryID != -1) {
       params["CategoryId"] = categoryID;
     }
     params['Fields'] = Params;
@@ -108,7 +109,7 @@ class ProductsService {
 
   Future<List<ProductCategory>> getCategories(
       {int limit = -1, int page = -1}) async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -116,15 +117,11 @@ class ProductsService {
     if (page != -1) {
       params["page"] = page;
     }
-    Response response = await dio.get(
-      MikanoShopCategoriesURL,
-      queryParameters: params,
-      options: Options(
-        headers: {
-            'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
-          }
-      )
-    );
+    Response response = await dio.get(MikanoShopCategoriesURL,
+        queryParameters: params,
+        options: Options(headers: {
+          'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
+        }));
     if (response.statusCode == 200) {
       List<ProductCategory> products = [];
       try {

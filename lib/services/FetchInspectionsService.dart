@@ -17,7 +17,8 @@ class InspectionService {
   Future<List<InspectionModel>> fetchInspectionsByUser() async {
     await PrepareCall();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    debugPrint(GetTechnicianInspectionURL + prefs.getString('UserID').toString());
+    debugPrint(
+        GetTechnicianInspectionURL + prefs.getString('UserID').toString());
     final response = await dio.get(
         (GetTechnicianInspectionURL + prefs.getString('UserID').toString()));
 

@@ -97,8 +97,7 @@ const MikanoShopPlaceOrder = '$MikanoShopMainURl/orders';
 const MikanoShopPrimaryCurrency = '$MikanoShopMainURl/currencies/primary';
 const MikanoShopGetOrdersByCustomerIdURL =
     '$MikanoShopMainURl/orders/customer/{customerID}';
-const MikanoShopCategoriesURL =
-    '$MikanoShopMainURl/categories';
+const MikanoShopCategoriesURL = '$MikanoShopMainURl/categories';
 
 const mainAppName = 'My Mikano App';
 

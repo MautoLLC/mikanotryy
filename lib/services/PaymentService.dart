@@ -58,7 +58,6 @@ class PaymentService {
       // await IswMobileSdk.initialize(config);
       // intialize with environment, default is Environment.TEST
       await IswMobileSdk.initialize(config, Environment.TEST);
-
     } on PlatformException {}
   }
 

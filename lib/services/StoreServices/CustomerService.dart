@@ -61,7 +61,7 @@ class CustomerService {
         return chosenAddress;
       } catch (e) {
         debugPrint(e.toString());
-      return Address();
+        return Address();
       }
     } else {
       throw Exception('Failed to get shipping addresses');
@@ -140,26 +140,24 @@ class CustomerService {
 
   Future<void> deleteFavoriteItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
-
-    
-    Response response = await dio.post(
-      MikanoDeleteFavoritAndCartItems,
-      queryParameters: {
-        "Ids": arr,
-        "ShoppingCartType": "Wishlist",
-        "CustomerId": prefs.getString("StoreCustomerId").toString()
-      },
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      return;
-    } else {
-      throw Exception('Failed to delete item from favorites');
-    }
-    }catch(e){
+    try {
+      Response response = await dio.post(
+        MikanoDeleteFavoritAndCartItems,
+        queryParameters: {
+          "Ids": arr,
+          "ShoppingCartType": "Wishlist",
+          "CustomerId": prefs.getString("StoreCustomerId").toString()
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception('Failed to delete item from favorites');
+      }
+    } catch (e) {
       debugPrint(e.toString());
     }
   }
@@ -444,7 +442,8 @@ class CustomerService {
     }
   }
 
-  Future<bool> Checkout(Address add, List<CartProduct> products, bool byCard) async {
+  Future<bool> Checkout(
+      Address add, List<CartProduct> products, bool byCard) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     add.customerAttributes = "";
     add.address2 = add.address1;
@@ -453,8 +452,9 @@ class CustomerService {
           .post((MikanoShopPlaceOrder),
               data: {
                 "order": {
-                  "payment_status": byCard?"Paid":"Pending",
-                  "payment_method_system_name": byCard?"Payments.Manual":"Payments.CheckMoneyOrder",
+                  "payment_status": byCard ? "Paid" : "Pending",
+                  "payment_method_system_name":
+                      byCard ? "Payments.Manual" : "Payments.CheckMoneyOrder",
                   "shipping_method": "Shipping.FixedByWeightByTotal",
                   "customer_id": prefs.getString("StoreCustomerId").toInt(),
                   "billing_address": {
@@ -501,7 +501,7 @@ class CustomerService {
                 'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
               }))
           .then((response) {
-        if (response.statusCode == 200)  {
+        if (response.statusCode == 200) {
           Order order = Order.fromJson(response.data['orders'][0]);
           // if(byCard){
           //   dio

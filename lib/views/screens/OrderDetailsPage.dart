@@ -28,8 +28,10 @@ class OrderDetailsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("OrderID: ${order.id}"),
-                      Text("Item Count: ${order.orderItems!.fold(0, (previousValue, element) => int.parse(previousValue.toString()) + element.quantity)}"),
-                      Text("Date: ${DateTime.parse(order.createdOnUtc).year}-${DateTime.parse(order.createdOnUtc).month}-${DateTime.parse(order.createdOnUtc).day}"),
+                      Text(
+                          "Item Count: ${order.orderItems!.fold(0, (previousValue, element) => int.parse(previousValue.toString()) + element.quantity)}"),
+                      Text(
+                          "Date: ${DateTime.parse(order.createdOnUtc).year}-${DateTime.parse(order.createdOnUtc).month}-${DateTime.parse(order.createdOnUtc).day}"),
                     ],
                   ),
                   Column(
@@ -49,18 +51,18 @@ class OrderDetailsPage extends StatelessWidget {
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) => GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            (constraints.constrainWidth() ~/ 310).toInt() + 1,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 20.0,
-                        childAspectRatio: 0.8),
-                    itemCount: order.orderItems!.length,
-                    itemBuilder: (context, index){
-                      Product product = order.orderItems!.elementAt(index).product!;
-                      return ItemElement(product: product);
-                    }
-                  ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              (constraints.constrainWidth() ~/ 310).toInt() + 1,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 20.0,
+                          childAspectRatio: 0.8),
+                      itemCount: order.orderItems!.length,
+                      itemBuilder: (context, index) {
+                        Product product =
+                            order.orderItems!.elementAt(index).product!;
+                        return ItemElement(product: product);
+                      }),
                 ),
               ),
             ],

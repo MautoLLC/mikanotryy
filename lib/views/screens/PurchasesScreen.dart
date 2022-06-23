@@ -4,7 +4,6 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/screens/CartPage.dart';
 import 'package:mymikano_app/views/screens/OrderDetailsPage.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:provider/provider.dart';
@@ -43,9 +42,9 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
               ),
               Expanded(
                   child: ListView.separated(
-                    separatorBuilder: (context, index) {
-    return Divider();
-  },
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
                       itemCount: state.ordersHistory.length,
                       itemBuilder: (context, index) {
                         Order temp = state.ordersHistory[index];
@@ -53,13 +52,15 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: ((context) => OrderDetailsPage(order: temp,)))),
+                                  builder: ((context) => OrderDetailsPage(
+                                        order: temp,
+                                      )))),
                           title: Row(
                             children: [
                               Text("Order ${temp.id.toString()}"),
                               Spacer(),
                               Text(
-                              "${temp.orderTotal.toString()} ${currencyState.currency!.currencySymbol}")
+                                  "${temp.orderTotal.toString()} ${currencyState.currency!.currencySymbol}")
                             ],
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -71,7 +72,6 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                               Text("${temp.orderStatus.toString()}")
                             ],
                           ),
-                          
                         );
                       }))
             ]),

@@ -7,7 +7,6 @@ import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
@@ -32,7 +31,7 @@ class DashboardState extends State<Dashboard> {
 
   init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     guestLogin = await prefs.getBool("GuestLogin")!;
     if (!guestLogin) {
       sendGpsCoord();
@@ -164,19 +163,46 @@ class DashboardState extends State<Dashboard> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context, listen: false).categories.firstWhere((element) => element.name == "Categories").id).length,
+                  itemCount: state.categories
+                      .where((element) =>
+                          element.parentCategoryId ==
+                          Provider.of<ProductState>(context, listen: false)
+                              .categories
+                              .firstWhere(
+                                  (element) => element.name == "Categories")
+                              .id)
+                      .length,
                   physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: GestureDetector(
-                                                    onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ListPage(
-                                        title: state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context, listen: false).categories.firstWhere((element) => element.name == "Categories").id).toList()[index].name.toString(),
-                                        categoryID: state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context, listen: false).categories.firstWhere((element) => element.name == "Categories").id).toList()[index].id!
-                                      )));
-                            },
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ListPage(
+                                  title: state.categories
+                                      .where((element) =>
+                                          element.parentCategoryId ==
+                                          Provider.of<ProductState>(context,
+                                                  listen: false)
+                                              .categories
+                                              .firstWhere((element) =>
+                                                  element.name == "Categories")
+                                              .id)
+                                      .toList()[index]
+                                      .name
+                                      .toString(),
+                                  categoryID: state.categories
+                                      .where((element) =>
+                                          element.parentCategoryId ==
+                                          Provider.of<ProductState>(context,
+                                                  listen: false)
+                                              .categories
+                                              .firstWhere((element) => element.name == "Categories")
+                                              .id)
+                                      .toList()[index]
+                                      .id!)));
+                        },
                         child: Column(
                           children: [
                             Padding(
@@ -189,14 +215,32 @@ class DashboardState extends State<Dashboard> {
                                     bgColor:
                                         mainGreyColorTheme.withOpacity(0.3)),
                                 // child: commonCacheImageWidget(
-                                //   state.categories.where((element) => element.parentCategoryId == ParentCategoryID).toList()[index].image!.src,
+                                //   state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context,
+                                //               listen: false)
+                                //           .categories
+                                //           .firstWhere((element) =>
+                                //               element.name == "Categories")
+                                //           .id).toList()[index]
+                                //           .image!
+                                //           .src,
                                 //   60,
                                 //   width: 80,
                                 // ),
                               ),
                             ),
                             Text(
-                              state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context, listen: false).categories.firstWhere((element) => element.name == "Categories").id).toList()[index].name.toString(),
+                              state.categories
+                                  .where((element) =>
+                                      element.parentCategoryId ==
+                                      Provider.of<ProductState>(context,
+                                              listen: false)
+                                          .categories
+                                          .firstWhere((element) =>
+                                              element.name == "Categories")
+                                          .id)
+                                  .toList()[index]
+                                  .name
+                                  .toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,

@@ -131,9 +131,8 @@ class _ItemElementState extends State<ItemElement> {
                           state.addorremoveProductToFavorite(widget.product);
                         },
                         child: commonCacheImageWidget(ic_heart, 30,
-                            color: widget.product.liked
-                                ? mainColorTheme
-                                : null),
+                            color:
+                                widget.product.liked ? mainColorTheme : null),
                       ),
                     ),
                   ),

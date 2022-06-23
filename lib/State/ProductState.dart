@@ -150,7 +150,7 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  clearCart(){
+  clearCart() {
     productsInCart.clear();
     selectedProducts.clear();
     notifyListeners();
@@ -162,8 +162,8 @@ class ProductState extends ChangeNotifier {
     //   page++;
     //   await getListOfProducts(categoryID);
     // }
-          page++;
-      await getListOfProducts(categoryID);
+    page++;
+    await getListOfProducts(categoryID);
     notifyListeners();
   }
 
@@ -173,8 +173,8 @@ class ProductState extends ChangeNotifier {
   }
 
   Future<void> getListOfProducts([int categoryID = -1]) async {
-    ListOfProducts.addAll(
-        await ProductsService().getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID));
+    ListOfProducts.addAll(await ProductsService()
+        .getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID));
     notifyListeners();
   }
 
@@ -198,14 +198,12 @@ class ProductState extends ChangeNotifier {
           break;
         }
       }
-      product.liked =
-          false;
+      product.liked = false;
       toast("Product removed from favorites");
     } else {
       FavoriteProduct t =
           await CustomerService().addFavoriteItemsforLoggedInUser(product);
-      product.liked =
-          true;
+      product.liked = true;
       favoriteProducts.add(t);
       toast("Product added to favorites");
     }
@@ -306,7 +304,8 @@ class ProductState extends ChangeNotifier {
   }
 
   Future<bool> checkout(Address add, {bool byCard = false}) async {
-    bool success = await CustomerService().Checkout(add, selectedProducts, byCard);
+    bool success =
+        await CustomerService().Checkout(add, selectedProducts, byCard);
     if (success) {
       List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
       await CustomerService().deleteCartItemsforLoggedInUser(ids);

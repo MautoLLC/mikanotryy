@@ -20,12 +20,10 @@ Register(String username, String firstname, String lastname, String email,
     "deviceToken": token
   };
 
-  var response = await http.post(
-      Uri.parse(UserURL),
-      body: json.encode(body),
-      headers: {
-        'Content-type': 'application/json',
-      });
+  var response =
+      await http.post(Uri.parse(UserURL), body: json.encode(body), headers: {
+    'Content-type': 'application/json',
+  });
 
   if (response.statusCode == 201) {
     if (prefs.getBool(prefs_DashboardFirstTimeAccess) == null) {

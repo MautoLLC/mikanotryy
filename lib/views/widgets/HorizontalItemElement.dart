@@ -97,9 +97,7 @@ class HorizontalItemElement extends StatelessWidget {
                           state.addorremoveProductToFavorite(product);
                         },
                         child: commonCacheImageWidget(ic_heart, 30,
-                            color: product.liked
-                                ? mainColorTheme
-                                : null)),
+                            color: product.liked ? mainColorTheme : null)),
                   )
                 ],
               ),

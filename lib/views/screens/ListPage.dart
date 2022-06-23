@@ -3,7 +3,6 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -13,7 +12,11 @@ class ListPage extends StatefulWidget {
   final String title;
   bool IsCategory;
   int categoryID;
-  ListPage({Key? key, required this.title, this.IsCategory = true, this.categoryID = -1})
+  ListPage(
+      {Key? key,
+      required this.title,
+      this.IsCategory = true,
+      this.categoryID = -1})
       : super(key: key);
 
   @override
@@ -29,8 +32,9 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.categoryID!=-1){
-      Provider.of<ProductState>(context, listen: false).getProductsByCategory(widget.categoryID);
+    if (widget.categoryID != -1) {
+      Provider.of<ProductState>(context, listen: false)
+          .getProductsByCategory(widget.categoryID);
     }
   }
 
@@ -38,7 +42,6 @@ class _ListPageState extends State<ListPage> {
   void dispose() {
     // TODO: implement dispose
     Provider.of<ProductState>(context, listen: false).clearListOfProducts();
-    
   }
 
   @override

@@ -29,6 +29,7 @@ class _CartPageState extends State<CartPage> {
     Provider.of<ProductState>(context, listen: false).clearCart();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<ProductState, CurrencyState>(

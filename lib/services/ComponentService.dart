@@ -54,7 +54,8 @@ class ComponentService {
             textColor: Colors.black87,
             fontSize: 16.0);
       } else {
-        debugPrint("Failed to update component status!" + response.data.toString());
+        debugPrint(
+            "Failed to update component status!" + response.data.toString());
         Fluttertoast.showToast(
             msg: "Failed to update component status!",
             toastLength: Toast.LENGTH_SHORT,
