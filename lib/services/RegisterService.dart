@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ Register(String username, String firstname, String lastname, String email,
   };
 
   var response = await http.post(
-      Uri.parse("http://dev.codepickles.com:8083/api/Users"),
+      Uri.parse(UserURL),
       body: json.encode(body),
       headers: {
         'Content-type': 'application/json',
