@@ -120,6 +120,7 @@ class CustomerService {
           var productsdata = response.data["shopping_carts"];
           for (var item in productsdata) {
             Product temp = Product.fromJson(item["product"]);
+            temp.liked = true;
             FavoriteProduct t = FavoriteProduct(product: temp, id: item["id"]);
             products.add(t);
           }
@@ -445,12 +446,11 @@ class CustomerService {
 
   Future<bool> Checkout(Address add, List<CartProduct> products, bool byCard) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String url = MikanoShopPlaceOrder;
     add.customerAttributes = "";
     add.address2 = add.address1;
     try {
       await dio
-          .post((url),
+          .post((MikanoShopPlaceOrder),
               data: {
                 "order": {
                   "payment_status": byCard?"Paid":"Pending",
@@ -501,7 +501,58 @@ class CustomerService {
                 'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
               }))
           .then((response) {
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200)  {
+          Order order = Order.fromJson(response.data['orders'][0]);
+          // if(byCard){
+          //   dio
+          // .post((MikanoShopPlaceOrder),
+          // queryParameters: {
+          //   "id": response.data
+          // },
+          // data: {
+          //       "order": {
+          //         "payment_status": "Paid",
+          //         "billing_address": {
+          //           "first_name": add.firstName,
+          //           "last_name": add.lastName,
+          //           "email": add.email,
+          //           "company": add.company,
+          //           "country_id": add.countryId,
+          //           "country": add.country,
+          //           "state_province_id": add.stateProvinceId,
+          //           "city": add.city,
+          //           "address1": add.address1,
+          //           "address2": add.address2,
+          //           "zip_postal_code": add.zipPostalCode,
+          //           "phone_number": add.phoneNumber,
+          //           "fax_number": add.faxNumber,
+          //           "customer_attributes": add.customerAttributes,
+          //           "created_on_utc": add.createdOnUtc,
+          //           "province": add.province,
+          //           "id": add.id
+          //         },
+          //         "shipping_address": {
+          //           "first_name": add.firstName,
+          //           "last_name": add.lastName,
+          //           "email": add.email,
+          //           "company": add.company,
+          //           "country_id": add.countryId,
+          //           "country": add.country,
+          //           "state_province_id": add.stateProvinceId,
+          //           "city": add.city,
+          //           "address1": add.address1,
+          //           "address2": add.address2,
+          //           "zip_postal_code": add.zipPostalCode,
+          //           "phone_number": add.phoneNumber,
+          //           "fax_number": add.faxNumber,
+          //           "customer_attributes": add.customerAttributes,
+          //           "created_on_utc": add.createdOnUtc,
+          //           "province": add.province,
+          //           "id": add.id
+          //         },
+          //       }
+          //     },);
+          // }
           toast("Checkout successfully");
           return true;
         } else {
@@ -511,7 +562,6 @@ class CustomerService {
       });
     } catch (e) {
       debugPrint(e.toString());
-      debugPrint(add.toJson().toString());
       toast("Failed to checkout");
       return false;
     }

@@ -97,11 +97,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                           },
                                           child: commonCacheImageWidget(
                                               ic_heart, 30,
-                                              color: state.allProducts
-                                                      .firstWhere((element) =>
-                                                          element.id ==
-                                                          widget.product.id)
-                                                      .liked
+                                              color: widget.product.liked
                                                   ? mainColorTheme
                                                   : null)),
                                 )

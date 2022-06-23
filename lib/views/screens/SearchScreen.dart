@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'SearchCategoriesSubPage.dart';
 import 'SearchItemsSubPage.dart';
-
+//TODO Unused
 class SearchPage extends StatefulWidget {
   SearchPage({Key? key}) : super(key: key);
 
@@ -142,7 +142,7 @@ class _SearchPageState extends State<SearchPage> {
                   Expanded(
                     child: TabBarView(children: [
                       SearchItemSubPage(),
-                      SearchCategoriesSubPage()
+                      // SearchCategoriesSubPage()
                     ]),
                   )
                 ],

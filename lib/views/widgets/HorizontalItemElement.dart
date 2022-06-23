@@ -97,10 +97,7 @@ class HorizontalItemElement extends StatelessWidget {
                           state.addorremoveProductToFavorite(product);
                         },
                         child: commonCacheImageWidget(ic_heart, 30,
-                            color: state.allProducts
-                                    .firstWhere(
-                                        (element) => element.id == product.id)
-                                    .liked
+                            color: product.liked
                                 ? mainColorTheme
                                 : null)),
                   )

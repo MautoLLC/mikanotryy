@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
@@ -29,11 +30,14 @@ class ProductState extends ChangeNotifier {
   List<Product> ListOfProductsToShow = [];
   List<String> filters = [];
   int ItemsPerPage = 6;
+  List<ProductCategory> categories = [];
 
   void clear() {
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();
+    categories.clear();
+    ordersHistory.clear();
     selectedProducts.clear();
     favoriteProducts.clear();
     purchasedProducts.clear();
@@ -52,6 +56,7 @@ class ProductState extends ChangeNotifier {
   }
 
   update() async {
+    await fetchCategories();
     await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
@@ -70,6 +75,11 @@ class ProductState extends ChangeNotifier {
     flashsaleProducts = [];
     await getFeatured();
     await updateCart();
+    notifyListeners();
+  }
+
+  fetchCategories() async {
+    categories = await ProductsService().getCategories();
     notifyListeners();
   }
 
@@ -120,6 +130,11 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getProductsByCategory(int id) async {
+    ListOfProducts = await ProductsService().getProducts(categoryID: id);
+    notifyListeners();
+  }
+
   Future<void> getTopDeals() async {
     topDealProducts = await ProductsService().getTopDealsProducts();
     notifyListeners();
@@ -141,11 +156,14 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void Paginate() async {
-    if (!(page + 1 > allProducts.length / ItemsPerPage)) {
-      page++;
-      await getListOfProducts();
-    }
+  void Paginate([int categoryID = -1]) async {
+    // !!Check for later
+    // if (!(page + 1 > allProducts.length / ItemsPerPage)) {
+    //   page++;
+    //   await getListOfProducts(categoryID);
+    // }
+          page++;
+      await getListOfProducts(categoryID);
     notifyListeners();
   }
 
@@ -154,9 +172,9 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getListOfProducts() async {
+  Future<void> getListOfProducts([int categoryID = -1]) async {
     ListOfProducts.addAll(
-        await ProductsService().getProducts(limit: ItemsPerPage, page: page));
+        await ProductsService().getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID));
     notifyListeners();
   }
 
@@ -180,13 +198,13 @@ class ProductState extends ChangeNotifier {
           break;
         }
       }
-      allProducts.firstWhere((element) => element.id == product.id).liked =
+      product.liked =
           false;
       toast("Product removed from favorites");
     } else {
       FavoriteProduct t =
           await CustomerService().addFavoriteItemsforLoggedInUser(product);
-      allProducts.firstWhere((element) => element.id == product.id).liked =
+      product.liked =
           true;
       favoriteProducts.add(t);
       toast("Product added to favorites");
