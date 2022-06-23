@@ -51,7 +51,7 @@ Register(String username, String firstname, String lastname, String email,
       context,
       MaterialPageRoute(builder: (context) => T13SignInScreen()),
     );
-    // print("created successfully");
+    // debugPrint("created successfully");
 
   } else {
     Fluttertoast.showToast(
@@ -62,6 +62,6 @@ Register(String username, String firstname, String lastname, String email,
         backgroundColor: Colors.white,
         textColor: Colors.black87,
         fontSize: 16.0);
-    //print("failed to create user");
+    //debugPrint("failed to create user");
   }
 }

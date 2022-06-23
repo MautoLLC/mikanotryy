@@ -16,7 +16,7 @@ class ComponentModel {
       this.idChecklist});
 
   factory ComponentModel.fromJson(Map<String, dynamic> json) {
-    print(json);
+    debugPrint(json);
     return ComponentModel(
         idComponent: json['idComponent'] == null
             ? json['idCustomComponent']

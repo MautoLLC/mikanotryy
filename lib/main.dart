@@ -22,7 +22,7 @@ final GlobalKey<NavigatorState> navigator =
     GlobalKey<NavigatorState>(); //Create a key for navigator
 
 Future<void> _messageHandler(RemoteMessage message) async {
-  print('background message ${message.notification!.body}');
+  debugPrint('background message ${message.notification!.body}');
 }
 
 Future<void> main() async {

@@ -237,7 +237,7 @@ class WSVGeneratorState extends ChangeNotifier {
           decimalPlaces: "Error",
           timeStamp: "Error");
     }).name;
-    print("$temp");
+    debugPrint("$temp");
     return _SensorsList.singleWhere(
         (element) =>
             AllowedGUID.contains(element.valueGuid) &&

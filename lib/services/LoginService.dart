@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ Login(String username, String password, BuildContext context) async {
           "StoreCustomerGuid", response.data["customer_guid"]);
     } on Exception catch (e) {
       FailedToast();
-      print(e.toString());
+      debugPrint(e.toString());
       return false;
     }
     try {
@@ -93,7 +94,7 @@ Login(String username, String password, BuildContext context) async {
       );
     } on Exception catch (e) {
       FailedToast();
-      print(e.toString());
+      debugPrint(e.toString());
       return false;
     }
     SuccessToast();
@@ -108,7 +109,7 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setBool('GuestLogin', false);
     return true;
   } on Exception catch (e) {
-    print(e);
+    debugPrint(e.toString());
     FailedToast();
     return false;
   }

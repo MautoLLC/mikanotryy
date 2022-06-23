@@ -66,10 +66,10 @@ Future<bool> SubmitMaintenanceRequest(
       fontSize: 16.0);
   StreamedResponse response = await request.send();
   if (response.statusCode == 201) {
-    print("Uploaded!");
+    debugPrint("Uploaded!");
     return true;
   } else {
-    print(response.reasonPhrase);
+    debugPrint(response.reasonPhrase);
   }
   return false;
 }

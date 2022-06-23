@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/Currency.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 
@@ -19,7 +20,7 @@ class CurrencyService {
       response = await dio.get(MikanoShopPrimaryCurrency);
       currency = Currency.fromJson(response.data);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     return currency;
   }

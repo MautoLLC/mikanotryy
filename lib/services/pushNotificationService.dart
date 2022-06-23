@@ -18,12 +18,12 @@ class PushNotificationService {
     String? token = await _fcm.getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("DeviceToken", token.toString());
-    print("DeviceToken ===>>> ${token.toString()}");
+    debugPrint("DeviceToken ===>>> ${token.toString()}");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("message recieved");
-      print(event.notification!.body);
-      print(event.notification!.title);
+      debugPrint("message recieved");
+      debugPrint(event.notification!.body);
+      debugPrint(event.notification!.title);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
       await Navigator.push(

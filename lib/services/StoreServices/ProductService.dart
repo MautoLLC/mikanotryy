@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -31,7 +32,7 @@ class ProductsService {
         }
         return products;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return products;
       }
     } else {
@@ -62,7 +63,7 @@ class ProductsService {
         }
         return products;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return products;
       }
     } else {
@@ -93,7 +94,7 @@ class ProductsService {
         }
         return products;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return products;
       }
     } else {
@@ -119,7 +120,7 @@ class ProductsService {
         throw Exception('Failed to load Carousel Items');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }

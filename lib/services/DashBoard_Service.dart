@@ -7,6 +7,7 @@ import 'package:mymikano_app/models/Token_Model.dart';
 import 'package:mymikano_app/models/Unit_Model.dart';
 import 'package:mymikano_app/models/Units_Model.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter/material.dart';
 
 import 'DioClass.dart';
 
@@ -63,8 +64,8 @@ class DashBorad_Service {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       UnitGuid = (response.data)['unitGuid'];
-      print(response.data);
-      print(UnitGuid);
+      debugPrint(response.data);
+      debugPrint(UnitGuid);
       await prefs.setString("UnitGuid", UnitGuid);
       // return Token.fromJson((response.data));
     } else {
@@ -91,7 +92,7 @@ class DashBorad_Service {
       for (var item in (response.data)) {
         listUnitGuids.add(item);
       }
-      // print(listUnitGuids);
+      // debugPrint(listUnitGuids);
       // return Token.fromJson((response.data));
       return listUnitGuids;
     } else {
@@ -122,7 +123,7 @@ class DashBorad_Service {
           UnitsObj.units.map((e) => Unit.fromJson(e)).toList();
       return unitslist;
     } else {
-      print(response.statusMessage);
+      debugPrint(response.statusMessage);
       return [];
     }
   }
@@ -146,7 +147,7 @@ class DashBorad_Service {
           SensorsObj.sensors.map((e) => Sensor.fromJson(e)).toList();
       return sensorslist;
     } else {
-      print(response.statusMessage);
+      debugPrint(response.statusMessage);
       return [];
       //return response.stream.bytesToString();
     }
@@ -172,7 +173,7 @@ class DashBorad_Service {
       Sensor sensor = Sensor.fromJson(list.elementAt(0));
       return sensor;
     } else {
-      print(response.statusMessage);
+      debugPrint(response.statusMessage);
       return Sensor(
           name: "name",
           valueGuid: "valueGuid",

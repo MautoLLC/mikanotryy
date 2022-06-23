@@ -40,7 +40,7 @@ class CustomerService {
         throw Exception('Failed to add shipping address');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }
@@ -60,7 +60,7 @@ class CustomerService {
             Address.fromJson(response.data['customers'][0]['shipping_address']);
         return chosenAddress;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
       return Address();
       }
     } else {
@@ -93,7 +93,7 @@ class CustomerService {
         }
         return addresses;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return addresses;
       }
     } else {
@@ -125,14 +125,14 @@ class CustomerService {
           }
           return products;
         } catch (e) {
-          print(e);
+          debugPrint(e.toString());
           return products;
         }
       } else {
         throw Exception('Failed to get shipping addresses');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }
@@ -206,14 +206,14 @@ class CustomerService {
           }
           return products;
         } catch (e) {
-          print(e);
+          debugPrint(e.toString());
           return products;
         }
       } else {
         throw Exception('Failed to get cart Items');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }
@@ -247,7 +247,7 @@ class CustomerService {
         throw Exception('Failed to add to cart');
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       throw Exception('Failed to add to cart');
     }
   }
@@ -303,7 +303,7 @@ class CustomerService {
         throw Exception('Failed to Change Quantity');
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       throw Exception('Failed to Change Quantity');
     }
   }
@@ -322,7 +322,7 @@ class CustomerService {
       try {
         return response.data;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -346,7 +346,7 @@ class CustomerService {
       try {
         return state;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -368,7 +368,7 @@ class CustomerService {
       try {
         return response.data;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -392,7 +392,7 @@ class CustomerService {
       try {
         return true;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -437,7 +437,7 @@ class CustomerService {
         return;
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       toast("Something went wrong");
       return;
     }
@@ -453,6 +453,7 @@ class CustomerService {
           .post((url),
               data: {
                 "order": {
+                  "payment_status": "Paid",
                   "payment_method_system_name": "Payments.CheckMoneyOrder",
                   "shipping_method": "Shipping.FixedByWeightByTotal",
                   "customer_id": prefs.getString("StoreCustomerId").toInt(),
@@ -509,7 +510,7 @@ class CustomerService {
         }
       });
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       toast("Failed to checkout");
       throw Exception('Failed to checkout');
     }
@@ -545,14 +546,14 @@ class CustomerService {
           }
           return orders;
         } catch (e) {
-          print(e);
+          debugPrint(e.toString());
           return orders;
         }
       } else {
         throw Exception('Failed to load products');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return orders;
     }
   }

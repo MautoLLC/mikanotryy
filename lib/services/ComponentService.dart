@@ -17,8 +17,8 @@ class ComponentService {
     final url = (ComponentsStatusURL);
     await PrepareCall();
     final response = await dio.get(url);
-    print(url);
-    print(response.statusCode);
+    debugPrint(url);
+    debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
       List<ComponentStatus> listresult = [];
       for (var item in response.data) {
@@ -37,14 +37,14 @@ class ComponentService {
       };
       final url = Uri.http("dev.codepickles.com:8087",
           ChangeStatusCustomCheckListURL, queryParameters);
-      print(url);
+      debugPrint(url.toString());
       await PrepareCall();
       final response = await dio.put(url.toString());
-      print(response.data);
-      // print(url);
-      print(response.statusCode);
+      debugPrint(response.data);
+      // debugPrint(url);
+      debugPrint(response.statusCode.toString());
       if (response.statusCode == 204) {
-        print("Component status updated!");
+        debugPrint("Component status updated!");
         Fluttertoast.showToast(
             msg: "Component status updated!",
             toastLength: Toast.LENGTH_SHORT,
@@ -54,7 +54,7 @@ class ComponentService {
             textColor: Colors.black87,
             fontSize: 16.0);
       } else {
-        print("Failed to update component status!" + response.data.toString());
+        debugPrint("Failed to update component status!" + response.data.toString());
         Fluttertoast.showToast(
             msg: "Failed to update component status!",
             toastLength: Toast.LENGTH_SHORT,
@@ -65,8 +65,8 @@ class ComponentService {
             fontSize: 16.0);
       }
     } on Exception catch (e) {
-      print(e);
-      print("Failed to update component status!" + e.toString());
+      debugPrint(e.toString());
+      debugPrint("Failed to update component status!" + e.toString());
       Fluttertoast.showToast(
           msg: "Failed to update component status! ",
           toastLength: Toast.LENGTH_SHORT,
@@ -83,7 +83,7 @@ class ComponentService {
     try {
       final url =
           ("$PostInspectionCustomChecklistItemURL${idInspection.toString()}");
-      print(url);
+      debugPrint(url);
       await PrepareCall();
       var response = await dio.post((url), data: {
         "customComponentName": comp.componentName.toString(),
@@ -106,7 +106,7 @@ class ComponentService {
       final url = (DeleteInspectionCustomChecklistItemURL.replaceAll(
           "{id}", id.toString()));
       await PrepareCall();
-      print(url);
+      debugPrint(url);
       var response = await dio.delete(url);
       if (response.statusCode == 204) {
         return true;
@@ -114,7 +114,7 @@ class ComponentService {
         return false;
       }
     } on Exception catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }

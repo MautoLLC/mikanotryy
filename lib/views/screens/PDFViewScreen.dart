@@ -21,7 +21,7 @@ class PDFViewScreen extends StatelessWidget {
         toast("Failed to Download");
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 

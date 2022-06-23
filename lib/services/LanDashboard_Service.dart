@@ -4,6 +4,7 @@ import 'package:mymikano_app/models/LanSensor_Model.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter/material.dart';
 
 class LanDashBoard_Service {
   //final String ApiEndPoint;
@@ -20,7 +21,7 @@ class LanDashBoard_Service {
       LANSensor sensor = LANSensor.fromJson(data);
       return sensor;
     } else {
-      print(response);
+      debugPrint(response.toString());
       return LANSensor(
           return_value: 0,
           id: "id",

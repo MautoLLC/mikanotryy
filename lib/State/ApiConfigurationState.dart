@@ -39,7 +39,7 @@ class ApiConfigurationState extends ChangeNotifier {
     option = value;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(prefs_ApiConfigurationOption, option);
-    print(prefs.getString(prefs_ApiConfigurationOption));
+    debugPrint(prefs.getString(prefs_ApiConfigurationOption));
     if (option == 'lan') {
       cloudMode = 0;
     }
@@ -47,7 +47,7 @@ class ApiConfigurationState extends ChangeNotifier {
       cloudMode = 1;
     }
 
-    print("cloudmode: " + cloudMode.toString());
+    debugPrint("cloudmode: " + cloudMode.toString());
     notifyListeners();
   }
 

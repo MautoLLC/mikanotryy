@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isw_mobile_sdk/isw_mobile_sdk.dart';
 import 'package:mymikano_app/models/Currency.dart';
@@ -54,9 +55,9 @@ class PaymentService {
           merchantId, merchantSecret, merchantCode, currencyCode);
 
       // initialize the sdk
-      await IswMobileSdk.initialize(config);
+      // await IswMobileSdk.initialize(config);
       // intialize with environment, default is Environment.TEST
-      // IswMobileSdk.initialize(config, Environment.SANDBOX);
+      await IswMobileSdk.initialize(config, Environment.TEST);
 
     } on PlatformException {}
   }
@@ -86,7 +87,7 @@ class PaymentService {
 
       return result.value.isSuccessful;
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
 

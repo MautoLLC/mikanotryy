@@ -3,6 +3,7 @@ import 'package:mymikano_app/models/MaintenanceRequestModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'DioClass.dart';
+import 'package:flutter/material.dart';
 
 class MaintenanceRequestService {
   late Dio dio;
@@ -23,12 +24,12 @@ class MaintenanceRequestService {
           listresult.add(MaintenanceRequestModel.fromJson(item));
         }
       } else {
-        print((GetMaintenaceRequestURL).toString());
-        print(response.body.toString());
+        debugPrint((GetMaintenaceRequestURL).toString());
+        debugPrint(response.body.toString());
         throw Exception('Error fetching');
       }
     } on Exception catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
     return listresult;
   }
@@ -49,11 +50,11 @@ class MaintenanceRequestService {
           listresult.add(MaintenanceRequestModel.fromJson(item));
         }
       } else {
-        print((GetMaintenaceRequestURL).toString());
+        debugPrint((GetMaintenaceRequestURL).toString());
         throw Exception('Error fetching');
       }
     } on Exception catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
     return listresult;
   }
@@ -61,11 +62,11 @@ class MaintenanceRequestService {
   Future<MaintenanceRequestModel> fetchMaintenanceRequestByID(int id) async {
     await PrepareCall();
     final response = await dio.get((GetMaintenaceRequestURL + '/$id'));
-    print(response.statusCode);
+    debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
       return MaintenanceRequestModel.fromJson(response.data);
     } else {
-      print(response.data.toString());
+      debugPrint(response.data.toString());
       throw Exception('Error fetching');
     }
   }
@@ -94,7 +95,7 @@ class MaintenanceRequestService {
         throw Exception('Error fetching');
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 }

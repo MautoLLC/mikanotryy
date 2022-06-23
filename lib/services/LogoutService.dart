@@ -29,6 +29,6 @@ logout() async {
       MaterialPageRoute(builder: (context) => T13SignInScreen()),
     );
   } catch (e) {
-    print(e);
+    debugPrint(e.toString());
   }
 }

@@ -7,12 +7,13 @@ import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
+import 'package:flutter/material.dart';
 
 class ApiConfigurationService {
   void resetESP(String url) async {
     final response = await http.get(Uri.parse("http://" + url + "/reset"));
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      debugPrint(response.body.toString());
     } else {
       throw Exception('Failed to reset ESP');
     }
@@ -34,7 +35,7 @@ class ApiConfigurationService {
         '&GeneratorId=' +
         generatorId));
     if (response.statusCode == 200) {
-      print(response.body.toString());
+      debugPrint(response.body.toString());
       return (response.body.toString());
     } else {
       return (response.body.toString());
@@ -58,25 +59,25 @@ class ApiConfigurationService {
       final response = await dio.get(("http://192.168.4.1"));
       List<String> ssids = [];
       if (response.statusCode == 200) {
-        print(response.data.toString());
+        debugPrint(response.data.toString());
         dom.Document document = parse(response.data);
 
         document
             .getElementsByTagName('li')
             .map((e) => e.innerHtml)
             .forEach((element) {
-          print(element);
+          debugPrint(element);
           String ssidName = element.toString();
           final splitted = ssidName.split(' (');
           ssids.add(splitted[0]);
         });
         return ssids;
       } else {
-        print(response.data.toString());
+        debugPrint(response.data.toString());
         return ssids;
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }
@@ -122,11 +123,11 @@ class ApiConfigurationService {
             response.data.map((x) => Generator.fromJson(x)));
         return generators;
       } else {
-        print(response.data.toString());
+        debugPrint(response.data.toString());
         return generators;
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return generators;
     }
   }
