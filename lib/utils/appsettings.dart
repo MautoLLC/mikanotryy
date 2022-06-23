@@ -12,7 +12,7 @@ const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 const userApiUrl = isProduction
     ? 'https://services.mikano-intl.com/users-api'
     : 'http://dev.codepickles.com:8083';
-const UserURL = '$userApiUrl/api/Users/{id}';
+const UserURL = '$userApiUrl/api/Users';
 const userEditInfoUrl = '$userApiUrl/api/Users/{id}';
 const userGetInfoUrl = '$userApiUrl/api/Users/{id}';
 const deleteDeviceUrl = '$userApiUrl/api/Users/Devices';
