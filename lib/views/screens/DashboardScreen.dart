@@ -81,12 +81,12 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
-                      !guestLogin
-                          ? Align(
-                              alignment: Alignment.centerRight,
-                              child: NotificationBell(),
-                            )
-                          : Container()
+                      // !guestLogin
+                      //     ? Align(
+                      //         alignment: Alignment.centerRight,
+                      //         child: NotificationBell(),
+                      //       )
+                      //     : Container()
                     ],
                   ),
                 ),

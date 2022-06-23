@@ -72,9 +72,9 @@ class _ListPageState extends State<ListPage> {
                     Align(
                         alignment: Alignment.center,
                         child: TitleText(title: widget.title)),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: NotificationBell())
+                    // Align(
+                    //     alignment: Alignment.centerRight,
+                    //     child: NotificationBell())
                   ],
                 ),
                 SizedBox(
