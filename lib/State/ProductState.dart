@@ -281,8 +281,8 @@ class ProductState extends ChangeNotifier {
     }
   }
 
-  Future<bool> checkout(Address add) async {
-    bool success = await CustomerService().Checkout(add, selectedProducts);
+  Future<bool> checkout(Address add, {bool byCard = false}) async {
+    bool success = await CustomerService().Checkout(add, selectedProducts, byCard);
     if (success) {
       List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
       await CustomerService().deleteCartItemsforLoggedInUser(ids);

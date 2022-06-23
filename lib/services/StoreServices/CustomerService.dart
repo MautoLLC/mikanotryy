@@ -443,7 +443,7 @@ class CustomerService {
     }
   }
 
-  Future<bool> Checkout(Address add, List<CartProduct> products) async {
+  Future<bool> Checkout(Address add, List<CartProduct> products, bool byCard) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String url = MikanoShopPlaceOrder;
     add.customerAttributes = "";
@@ -453,8 +453,8 @@ class CustomerService {
           .post((url),
               data: {
                 "order": {
-                  "payment_status": "Paid",
-                  "payment_method_system_name": "Payments.CheckMoneyOrder",
+                  "payment_status": byCard?"Paid":"Pending",
+                  "payment_method_system_name": byCard?"Payments.Manual":"Payments.CheckMoneyOrder",
                   "shipping_method": "Shipping.FixedByWeightByTotal",
                   "customer_id": prefs.getString("StoreCustomerId").toInt(),
                   "billing_address": {
@@ -506,15 +506,16 @@ class CustomerService {
           return true;
         } else {
           toast("Failed to checkout");
-          throw Exception('Failed to checkout');
+          return false;
         }
       });
     } catch (e) {
       debugPrint(e.toString());
+      debugPrint(add.toJson().toString());
       toast("Failed to checkout");
-      throw Exception('Failed to checkout');
+      return false;
     }
-    return true;
+    return false;
   }
 
   Future<List<Order>> getOrdersByCustomerID(

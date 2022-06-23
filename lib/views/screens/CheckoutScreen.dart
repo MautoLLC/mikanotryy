@@ -317,7 +317,7 @@ class CheckoutScreen extends StatelessWidget {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                                 productState
-                                    .checkout(state.ChosenAddress)
+                                    .checkout(state.ChosenAddress, byCard: true)
                                     .then((value) {
                                   if (value) {
                                     Navigator.pop(context);
