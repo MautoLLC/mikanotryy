@@ -452,7 +452,6 @@ class CustomerService {
           .post((MikanoShopPlaceOrder),
               data: {
                 "order": {
-                  "payment_status": byCard ? "Paid" : "Pending",
                   "payment_method_system_name":
                       byCard ? "Payments.Manual" : "Payments.CheckMoneyOrder",
                   "shipping_method": "Shipping.FixedByWeightByTotal",
@@ -503,56 +502,63 @@ class CustomerService {
           .then((response) {
         if (response.statusCode == 200) {
           Order order = Order.fromJson(response.data['orders'][0]);
-          // if(byCard){
-          //   dio
-          // .post((MikanoShopPlaceOrder),
-          // queryParameters: {
-          //   "id": response.data
-          // },
-          // data: {
-          //       "order": {
-          //         "payment_status": "Paid",
-          //         "billing_address": {
-          //           "first_name": add.firstName,
-          //           "last_name": add.lastName,
-          //           "email": add.email,
-          //           "company": add.company,
-          //           "country_id": add.countryId,
-          //           "country": add.country,
-          //           "state_province_id": add.stateProvinceId,
-          //           "city": add.city,
-          //           "address1": add.address1,
-          //           "address2": add.address2,
-          //           "zip_postal_code": add.zipPostalCode,
-          //           "phone_number": add.phoneNumber,
-          //           "fax_number": add.faxNumber,
-          //           "customer_attributes": add.customerAttributes,
-          //           "created_on_utc": add.createdOnUtc,
-          //           "province": add.province,
-          //           "id": add.id
-          //         },
-          //         "shipping_address": {
-          //           "first_name": add.firstName,
-          //           "last_name": add.lastName,
-          //           "email": add.email,
-          //           "company": add.company,
-          //           "country_id": add.countryId,
-          //           "country": add.country,
-          //           "state_province_id": add.stateProvinceId,
-          //           "city": add.city,
-          //           "address1": add.address1,
-          //           "address2": add.address2,
-          //           "zip_postal_code": add.zipPostalCode,
-          //           "phone_number": add.phoneNumber,
-          //           "fax_number": add.faxNumber,
-          //           "customer_attributes": add.customerAttributes,
-          //           "created_on_utc": add.createdOnUtc,
-          //           "province": add.province,
-          //           "id": add.id
-          //         },
-          //       }
-          //     },);
-          // }
+          if(byCard){
+            try{
+
+
+            dio
+          .post((MikanoShopPlaceOrder),
+          queryParameters: {
+            "id": order.id
+          },
+          data: {
+                "order": {
+                  "payment_status": "Paid",
+                  "billing_address": {
+                    "first_name": add.firstName,
+                    "last_name": add.lastName,
+                    "email": add.email,
+                    "company": add.company,
+                    "country_id": add.countryId,
+                    "country": add.country,
+                    "state_province_id": add.stateProvinceId,
+                    "city": add.city,
+                    "address1": add.address1,
+                    "address2": add.address2,
+                    "zip_postal_code": add.zipPostalCode,
+                    "phone_number": add.phoneNumber,
+                    "fax_number": add.faxNumber,
+                    "customer_attributes": add.customerAttributes,
+                    "created_on_utc": add.createdOnUtc,
+                    "province": add.province,
+                    "id": add.id
+                  },
+                  "shipping_address": {
+                    "first_name": add.firstName,
+                    "last_name": add.lastName,
+                    "email": add.email,
+                    "company": add.company,
+                    "country_id": add.countryId,
+                    "country": add.country,
+                    "state_province_id": add.stateProvinceId,
+                    "city": add.city,
+                    "address1": add.address1,
+                    "address2": add.address2,
+                    "zip_postal_code": add.zipPostalCode,
+                    "phone_number": add.phoneNumber,
+                    "fax_number": add.faxNumber,
+                    "customer_attributes": add.customerAttributes,
+                    "created_on_utc": add.createdOnUtc,
+                    "province": add.province,
+                    "id": add.id
+                  },
+                }
+              },);
+                          } catch(e){
+              debugPrint(e.toString());
+              return false;
+            }
+          }
           toast("Checkout successfully");
           return true;
         } else {
