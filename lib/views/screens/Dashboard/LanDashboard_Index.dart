@@ -159,8 +159,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         ),
                                         child: GaugeWidget(
                                             title: lbl_RPM,
-                                            value: ((lan.Rpm.return_value) /
-                                                100))),
+                                            value: ((lan.Rpm.return_value)))),
                                     SizedBox(height: 10),
                                     Container(
                                         height: 160,

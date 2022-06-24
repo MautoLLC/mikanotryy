@@ -172,8 +172,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: GaugeWidget(
                                           title: lbl_Actual_Power,
                                           value:
-                                              (double.parse(cloud.Rpm.value) /
-                                                  100),
+                                              (double.parse(cloud.GeneratorLoad.value)),
                                           needleColor: mainColorTheme)),
                                 ],
                               ),
