@@ -44,7 +44,7 @@ class DioClass {
     }, onResponse: (response, handler) async {
       return handler.next(response);
     }, onError: (error, handler) {
-      print(error.response!.statusCode.toString());
+      debugPrint(error.response!.statusCode.toString());
       return handler.next(error);
     }));
     return dio;

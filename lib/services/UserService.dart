@@ -55,4 +55,23 @@ class UserService {
       throw Exception('Error');
     }
   }
+
+  Future<TechnicianModel> GetUserInfoByID(String userID) async {
+    await PrepareCall();
+    String url = userGetInfoUrl.replaceAll("{id}", userID);
+    try {
+      Response response = await dio.get(
+        (url),
+      );
+      if (response.statusCode == 200) {
+        TechnicianModel technicianModel =
+            TechnicianModel.fromJson(response.data);
+        return technicianModel;
+      } else {
+        throw Exception('Error');
+      }
+    } catch (e) {
+      throw Exception('Error');
+    }
+  }
 }

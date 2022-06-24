@@ -113,7 +113,6 @@ class DashBoard_ModelView {
           decimalPlaces: "Error",
           timeStamp: "Error");
     }).name;
-    print("$temp");
     return _SensorsList.singleWhere(
         (element) =>
             AllowedGUID.contains(element.valueGuid) &&

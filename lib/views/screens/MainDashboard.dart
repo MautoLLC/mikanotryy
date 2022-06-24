@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
+import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 import 'CartPage.dart';
 import 'DashboardScreen.dart';
 import 'ListPage.dart';
@@ -21,10 +24,11 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   bool guestLogin = true;
 
   init() async {
+    await Provider.of<CurrencyState>(context, listen: false).update();
     pages.add(MenuScreen());
     pages.add(ListPage(
       title: lbl_Search,
-      fromNavigationBar: true,
+      IsCategory: false,
     ));
     // pages.add(SearchPage());
     pages.add(Dashboard());
@@ -38,6 +42,10 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     }
     selectedIndex = 2;
     setState(() {});
+    Future.delayed(Duration(seconds: 5), () async {
+      await PaymentService()
+          .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
+    });
   }
 
   @override

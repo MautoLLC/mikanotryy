@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:mymikano_app/models/InspectionModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -16,7 +17,8 @@ class InspectionService {
   Future<List<InspectionModel>> fetchInspectionsByUser() async {
     await PrepareCall();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(GetTechnicianInspectionURL + prefs.getString('UserID').toString());
+    debugPrint(
+        GetTechnicianInspectionURL + prefs.getString('UserID').toString());
     final response = await dio.get(
         (GetTechnicianInspectionURL + prefs.getString('UserID').toString()));
 
@@ -27,8 +29,8 @@ class InspectionService {
       }
       return listresult;
     } else {
-      print((GetInspectionURL).toString());
-      print(response.data.toString());
+      debugPrint((GetInspectionURL).toString());
+      debugPrint(response.data.toString());
       throw Exception('Error fetching');
     }
   }
@@ -44,8 +46,8 @@ class InspectionService {
 
       return listresult;
     } else {
-      print((GetInspectionURL).toString());
-      print(response.data.toString());
+      debugPrint((GetInspectionURL).toString());
+      debugPrint(response.data.toString());
       throw Exception('Error fetching');
     }
   }
@@ -62,8 +64,8 @@ class InspectionService {
       listresult.add(inspection);
       return listresult;
     } else {
-      print((GetInspectionURL).toString());
-      print(response.data.toString());
+      debugPrint((GetInspectionURL).toString());
+      debugPrint(response.data.toString());
       throw Exception('Error fetching');
     }
   }

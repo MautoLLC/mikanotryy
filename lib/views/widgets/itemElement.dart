@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -106,7 +107,7 @@ class _ItemElementState extends State<ItemElement> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "\$${widget.product.Price}",
+                      "${Provider.of<CurrencyState>(context, listen: false).currency!.currencySymbol} ${widget.product.Price}",
                       style: TextStyle(
                         fontSize: 14,
                         color: mainBlackColorTheme,
@@ -130,12 +131,8 @@ class _ItemElementState extends State<ItemElement> {
                           state.addorremoveProductToFavorite(widget.product);
                         },
                         child: commonCacheImageWidget(ic_heart, 30,
-                            color: state.allProducts
-                                    .firstWhere((element) =>
-                                        element.id == widget.product.id)
-                                    .liked
-                                ? mainColorTheme
-                                : null),
+                            color:
+                                widget.product.liked ? mainColorTheme : null),
                       ),
                     ),
                   ),

@@ -26,7 +26,7 @@ class _Dashboard_TestState extends State<Dashboard_Test> {
                 if (prefs.getBool('DashboardFirstTimeAccess')! == false) {
                   value.DashBoardFirstTimeAccess =
                       prefs.getBool('DashboardFirstTimeAccess')!;
-                  print("it's not first time");
+                  debugPrint("it's not first time");
                 }
 
                 Navigator.of(context).push(MaterialPageRoute(

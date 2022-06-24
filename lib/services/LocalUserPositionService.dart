@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mymikano_app/models/LocationSettingsModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -86,14 +87,14 @@ class gps {
             "Content-Type": "application/json"
           }));
       if (response.statusCode == 200) {
-        print("Location updated");
+        debugPrint("Location updated");
         return;
       } else {
-        print("Location not updated");
+        debugPrint("Location not updated");
         return;
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Exception(e);
     }
   }
@@ -113,7 +114,7 @@ class gps {
         throw Exception('Failed to load location settings');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       throw Exception('Failed to load location settings');
     }
   }

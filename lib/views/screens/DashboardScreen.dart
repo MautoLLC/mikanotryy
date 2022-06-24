@@ -6,14 +6,11 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
-import 'package:mymikano_app/utils/DataGenerator.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
-import 'package:mymikano_app/models/CategoryModel.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -30,11 +27,11 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardState extends State<Dashboard> {
-  List<CategoryModel>? mFavouriteList;
   bool guestLogin = true;
 
   init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     guestLogin = await prefs.getBool("GuestLogin")!;
     if (!guestLogin) {
       sendGpsCoord();
@@ -53,8 +50,6 @@ class DashboardState extends State<Dashboard> {
   void initState() {
     init();
     super.initState();
-
-    mFavouriteList = getDItems();
   }
 
   @override
@@ -81,12 +76,12 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
-                      !guestLogin
-                          ? Align(
-                              alignment: Alignment.centerRight,
-                              child: NotificationBell(),
-                            )
-                          : Container()
+                      // !guestLogin
+                      //     ? Align(
+                      //         alignment: Alignment.centerRight,
+                      //         child: NotificationBell(),
+                      //       )
+                      //     : Container()
                     ],
                   ),
                 ),
@@ -168,23 +163,50 @@ class DashboardState extends State<Dashboard> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: mFavouriteList!.length,
+                  itemCount: state.categories
+                      .where((element) =>
+                          element.parentCategoryId ==
+                          Provider.of<ProductState>(context, listen: false)
+                              .categories
+                              .firstWhere(
+                                  (element) => element.name == "Categories")
+                              .id)
+                      .length,
                   physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                // TODO Open category page
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ListPage(
-                                          title: mFavouriteList![index].name,
-                                        )));
-                              },
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ListPage(
+                                  title: state.categories
+                                      .where((element) =>
+                                          element.parentCategoryId ==
+                                          Provider.of<ProductState>(context,
+                                                  listen: false)
+                                              .categories
+                                              .firstWhere((element) =>
+                                                  element.name == "Categories")
+                                              .id)
+                                      .toList()[index]
+                                      .name
+                                      .toString(),
+                                  categoryID: state.categories
+                                      .where((element) =>
+                                          element.parentCategoryId ==
+                                          Provider.of<ProductState>(context,
+                                                  listen: false)
+                                              .categories
+                                              .firstWhere((element) => element.name == "Categories")
+                                              .id)
+                                      .toList()[index]
+                                      .id!)));
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 alignment: Alignment.center,
                                 decoration: boxDecoration(
@@ -192,23 +214,41 @@ class DashboardState extends State<Dashboard> {
                                     showShadow: false,
                                     bgColor:
                                         mainGreyColorTheme.withOpacity(0.3)),
-                                child: commonCacheImageWidget(
-                                  mFavouriteList![index].icon,
-                                  60,
-                                  width: 80,
-                                ),
+                                // child: commonCacheImageWidget(
+                                //   state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context,
+                                //               listen: false)
+                                //           .categories
+                                //           .firstWhere((element) =>
+                                //               element.name == "Categories")
+                                //           .id).toList()[index]
+                                //           .image!
+                                //           .src,
+                                //   60,
+                                //   width: 80,
+                                // ),
                               ),
                             ),
-                          ),
-                          Text(
-                            mFavouriteList![index].name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              fontFamily: PoppinsFamily,
+                            Text(
+                              state.categories
+                                  .where((element) =>
+                                      element.parentCategoryId ==
+                                      Provider.of<ProductState>(context,
+                                              listen: false)
+                                          .categories
+                                          .firstWhere((element) =>
+                                              element.name == "Categories")
+                                          .id)
+                                  .toList()[index]
+                                  .name
+                                  .toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                fontFamily: PoppinsFamily,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -224,9 +264,8 @@ class DashboardState extends State<Dashboard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(
-                          title: "Top Deals", color: Colors.white),
-                      ViewMoreBtn(title: lbl_Popular_Products),
+                      SubTitleText(title: "Top Deals", color: Colors.white),
+                      ViewMoreBtn(title: "Top Deals"),
                     ],
                   ),
                 ),
@@ -305,7 +344,8 @@ class DashboardState extends State<Dashboard> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SubTitleText(title: lbl_Featured_Products, color: Colors.white),
+                      SubTitleText(
+                          title: lbl_Featured_Products, color: Colors.white),
                       ViewMoreBtn(title: lbl_Featured_Products),
                     ],
                   ),

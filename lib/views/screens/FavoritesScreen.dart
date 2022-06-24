@@ -113,9 +113,6 @@ class FavoritesItem extends StatelessWidget {
       key: Key(this.product.id.toString()),
       onDismissed: (direction) {
         OnPressed();
-        // Then show a snackbar.
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("${product.product.Name} dismissed")));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 9.0),

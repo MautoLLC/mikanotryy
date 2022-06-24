@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/SignInScreen.dart';
 import 'package:http/http.dart' as http;
@@ -19,12 +20,10 @@ Register(String username, String firstname, String lastname, String email,
     "deviceToken": token
   };
 
-  var response = await http.post(
-      Uri.parse("http://dev.codepickles.com:8083/api/Users"),
-      body: json.encode(body),
-      headers: {
-        'Content-type': 'application/json',
-      });
+  var response =
+      await http.post(Uri.parse(UserURL), body: json.encode(body), headers: {
+    'Content-type': 'application/json',
+  });
 
   if (response.statusCode == 201) {
     if (prefs.getBool(prefs_DashboardFirstTimeAccess) == null) {
@@ -51,7 +50,7 @@ Register(String username, String firstname, String lastname, String email,
       context,
       MaterialPageRoute(builder: (context) => T13SignInScreen()),
     );
-    // print("created successfully");
+    // debugPrint("created successfully");
 
   } else {
     Fluttertoast.showToast(
@@ -62,6 +61,6 @@ Register(String username, String firstname, String lastname, String email,
         backgroundColor: Colors.white,
         textColor: Colors.black87,
         fontSize: 16.0);
-    //print("failed to create user");
+    //debugPrint("failed to create user");
   }
 }

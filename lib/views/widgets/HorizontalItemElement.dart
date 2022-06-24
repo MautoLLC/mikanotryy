@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -80,7 +81,7 @@ class HorizontalItemElement extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "\$${product.Price}",
+                    "${Provider.of<CurrencyState>(context, listen: false).currency!.currencySymbol} ${product.Price}",
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "Poppins",
@@ -96,12 +97,7 @@ class HorizontalItemElement extends StatelessWidget {
                           state.addorremoveProductToFavorite(product);
                         },
                         child: commonCacheImageWidget(ic_heart, 30,
-                            color: state.allProducts
-                                    .firstWhere(
-                                        (element) => element.id == product.id)
-                                    .liked
-                                ? mainColorTheme
-                                : null)),
+                            color: product.liked ? mainColorTheme : null)),
                   )
                 ],
               ),

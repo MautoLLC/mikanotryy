@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'dart:convert';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -13,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-SubmitMaintenanceRequest(
+Future<bool> SubmitMaintenanceRequest(
     MaintenanceRequestModel mMaintenanceRequest, BuildContext context) async {
   final url = Uri.parse(PostMaintenaceRequestURL);
 
@@ -65,33 +64,14 @@ SubmitMaintenanceRequest(
       backgroundColor: Colors.white,
       textColor: Colors.black87,
       fontSize: 16.0);
-  request.send().then((response) {
-    if (response.statusCode == 201) {
-      print("Uploaded!");
-      Fluttertoast.showToast(
-          msg: "Request submitted successfully ! ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.white,
-          textColor: Colors.black87,
-          fontSize: 16.0);
-      Navigator.pop(context);
-    } else {
-      print("Failed to submit !" + response.toString());
-      Fluttertoast.showToast(
-          msg: "Error in submitting request ! ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.white,
-          textColor: Colors.black87,
-          fontSize: 16.0);
-    }
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  });
+  StreamedResponse response = await request.send();
+  if (response.statusCode == 201) {
+    debugPrint("Uploaded!");
+    return true;
+  } else {
+    debugPrint(response.reasonPhrase);
+  }
+  return false;
 }
 
 Future<File> getImageFileFromAssets(Asset? asset) async {

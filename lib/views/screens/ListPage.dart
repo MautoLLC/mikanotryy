@@ -3,7 +3,6 @@ import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -11,8 +10,13 @@ import 'package:provider/provider.dart';
 
 class ListPage extends StatefulWidget {
   final String title;
-  bool fromNavigationBar;
-  ListPage({Key? key, required this.title, this.fromNavigationBar = false})
+  bool IsCategory;
+  int categoryID;
+  ListPage(
+      {Key? key,
+      required this.title,
+      this.IsCategory = true,
+      this.categoryID = -1})
       : super(key: key);
 
   @override
@@ -23,6 +27,16 @@ class _ListPageState extends State<ListPage> {
   TextEditingController seearchController = TextEditingController();
 
   bool isfirst = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.categoryID != -1) {
+      Provider.of<ProductState>(context, listen: false)
+          .getProductsByCategory(widget.categoryID);
+    }
+  }
 
   @override
   void dispose() {
@@ -36,7 +50,7 @@ class _ListPageState extends State<ListPage> {
       if (isfirst) {
         state.clearListOfProducts();
         state.page = 1;
-        state.getListOfProducts();
+        state.getListOfProducts(widget.categoryID);
         isfirst = false;
       }
       return Scaffold(
@@ -45,7 +59,7 @@ class _ListPageState extends State<ListPage> {
           onNotification: (ScrollEndNotification notification) {
             if (notification.metrics.pixels ==
                 notification.metrics.maxScrollExtent) {
-              state.Paginate();
+              state.Paginate(widget.categoryID);
             }
             return true;
           },
@@ -56,7 +70,7 @@ class _ListPageState extends State<ListPage> {
               children: [
                 Stack(
                   children: <Widget>[
-                    !widget.fromNavigationBar
+                    !widget.IsCategory
                         ? Align(
                             alignment: Alignment.centerLeft,
                             child: IconButton(
@@ -72,9 +86,9 @@ class _ListPageState extends State<ListPage> {
                     Align(
                         alignment: Alignment.center,
                         child: TitleText(title: widget.title)),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: NotificationBell())
+                    // Align(
+                    //     alignment: Alignment.centerRight,
+                    //     child: NotificationBell())
                   ],
                 ),
                 SizedBox(

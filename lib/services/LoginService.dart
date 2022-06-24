@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
@@ -74,13 +74,13 @@ Login(String username, String password, BuildContext context) async {
           "StoreCustomerGuid", response.data["customer_guid"]);
     } on Exception catch (e) {
       FailedToast();
-      print(e.toString());
+      debugPrint(e.toString());
       return false;
     }
     try {
       await http.post(
-          Uri.parse(
-              DeviceUrl.replaceAll("{sub}", jwtData['sub']).replaceAll("{token}", prefs.getString("DeviceToken").toString())),
+          Uri.parse(DeviceUrl.replaceAll("{sub}", jwtData['sub']).replaceAll(
+              "{token}", prefs.getString("DeviceToken").toString())),
           headers: {
             "Authorization": "Bearer ${prefs.getString("accessToken")}",
             "Content-Type": "application/json"
@@ -93,7 +93,7 @@ Login(String username, String password, BuildContext context) async {
       );
     } on Exception catch (e) {
       FailedToast();
-      print(e.toString());
+      debugPrint(e.toString());
       return false;
     }
     SuccessToast();
@@ -108,7 +108,7 @@ Login(String username, String password, BuildContext context) async {
     await prefs.setBool('GuestLogin', false);
     return true;
   } on Exception catch (e) {
-    print(e);
+    debugPrint(e.toString());
     FailedToast();
     return false;
   }

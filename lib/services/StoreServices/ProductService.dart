@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/CarouselImageModel.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,14 +9,19 @@ import 'package:nb_utils/nb_utils.dart';
 class ProductsService {
   Dio dio = new Dio();
 
-  String Params = "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
-  Future<List<Product>> getProducts({int limit = -1, int page = -1}) async {
+  String Params =
+      "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
+  Future<List<Product>> getProducts(
+      {int limit = -1, int page = -1, int categoryID = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
     }
     if (page != -1) {
       params["page"] = page;
+    }
+    if (categoryID != -1) {
+      params["CategoryId"] = categoryID;
     }
     params['Fields'] = Params;
     Response response = await dio.get(
@@ -30,7 +37,7 @@ class ProductsService {
         }
         return products;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return products;
       }
     } else {
@@ -38,7 +45,8 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> getTopDealsProducts({int limit = -1, int page = -1}) async {
+  Future<List<Product>> getTopDealsProducts(
+      {int limit = -1, int page = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -60,7 +68,7 @@ class ProductsService {
         }
         return products;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return products;
       }
     } else {
@@ -68,7 +76,8 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> getFeaturedProducts({int limit = -1, int page = -1}) async {
+  Future<List<Product>> getFeaturedProducts(
+      {int limit = -1, int page = -1}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -90,11 +99,43 @@ class ProductsService {
         }
         return products;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return products;
       }
     } else {
       throw Exception('Failed to load products');
+    }
+  }
+
+  Future<List<ProductCategory>> getCategories(
+      {int limit = -1, int page = -1}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> params = {};
+    if (limit != -1) {
+      params["limit"] = limit;
+    }
+    if (page != -1) {
+      params["page"] = page;
+    }
+    Response response = await dio.get(MikanoShopCategoriesURL,
+        queryParameters: params,
+        options: Options(headers: {
+          'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
+        }));
+    if (response.statusCode == 200) {
+      List<ProductCategory> products = [];
+      try {
+        for (var item in response.data['categories']) {
+          ProductCategory temp = ProductCategory.fromJson(item);
+          products.add(temp);
+        }
+        return products;
+      } catch (e) {
+        debugPrint(e.toString());
+        return products;
+      }
+    } else {
+      throw Exception('Failed to load Categories');
     }
   }
 
@@ -116,7 +157,7 @@ class ProductsService {
         throw Exception('Failed to load Carousel Items');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }

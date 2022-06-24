@@ -86,10 +86,13 @@ class InspectionDetailsScreenState extends State<InspectionDetailsScreen> {
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => UserDetailsPage(
-                                          realEstateId: this
-                                              .widget
-                                              .Maintenance
-                                              .realEstateId)));
+                                            realEstateId: this
+                                                .widget
+                                                .Maintenance
+                                                .realEstateId,
+                                            userId:
+                                                this.widget.Maintenance.userId,
+                                          )));
                                 },
                                 icon: Icon(Icons.person))
                           ],

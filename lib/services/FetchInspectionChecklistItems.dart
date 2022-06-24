@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/ComponentModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/models/InspectionChecklistItem.dart';
@@ -35,7 +36,7 @@ class ChecklistItemsService {
 
     await PrepareCall();
     dynamic response = await dio.get(url);
-    // print(response.data);
+    // debugPrint(response.data);
 
     if (response.statusCode == 200) {
       List<InspectionChecklistItem> listresult = [];
@@ -85,7 +86,7 @@ class ChecklistItemsService {
       List<dynamic> listresult = [];
 
       for (var item in response.data) {
-        print(item.toString());
+        debugPrint(item.toString());
         ComponentModel model = ComponentModel.fromJson(item['customComponent']);
         model.status = item['componentStatus']['componentStatusDescription'];
         model.idChecklist = item['idInspectionChecklistItem'];

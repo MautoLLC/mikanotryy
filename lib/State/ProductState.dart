@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
+import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/services/StoreServices/CustomerService.dart';
@@ -16,6 +18,7 @@ class ProductState extends ChangeNotifier {
   List<CartProduct> selectedProducts = [];
   List<FavoriteProduct> favoriteProducts = [];
   List<Product> purchasedProducts = [];
+  List<Order> ordersHistory = [];
   List<Product> trendingProducts = [];
   List<Product> topDealProducts = [];
   List<Product> featuredProducts = [];
@@ -27,11 +30,14 @@ class ProductState extends ChangeNotifier {
   List<Product> ListOfProductsToShow = [];
   List<String> filters = [];
   int ItemsPerPage = 6;
+  List<ProductCategory> categories = [];
 
   void clear() {
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();
+    categories.clear();
+    ordersHistory.clear();
     selectedProducts.clear();
     favoriteProducts.clear();
     purchasedProducts.clear();
@@ -50,18 +56,13 @@ class ProductState extends ChangeNotifier {
   }
 
   update() async {
+    await fetchCategories();
     await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
       if (isInFavorite(item)) {
         item.liked = true;
       }
-    }
-    purchasedProducts = [];
-    for (var i = 0; i < 8; i++) {
-      Random random = new Random();
-      Product item = allProducts[random.nextInt(allProducts.length)];
-      purchasedProducts.add(item);
     }
     trendingProducts = [];
     for (var i = 0; i < 4; i++) {
@@ -72,13 +73,18 @@ class ProductState extends ChangeNotifier {
     topDealProducts = [];
     await getTopDeals();
     flashsaleProducts = [];
-    // for (var i = 0; i < 3; i++) {
-    //   Random random = new Random();
-    //   Product item = allProducts[random.nextInt(allProducts.length)];
-    //   flashsaleProducts.add(item);
-    // }
     await getFeatured();
     await updateCart();
+    notifyListeners();
+  }
+
+  fetchCategories() async {
+    categories = await ProductsService().getCategories();
+    notifyListeners();
+  }
+
+  fetchPurchases() async {
+    ordersHistory = await CustomerService().getOrdersByCustomerID();
     notifyListeners();
   }
 
@@ -124,6 +130,11 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getProductsByCategory(int id) async {
+    ListOfProducts = await ProductsService().getProducts(categoryID: id);
+    notifyListeners();
+  }
+
   Future<void> getTopDeals() async {
     topDealProducts = await ProductsService().getTopDealsProducts();
     notifyListeners();
@@ -139,11 +150,20 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void Paginate() async {
-    if (!(page + 1 > allProducts.length / ItemsPerPage)) {
-      page++;
-      await getListOfProducts();
-    }
+  clearCart() {
+    productsInCart.clear();
+    selectedProducts.clear();
+    notifyListeners();
+  }
+
+  void Paginate([int categoryID = -1]) async {
+    // !!Check for later
+    // if (!(page + 1 > allProducts.length / ItemsPerPage)) {
+    //   page++;
+    //   await getListOfProducts(categoryID);
+    // }
+    page++;
+    await getListOfProducts(categoryID);
     notifyListeners();
   }
 
@@ -152,9 +172,9 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getListOfProducts() async {
-    ListOfProducts.addAll(
-        await ProductsService().getProducts(limit: ItemsPerPage, page: page));
+  Future<void> getListOfProducts([int categoryID = -1]) async {
+    ListOfProducts.addAll(await ProductsService()
+        .getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID));
     notifyListeners();
   }
 
@@ -178,14 +198,12 @@ class ProductState extends ChangeNotifier {
           break;
         }
       }
-      allProducts.firstWhere((element) => element.id == product.id).liked =
-          false;
-      toast("Product removed to favorites");
+      product.liked = false;
+      toast("Product removed from favorites");
     } else {
       FavoriteProduct t =
           await CustomerService().addFavoriteItemsforLoggedInUser(product);
-      allProducts.firstWhere((element) => element.id == product.id).liked =
-          true;
+      product.liked = true;
       favoriteProducts.add(t);
       toast("Product added to favorites");
     }
@@ -208,7 +226,7 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addProduct(CartProduct product) async {
+  Future<void> addProduct(CartProduct product) async {
     product = await CustomerService().addCartItemsforLoggedInUser(product);
     productsInCart.add(product);
     notifyListeners();
@@ -259,9 +277,8 @@ class ProductState extends ChangeNotifier {
   }
 
   void removecheckedProducts() async {
-    for (var item in selectedProducts) {
-      productsInCart.remove(item);
-    }
+    productsInCart.clear();
+    selectedProducts.clear();
     notifyListeners();
   }
 
@@ -270,7 +287,7 @@ class ProductState extends ChangeNotifier {
   double get selectedProductsPrice => selectedProducts.fold(
       0, (total, product) => total + product.product.Price * product.quantity);
 
-  void increaseCartItemQuantity(CartProduct product) async {
+  Future<void> increaseCartItemQuantity(CartProduct product) async {
     product.quantity++;
     await CustomerService()
         .ChangeQuantityCartProductforLoggedInUser(product, product.quantity);
@@ -286,21 +303,18 @@ class ProductState extends ChangeNotifier {
     }
   }
 
-  Future<bool> checkout(Address add, bool checkBox) async {
-    if (!checkBox) {
-      toast("Check the checkbox to agree to the terms of user");
+  Future<bool> checkout(Address add, {bool byCard = false}) async {
+    bool success =
+        await CustomerService().Checkout(add, selectedProducts, byCard);
+    if (success) {
+      List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
+      await CustomerService().deleteCartItemsforLoggedInUser(ids);
+      removecheckedProducts();
+      update();
+      toast("Checkout Successful");
+      return true;
     } else {
-      bool success = await CustomerService().Checkout(add, selectedProducts);
-      if (success) {
-        List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
-        await CustomerService().deleteCartItemsforLoggedInUser(ids);
-        removecheckedProducts();
-        update();
-        toast("Checkout Successful");
-        return true;
-      } else {
-        toast("Checkout Failed");
-      }
+      toast("Checkout Failed");
     }
     notifyListeners();
     return false;

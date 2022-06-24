@@ -4,8 +4,6 @@ import 'package:mymikano_app/services/ApiConfigurationService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../views/screens/Dashboard/ApiConfigurationPage.dart';
-
 class ApiConfigurationState extends ChangeNotifier {
   bool DashBoardFirstTimeAccess = true;
   bool isSuccess = false;
@@ -20,7 +18,7 @@ class ApiConfigurationState extends ChangeNotifier {
   int cloudMode = 0;
   String password = '';
   String cloudUsername = '';
-  bool cloudConfigValue=false;
+  bool cloudConfigValue = true;
   String cloudPassword = '';
   String apiLanEndpoint = '';
   List<String> ssidList = [];
@@ -41,7 +39,7 @@ class ApiConfigurationState extends ChangeNotifier {
     option = value;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(prefs_ApiConfigurationOption, option);
-    print(prefs.getString(prefs_ApiConfigurationOption));
+    debugPrint(prefs.getString(prefs_ApiConfigurationOption));
     if (option == 'lan') {
       cloudMode = 0;
     }
@@ -49,7 +47,7 @@ class ApiConfigurationState extends ChangeNotifier {
       cloudMode = 1;
     }
 
-    print("cloudmode: " + cloudMode.toString());
+    debugPrint("cloudmode: " + cloudMode.toString());
     notifyListeners();
   }
 
@@ -104,6 +102,7 @@ class ApiConfigurationState extends ChangeNotifier {
     cloudUsername = username;
     notifyListeners();
   }
+
   void changeCloudConfigValue(val) {
     cloudConfigValue = val;
     notifyListeners();
@@ -196,7 +195,6 @@ class ApiConfigurationState extends ChangeNotifier {
     prefs.setInt(prefs_CloudMode, cloudMode);
     prefs.setString(prefs_GeneratorId, generatorId);
   }
-
 
   void setApiLanEndpoint(String apiEndpoint) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

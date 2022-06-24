@@ -1,15 +1,18 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
+import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
+import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CustomerService {
   Dio dio = new Dio();
-  Future<bool> addShippingAddress(Address address) async {
+  Future<bool> addShippingAddress(Address address, TechnicianModel User) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       Response response = await dio.post(
@@ -21,13 +24,13 @@ class CustomerService {
           data: {
             "city": address.city,
             "address1": address.address1,
-            "first_name": "f1",
-            "last_name": "l1",
-            "email": "email@hotmail.com",
+            "first_name": User.username,
+            "last_name": User.username,
+            "email": User.email,
             "country_id": 2,
             "state_province_id": 2,
             "zip_postal_code": "1001",
-            "phone_number": "01234567",
+            "phone_number": User.phoneNumber,
           });
       if (response.statusCode == 200) {
         toast("Address Added Successfully");
@@ -37,7 +40,7 @@ class CustomerService {
         throw Exception('Failed to add shipping address');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return false;
     }
   }
@@ -57,8 +60,8 @@ class CustomerService {
             Address.fromJson(response.data['customers'][0]['shipping_address']);
         return chosenAddress;
       } catch (e) {
-        print(e);
-        return chosenAddress;
+        debugPrint(e.toString());
+        return Address();
       }
     } else {
       throw Exception('Failed to get shipping addresses');
@@ -90,7 +93,7 @@ class CustomerService {
         }
         return addresses;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return addresses;
       }
     } else {
@@ -117,40 +120,45 @@ class CustomerService {
           var productsdata = response.data["shopping_carts"];
           for (var item in productsdata) {
             Product temp = Product.fromJson(item["product"]);
+            temp.liked = true;
             FavoriteProduct t = FavoriteProduct(product: temp, id: item["id"]);
             products.add(t);
           }
           return products;
         } catch (e) {
-          print(e);
+          debugPrint(e.toString());
           return products;
         }
       } else {
         throw Exception('Failed to get shipping addresses');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }
 
   Future<void> deleteFavoriteItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.post(
-      MikanoDeleteFavoritAndCartItems,
-      queryParameters: {
-        "Ids": arr,
-        "ShoppingCartType": "Wishlist",
-        "CustomerId": prefs.getString("StoreCustomerId").toString()
-      },
-      options: Options(headers: {
-        "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-      }),
-    );
-    if (response.statusCode == 200) {
-      return;
-    } else {
-      throw Exception('Failed to delete item from favorites');
+    try {
+      Response response = await dio.post(
+        MikanoDeleteFavoritAndCartItems,
+        queryParameters: {
+          "Ids": arr,
+          "ShoppingCartType": "Wishlist",
+          "CustomerId": prefs.getString("StoreCustomerId").toString()
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        return;
+      } else {
+        throw Exception('Failed to delete item from favorites');
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -197,14 +205,14 @@ class CustomerService {
           }
           return products;
         } catch (e) {
-          print(e);
+          debugPrint(e.toString());
           return products;
         }
       } else {
         throw Exception('Failed to get cart Items');
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       return [];
     }
   }
@@ -238,7 +246,7 @@ class CustomerService {
         throw Exception('Failed to add to cart');
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       throw Exception('Failed to add to cart');
     }
   }
@@ -294,7 +302,7 @@ class CustomerService {
         throw Exception('Failed to Change Quantity');
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       throw Exception('Failed to Change Quantity');
     }
   }
@@ -313,7 +321,7 @@ class CustomerService {
       try {
         return response.data;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -337,7 +345,7 @@ class CustomerService {
       try {
         return state;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -359,7 +367,7 @@ class CustomerService {
       try {
         return response.data;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -383,7 +391,7 @@ class CustomerService {
       try {
         return true;
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
         return false;
       }
     } else {
@@ -428,23 +436,25 @@ class CustomerService {
         return;
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       toast("Something went wrong");
       return;
     }
   }
 
-  Future<bool> Checkout(Address add, List<CartProduct> products) async {
+  Future<bool> Checkout(
+      Address add, List<CartProduct> products, bool byCard) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String url = MikanoShopPlaceOrder;
     add.customerAttributes = "";
     add.address2 = add.address1;
     try {
       await dio
-          .post((url),
+          .post((MikanoShopPlaceOrder),
               data: {
                 "order": {
-                  "payment_method_system_name": "Payments.CheckMoneyOrder",
+                  "payment_status": byCard ? "Paid" : "Pending",
+                  "payment_method_system_name":
+                      byCard ? "Payments.Manual" : "Payments.CheckMoneyOrder",
                   "shipping_method": "Shipping.FixedByWeightByTotal",
                   "customer_id": prefs.getString("StoreCustomerId").toInt(),
                   "billing_address": {
@@ -492,18 +502,110 @@ class CustomerService {
               }))
           .then((response) {
         if (response.statusCode == 200) {
+          Order order = Order.fromJson(response.data['orders'][0]);
+          // if(byCard){
+          //   dio
+          // .post((MikanoShopPlaceOrder),
+          // queryParameters: {
+          //   "id": response.data
+          // },
+          // data: {
+          //       "order": {
+          //         "payment_status": "Paid",
+          //         "billing_address": {
+          //           "first_name": add.firstName,
+          //           "last_name": add.lastName,
+          //           "email": add.email,
+          //           "company": add.company,
+          //           "country_id": add.countryId,
+          //           "country": add.country,
+          //           "state_province_id": add.stateProvinceId,
+          //           "city": add.city,
+          //           "address1": add.address1,
+          //           "address2": add.address2,
+          //           "zip_postal_code": add.zipPostalCode,
+          //           "phone_number": add.phoneNumber,
+          //           "fax_number": add.faxNumber,
+          //           "customer_attributes": add.customerAttributes,
+          //           "created_on_utc": add.createdOnUtc,
+          //           "province": add.province,
+          //           "id": add.id
+          //         },
+          //         "shipping_address": {
+          //           "first_name": add.firstName,
+          //           "last_name": add.lastName,
+          //           "email": add.email,
+          //           "company": add.company,
+          //           "country_id": add.countryId,
+          //           "country": add.country,
+          //           "state_province_id": add.stateProvinceId,
+          //           "city": add.city,
+          //           "address1": add.address1,
+          //           "address2": add.address2,
+          //           "zip_postal_code": add.zipPostalCode,
+          //           "phone_number": add.phoneNumber,
+          //           "fax_number": add.faxNumber,
+          //           "customer_attributes": add.customerAttributes,
+          //           "created_on_utc": add.createdOnUtc,
+          //           "province": add.province,
+          //           "id": add.id
+          //         },
+          //       }
+          //     },);
+          // }
           toast("Checkout successfully");
           return true;
         } else {
           toast("Failed to checkout");
-          throw Exception('Failed to checkout');
+          return false;
         }
       });
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       toast("Failed to checkout");
-      throw Exception('Failed to checkout');
+      return false;
     }
-    return true;
+    return false;
+  }
+
+  Future<List<Order>> getOrdersByCustomerID(
+      {int limit = -1, int page = -1}) async {
+    List<Order> orders = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> params = {};
+    if (limit != -1) {
+      params["limit"] = limit;
+    }
+    if (page != -1) {
+      params["page"] = page;
+    }
+    // params['Fields'] = Params;
+    try {
+      Response response = await dio.get(
+        MikanoShopGetOrdersByCustomerIdURL.replaceAll(
+            '{customerID}', prefs.getString("StoreCustomerId").toString()),
+        queryParameters: params,
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        try {
+          for (var item in response.data['orders']) {
+            Order order = Order.fromJson(item);
+            orders.add(order);
+          }
+          return orders;
+        } catch (e) {
+          debugPrint(e.toString());
+          return orders;
+        }
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return orders;
+    }
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
@@ -70,6 +69,8 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('lan');
+                          //added by youssef//
+                          value.changeCloudConfigValue(true);
                           if (value.DashBoardFirstTimeAccess == false) {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => LanDashboard_Index(
@@ -112,6 +113,8 @@ class ApiConfigurationPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           value.ChangeMode('cloud');
+                          //added by youssef
+                          value.changeCloudConfigValue(false);
                           if (value.DashBoardFirstTimeAccess == false) {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => CloudDashboard_Index(
@@ -181,16 +184,22 @@ class ApiConfigurationPage extends StatelessWidget {
                     height: 55,
                   ),
                   //added by youssef with and without configuration for cloud
-                  if (value.DashBoardFirstTimeAccess == true && value.cloudMode==1) ...[
-        Padding(padding:EdgeInsets.fromLTRB(11, 0, 0, 0),
-        child:  CheckboxListTile(
-        title: const Text('Device Configuration',style: TextStyle(fontWeight: FontWeight.bold,),),
-              value:value.cloudConfigValue,
-              onChanged: (bool? val) {
-                value.changeCloudConfigValue(val);
-              }
-          ),
-        )
+                  if (value.DashBoardFirstTimeAccess == true &&
+                      value.cloudMode == 1) ...[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(11, 0, 0, 0),
+                      child: CheckboxListTile(
+                          title: const Text(
+                            'Device Configuration',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: value.cloudConfigValue,
+                          onChanged: (bool? val) {
+                            value.changeCloudConfigValue(val);
+                          }),
+                    )
 
                     // ListTile(
                     //   title: const Text('With Configuration'),
@@ -357,7 +366,8 @@ class ApiConfigurationPage extends StatelessWidget {
                         SizedBox(
                           height: 25,
                         ),
-                        if (value.isSuccess == true && value.cloudConfigValue==true) ...[
+                        if (value.isSuccess == true &&
+                            value.cloudConfigValue == true) ...[
                           Row(
                             children: [
                               Container(
@@ -542,34 +552,34 @@ class ApiConfigurationPage extends StatelessWidget {
                             height: 25,
                           ),
                         ],
-                        if(value.isSuccess==true && value.cloudConfigValue==false && value.option=='cloud')
-                        T13Button(
-                            textContent: lbl_Submit_Settings,
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                              value.setApiLanEndpoint(
-                                  "http://" + apiEndpointLanController.text);
-                              if (value.DashBoardFirstTimeAccess == true) {
-                                await value.setpref(
-                                  "",
-                                    "",
-                                    10,
-                                    cloudUsernameController.text,
-                                    cloudPasswordController.text,
-                                    value.cloudMode,
-                                    value.chosenGeneratorId);
-                              }
+                        if (value.isSuccess == true &&
+                            value.cloudConfigValue == false &&
+                            value.option == 'cloud')
+                          T13Button(
+                              textContent: lbl_Submit_Settings,
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                value.setApiLanEndpoint(
+                                    "http://" + apiEndpointLanController.text);
+                                if (value.DashBoardFirstTimeAccess == true) {
+                                  await value.setpref(
+                                      "",
+                                      "",
+                                      10,
+                                      cloudUsernameController.text,
+                                      cloudPasswordController.text,
+                                      value.cloudMode,
+                                      value.chosenGeneratorId);
+                                }
 
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      CloudDashboard_Index(
-                                          RefreshRate: 10)));
-                              value.isNotFirstTime();
-                              prefs.setBool(
-                                  prefs_DashboardFirstTimeAccess, false);
-                            }
-                            ),
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        CloudDashboard_Index(RefreshRate: 10)));
+                                value.isNotFirstTime();
+                                prefs.setBool(
+                                    prefs_DashboardFirstTimeAccess, false);
+                              }),
                       ]),
                     ),
                   ],
@@ -586,4 +596,4 @@ class ApiConfigurationPage extends StatelessWidget {
       DropdownMenuItem(value: selectedSSID, child: Text(selectedSSID));
 }
 
- enum ConfigValue { withConfig, withoutConfig}
+enum ConfigValue { withConfig, withoutConfig }
