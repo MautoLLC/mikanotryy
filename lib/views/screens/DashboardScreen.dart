@@ -37,7 +37,7 @@ class DashboardState extends State<Dashboard> {
       sendGpsCoord();
     }
     guestLogin ? null : Provider.of<UserState>(context, listen: false).update();
-    Provider.of<ProductState>(context, listen: false).update();
+    // Provider.of<ProductState>(context, listen: false).update();
     setState(() {});
   }
 
@@ -163,11 +163,11 @@ class DashboardState extends State<Dashboard> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: state.categories
+                  itemCount: state.allCategories
                       .where((element) =>
                           element.parentCategoryId ==
                           Provider.of<ProductState>(context, listen: false)
-                              .categories
+                              .allCategories
                               .firstWhere(
                                   (element) => element.name == "Categories")
                               .id)
@@ -180,27 +180,10 @@ class DashboardState extends State<Dashboard> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ListPage(
-                                  title: state.categories
-                                      .where((element) =>
-                                          element.parentCategoryId ==
-                                          Provider.of<ProductState>(context,
-                                                  listen: false)
-                                              .categories
-                                              .firstWhere((element) =>
-                                                  element.name == "Categories")
-                                              .id)
-                                      .toList()[index]
+                                  title: state.mainCategories[index]
                                       .name
                                       .toString(),
-                                  categoryID: state.categories
-                                      .where((element) =>
-                                          element.parentCategoryId ==
-                                          Provider.of<ProductState>(context,
-                                                  listen: false)
-                                              .categories
-                                              .firstWhere((element) => element.name == "Categories")
-                                              .id)
-                                      .toList()[index]
+                                  categoryID: state.mainCategories[index]
                                       .id!)));
                         },
                         child: Column(
@@ -214,31 +197,17 @@ class DashboardState extends State<Dashboard> {
                                     showShadow: false,
                                     bgColor:
                                         mainGreyColorTheme.withOpacity(0.3)),
-                                // child: commonCacheImageWidget(
-                                //   state.categories.where((element) => element.parentCategoryId == Provider.of<ProductState>(context,
-                                //               listen: false)
-                                //           .categories
-                                //           .firstWhere((element) =>
-                                //               element.name == "Categories")
-                                //           .id).toList()[index]
-                                //           .image!
-                                //           .src,
-                                //   60,
-                                //   width: 80,
-                                // ),
+                                child: commonCacheImageWidget(
+                                  state.mainCategories[index]
+                                          .image!
+                                          .src,
+                                  60,
+                                  width: 80,
+                                ),
                               ),
                             ),
                             Text(
-                              state.categories
-                                  .where((element) =>
-                                      element.parentCategoryId ==
-                                      Provider.of<ProductState>(context,
-                                              listen: false)
-                                          .categories
-                                          .firstWhere((element) =>
-                                              element.name == "Categories")
-                                          .id)
-                                  .toList()[index]
+                              state.mainCategories[index]
                                   .name
                                   .toString(),
                               style: TextStyle(
@@ -395,22 +364,26 @@ class DashboardState extends State<Dashboard> {
               SizedBox(
                   height: 60,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: state.brandCategories.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Container(
-                            width: 105,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border:
-                                  Border.all(color: lightBorderColor, width: 1),
+                        return GestureDetector(
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: ((context) => ListPage(title: state.brandCategories[index].name.toString(), categoryID: state.brandCategories[index].id!,)))),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Container(
+                              width: 105,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                border:
+                                    Border.all(color: lightBorderColor, width: 1),
+                              ),
+                              // child: commonCacheImageWidget(
+                              //     state.brandCategories[index].image!.src, 60,
+                              //     width: 60),
+                              child: Center(child: Text(state.brandCategories[index].name!)),
                             ),
-                            child: commonCacheImageWidget(
-                                "assets/Brand${index + 1}.png", 60,
-                                width: 60),
                           ),
                         );
                       })),

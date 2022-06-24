@@ -30,13 +30,17 @@ class ProductState extends ChangeNotifier {
   List<Product> ListOfProductsToShow = [];
   List<String> filters = [];
   int ItemsPerPage = 6;
-  List<ProductCategory> categories = [];
+  List<ProductCategory> allCategories = [];
+  List<ProductCategory> mainCategories = [];
+  List<ProductCategory> brandCategories = [];
 
   void clear() {
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();
-    categories.clear();
+    allCategories.clear();
+    mainCategories.clear();
+    brandCategories.clear();
     ordersHistory.clear();
     selectedProducts.clear();
     favoriteProducts.clear();
@@ -56,7 +60,7 @@ class ProductState extends ChangeNotifier {
   }
 
   update() async {
-    await fetchCategories();
+    await fetchallCategories();
     await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
@@ -78,8 +82,21 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchCategories() async {
-    categories = await ProductsService().getCategories();
+  fetchallCategories() async {
+    allCategories = await ProductsService().getCategories();
+    mainCategories = allCategories
+                                      .where((element) =>
+                                          element.parentCategoryId ==
+                                          allCategories
+                                              .firstWhere((element) => element.name == "Categories")
+                                              .id)
+                                      .toList();
+    brandCategories.clear();
+    for (ProductCategory item in mainCategories) {
+      List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
+      brandCategories.addAll(tempResult);
+    }
+    
     notifyListeners();
   }
 

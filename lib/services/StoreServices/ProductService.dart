@@ -108,7 +108,7 @@ class ProductsService {
   }
 
   Future<List<ProductCategory>> getCategories(
-      {int limit = -1, int page = -1}) async {
+      {int limit = -1, int page = -1, int parentId = -1}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> params = {};
     if (limit != -1) {
@@ -116,6 +116,9 @@ class ProductsService {
     }
     if (page != -1) {
       params["page"] = page;
+    }
+    if (parentId != -1) {
+      params["ParentCategoryId"] = parentId;
     }
     Response response = await dio.get(MikanoShopCategoriesURL,
         queryParameters: params,
