@@ -29,18 +29,25 @@ class ProductState extends ChangeNotifier {
   int page = 0;
   List<Product> ListOfProductsToShow = [];
   List<String> filters = [];
+  List<int> categoryFilters = [];
   int ItemsPerPage = 6;
   List<ProductCategory> allCategories = [];
   List<ProductCategory> mainCategories = [];
   List<ProductCategory> brandCategories = [];
+  List<ProductCategory> AllFiltersForCategories = [];
+  int selectedCategoryId = -1;
+  int mainParentCategory = -1;
 
   void clear() {
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();
+    filters.clear();
+    categoryFilters.clear();
     allCategories.clear();
     mainCategories.clear();
     brandCategories.clear();
+    AllFiltersForCategories.clear();
     ordersHistory.clear();
     selectedProducts.clear();
     favoriteProducts.clear();
@@ -82,8 +89,30 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  setselectedCategoryId(int id){
+    selectedCategoryId = id;
+    notifyListeners();
+  }
+
+  addFilter(int filterID){
+    categoryFilters.add(filterID);
+    notifyListeners();
+  }
+
+  removeFilter(int filterID){
+    categoryFilters.removeWhere((item) => item == filterID);
+    notifyListeners();
+  }
+
+  bool checkIfFilterApplied(int filterID){
+    return categoryFilters.contains(filterID);
+  }
+
   fetchallCategories() async {
-    allCategories = await ProductsService().getCategories();
+    allCategories.clear();
+    allCategories.addAll(await ProductsService().getCategories(page: 1));
+    allCategories.addAll(await ProductsService().getCategories(page: 2));
+    allCategories.addAll(await ProductsService().getCategories(page: 3));
     mainCategories = allCategories
                                       .where((element) =>
                                           element.parentCategoryId ==
@@ -96,7 +125,10 @@ class ProductState extends ChangeNotifier {
       List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
       brandCategories.addAll(tempResult);
     }
-    
+    for (ProductCategory item in brandCategories) {
+      List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
+      AllFiltersForCategories.addAll(tempResult);
+    }
     notifyListeners();
   }
 

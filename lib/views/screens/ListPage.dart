@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -35,6 +36,15 @@ class _ListPageState extends State<ListPage> {
     if (widget.categoryID != -1) {
       Provider.of<ProductState>(context, listen: false)
           .getProductsByCategory(widget.categoryID);
+      Provider.of<ProductState>(context, listen: false)
+          .selectedCategoryId = widget.categoryID;
+      Provider.of<ProductState>(context, listen: false)
+          .mainParentCategory = widget.categoryID;
+    } else {
+      Provider.of<ProductState>(context, listen: false)
+          .mainParentCategory = -1;
+          Provider.of<ProductState>(context, listen: false)
+          .selectedCategoryId = -1;
     }
   }
 
@@ -50,7 +60,7 @@ class _ListPageState extends State<ListPage> {
       if (isfirst) {
         state.clearListOfProducts();
         state.page = 1;
-        state.getListOfProducts(widget.categoryID);
+        state.getListOfProducts(state.selectedCategoryId);
         isfirst = false;
       }
       return Scaffold(
@@ -59,7 +69,7 @@ class _ListPageState extends State<ListPage> {
           onNotification: (ScrollEndNotification notification) {
             if (notification.metrics.pixels ==
                 notification.metrics.maxScrollExtent) {
-              state.Paginate(widget.categoryID);
+              state.Paginate(state.selectedCategoryId);
             }
             return true;
           },
@@ -70,7 +80,7 @@ class _ListPageState extends State<ListPage> {
               children: [
                 Stack(
                   children: <Widget>[
-                    !widget.IsCategory
+                    widget.IsCategory
                         ? Align(
                             alignment: Alignment.centerLeft,
                             child: IconButton(
@@ -122,56 +132,94 @@ class _ListPageState extends State<ListPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    DropdownButton(
-                        elevation: 0,
-                        underline: Container(),
-                        icon: Icon(Icons.sort, color: black, size: 25),
-                        items: [
-                          DropdownMenuItem(
-                            child: Text('Sort By Price Low to High'),
-                            value: 'price_low_to_high',
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Sort By Price High to Low'),
-                            value: 'price_high_to_low',
-                          ),
-                          DropdownMenuItem(
-                            child: Text('A to Z'),
-                            value: 'a_to_z',
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Z to A'),
-                            value: 'z_to_a',
-                          ),
-                        ],
-                        onChanged: (value) {
-                          switch (value) {
-                            case 'price_low_to_high':
-                              state.sortByPriceLowToHigh();
-                              break;
-                            case 'price_high_to_low':
-                              state.sortByPriceHighToLow();
-                              break;
-                            case 'a_to_z':
-                              state.sortByPriceAToZ();
-                              break;
-                            case 'z_to_a':
-                              state.sortByPriceZToA();
-                              break;
-                          }
-                        }),
-                    IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                );
-                              });
-                        },
-                        icon: Icon(Icons.filter, size: 25, color: black)),
+                    DropdownButtonHideUnderline(
+                      child: ButtonTheme(
+                        alignedDropdown: true,
+                        child: DropdownButton(
+                          isDense: true,
+                            elevation: 0,
+                            icon: Icon(Icons.sort, color: black),
+                            items: [
+                              DropdownMenuItem(
+                                child: Text('Sort By Price Low to High'),
+                                value: 'price_low_to_high',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Sort By Price High to Low'),
+                                value: 'price_high_to_low',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('A to Z'),
+                                value: 'a_to_z',
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Z to A'),
+                                value: 'z_to_a',
+                              ),
+                            ],
+                            onChanged: (value) {
+                              switch (value) {
+                                case 'price_low_to_high':
+                                  state.sortByPriceLowToHigh();
+                                  break;
+                                case 'price_high_to_low':
+                                  state.sortByPriceHighToLow();
+                                  break;
+                                case 'a_to_z':
+                                  state.sortByPriceAToZ();
+                                  break;
+                                case 'z_to_a':
+                                  state.sortByPriceZToA();
+                                  break;
+                              }
+                            }),
+                      ),
+                    ),
+                    IconButton(onPressed: (){
+                      showModalBottomSheet(context: context, 
+                      builder: (context){      
+                           return Consumer<ProductState>(
+                            builder: (context, value, child) => Container(
+                              child: ListView(
+                                children: List.generate(
+                                  value.selectedCategoryId!=-1?
+                                  value.allCategories
+                                                  .where((element) => element.parentCategoryId == value.selectedCategoryId)
+                                                  .length
+                                                  :value.mainCategories.length
+                                                  , (index) { 
+                                                    ProductCategory obj = value.selectedCategoryId!=-1?
+                                                  value.allCategories.where((element) => element.parentCategoryId == value.selectedCategoryId).elementAt(index):
+                                                  value.mainCategories.elementAt(index);
+                                                  return ListTile(
+                                                    trailing: Icon(Icons.arrow_forward_ios),
+                                                    onTap: () {
+                                                                                                            value.setselectedCategoryId(obj.id.toString().toInt());
+                                                      if(value.allCategories
+                                                                      .where((element) => element.parentCategoryId == value.selectedCategoryId)
+                                                                      .length == 0){
+                                                                        value.setselectedCategoryId(value.mainParentCategory);
+                                                                        Navigator.pop(context);
+                                                                      }
+                                                      value.ListOfProducts.clear();
+                                                      value.getListOfProducts(obj.id.toString().toInt());
+                                                    },
+                                                    title: value.selectedCategoryId!=-1?
+                                                  Text(obj.name.toString())
+                                                  :Text(obj.name.toString()),
+                                                  );
+    }),
+                              ),
+                            ),
+                          );
+
+                      });
+                    }, icon: Icon(Icons.filter, color: Colors.black)),                        
+                    IconButton(onPressed: (){
+                      state.setselectedCategoryId(state.mainParentCategory);
+                      state.ListOfProducts.clear();
+                      state.getListOfProducts(state.mainParentCategory);
+                        }, icon: Icon(Icons.restore))
                   ],
                 ),
                 Expanded(
