@@ -122,8 +122,10 @@ class ProductState extends ChangeNotifier {
                                       .toList();
     brandCategories.clear();
     for (ProductCategory item in mainCategories) {
-      List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
-      brandCategories.addAll(tempResult);
+      if(item.name.toString() == 'Generator' || item.name.toString() == 'Electricals' || item.name.toString() == 'Construction and forklifts' || item.name.toString() == 'Mikano motors'){
+        List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
+        brandCategories.addAll(tempResult);
+      }
     }
     for (ProductCategory item in brandCategories) {
       List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
