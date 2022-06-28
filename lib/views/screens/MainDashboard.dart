@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
+import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -25,6 +26,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
 
   init() async {
     await Provider.of<CurrencyState>(context, listen: false).update();
+    Provider.of<ProductState>(context, listen: false).update();
     pages.add(MenuScreen());
     pages.add(ListPage(
       title: lbl_Search,

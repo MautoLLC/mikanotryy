@@ -120,6 +120,7 @@ class ProductsService {
     if (parentId != -1) {
       params["ParentCategoryId"] = parentId;
     }
+    // params["Fields"] = "name, parent_category_id, id, image";
     Response response = await dio.get(MikanoShopCategoriesURL,
         queryParameters: params,
         options: Options(headers: {

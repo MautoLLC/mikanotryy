@@ -37,7 +37,6 @@ class DashboardState extends State<Dashboard> {
       sendGpsCoord();
     }
     guestLogin ? null : Provider.of<UserState>(context, listen: false).update();
-    // Provider.of<ProductState>(context, listen: false).update();
     setState(() {});
   }
 
@@ -160,17 +159,11 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                 height: 100,
-                child: ListView.builder(
+                child: state.mainCategories.length!=0?
+                ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: state.allCategories
-                      .where((element) =>
-                          element.parentCategoryId ==
-                          Provider.of<ProductState>(context, listen: false)
-                              .allCategories
-                              .firstWhere(
-                                  (element) => element.name == "Categories")
-                              .id)
+                  itemCount: state.mainCategories
                       .length,
                   physics: AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
@@ -221,7 +214,8 @@ class DashboardState extends State<Dashboard> {
                       ),
                     );
                   },
-                ),
+                )
+                :Center(child: CircularProgressIndicator(),),
               ),
               SizedBox(
                 height: 41,
@@ -363,7 +357,7 @@ class DashboardState extends State<Dashboard> {
               ),
               SizedBox(
                   height: 60,
-                  child: ListView.builder(
+                  child: state.brandCategories!=0?ListView.builder(
                       itemCount: state.brandCategories.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -382,11 +376,12 @@ class DashboardState extends State<Dashboard> {
                               // child: commonCacheImageWidget(
                               //     state.brandCategories[index].image!.src, 60,
                               //     width: 60),
-                              child: Center(child: Text(state.brandCategories[index].name!)),
+                              child: Center(child: commonCacheImageWidget(state.brandCategories[index].image!.src, 300)),
                             ),
                           ),
                         );
-                      })),
+                      })
+                      :Center(child: CircularProgressIndicator(),)),
               SizedBox(
                 height: 40,
               ),

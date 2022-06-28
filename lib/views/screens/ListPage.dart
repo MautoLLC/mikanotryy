@@ -33,6 +33,10 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(Provider.of<ProductState>(context, listen: false).AllFiltersForCategories.length == 0){
+      Provider.of<ProductState>(context, listen: false)
+          .fetchFilterCategories();
+    }
     if (widget.categoryID != -1) {
       Provider.of<ProductState>(context, listen: false)
           .getProductsByCategory(widget.categoryID);

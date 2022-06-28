@@ -22,7 +22,6 @@ class ProductState extends ChangeNotifier {
   List<Product> trendingProducts = [];
   List<Product> topDealProducts = [];
   List<Product> featuredProducts = [];
-  List<Product> flashsaleProducts = [];
   List<Product> allProducts = [];
   List<Product> ListOfProducts = [];
   int allProductNumbers = 0;
@@ -54,7 +53,6 @@ class ProductState extends ChangeNotifier {
     purchasedProducts.clear();
     trendingProducts.clear();
     topDealProducts.clear();
-    flashsaleProducts.clear();
     allProducts.clear();
     ListOfProducts.clear();
     allProductNumbers = 0;
@@ -67,7 +65,6 @@ class ProductState extends ChangeNotifier {
   }
 
   update() async {
-    await fetchallCategories();
     await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
@@ -75,16 +72,25 @@ class ProductState extends ChangeNotifier {
         item.liked = true;
       }
     }
+    topDealProducts = [];
+    await getTopDeals();
+    await getFeatured();
     trendingProducts = [];
     for (var i = 0; i < 4; i++) {
       Random random = new Random();
       Product item = allProducts[random.nextInt(allProducts.length)];
       trendingProducts.add(item);
     }
-    topDealProducts = [];
-    await getTopDeals();
-    flashsaleProducts = [];
-    await getFeatured();
+    await fetchallCategories();
+    await fetchBrandCategories();
+    await fetchFilterCategories();
+
+    allCategories.addAll(mainCategories);
+    allCategories.addAll(brandCategories);
+    allCategories.addAll(AllFiltersForCategories);
+    final set = Set();
+    allCategories.retainWhere((element) => set.add(element.id));
+    
     await updateCart();
     notifyListeners();
   }
@@ -108,29 +114,30 @@ class ProductState extends ChangeNotifier {
     return categoryFilters.contains(filterID);
   }
 
-  fetchallCategories() async {
-    allCategories.clear();
-    allCategories.addAll(await ProductsService().getCategories(page: 1));
-    allCategories.addAll(await ProductsService().getCategories(page: 2));
-    allCategories.addAll(await ProductsService().getCategories(page: 3));
-    mainCategories = allCategories
-                                      .where((element) =>
-                                          element.parentCategoryId ==
-                                          allCategories
-                                              .firstWhere((element) => element.name == "Categories")
-                                              .id)
-                                      .toList();
+  fetchBrandCategories() async {
     brandCategories.clear();
     for (ProductCategory item in mainCategories) {
-      if(item.name.toString() == 'Generator' || item.name.toString() == 'Electricals' || item.name.toString() == 'Construction and forklifts' || item.name.toString() == 'Mikano motors'){
-        List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
-        brandCategories.addAll(tempResult);
-      }
+      List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
+      brandCategories.addAll(tempResult);
     }
+    final categories = Set();
+    brandCategories.retainWhere((element) => categories.add(element.id));
+    notifyListeners();
+  }
+
+  fetchFilterCategories() async {
+    AllFiltersForCategories.clear();
     for (ProductCategory item in brandCategories) {
       List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
       AllFiltersForCategories.addAll(tempResult);
     }
+    final categories = Set();
+    AllFiltersForCategories.retainWhere((element) => categories.add(element.id));
+    notifyListeners();
+  }
+
+  fetchallCategories() async {
+    mainCategories = await ProductsService().getCategories(parentId: 42);
     notifyListeners();
   }
 

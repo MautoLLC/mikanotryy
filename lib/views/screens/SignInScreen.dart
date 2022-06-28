@@ -55,8 +55,8 @@ class T13SignInScreenState extends State<T13SignInScreen> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Provider.of<ProductState>(context, listen: false).update();
-                    Provider.of<UserState>(context, listen: false).update();
+                    // Provider.of<ProductState>(context, listen: false).update();
+                    // Provider.of<UserState>(context, listen: false).update();
                     Navigator.of(context).popUntil((route) => route.isFirst);
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
