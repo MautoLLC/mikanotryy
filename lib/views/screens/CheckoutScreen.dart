@@ -291,7 +291,7 @@ class CheckoutScreen extends StatelessWidget {
                         ),
                         Text(
                           '${currencyState.currency!.currencySymbol}' +
-                              "${productState.selectedProductsPrice}",
+                              "${productState.selectedProductsPrice.toStringAsFixed(2)}",
                           style: TextStyle(fontSize: 14, color: mainColorTheme),
                         ),
                       ],
