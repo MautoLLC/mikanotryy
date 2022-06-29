@@ -107,7 +107,7 @@ class _ItemElementState extends State<ItemElement> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "${Provider.of<CurrencyState>(context, listen: false).currency!.currencySymbol} ${widget.product.Price}",
+                      "${Provider.of<CurrencyState>(context, listen: false).currency!.currencySymbol} ${widget.product.Price.toStringAsFixed(2)}",
                       style: TextStyle(
                         fontSize: 14,
                         color: mainBlackColorTheme,
