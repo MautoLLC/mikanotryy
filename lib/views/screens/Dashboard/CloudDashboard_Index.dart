@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
@@ -12,6 +13,8 @@ import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+
+import '../../widgets/Custom_GaugeWidget.dart';
 
 class CloudDashboard_Index extends StatefulWidget {
   final int RefreshRate;
@@ -157,10 +160,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         color: mainGreyColorTheme2,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: GaugeWidget(
+                                      child: Custom_GaugeWidget(
                                           title: lbl_RPM,
                                           value:
-                                              (double.parse(cloud.Rpm.value)))),
+                                              (double.parse(cloud.Rpm.value)),
+                                      min:0,max:3000)),
                                   SizedBox(height: 10),
                                   Container(
                                       height: 160,
@@ -169,11 +173,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         color: mainGreyColorTheme2,
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: GaugeWidget(
+                                      child: Custom_GaugeWidget(
                                           title: lbl_Actual_Power,
                                           value:
-                                              (double.parse(cloud.GeneratorLoad.value)),
-                                          needleColor: mainColorTheme)),
+                                              (double.parse(cloud.GeneratorLoad.value/1000)),
+                                          needleColor: mainColorTheme,min:0,max: 200,)),
                                 ],
                               ),
                               SizedBox(width: 10),
@@ -385,7 +389,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               ),
                               infotile(
                                 title: lbl_Load,
-                                value: cloud.GeneratorLoad.value.toString(),
+                                value: cloud.GeneratorLoad.value/1000.toString(),
                               ),
                             ],
                           )

@@ -13,6 +13,8 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/Custom_GaugeWidget.dart';
+
 class LanDashboard_Index extends StatefulWidget {
   final int RefreshRate;
   LanDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
@@ -157,9 +159,10 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        child: GaugeWidget(
+                                        child: Custom_GaugeWidget(
                                             title: lbl_RPM,
-                                            value: ((lan.Rpm.return_value)))),
+                                            value: ((lan.Rpm.return_value.toDouble())),
+                                        min:0,max: 3000,)),
                                     SizedBox(height: 10),
                                     Container(
                                         height: 160,
@@ -169,11 +172,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        child: GaugeWidget(
+                                        child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
                                             value: ((lan
                                                     .GeneratorLoad.return_value)
                                                 .toDouble()),
+                                            min:0,
+                                            max:200,
                                             needleColor: mainColorTheme)),
                                   ],
                                 ),
@@ -398,7 +403,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 infotile(
                                   title: lbl_Load,
                                   value:
-                                      lan.GeneratorLoad.return_value.toString(),
+                                  (lan.GeneratorLoad.return_value).toString(),
                                 ),
                               ],
                             )
