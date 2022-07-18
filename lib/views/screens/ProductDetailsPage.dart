@@ -166,7 +166,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         TitleText(title: lbl_About_the_product),
                         SizedBox(height: 11),
                         Text(
-                          widget.product.Description,
+                          widget.product.Description
+                          .replaceAll("</p>", "")
+                          .replaceAll("<p>", "")
+                          .replaceAll("&nbsp;", ""),
                           maxLines: 1000,
                           style: TextStyle(
                               fontSize: 12,
@@ -199,71 +202,74 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                   ]),
             ),
-            userState.guestLogin
-                ? Container()
-                : Align(
+            if (userState.guestLogin) Container() else Align(
                     alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      height: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () async {
-                                CartProduct p = CartProduct(
-                                    product: widget.product,
-                                    quantity: Quantity);
-                                state.addProduct(p);
+                    child: Container(
+                      height: 60,
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  CartProduct p = CartProduct(
+                                      product: widget.product,
+                                      quantity: Quantity);
+                                  state.addProduct(p);
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => CartPage())));
-                              },
-                              child: Container(
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0)),
-                                  color: mainBlackColorTheme,
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: ((context) => CartPage())));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50.0)),
+                                    color: mainBlackColorTheme,
+                                  ),
+                                  child: Center(
+                                      child: Text(lbl_Buy_Now,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontFamily: PoppinsFamily))),
                                 ),
-                                child: Center(
-                                    child: Text(lbl_Buy_Now,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontFamily: PoppinsFamily))),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                CartProduct p = CartProduct(
-                                    product: widget.product,
-                                    quantity: Quantity);
-                                state.addProduct(p);
-                                toast("${widget.product.Name} added to cart");
-                              },
-                              child: Container(
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50.0)),
-                                  color: mainColorTheme,
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  CartProduct p = CartProduct(
+                                      product: widget.product,
+                                      quantity: Quantity);
+                                  state.addProduct(p);
+                                  toast("${widget.product.Name} added to cart");
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50.0)),
+                                    color: mainColorTheme,
+                                  ),
+                                  child: Center(
+                                      child: Text(lbl_Add_To_Cart,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontFamily: PoppinsFamily))),
                                 ),
-                                child: Center(
-                                    child: Text(lbl_Add_To_Cart,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontFamily: PoppinsFamily))),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   )

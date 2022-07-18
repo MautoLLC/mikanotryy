@@ -24,7 +24,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final emailController = TextEditingController();
   final messageController = TextEditingController();
 
-  List<String> ListIcons = [ic_Mail, ic_Location];
+  List<String> ListIcons = [ic_Mail, ic_Contact_Us, ic_Location];
   @override
   Widget build(BuildContext context) {
     return Consumer<UserState>(
@@ -80,24 +80,48 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                     0.0, 0.0, 0.0, 20.0),
                                 child: Row(
                                   children: [
-                                    ImageBox(image: ListIcons[1]),
+                                    ImageBox(image: ListIcons[1], color: Colors.black),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           14.3, 0.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            snapshot.data!.companyAddress
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontFamily: PoppinsFamily),
-                                          ),
-                                        ],
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width*0.5,
+                                        child: Text(
+                                          snapshot.data!.companyPhoneNumber
+                                              .toString(),
+                                              maxLines: 5,
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: PoppinsFamily),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 0.0, 0.0, 20.0),
+                                child: Row(
+                                  children: [
+                                    ImageBox(image: ListIcons[2]),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          14.3, 0.0, 0.0, 0.0),
+                                      child: SizedBox(
+                                        width: MediaQuery.of(context).size.width*0.5,
+                                        child: Text(
+                                          snapshot.data!.companyAddress
+                                              .toString(),
+                                              maxLines: 5,
+                                              softWrap: true,
+                                              overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: PoppinsFamily),
+                                        ),
                                       ),
                                     ),
                                   ],

@@ -64,27 +64,65 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: BankingBottomNavigationBar(
-        backgroundColor: bottomNavigationBarColor,
-        selectedItemColor: bottomNavigationBarSelectedItemColor,
-        unselectedItemColor: Colors.white,
-        items: <BankingBottomNavigationBarItem>[
-          BankingBottomNavigationBarItem(icon: ic_menu),
-          BankingBottomNavigationBarItem(icon: ic_search),
-          BankingBottomNavigationBarItem(icon: ic_dog_house),
-          if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_handcart),
-          if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_customer),
+    return WillPopScope(
+      onWillPop: ()async {
+        bool toExit = false;
+        await showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Exit Dialog'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('Are you sure you want to exit the app?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Yes'),
+            onPressed: () {
+              Navigator.pop(context);
+              toExit = true;
+            },
+          ),
+          TextButton(
+            child: const Text('No'),
+            onPressed: () {
+              Navigator.pop(context);
+              toExit = false;
+            },
+          ),
         ],
-        currentIndex: selectedIndex,
-        unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),
-        selectedIconTheme: IconThemeData(
-            color: bottomNavigationBarSelectedItemColor, size: 20),
-        onTap: _onItemTapped,
-        type: BankingBottomNavigationBarType.fixed,
+      );
+    },
+  );
+    return toExit;    
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        bottomNavigationBar: BankingBottomNavigationBar(
+          backgroundColor: bottomNavigationBarColor,
+          selectedItemColor: bottomNavigationBarSelectedItemColor,
+          unselectedItemColor: Colors.white,
+          items: <BankingBottomNavigationBarItem>[
+            BankingBottomNavigationBarItem(icon: ic_menu),
+            BankingBottomNavigationBarItem(icon: ic_search),
+            BankingBottomNavigationBarItem(icon: ic_dog_house),
+            if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_handcart),
+            if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_customer),
+          ],
+          currentIndex: selectedIndex,
+          unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),
+          selectedIconTheme: IconThemeData(
+              color: bottomNavigationBarSelectedItemColor, size: 20),
+          onTap: _onItemTapped,
+          type: BankingBottomNavigationBarType.fixed,
+        ),
+        body: pages[selectedIndex],
       ),
-      body: pages[selectedIndex],
     );
   }
 }
