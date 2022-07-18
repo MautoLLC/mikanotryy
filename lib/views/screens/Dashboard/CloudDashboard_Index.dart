@@ -176,7 +176,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: Custom_GaugeWidget(
                                           title: lbl_Actual_Power,
                                           value:
-                                              (double.parse(cloud.GeneratorLoad.value/1000)),
+                                              (double.parse(cloud.GeneratorLoad.value)/1000),
                                           needleColor: mainColorTheme,min:0,max: 200,)),
                                 ],
                               ),
@@ -389,7 +389,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               ),
                               infotile(
                                 title: lbl_Load,
-                                value: cloud.GeneratorLoad.value/1000.toString(),
+                                value: (double.parse(cloud.GeneratorLoad.value)/1000).toString(),
                               ),
                             ],
                           )
