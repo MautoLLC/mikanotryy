@@ -24,6 +24,7 @@ class ProductsService {
       params["CategoryId"] = categoryID;
     }
     params['Fields'] = Params;
+    params['PublishedStatus'] = true;
     Response response = await dio.get(
       MikanoShopGetAllProductsURL,
       queryParameters: params,
@@ -55,6 +56,7 @@ class ProductsService {
       params["page"] = page;
     }
     params['Fields'] = Params;
+    params['PublishedStatus'] = true;
     Response response = await dio.get(
       MikanoShopGetTopDealsProductsURL,
       queryParameters: params,
@@ -86,6 +88,7 @@ class ProductsService {
       params["page"] = page;
     }
     params['Fields'] = Params;
+    params['PublishedStatus'] = true;
     Response response = await dio.get(
       MikanoShopGetFeaturedProductsURL,
       queryParameters: params,
