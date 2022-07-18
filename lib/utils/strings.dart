@@ -30,7 +30,7 @@ const lbl_Privacy = 'Privacy';
 const lbl_Terms = 'Terms';
 const txt_Terms =
     'By accessing our app, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.';
-const lbl_Use_License = 'Use License';
+const lbl_Use_License = 'User License';
 const txt_Use_License =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
@@ -89,11 +89,11 @@ const lbl_Load = 'Load';
 
 const lbl_Categories = 'Categories';
 const lbl_Search = 'Search';
-const lbl_Top_Categories = 'Top Categories';
+const lbl_Top_Categories = 'Divisions';
 const lbl_Popular_Products = 'Popular Products';
 const lbl_View_more = 'View more';
 const lbl_Featured_Products = 'Featured products';
-const lbl_Top_Brands = 'Top Brands';
+const lbl_Top_Brands = 'Brands and Categories';
 const lbl_Trending_Now = 'Trending Now';
 const lbl_Top_Products = 'Top Products';
 const lbl_About_the_product = 'About the product';
