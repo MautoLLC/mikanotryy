@@ -14,7 +14,7 @@ class TechnicianModel {
         json['firstName'] + " " + json['lastName'],
         json['image'] ?? "",
         json['phoneNumber'] ?? "",
-        json['email']);
+        json['email'] ?? "");
   }
 
   Map<String, dynamic> toJson() {
