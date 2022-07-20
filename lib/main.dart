@@ -14,6 +14,7 @@ import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
 import 'State/CarouselState.dart';
 import 'State/InspectionsState.dart';
+import 'State/LoadCalculationState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
 import 'package:flutter/services.dart';
@@ -67,6 +68,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => WSVGeneratorState())),
         ChangeNotifierProvider<CurrencyState>(
             create: ((context) => CurrencyState())),
+        ChangeNotifierProvider<LoadCalculationState>(
+            create: ((context) => LoadCalculationState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,
