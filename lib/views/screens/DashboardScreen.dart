@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:mymikano_app/services/LocalUserPositionService.dart';
 
 import 'ListPage.dart';
+import 'LoadCalculationScreen.dart';
 
 class Dashboard extends StatefulWidget {
   static var tag = "/T5Dashboard";
@@ -69,7 +70,9 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoadCalculationScreen()));
+                              },
                               child: SvgPicture.asset(ic_KVA,
                                   height: 50, width: 50))),
                       Align(
