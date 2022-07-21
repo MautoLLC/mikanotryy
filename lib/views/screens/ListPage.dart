@@ -25,7 +25,7 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  TextEditingController seearchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   bool isfirst = true;
 
@@ -113,8 +113,9 @@ class _ListPageState extends State<ListPage> {
                       fontSize: textSizeMedium, fontFamily: PoppinsFamily),
                   obscureText: false,
                   cursorColor: black,
-                  controller: seearchController,
-                  onChanged: state.fillListOfProductsToShow,
+                  controller: searchController,
+                  onFieldSubmitted: state.setSearchTerm,
+                  // onChanged: ,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
@@ -234,24 +235,11 @@ class _ListPageState extends State<ListPage> {
                         childAspectRatio: 0.8,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10),
-                    itemCount: seearchController.text.length != 0
-                        ? state.ListOfProductsToShow.length
-                        : state.ListOfProducts.length,
+                    itemCount: state.ListOfProducts.length,
                     itemBuilder: (context, index) {
-                      if ((seearchController.text.length != 0
-                              ? state.ListOfProductsToShow.length
-                              : state.ListOfProducts.length) !=
-                          0) {
                         return ItemElement(
-                          product: (seearchController.text.length != 0
-                              ? state.ListOfProductsToShow
-                              : state.ListOfProducts)[index],
+                          product: state.ListOfProducts[index],
                         );
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
                     },
                   ),
                 ),

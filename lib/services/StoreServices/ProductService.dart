@@ -12,7 +12,7 @@ class ProductsService {
   String Params =
       "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
   Future<List<Product>> getProducts(
-      {int limit = -1, int page = -1, int categoryID = -1}) async {
+      {int limit = -1, int page = -1, int categoryID = -1, String searchTerm = ''}) async {
     Map<String, dynamic> params = {};
     if (limit != -1) {
       params["limit"] = limit;
@@ -22,6 +22,9 @@ class ProductsService {
     }
     if (categoryID != -1) {
       params["CategoryId"] = categoryID;
+    }
+    if(searchTerm != ''){
+      params["Name"] = searchTerm;
     }
     params['Fields'] = Params;
     params['PublishedStatus'] = true;

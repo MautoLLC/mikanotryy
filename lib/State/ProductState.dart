@@ -36,8 +36,10 @@ class ProductState extends ChangeNotifier {
   List<ProductCategory> AllFiltersForCategories = [];
   int selectedCategoryId = -1;
   int mainParentCategory = -1;
+  String _searchTerm = '';
 
   void clear() {
+    _searchTerm = '';
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();
@@ -94,6 +96,16 @@ class ProductState extends ChangeNotifier {
     await updateCart();
     notifyListeners();
   }
+
+  setSearchTerm(String term) async{
+    _searchTerm = term;
+    page = 1;
+    ListOfProducts.clear();
+    await getListOfProducts(selectedCategoryId);
+    notifyListeners();
+  }
+
+  String searchTerm() => _searchTerm;
 
   setselectedCategoryId(int id){
     selectedCategoryId = id;
@@ -227,12 +239,13 @@ class ProductState extends ChangeNotifier {
 
   void clearListOfProducts() {
     ListOfProducts = [];
+    page = 1;
     notifyListeners();
   }
 
   Future<void> getListOfProducts([int categoryID = -1]) async {
     ListOfProducts.addAll(await ProductsService()
-        .getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID));
+        .getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID, searchTerm: _searchTerm));
     notifyListeners();
   }
 
