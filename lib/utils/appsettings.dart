@@ -98,6 +98,18 @@ const MikanoShopPrimaryCurrency = '$MikanoShopMainURl/currencies/primary';
 const MikanoShopGetOrdersByCustomerIdURL =
     '$MikanoShopMainURl/orders/customer/{customerID}';
 const MikanoShopCategoriesURL = '$MikanoShopMainURl/categories';
+const MikanoShopCategoriesKva = '$MikanoShopMainURl/categories/generators/{kva}';
+
+const MikanoLoadCalculationURL = isProduction
+          ?"https://services.mikano-intl.com/load-calculation-api/api"
+          :"";
+const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
+const MikanoLoadCalculationCategoriesWithId = "$MikanoLoadCalculationURL/Categories/{id}";
+const MikanoLoadCalculationEquipments = "$MikanoLoadCalculationURL/Equipments";
+const MikanoLoadCalculationEquipmentsWithId = "$MikanoLoadCalculationURL/Equipments/{id}";
+const MikanoLoadCalculationUnits = "$MikanoLoadCalculationURL/Units";
+const MikanoLoadCalculationUnitsWithId = "$MikanoLoadCalculationURL/Units/{id}";
+const MikanoLoadCalculationCalculation= "$MikanoLoadCalculationURL/LoadCalculation/{util}";
 
 const mainAppName = 'My Mikano App';
 
