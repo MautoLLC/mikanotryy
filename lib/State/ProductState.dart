@@ -265,7 +265,7 @@ class ProductState extends ChangeNotifier {
           product.liked = false;
           favoriteProducts.remove(item);
           await CustomerService()
-              .deleteFavoriteItemsforLoggedInUser([item.product.id]);
+              .deleteFavoriteItemsforLoggedInUser([item.id]);
           break;
         }
       }
