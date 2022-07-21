@@ -24,6 +24,7 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<UserState>(context, listen: false).fetchAllAddresses();
     super.initState();
   }
 
@@ -38,14 +39,10 @@ class _AddressScreenState extends State<AddressScreen> {
             children: [
               TopRowBar(title: lbl_Address),
               SizedBox(height: 30),
-              FutureBuilder(
-                future: CustomerService().GetShippingAddressesForLoggedInUser(),
-                builder: (context, AsyncSnapshot<List<Address>> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
+              ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
+                      itemCount: state.listofAddresses.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding:
@@ -66,7 +63,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        snapshot.data!
+                                        state.listofAddresses
                                             .elementAt(index)
                                             .city
                                             .toString(),
@@ -77,7 +74,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                       ),
                                       SizedBox(height: 11),
                                       Text(
-                                        snapshot.data!
+                                        state.listofAddresses
                                             .elementAt(index)
                                             .address1
                                             .toString(),
@@ -93,29 +90,33 @@ class _AddressScreenState extends State<AddressScreen> {
                             ),
                             Align(
                               alignment: Alignment.centerRight,
-                              child: Switch(
-                                  value: snapshot.data!.elementAt(index).chosen,
-                                  onChanged: (value) {
-                                    state.addAddress(
-                                        snapshot.data!
-                                            .elementAt(index)
-                                            .address1
-                                            .toString(),
-                                        snapshot.data!
-                                            .elementAt(index)
-                                            .city
-                                            .toString());
-                                  }),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Switch(
+                                      value: state.listofAddresses.elementAt(index).address1 == state.ChosenAddress.address1,
+                                      onChanged: (value) {
+                                        state.addAddress(
+                                            state.listofAddresses
+                                                .elementAt(index)
+                                                .address1
+                                                .toString(),
+                                            state.listofAddresses
+                                                .elementAt(index)
+                                                .city
+                                                .toString());
+                                      }),
+                                      if(state.listofAddresses.elementAt(index).address1 != state.ChosenAddress.address1)
+                                        IconButton(icon: Icon(Icons.delete), onPressed: (){
+                                          state.deleteAddress(state.listofAddresses.elementAt(index).id!);
+                                        },)
+                                ],
+                              ),
                             )
                           ]),
                         );
                       },
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
+                    ),
               SizedBox(height: 4),
               Row(
                 children: [

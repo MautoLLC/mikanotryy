@@ -12,7 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 class CustomerService {
   Dio dio = new Dio();
-  Future<bool> addShippingAddress(Address address, TechnicianModel User) async {
+  Future<bool> addShippingAddress(Address address) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       Response response = await dio.post(
@@ -24,14 +24,15 @@ class CustomerService {
           data: {
             "city": address.city,
             "address1": address.address1,
-            "first_name": User.username,
-            "last_name": User.username,
-            "email": User.email,
+            "first_name": address.firstName,
+            "last_name": address.lastName,
+            "email": address.email,
             "country_id": 2,
             "state_province_id": 2,
             "zip_postal_code": "1001",
-            "phone_number": User.phoneNumber,
+            "phone_number": address.phoneNumber,
           });
+              
       if (response.statusCode == 200) {
         toast("Address Added Successfully");
         return true;
@@ -612,6 +613,26 @@ class CustomerService {
     } catch (e) {
       debugPrint(e.toString());
       return orders;
+    }
+  }
+
+  Future<bool> deleteAddress(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      Response response = await dio.delete(
+        MikanoShopDeleteAddress.replaceAll(
+            '{customerId}', prefs.getString("StoreCustomerId").toString()).replaceAll("{addressId}", id.toString()),
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('Failed to delete Address');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete Address');
     }
   }
 }

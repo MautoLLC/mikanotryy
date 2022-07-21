@@ -13,6 +13,7 @@ class UserState extends ChangeNotifier {
   Address ChosenAddress = Address();
   bool checkedValueForOrder = false;
   bool guestLogin = true;
+  List<Address> listofAddresses = [];
 
   UserState() {
     update();
@@ -35,6 +36,17 @@ class UserState extends ChangeNotifier {
     fetchAddress();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
+    notifyListeners();
+  }
+
+  fetchAllAddresses() async {
+    listofAddresses = await CustomerService().GetShippingAddressesForLoggedInUser();
+    notifyListeners();
+  }
+
+  deleteAddress(int id) async{
+    if(await CustomerService().deleteAddress(id))
+      listofAddresses.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 
@@ -62,9 +74,21 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> addAddress(String address, String city) async {
-    Address newAddress = Address(address1: address, city: city);
+    Address newAddress = Address(address1: address, city: city,
+     firstName: User.username,
+     lastName: User.username,
+     email: User.email,
+     countryId: 2,
+     stateProvinceId: 2,
+     zipPostalCode: "1001",
+     phoneNumber: User.phoneNumber
+     );
     ChosenAddress = newAddress;
-    await CustomerService().addShippingAddress(newAddress, User);
+    if(await CustomerService().addShippingAddress(newAddress) && !listofAddresses.any((element) => element.address1 == newAddress.address1)){
+      listofAddresses.add(newAddress);
+    } else {
+      newAddress.chosen = true;
+    }
     notifyListeners();
   }
 
