@@ -26,7 +26,6 @@ class ProductState extends ChangeNotifier {
   List<Product> ListOfProducts = [];
   int allProductNumbers = 0;
   int page = 0;
-  List<Product> ListOfProductsToShow = [];
   List<String> filters = [];
   List<int> categoryFilters = [];
   int ItemsPerPage = 6;
@@ -180,15 +179,6 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fillListOfProductsToShow(String searchTerm) async {
-    ListOfProductsToShow.clear();
-    ListOfProductsToShow = allProducts
-        .where((element) =>
-            element.Name.toLowerCase().contains(searchTerm.toLowerCase()))
-        .toList();
-    notifyListeners();
-  }
-
   Future<void> getFavorites() async {
     favoriteProducts =
         await CustomerService().getAllFavoriteItemsforLoggedInUser();
@@ -263,13 +253,28 @@ class ProductState extends ChangeNotifier {
       for (var item in favoriteProducts) {
         if (item.product.id == product.id) {
           product.liked = false;
+          item.product.liked = false;
           favoriteProducts.remove(item);
           await CustomerService()
               .deleteFavoriteItemsforLoggedInUser([item.id]);
           break;
         }
       }
-      product.liked = false;
+      try{
+        topDealProducts.where((element) => element.id == product.id).first.liked = false;
+      } catch (e){
+        debugPrint(e.toString());
+      }
+      try{
+        featuredProducts.where((element) => element.id == product.id).first.liked = false;
+      } catch (e){
+        debugPrint(e.toString());
+      }
+      try{
+        trendingProducts.where((element) => element.id == product.id).first.liked = false;
+      } catch (e){
+        debugPrint(e.toString());
+      }
       toast("Product removed from favorites");
     } else {
       FavoriteProduct t =
