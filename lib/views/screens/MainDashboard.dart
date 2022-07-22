@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
+import 'package:mymikano_app/State/MainDashboardState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -42,7 +43,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     if (!guestLogin) {
       pages.add(ProfileScreen());
     }
-    selectedIndex = 2;
+    Provider.of<MainDashboardState>(context, listen: false).setSelectedIndex(2);
     setState(() {});
     Future.delayed(Duration(seconds: 5), () async {
       await PaymentService()
@@ -56,72 +57,69 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     super.initState();
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: ()async {
-        bool toExit = false;
-        await showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Exit Dialog'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const <Widget>[
-              Text('Are you sure you want to exit the app?'),
-            ],
+    return Consumer<MainDashboardState>(
+      builder: ((context, mainDashboardState, child) => WillPopScope(
+        onWillPop: ()async {
+          bool toExit = false;
+          await showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Exit Dialog'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure you want to exit the app?'),
+              ],
+            ),
           ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Yes'),
-            onPressed: () {
-              Navigator.pop(context);
-              toExit = true;
-            },
-          ),
-          TextButton(
-            child: const Text('No'),
-            onPressed: () {
-              Navigator.pop(context);
-              toExit = false;
-            },
-          ),
-        ],
-      );
-    },
-  );
-    return toExit;    
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: BankingBottomNavigationBar(
-          backgroundColor: bottomNavigationBarColor,
-          selectedItemColor: bottomNavigationBarSelectedItemColor,
-          unselectedItemColor: Colors.white,
-          items: <BankingBottomNavigationBarItem>[
-            BankingBottomNavigationBarItem(icon: ic_menu),
-            BankingBottomNavigationBarItem(icon: ic_search),
-            BankingBottomNavigationBarItem(icon: ic_dog_house),
-            if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_handcart),
-            if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_customer),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                Navigator.pop(context);
+                toExit = true;
+              },
+            ),
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.pop(context);
+                toExit = false;
+              },
+            ),
           ],
-          currentIndex: selectedIndex,
-          unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),
-          selectedIconTheme: IconThemeData(
-              color: bottomNavigationBarSelectedItemColor, size: 20),
-          onTap: _onItemTapped,
-          type: BankingBottomNavigationBarType.fixed,
+        );
+      },
+      );
+      return toExit;    
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          bottomNavigationBar: BankingBottomNavigationBar(
+            backgroundColor: bottomNavigationBarColor,
+            selectedItemColor: bottomNavigationBarSelectedItemColor,
+            unselectedItemColor: Colors.white,
+            items: <BankingBottomNavigationBarItem>[
+              BankingBottomNavigationBarItem(icon: ic_menu),
+              BankingBottomNavigationBarItem(icon: ic_search),
+              BankingBottomNavigationBarItem(icon: ic_dog_house),
+              if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_handcart),
+              if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_customer),
+            ],
+            currentIndex: mainDashboardState.selectedIndex(),
+            unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),
+            selectedIconTheme: IconThemeData(
+                color: bottomNavigationBarSelectedItemColor, size: 20),
+            onTap: mainDashboardState.setSelectedIndex,
+            type: BankingBottomNavigationBarType.fixed,
+          ),
+          body: pages[mainDashboardState.selectedIndex()],
         ),
-        body: pages[selectedIndex],
+      )
       ),
     );
   }

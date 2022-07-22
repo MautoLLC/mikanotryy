@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'State/CarouselState.dart';
 import 'State/InspectionsState.dart';
 import 'State/LoadCalculationState.dart';
+import 'State/MainDashboardState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
 import 'package:flutter/services.dart';
@@ -70,6 +71,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => CurrencyState())),
         ChangeNotifierProvider<LoadCalculationState>(
             create: ((context) => LoadCalculationState())),
+        ChangeNotifierProvider<MainDashboardState>(
+            create: ((context) => MainDashboardState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

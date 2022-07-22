@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mymikano_app/State/CarouselState.dart';
+import 'package:mymikano_app/State/MainDashboardState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
@@ -55,10 +56,11 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Consumer2<ProductState, UserState>(
-      builder: (context, state, userState, child) => Scaffold(
+    return Consumer3<ProductState, UserState, MainDashboardState>(
+      builder: (context, state, userState, mainDashboardState, child) => Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
+            controller: mainDashboardState.scrollController(),
             child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
               SafeArea(
                 child: Container(
