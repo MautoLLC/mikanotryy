@@ -32,8 +32,26 @@ class CustomerService {
             "zip_postal_code": "1001",
             "phone_number": address.phoneNumber,
           });
+
+      Response response2 = await dio.post(
+          MikanoShopAddBillingAddress.replaceAll(
+              "{customerId}", prefs.getString("StoreCustomerId").toString()),
+          options: Options(headers: {
+            "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+          }),
+          data: {
+            "city": address.city,
+            "address1": address.address1,
+            "first_name": address.firstName,
+            "last_name": address.lastName,
+            "email": address.email,
+            "country_id": 2,
+            "state_province_id": 2,
+            "zip_postal_code": "1001",
+            "phone_number": address.phoneNumber,
+          });
               
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response2.statusCode == 200) {
         toast("Address Added Successfully");
         return true;
       } else {
