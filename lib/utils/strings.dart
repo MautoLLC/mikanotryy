@@ -27,12 +27,15 @@ const lbl_Language = 'Language';
 const lbl_Purchases = 'Purchases';
 const lbl_Privacy = 'Privacy';
 
-const lbl_Terms = 'Terms';
+const lbl_Terms = 'PARTIES';
 const txt_Terms =
-    'By accessing our app, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.';
-const lbl_Use_License = 'User License';
+    "This End User License Agreement ), dated as of July 20-2022 , is entered into by Mikano, located at 934,35 Acme Road, Ogba, Ikeja.\n\n"
+    "The Company and the End User may each be referred to as “Party” and collectively as “Parties”.";
+const lbl_Use_License = 'TERMS & CONDITIONS';
 const txt_Use_License =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+    "• The Company authorizes the End User non-exclusive right to use and operate the data storing software, DataSave.\n\n"
+"• The End User is prohibited from modifying and adapting the Company’s software for commercial purposes.\n\n"
+"• The End User is not allowed to decompile , Reverse engineer , or share any sensitive data with third parties.\n\n";
 
 const lbl_SubCategory = 'Sub Category';
 const lbl_Address = 'Address';

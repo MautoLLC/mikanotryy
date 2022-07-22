@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 class TitleText extends StatelessWidget {
   final String title;
-  const TitleText({Key? key, required this.title}) : super(key: key);
+  final double textSize;
+  const TitleText({Key? key, required this.title, this.textSize = 24}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 24,
+        fontSize: textSize,
         fontWeight: FontWeight.bold,
         fontFamily: "Poppins",
         color: Colors.black,
