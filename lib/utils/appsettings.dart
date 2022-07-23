@@ -84,6 +84,7 @@ const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 const MikanoShopGetTopDealsProductsURL = '$MikanoShopMainURl/products/topDeals';
 const MikanoShopGetFeaturedProductsURL = '$MikanoShopMainURl/products/featured';
+const MikanoShopGetRelatedProductsById = '$MikanoShopMainURl/RelatedProducts/{Id}';
 const MikanoShopAddShippingAddress =
     '$MikanoShopMainURl/customers/{customerId}/shippingaddress';
 const MikanoShopAddBillingAddress =

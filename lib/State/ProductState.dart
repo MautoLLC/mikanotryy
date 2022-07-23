@@ -36,9 +36,11 @@ class ProductState extends ChangeNotifier {
   int selectedCategoryId = -1;
   int mainParentCategory = -1;
   String _searchTerm = '';
+  List<Product> relatedProducts = [];
 
   void clear() {
     _searchTerm = '';
+    relatedProducts.clear();
     selectMode = false;
     cashOnDelivery = true;
     productsInCart.clear();
@@ -93,6 +95,12 @@ class ProductState extends ChangeNotifier {
     allCategories.retainWhere((element) => set.add(element.id));
     
     await updateCart();
+    notifyListeners();
+  }
+
+  getRelatedProducts(int id) async{
+    relatedProducts.clear();
+    relatedProducts = await ProductsService().getRelatedProducts(id);
     notifyListeners();
   }
 
