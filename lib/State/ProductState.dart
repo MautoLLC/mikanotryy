@@ -101,6 +101,7 @@ class ProductState extends ChangeNotifier {
   getRelatedProducts(int id) async{
     relatedProducts.clear();
     relatedProducts = await ProductsService().getRelatedProducts(id);
+    notifyListeners();
   }
 
   setSearchTerm(String term) async{
