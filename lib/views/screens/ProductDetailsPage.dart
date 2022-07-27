@@ -12,11 +12,14 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/CartPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
+import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
+import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'PDFViewScreen.dart';
+import 'RFQFormScreen.dart';
 
 int Quantity = 1;
 
@@ -37,6 +40,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   RegExp exp2 = RegExp(r"<[^>]*/>", multiLine: true, caseSensitive: true);
 
   RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<ProductState>(context, listen: false).getRelatedProducts(widget.product.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,9 +186,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               color: mainGreyColorTheme),
                         ),
                         SizedBox(height: 30),
-                        TitleText(title: lbl_Data_Sheet),
+                        if(widget.product.dataSheetLabel.toString() != "")
+                          TitleText(title: lbl_Data_Sheet),
                         SizedBox(height: 11),
-                        GestureDetector(
+                        if(widget.product.dataSheetLabel.toString() != "")
+                          GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PDFViewScreen(
@@ -198,11 +209,35 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ],
                     ),
                     SizedBox(
+                      height: 30,
+                    ),
+                    if(state.relatedProducts.length != 0)
+                      TitleText(title: lbl_Related_Products),
+                    if(state.relatedProducts.length != 0)
+                      SizedBox(
+                        height: 250,
+                        child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.relatedProducts.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: SizedBox(
+                                      width: 140,
+                                      child: ItemElement(
+                                        product: state.relatedProducts[index],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                      ),
+                    SizedBox(
                       height: 50,
                     ),
                   ]),
             ),
-            if (userState.guestLogin) Container() else Align(
+            if (userState.guestLogin) Container() else if(!widget.product.call_for_price) Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       height: 60,
@@ -273,6 +308,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
                     ),
                   )
+                  else
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 60,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: T13Button(textContent: 'Request For Quote', onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RFQFormScreen(id: widget.product.id)));
+                          }),
+                        )))
           ]),
         ),
       )),

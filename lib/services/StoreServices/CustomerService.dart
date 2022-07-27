@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/models/RFQModel.dart';
 import 'package:mymikano_app/models/StoreModels/AddressModel.dart';
 import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
@@ -672,4 +673,36 @@ class CustomerService {
       return false;
     }
   }
+
+      Future<bool> requestAQuote(RFQ rfq, int productId) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      //Todo the logic
+      try {
+        Response response = await dio.post(
+          MikanoShopRfq,
+          data: {
+            "rfq": {
+              "name": rfq.name,
+              "email": rfq.email,
+              "phone": rfq.phone,
+              "address": rfq.address,
+              "note": rfq.note,
+              "product_id": productId,
+              "customer_id": prefs.getString("StoreCustomerId").toString(),
+            } 
+          },
+          options: Options(headers: {
+            "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+          }),
+        );
+        if (response.statusCode == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+
 }

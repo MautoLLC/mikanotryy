@@ -84,6 +84,7 @@ const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 const MikanoShopGetTopDealsProductsURL = '$MikanoShopMainURl/products/topDeals';
 const MikanoShopGetFeaturedProductsURL = '$MikanoShopMainURl/products/featured';
+const MikanoShopGetRelatedProductsById = '$MikanoShopMainURl/Relatedproducts/{Id}';
 const MikanoShopAddShippingAddress =
     '$MikanoShopMainURl/customers/{customerId}/shippingaddress';
 const MikanoShopAddBillingAddress =
@@ -104,6 +105,7 @@ const MikanoShopGetOrdersByCustomerIdURL =
     '$MikanoShopMainURl/orders/customer/{customerID}';
 const MikanoShopCategoriesURL = '$MikanoShopMainURl/categories';
 const MikanoShopCategoriesKva = '$MikanoShopMainURl/categories/generators/{kva}';
+const MikanoShopRfq= "$MikanoShopMainURl/rfq";
 
 const MikanoLoadCalculationURL = isProduction
           ?"https://services.mikano-intl.com/load-calculation-api/api"
@@ -115,6 +117,7 @@ const MikanoLoadCalculationEquipmentsWithId = "$MikanoLoadCalculationURL/Equipme
 const MikanoLoadCalculationUnits = "$MikanoLoadCalculationURL/Units";
 const MikanoLoadCalculationUnitsWithId = "$MikanoLoadCalculationURL/Units/{id}";
 const MikanoLoadCalculationCalculation= "$MikanoLoadCalculationURL/LoadCalculation/{util}";
+
 
 const mainAppName = 'My Mikano App';
 

@@ -10,7 +10,7 @@ class ProductsService {
   Dio dio = new Dio();
 
   String Params =
-      "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
+      "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order, call_for_price";
   Future<List<Product>> getProducts(
       {int limit = -1, int page = -1, int categoryID = -1, String searchTerm = ''}) async {
     Map<String, dynamic> params = {};
@@ -165,6 +165,29 @@ class ProductsService {
         return images;
       } else {
         throw Exception('Failed to load Carousel Items');
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
+    Future<List<Product>> getRelatedProducts(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      Response response = await dio.get(MikanoShopGetRelatedProductsById.replaceAll('{Id}', id.toString()),
+          options: Options(headers: {
+            'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
+          }));
+      if (response.statusCode == 200) {
+        List<Product> products = [];
+        for (var item in response.data['products']) {
+          Product product = Product.fromJson(item);
+          products.add(product);
+        }
+        return products;
+      } else {
+        throw Exception('Failed to load Related Products');
       }
     } catch (e) {
       debugPrint(e.toString());
