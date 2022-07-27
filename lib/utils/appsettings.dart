@@ -93,6 +93,7 @@ const MikanoShopDeleteAddress =
     '$MikanoShopMainURl/customers/{customerId}/AddressDelete/{addressId}';
 const MikanoShopGetUserById = '$MikanoShopMainURl/customers/{customerId}';
 const MikanoShopGetLoggedInUser = '$MikanoShopMainURl/customers/me';
+const MikanoShopDeleteLoggedInUser = '$MikanoShopMainURl/customers/me';
 const MikanoFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items';
 const MikanoDeleteFavoritAndCartItems =
     '$MikanoShopMainURl/shopping_cart_items/delete';
