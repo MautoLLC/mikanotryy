@@ -12,11 +12,13 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/CartPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
+import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'PDFViewScreen.dart';
+import 'RFQFormScreen.dart';
 
 int Quantity = 1;
 
@@ -202,7 +204,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                   ]),
             ),
-            if (userState.guestLogin) Container() else Align(
+            if (userState.guestLogin) Container() else if(!widget.product.call_for_price) Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       height: 60,
@@ -273,6 +275,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ),
                     ),
                   )
+                  else
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 60,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: T13Button(textContent: 'Request For Quote', onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RFQFormScreen(id: widget.product.id)));
+                          }),
+                        )))
           ]),
         ),
       )),
