@@ -14,6 +14,7 @@ import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
+import 'package:mymikano_app/views/widgets/itemElement.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   RegExp exp2 = RegExp(r"<[^>]*/>", multiLine: true, caseSensitive: true);
 
   RegExp exp3 = RegExp(r"</[^>]*>", multiLine: true, caseSensitive: true);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<ProductState>(context, listen: false).getRelatedProducts(widget.product.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,9 +186,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               color: mainGreyColorTheme),
                         ),
                         SizedBox(height: 30),
-                        TitleText(title: lbl_Data_Sheet),
+                        if(widget.product.dataSheetLabel.toString() != "")
+                          TitleText(title: lbl_Data_Sheet),
                         SizedBox(height: 11),
-                        GestureDetector(
+                        if(widget.product.dataSheetLabel.toString() != "")
+                          GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PDFViewScreen(
@@ -199,6 +208,30 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         SizedBox(height: 50),
                       ],
                     ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    if(state.relatedProducts.length != 0)
+                      TitleText(title: lbl_Related_Products),
+                    if(state.relatedProducts.length != 0)
+                      SizedBox(
+                        height: 250,
+                        child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.relatedProducts.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: SizedBox(
+                                      width: 140,
+                                      child: ItemElement(
+                                        product: state.relatedProducts[index],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                      ),
                     SizedBox(
                       height: 50,
                     ),

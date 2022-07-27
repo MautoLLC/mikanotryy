@@ -100,6 +100,7 @@ const lbl_Top_Brands = 'Brands and Categories';
 const lbl_Trending_Now = 'Trending Now';
 const lbl_Top_Products = 'Top Products';
 const lbl_About_the_product = 'About the product';
+const lbl_Related_Products = 'Related Products';
 const lbl_Data_Sheet = 'DataSheet';
 const lbl_Buy_Now = 'Buy Now';
 const lbl_Generator_Alerts = 'Generator Alerts';

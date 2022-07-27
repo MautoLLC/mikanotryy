@@ -171,4 +171,27 @@ class ProductsService {
       return [];
     }
   }
+
+    Future<List<Product>> getRelatedProducts(int id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      Response response = await dio.get(MikanoShopGetRelatedProductsById.replaceAll('{Id}', id.toString()),
+          options: Options(headers: {
+            'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
+          }));
+      if (response.statusCode == 200) {
+        List<Product> products = [];
+        for (var item in response.data['products']) {
+          Product product = Product.fromJson(item);
+          products.add(product);
+        }
+        return products;
+      } else {
+        throw Exception('Failed to load Related Products');
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
 }
