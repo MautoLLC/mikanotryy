@@ -13,6 +13,7 @@ class Product {
   String dataSheetLabel;
   bool liked;
   bool isTopDeal;
+  bool call_for_price;
   Product(
       {required this.Name,
       required this.Price,
@@ -25,7 +26,8 @@ class Product {
       this.dataSheet = "",
       this.dataSheetLabel = "",
       this.id = 0,
-      this.isTopDeal = false});
+      this.isTopDeal = false,
+      this.call_for_price = false});
 
   // From json
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -56,7 +58,8 @@ class Product {
         dataSheet: data_Sheet,
         dataSheetLabel: dataSheetLabel,
         Rating: json['approved_rating_sum'],
-        isTopDeal: json['is_top_deal']);
+        isTopDeal: json['is_top_deal'],
+        call_for_price: json['call_for_price']);
   }
 
   // To json
@@ -71,7 +74,8 @@ class Product {
       ],
       'sku': Code,
       'Category': Category,
-      'approved_rating_sum': Rating
+      'approved_rating_sum': Rating,
+      'call_for_price': call_for_price
     };
   }
 }

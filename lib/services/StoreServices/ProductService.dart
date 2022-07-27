@@ -10,7 +10,7 @@ class ProductsService {
   Dio dio = new Dio();
 
   String Params =
-      "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order";
+      "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order, call_for_price";
   Future<List<Product>> getProducts(
       {int limit = -1, int page = -1, int categoryID = -1, String searchTerm = ''}) async {
     Map<String, dynamic> params = {};
