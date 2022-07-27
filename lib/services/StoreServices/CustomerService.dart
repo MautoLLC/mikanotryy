@@ -653,4 +653,23 @@ class CustomerService {
       throw Exception('Failed to delete Address');
     }
   }
+
+  Future<bool> deleteAccount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      Response response = await dio.delete(
+        MikanoShopDeleteLoggedInUser,
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }
