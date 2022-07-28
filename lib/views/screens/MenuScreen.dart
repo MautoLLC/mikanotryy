@@ -130,6 +130,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         // prefs!.setBool("DashboardFirstTimeAccess", true);
                         Navigator.of(context).push(
                           MaterialPageRoute(
+                            // builder: (context) => ApiConfigurationPage(),
                             builder: (context) => ApiConfigurationPage(),
                           ),
                         );
