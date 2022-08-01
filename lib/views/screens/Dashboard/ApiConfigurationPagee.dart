@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -8,24 +9,23 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
+import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../State/ApiConfigurationStatee.dart';
+
 class ApiConfigurationPagee extends StatelessWidget {
   ApiConfigurationPagee({Key? key}) : super(key: key);
-  final refreshRateController = TextEditingController();
+
   final cloudUsernameController = TextEditingController();
   final cloudPasswordController = TextEditingController();
-  final passwordController = TextEditingController();
-  final apiEndpointLanController = TextEditingController(text: lanESPUrl);
-  bool isFirstTimeInThisPage = true;
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<ApiConfigurationState>(
+    return Consumer<ApiConfigurationStatee>(
       builder: (context, value, child) => Scaffold(
           body: SafeArea(
         child: CustomScrollView(
@@ -140,46 +140,38 @@ class ApiConfigurationPagee extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 25),
-                                width: MediaQuery.of(context).size.width / 2.3,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border:
-                                        Border.all(color: mainGreyColorTheme)),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      hint: Text(
-                                        lbl_Generator_ID,
-                                        style: TextStyle(
-                                            color: mainGreyColorTheme,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                      icon: Icon(
-                                        Icons.arrow_drop_down,
-                                        color: mainGreyColorTheme,
-                                      ),
-                                      items: value.generatorNameList
-                                          .map(buildMenuItem)
-                                          .toList(),
-                                      value: value.chosenGeneratorName,
-                                      onChanged: (item) {
-                                        value.ChooseGeneratorName(
-                                            item.toString());
-                                        int i = (value.gens).indexWhere(
-                                            (element) =>
-                                                element.name == item.toString());
-                                        value.setChosenGeneratorId(
-                                            value.gens.elementAt(i).generatorId);
-                                      }),
-                                ),
-                              ),
-                  ]),
+                                padding: EdgeInsets.symmetric(horizontal: 0),
 
-    ]),
+                                child:
+                                      T13Button(
+                                      textContent: lbl_Fetch_Generators,
+                                      onPressed: () async {
+                                        value.getGeneratorIds(
+                                            cloudUsernameController.text,
+                                            cloudPasswordController.text);
+                                        //we need to save the cloudusername and password to shared pref and then got to fetch generator page//
+
+    SharedPreferences prefs =
+    await SharedPreferences.getInstance();
+    //value.Loading(true);
+    await value.saveCloudUser(
+    cloudUsernameController.text,
+    cloudPasswordController.text,
+  );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        // builder: (context) => ApiConfigurationPage(),
+        builder: (context) => FetchGenerators(),
       ),
-    //]
+    );
+
+                                      }),
+
+                  ),
+
+    ]),]
+      ),
+                      )
 ]),
     ),
     )

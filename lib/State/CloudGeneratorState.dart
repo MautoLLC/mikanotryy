@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
+import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 
 class CloudGeneratorState extends ChangeNotifier {
-  CloudDashBoard_Service cloudService = CloudDashBoard_Service();
+  CloudDashBoard_Service cloudService=new CloudDashBoard_Service();
   CloudSensor EngineState = CloudSensor(
       sensorID: "Error",
       sensorName: "Error",
