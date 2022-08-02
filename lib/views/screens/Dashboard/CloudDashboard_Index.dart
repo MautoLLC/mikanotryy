@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
+import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -14,11 +16,11 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../State/ApiConfigurationStatee.dart';
 import '../../widgets/Custom_GaugeWidget.dart';
 
 class CloudDashboard_Index extends StatefulWidget {
   final int RefreshRate;
-
   CloudDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
 
   @override
@@ -45,7 +47,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   }
 
   Future<void> isDataFetched() async {
-    isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
+    isFetched = await Provider.of<CloudGeneratorState>(context,listen: false)
         .FetchData();
   }
 
@@ -57,7 +59,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ApiConfigurationState, CloudGeneratorState>(
+    return Consumer2<ApiConfigurationStatee, CloudGeneratorState>(
         builder: (context, value, cloud, child) => Scaffold(
               backgroundColor: Colors.white,
               body: SafeArea(
@@ -104,7 +106,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         color: Colors.white,
                                         child: InkWell(
                                           onTap: () {
-                                            value.resetPreferences();
+                                            //value.resetPreferences();
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -136,6 +138,47 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                           ),
                           SizedBox(
                             height: 40,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                width: MediaQuery.of(context).size.width / 2.3,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border:
+                                    Border.all(color: mainGreyColorTheme)),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      hint: Text(
+                                        lbl_Generator_ID,
+                                        style: TextStyle(
+                                            color: mainGreyColorTheme,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                      icon: Icon(
+                                        Icons.arrow_drop_down,
+                                        color: mainGreyColorTheme,
+                                      ),
+                                      items: value.ConfigurationModelsList
+                                          .map(buildMenuItem)
+                                          .toList(),
+                                      value:value.selectedConfigurationModel.generatorId,
+                                      onChanged: (item) async {
+                                       ConfigurationModel model=value.ConfigurationModelsList.firstWhere((element) => element.generatorId==item);
+                                      value.selectedConfigurationModel=model;
+                                       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                       String SelectedConfigurationModel=jsonEncode(value.selectedConfigurationModel);
+                                       await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
+                                       setState(() {
+                                         
+                                       });
+                                      }),
+                                ),
+                              ),
+                            ],
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -423,6 +466,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
               ),
             ));
   }
+  DropdownMenuItem<String> buildMenuItem(ConfigurationModel model) =>
+      DropdownMenuItem(value: model.generatorId, child: Text(model.generatorName));
 }
 
 class infotile extends StatelessWidget {

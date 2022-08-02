@@ -12,6 +12,7 @@ import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
+import 'State/ApiConfigurationStatee.dart';
 import 'State/CarouselState.dart';
 import 'State/InspectionsState.dart';
 import 'State/LoadCalculationState.dart';
@@ -57,6 +58,8 @@ class MyApp extends StatelessWidget {
             create: (context) => InspectionsState()),
         ChangeNotifierProvider<ApiConfigurationState>(
             create: ((context) => ApiConfigurationState())),
+        ChangeNotifierProvider<ApiConfigurationStatee>(
+            create: ((context) => ApiConfigurationStatee())),
         ChangeNotifierProvider<RequestFormState>(
             create: ((context) => RequestFormState())),
         ChangeNotifierProvider<CarouselState>(

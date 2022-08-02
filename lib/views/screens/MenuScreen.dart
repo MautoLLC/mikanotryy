@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'AboutUsScreen.dart';
 import 'AddressScreen.dart';
 import 'ContactUsScreen.dart';
+import 'Dashboard/ApiConfigurationPagee.dart';
 import 'Dashboard/Dashboard_Index.dart';
 import 'FavoritesScreen.dart';
 import 'MaintenanceHome.dart';
@@ -130,7 +131,8 @@ class _MenuScreenState extends State<MenuScreen> {
                         // prefs!.setBool("DashboardFirstTimeAccess", true);
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => ApiConfigurationPage(),
+                            // builder: (context) => ApiConfigurationPage(),
+                            builder: (context) => ApiConfigurationPagee(),
                           ),
                         );
                       } else {
