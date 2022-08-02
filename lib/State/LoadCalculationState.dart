@@ -36,12 +36,14 @@ class LoadCalculationState extends ChangeNotifier{
   int utils() => _utils;
 
   void increaseUtils(){
-    _utils++;
+    if(_utils<100)
+      _utils++;
     CalculateKVA();
     notifyListeners();
   }
   void decreaseUtils(){
-    _utils--;
+    if(_utils>0)
+      _utils--;
     CalculateKVA();
     notifyListeners();
   }
@@ -128,6 +130,7 @@ class LoadCalculationState extends ChangeNotifier{
     _runningPower = 0;
     _startingPower = 0;
     _KVA = 0;
+    _utils = 65;
     _components.clear();
     _componentQuantity.clear();
     notifyListeners();

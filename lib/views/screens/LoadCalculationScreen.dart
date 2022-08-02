@@ -88,9 +88,15 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
                   ):Container(),
                 ),
                 SizedBox(height: 10),
-                IconButton(onPressed: (){
-                  loadCalculationState.incrementFieldsCount();
-                }, icon: Icon(Icons.add_circle, color: Colors.red,)),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width*0.3,
+                  child: T13Button(
+                    textContent: "Add Items",
+                    onPressed: (){
+                      loadCalculationState.incrementFieldsCount();
+                    }, 
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -142,7 +148,12 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
                   child: T13Button(textContent: "Find My Generator", onPressed: () async{
                     if(loadCalculationState.getComponentListLength()!=0){
                       List<ProductCategory> list = await loadCalculationState.getResult();
-                      Navigator.of(context).push(MaterialPageRoute(builder: ((context) => ListPage(title: list.first.name.toString(), IsCategory: true, categoryID: list.first.id!.toInt(),))));
+                      if(list.isNotEmpty){
+                        Navigator.of(context).push(MaterialPageRoute(builder: ((context) => ListPage(title: list.first.name.toString(), IsCategory: true, categoryID: list.first.id!.toInt(),))));
+                      }
+                      else {
+                        toast('No Generator Category Available for that KVA');
+                      }
                     } else {
                       toast('You need to add components');
                     }
