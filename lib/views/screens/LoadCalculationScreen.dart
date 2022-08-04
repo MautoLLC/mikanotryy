@@ -59,7 +59,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
                                     );
                                   }).toList(), 
                                 onChanged: (variable){
-                                  loadCalculationState.setComponent(index, loadCalculationState.getcomponentByName(variable.toString()));
+                                  loadCalculationState.setComponent(index, variable!);
                                 },)),
                             Text(loadCalculationState.getcomponentQuatity(index).toString()),
                             Column(
