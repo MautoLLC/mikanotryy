@@ -58,6 +58,24 @@ class _RFQFormScreenState extends State<RFQFormScreen> {
               t13EditTextStyle('Note', noteController, isPassword: false),
               SizedBox(height: 20,),
               T13Button(textContent: 'Request', onPressed: () async{
+                await showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Request for quotes'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure you want to send a request?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () async {
+                // Navigator.pop(context);
                 String email = emailController.text;
                 String name = nameController.text;
                 String phone = phoneNumberController.text;
@@ -68,17 +86,31 @@ class _RFQFormScreenState extends State<RFQFormScreen> {
                   if(await CustomerService().requestAQuote(RFQobj, widget.id)){
                     toast("Request sent");
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   } else {
                     toast("Error sending request");
                   }
                 } else {
                   toast("Please check for empty fields");
                 }
-              })
-            ],
+              }),
+            
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.pop(context);
+                toast("Request cancelled");
+              },
+            ),
+          ],
+        );
+      },
+      );
+              }
           ),
-        )
+            ]
       ),
-    );
+    )));
+      
   }
 }
