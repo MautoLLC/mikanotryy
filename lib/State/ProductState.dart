@@ -221,7 +221,7 @@ class ProductState extends ChangeNotifier {
   clearCart() {
     productsInCart.clear();
     selectedProducts.clear();
-    notifyListeners();
+    // notifyListeners();
   }
 
   void Paginate([int categoryID = -1]) async {
@@ -238,7 +238,7 @@ class ProductState extends ChangeNotifier {
   void clearListOfProducts() {
     ListOfProducts = [];
     page = 1;
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> getListOfProducts([int categoryID = -1]) async {

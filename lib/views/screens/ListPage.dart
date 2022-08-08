@@ -33,6 +33,7 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<ProductState>(context, listen: false).clearListOfProducts();
     if(Provider.of<ProductState>(context, listen: false).AllFiltersForCategories.length == 0){
       Provider.of<ProductState>(context, listen: false)
           .fetchFilterCategories();
@@ -50,12 +51,6 @@ class _ListPageState extends State<ListPage> {
           Provider.of<ProductState>(context, listen: false)
           .selectedCategoryId = -1;
     }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    Provider.of<ProductState>(context, listen: false).clearListOfProducts();
   }
 
   @override

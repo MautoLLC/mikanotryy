@@ -4,7 +4,9 @@ class MainDashboardState extends ChangeNotifier{
   int _selectedIndex = 2;
   ScrollController _scrollController = ScrollController();
 
-  ScrollController scrollController() => _scrollController;
+  ScrollController scrollController() {
+    return _scrollController;
+  } 
 
   int selectedIndex() => _selectedIndex;
   setSelectedIndex(int index){
@@ -14,8 +16,8 @@ class MainDashboardState extends ChangeNotifier{
   }
 
   refreshPage(int index){
-    _scrollController.animateTo(0,
-        duration: const Duration(milliseconds: 300), curve: Curves.linear);
-        notifyListeners();
+    if(_scrollController.hasClients)
+      _scrollController.animateTo(0,
+          duration: const Duration(milliseconds: 300), curve: Curves.linear);
   }
 }
