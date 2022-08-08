@@ -47,6 +47,7 @@ dependencies:
   file_picker: ^4.5.1
   record: ^4.1.1
   isw_mobile_sdk: ^1.0.8
+  url_launcher: ^6.1.5
 
 #  flutter_absolute_path:
 #    git:

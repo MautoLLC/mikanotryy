@@ -203,6 +203,11 @@ class ProductState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<Product> fetchProductById(int id) async {
+    List<Product> temp = await ProductsService().getProducts(ids: [id]);
+    return temp.first;
+  }
+
   Future<void> getTopDeals() async {
     topDealProducts = await ProductsService().getTopDealsProducts();
     notifyListeners();

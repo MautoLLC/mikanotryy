@@ -17,9 +17,11 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:mymikano_app/services/LocalUserPositionService.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'ListPage.dart';
 import 'LoadCalculationScreen.dart';
+import 'ProductDetailsPage.dart';
 
 class Dashboard extends StatefulWidget {
   static var tag = "/T5Dashboard";
@@ -111,28 +113,63 @@ class DashboardState extends State<Dashboard> {
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: CachedNetworkImage(
-                                    imageUrl: Provider.of<CarouselState>(
-                                            context,
-                                            listen: false)
-                                        .topImages[index]
-                                        .url
-                                        .toString(),
-                                    height: 280,
-                                    memCacheHeight: 280,
-                                    memCacheWidth: 420,
-                                    progressIndicatorBuilder: (context, url,
-                                            downloadProgress) =>
-                                        Center(
-                                            child: CircularProgressIndicator(
-                                                value:
-                                                    downloadProgress.progress)),
-                                    errorWidget: (_, __, ___) {
-                                      return SizedBox(
-                                          height: 300, width: width);
-                                    },
+                                child: GestureDetector(
+                                  onTap: () async{
+                                    String link = Provider.of<CarouselState>(
+                                              context,
+                                              listen: false)
+                                          .topImages[index].link.toString();
+                                    String type = Provider.of<CarouselState>(
+                                              context,
+                                              listen: false)
+                                          .topImages[index].linkType.toString();
+                                    if(type == "external"){
+                                      try{
+                                        await launch(link);
+                                      }
+                                      catch (e){
+                                        debugPrint(e.toString());
+                                        toast("There was an error, pelase try again later");
+                                      }
+                                    } else if(type == "product"){
+                                      Product product = await state.fetchProductById(link.toInt());
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => ProductDetailsPage(
+                                              product: product,
+                                            )));
+                                    } else if(type == "category"){
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => ListPage(
+                                            title: state.mainCategories.firstWhere((element) => element.id!.toInt() == link.toInt())
+                                                .name
+                                                .toString(),
+                                            categoryID: state.mainCategories.firstWhere((element) => element.id!.toInt() == link.toInt())
+                                                .id!)));
+                                    }
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      imageUrl: Provider.of<CarouselState>(
+                                              context,
+                                              listen: false)
+                                          .topImages[index]
+                                          .url
+                                          .toString(),
+                                      height: 280,
+                                      memCacheHeight: 280,
+                                      memCacheWidth: 420,
+                                      progressIndicatorBuilder: (context, url,
+                                              downloadProgress) =>
+                                          Center(
+                                              child: CircularProgressIndicator(
+                                                  value:
+                                                      downloadProgress.progress)),
+                                      errorWidget: (_, __, ___) {
+                                        return SizedBox(
+                                            height: 300, width: width);
+                                      },
+                                    ),
                                   ),
                                 ),
                               )
