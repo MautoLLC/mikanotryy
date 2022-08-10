@@ -303,7 +303,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: Custom_GaugeWidget(
                                           title: lbl_RPM,
                                           value:
-                                              (double.parse(cloud.Rpm.value==null?0:cloud.Rpm.value)),
+                                              (double.parse(cloud.Rpm.value)),
                                       min:0,max:3000)),
                                   SizedBox(height: 10),
                                   Container(

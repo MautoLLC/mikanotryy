@@ -481,7 +481,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                     cloudUsernameController.text,
                                     cloudPasswordController.text,
                                     value.cloudMode.toString(),
-                                    value.chosenGeneratorId);
+                                    value.chosenGeneratorId,"");
 
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {
