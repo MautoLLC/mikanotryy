@@ -6,10 +6,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
+import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
+import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -30,11 +33,14 @@ class CloudDashboard_Index extends StatefulWidget {
 class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   late Timer timer;
   bool? isFetched;
+  late  ConfigurationModel configModel;
+  //late final List<ConfigurationModel> configsList;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getSelectedConfigurationModel();
     isDataFetched().whenComplete(() {
       setState(() {});
     });
@@ -47,9 +53,29 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   }
 
   Future<void> isDataFetched() async {
+    await Provider.of<CloudGeneratorState>(context,listen: false)
+        .ReinitiateCloudService();
     isFetched = await Provider.of<CloudGeneratorState>(context,listen: false)
         .FetchData();
   }
+  Future<ConfigurationModel> getSelectedConfigurationModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String test=prefs.getString('Configurations').toString();
+    List<ConfigurationModel> configsList = (json.decode(prefs.getString('Configurations')!) as List)
+        .map((data) => ConfigurationModel.fromJson(data))
+        .toList();
+    ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel=config;
+    return configModel;
+  }
+  // Future<List<ConfigurationModel>> getListConfigurationModel() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String test=prefs.getString('Configurations').toString();
+  //   configsList = (json.decode(prefs.getString('Configurations')!) as List)
+  //       .map((data) => ConfigurationModel.fromJson(data))
+  //       .toList();
+  //   return configsList;
+  // }
 
   @override
   void dispose() {
@@ -87,10 +113,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               Spacer(),
                               IconButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ApiConfigurationPage()));
+                                    Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ApiConfigurationPage()));
+                                                FetchGenerators()));
                                   },
                                   icon: Icon(Icons.settings)),
                               Column(
@@ -105,12 +135,65 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: Material(
                                         color: Colors.white,
                                         child: InkWell(
-                                          onTap: () {
-                                            //value.resetPreferences();
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ApiConfigurationPage()));
+                                          onTap: () async {
+                                            value.resetPreferences(configModel.espapiendpoint);
+                                            // Navigator.of(context).push(
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             ApiConfigurationPage()));
+                                            value.generatorNameList.add(
+                                                configModel.generatorName);
+
+                                            //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                            value.configsList.remove(
+                                                configModel);
+                                            if (value.configsList != 1)
+                                              value.configModel =
+                                                  value.configsList.elementAt(
+                                                      0);
+                                            SharedPreferences sharedPreferences = await SharedPreferences
+                                                .getInstance();
+                                            //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                            //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                            await sharedPreferences
+                                                .setStringList(
+                                                "genneratorNameList",
+                                                value.generatorNameList);
+                                            String Configs = jsonEncode(
+                                                value.configsList);
+                                            if (value.configsList != 1) {
+                                              String SelectedConfigurationModel = jsonEncode(
+                                                  configModel);
+                                              await sharedPreferences.setString(
+                                                  'SelectedConfigurationModel',
+                                                  SelectedConfigurationModel);
+                                            }
+                                            await sharedPreferences.setString(
+                                                'Configurations', Configs);
+                                            if (value.configsList != 1) {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FetchGenerators()));
+                                            }
+                                            else {
+                                              if(configModel.cloudMode==1){
+                                              Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          CloudDashboard_Index(
+                                                              RefreshRate: configModel
+                                                                  .refreshRate)));}
+                                              else{
+                                                Navigator.of(context).pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            LanDashboard_Index(
+                                                                RefreshRate: configModel
+                                                                    .refreshRate)));
+                                              }
+                                            }
                                           },
                                           child: Column(
                                             mainAxisAlignment:
@@ -162,19 +245,33 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         Icons.arrow_drop_down,
                                         color: mainGreyColorTheme,
                                       ),
-                                      items: value.ConfigurationModelsList
+                                      items: value.configsList
                                           .map(buildMenuItem)
                                           .toList(),
-                                      value:value.selectedConfigurationModel.generatorId,
+                                      //value:value.selectedConfigurationModel.generatorId,
+                                      value:configModel.generatorId,
                                       onChanged: (item) async {
-                                       ConfigurationModel model=value.ConfigurationModelsList.firstWhere((element) => element.generatorId==item);
-                                      value.selectedConfigurationModel=model;
+                                       ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
+                                      value.configModel=model;
                                        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                                       String SelectedConfigurationModel=jsonEncode(value.selectedConfigurationModel);
+                                       String SelectedConfigurationModel=jsonEncode(configModel);
                                        await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
-                                       setState(() {
-                                         
-                                       });
+                                       if(model.cloudMode==0) {
+                                         Navigator.of(context).pushReplacement(
+                                             MaterialPageRoute(
+                                               builder: (BuildContext context) => Provider(
+                                                 create: (context) => CloudGeneratorState(),
+                                                 builder: (context, child) =>LanDashboard_Index(RefreshRate: model.refreshRate)
+                                               ),
+                                             ),);
+                                       }
+                                       else{
+                                         // Navigator.of(context).push(
+                                         //     // MaterialPageRoute(
+                                         //     //     builder: (context) =>
+                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
+                                         initState();
+                                       }
                                       }),
                                 ),
                               ),
@@ -206,7 +303,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: Custom_GaugeWidget(
                                           title: lbl_RPM,
                                           value:
-                                              (double.parse(cloud.Rpm.value)),
+                                              (double.parse(cloud.Rpm.value==null?0:cloud.Rpm.value)),
                                       min:0,max:3000)),
                                   SizedBox(height: 10),
                                   Container(

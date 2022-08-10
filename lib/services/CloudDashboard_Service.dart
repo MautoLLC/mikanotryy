@@ -16,10 +16,11 @@ class CloudDashBoard_Service {
   //aded by youssef//
   late final ConfigurationModel configModel;
   CloudDashBoard_Service(){
-    getLastConfigurationModel();
+    getSelectedConfigurationModel();
+    //configModel=model;
   }
 
-  Future<ConfigurationModel> getLastConfigurationModel() async {
+  Future<ConfigurationModel> getSelectedConfigurationModel() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;

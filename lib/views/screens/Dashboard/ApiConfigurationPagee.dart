@@ -138,15 +138,12 @@ class ApiConfigurationPagee extends StatelessWidget {
                             height: 10,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 0),
-
-                                child:
                                       T13Button(
                                       textContent: lbl_Fetch_Generators,
                                       onPressed: () async {
-                                        value.getGeneratorIds(
+                                        await value.getGeneratorIds(
                                             cloudUsernameController.text,
                                             cloudPasswordController.text);
                                         //we need to save the cloudusername and password to shared pref and then got to fetch generator page//
@@ -158,17 +155,17 @@ class ApiConfigurationPagee extends StatelessWidget {
     cloudUsernameController.text,
     cloudPasswordController.text,
   );
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        // builder: (context) => ApiConfigurationPage(),
-        builder: (context) => FetchGenerators(),
-      ),
-    );
+    if(value.isSuccess) {
+      value.isNotFirstTime();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          // builder: (context) => ApiConfigurationPage(),
+          builder: (context) => FetchGenerators(),
+        ),
+      );
+    }
 
                                       }),
-
-                  ),
-
     ]),]
       ),
                       )

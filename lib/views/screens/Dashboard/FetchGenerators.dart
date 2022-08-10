@@ -3,8 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:html/parser.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
+import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -20,9 +22,11 @@ import '../../../State/ApiConfigurationStatee.dart';
 
 class FetchGenerators extends StatelessWidget {
   FetchGenerators({Key? key}) : super(key: key);
+  final ControllerAddressController = TextEditingController();
   final refreshRateController = TextEditingController();
   final passwordController = TextEditingController();
   final apiEndpointLanController = TextEditingController(text: lanESPUrl);
+  //late final List<ConfigurationModel> configsList;
   @override
   Widget build(BuildContext context) {
     return Consumer<ApiConfigurationStatee>(
@@ -53,11 +57,13 @@ class FetchGenerators extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 25),
-                        width: MediaQuery.of(context).size.width / 2.3,
+                        width:325,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             border:
                             Border.all(color: mainGreyColorTheme)),
+                      // InputDecorator(
+                      //   decoration: const InputDecoration(border: OutlineInputBorder()),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                               isExpanded: true,
@@ -84,9 +90,11 @@ class FetchGenerators extends StatelessWidget {
                                     element.name == item.toString());
                                 value.setChosenGeneratorId(
                                     value.gens.elementAt(i).generatorId);
+                                //value.setChosenGeneratorId(item.toString());
                               }),
                         ),
                       ),
+                      Spacer(),
                     ],
                   ),
                   SizedBox(
@@ -246,7 +254,7 @@ class FetchGenerators extends StatelessWidget {
                         SizedBox(
                           height: 25,
                         ),
-                        if (value.isSuccess == true &&
+                        if (
                             value.cloudConfigValue == true) ...[
                           Row(
                             children: [
@@ -329,6 +337,36 @@ class FetchGenerators extends StatelessWidget {
                               ),
                             ),
                           ),
+                          TextFormField(
+                            onChanged: (address) =>
+                                value.changeControllerAddress(address),
+                            style: TextStyle(
+                                fontSize: textSizeMedium,
+                                fontFamily: PoppinsFamily),
+                            obscureText: false,
+                            cursorColor: black,
+                            controller: ControllerAddressController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding:
+                              EdgeInsets.fromLTRB(26, 14, 4, 14),
+                              hintText: "Controller Address",
+                              hintStyle:
+                              primaryTextStyle(color: textFieldHintColor),
+                              filled: true,
+                              fillColor: lightBorderColor,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                // borderRadius: BorderRadius.circular(24),
+                                borderSide: BorderSide(
+                                    color: Colors.transparent, width: 0.0),
+                              ),
+                            ),
+                          ),
                           SizedBox(height: 10),
                           Spacer(),
                           if (value.loading == true)
@@ -343,25 +381,14 @@ class FetchGenerators extends StatelessWidget {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 value.Loading(true);
-                                // create a new configration model and save it into preferences//
-                                value.ConfigurationModelsList.add(ConfigurationModel(ssid:  value.chosenSSID, password:passwordController.text, refreshRate:int.parse(refreshRateController.text), cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName));
-                                value.selectedConfigurationModel=ConfigurationModel(ssid:  value.chosenSSID, password:passwordController.text, refreshRate:int.parse(refreshRateController.text), cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName);
-                                SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                                //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                                String Configs=jsonEncode(value.ConfigurationModelsList);
-                                String SelectedConfigurationModel=jsonEncode(value.selectedConfigurationModel);
-                                await sharedPreferences.setString('Configurations', Configs);
-                                await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
-                                value.generatorNameList.removeWhere((generator) => generator == value.chosenGeneratorName);
-
-
                                 await value.service.Connecttossid(
                                     value.chosenSSID,
                                     passwordController.text,
                                     value.cloudUsername,
                                     value.cloudPassword,
                                     value.cloudMode.toString(),
-                                    value.chosenGeneratorId);
+                                    value.chosenGeneratorId,
+                                    value.ControllerAddress);
 
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {
@@ -408,17 +435,35 @@ class FetchGenerators extends StatelessWidget {
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 value.setApiLanEndpoint(
-                                    "http://" + apiEndpointLanController.text);
+                                "http://" + apiEndpointLanController.text);
+                                value.configsList.add(ConfigurationModel(ssid:value.chosenSSID, password:value.password, refreshRate:value.RefreshRate, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: apiEndpointLanController.text,controllerAddress: ControllerAddressController.text));
+                                //await getListConfigurationModel();
+                                //configsList.add(ConfigurationModel(ssid:value.chosenSSID, password:value.password, refreshRate:value.RefreshRate, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: apiEndpointLanController.text));
+                                value.configModel=ConfigurationModel(ssid:value.chosenSSID, password:value.password, refreshRate:value.RefreshRate, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: apiEndpointLanController.text,controllerAddress: ControllerAddressController.text);
+                                SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                String Configs=jsonEncode(value.configsList);
+                                String SelectedConfigurationModel=jsonEncode(value.configModel);
+                                await sharedPreferences.setString('Configurations', Configs);
+                                await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
+                                value.generatorNameList.removeWhere((generator) => generator == value.chosenGeneratorName);
+                                value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                List<String> gens=await sharedPreferences.getStringList("generatorNameList")!;
+                                gens.remove(value.chosenGeneratorName);
+                                Generator Chosen=value.gens.firstWhere((element) => element.name==value.chosenGeneratorName);
+                                value.chosenGeneratorId=Chosen.generatorId;
+                                await sharedPreferences.setStringList("genneratorNameList",gens);
                                 if (value.option == 'cloud') {
-                                  Navigator.of(context).push(MaterialPageRoute(
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                                       builder: (context) =>
                                           CloudDashboard_Index(
                                               RefreshRate: value.RefreshRate)));
                                 } else if (value.option == 'comap') {
-                                  Navigator.of(context).push(MaterialPageRoute(
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                                       builder: (context) => Dashboard_Index()));
                                 } else {
-                                  Navigator.of(context).push(MaterialPageRoute(
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                                       builder: (context) => LanDashboard_Index(
                                             RefreshRate: value.RefreshRate,
                                           )));
@@ -432,7 +477,7 @@ class FetchGenerators extends StatelessWidget {
                             height: 25,
                           ),
                         ],
-                        if (value.isSuccess == true &&
+                        if (
                             value.cloudConfigValue == false &&
                             value.option == 'cloud')
                           T13Button(
@@ -440,18 +485,27 @@ class FetchGenerators extends StatelessWidget {
                               onPressed: () async {
                                 value.setApiLanEndpoint(
                                     "http://" + apiEndpointLanController.text);
-                                value.ConfigurationModelsList.add(ConfigurationModel(ssid:"", password:"", refreshRate:10, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName));
-                                value.selectedConfigurationModel=ConfigurationModel(ssid:"", password:"", refreshRate:10, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName);
+                                value.configsList.add(ConfigurationModel(ssid:"", password:"", refreshRate:10, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: "",controllerAddress: ""));
+                                //await getListConfigurationModel();
+                                //configsList.add(ConfigurationModel(ssid:"", password:"", refreshRate:10, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: ""));
+                                //value.configModel=null;
+                                value.configModel=ConfigurationModel(ssid:"", password:"", refreshRate:10, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: "",controllerAddress: "");
                                 SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
                                 //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                                String Configs=jsonEncode(value.ConfigurationModelsList);
-                                String SelectedConfigurationModel=jsonEncode(value.selectedConfigurationModel);
+                                //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                String Configs=jsonEncode(value.configsList);
+                                String SelectedConfigurationModel=jsonEncode(value.configModel);
                                 await sharedPreferences.setString('Configurations', Configs);
                                 await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
                                 value.generatorNameList.removeWhere((generator) => generator == value.chosenGeneratorName);
+                                List<String> gens=await sharedPreferences.getStringList("generatorNameList")!;
+                                gens.remove(value.chosenGeneratorName);
+                                value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                Generator Chosen=value.gens.firstWhere((element) => element.name==value.chosenGeneratorName);
+                                value.chosenGeneratorId=Chosen.generatorId;
+                                await sharedPreferences.setStringList("generatorNameList",gens);
 
-
-                                Navigator.of(context).push(MaterialPageRoute(
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(
                                     builder: (context) =>
                                         CloudDashboard_Index(RefreshRate: 10)));
                                 value.isNotFirstTime();
@@ -468,6 +522,22 @@ class FetchGenerators extends StatelessWidget {
 
   DropdownMenuItem<String> buildMenuItem(String selectedSSID) =>
       DropdownMenuItem(value: selectedSSID, child: Text(selectedSSID));
-}
+DropdownMenuItem<String> buildMenuItemgen(Generator gen) =>
+DropdownMenuItem(value: gen.generatorId, child: Text(gen.name));
+
+// Future<List<ConfigurationModel>> getListConfigurationModel() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     if(prefs.getString('Configurations')==null)
+//       configsList=[];
+//     else{
+//       configsList = (json.decode(prefs.getString('Configurations')!) as List)
+//           .map((data) => ConfigurationModel.fromJson(data))
+//           .toList();
+//     }
+//     return configsList;
+//   }
+ }
+
+
 
 enum ConfigValue { withConfig, withoutConfig }
