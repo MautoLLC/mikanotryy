@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/services/ApiConfigurationService.dart';
@@ -17,6 +19,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   var chosenSSID;
   var chosenGeneratorName;
   int RefreshRate = 60;
+  String  ControllerAddress = '';
   int cloudMode = 0;
   String password = '';
   String cloudUsername = '';
@@ -28,10 +31,11 @@ class ApiConfigurationStatee extends ChangeNotifier {
   List<Generator> gens = [];
   ApiConfigurationService service = new ApiConfigurationService();
   ///the list of configurations//
-  List<ConfigurationModel> ConfigurationModelsList=[];
-  late ConfigurationModel selectedConfigurationModel;
+  late  ConfigurationModel configModel;
+  late  List<ConfigurationModel> configsList;
   ApiConfigurationStatee() {
-    //update();
+    //if(!DashBoardFirstTimeAccess)
+    update();
   }
 
   void Loading(value) {
@@ -62,22 +66,21 @@ class ApiConfigurationStatee extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void update() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   DashBoardFirstTimeAccess = prefs.getBool(prefs_DashboardFirstTimeAccess)!;
-  //   option = prefs.getString(prefs_ApiConfigurationOption)!;
-  //   RefreshRate = prefs.getInt(prefs_RefreshRate)!;
-  //   password = prefs.getString(prefs_Password)!;
-  //   chosenSSID = prefs.getString(prefs_SSID);
-  //   cloudUsername = prefs.getString(prefs_CloudUsername)!;
-  //   cloudPassword = prefs.getString(prefs_CloudPassword)!;
-  //   cloudMode = prefs.getInt(prefs_CloudMode)!;
-  //   chosenGeneratorId = prefs.getString(prefs_GeneratorId)!;
-  //   apiLanEndpoint = prefs.getString(prefs_ApiLanEndpoint)!;
-  //   notifyListeners();
-  // }
+  void update() async {
+    await getListConfigurationModel();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(!DashBoardFirstTimeAccess) {
+      await getSelectedConfigurationModel();
+      await getListGenerators();
+      generatorNameList=prefs.getStringList("generatorNameList")!;
+      chosenGeneratorName=generatorNameList.elementAt(0);
+    }
+    cloudUsername = prefs.getString(prefs_CloudUsername).toString();
+    cloudPassword = prefs.getString(prefs_CloudPassword).toString();
+    notifyListeners();
+  }
 
-  void getGeneratorIds(clouduser, cloudpass) async {
+  Future<void> getGeneratorIds(clouduser, cloudpass) async {
     generatorNameList.clear();
     List<Generator> generators =
         await service.getGeneratorsOfUser(clouduser, cloudpass);
@@ -90,15 +93,26 @@ class ApiConfigurationStatee extends ChangeNotifier {
       isSuccess = false;
       Message = 'Invalid input, try again.';
     } else {
-      generatorNameList.add(gens.elementAt(0).name);
+      gens.forEach((element) {generatorNameList.add(element.name);});
+      chosenGeneratorName=generatorNameList.elementAt(0);
+      chosenGeneratorId=gens.elementAt(0).generatorId;
+      //generatorNameList.add(gens.elementAt(0).name);
       isSuccess = true;
       Message = 'Generators fetched successfully.';
     }
     notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("generatorNameList", generatorNameList);
+    String gensList=jsonEncode(gens);
+    await prefs.setString('Generators', gensList);
   }
 
   void changeRefreshRate(int rate) {
     RefreshRate = rate;
+    notifyListeners();
+  }
+  void changeControllerAddress(String  Address) {
+    ControllerAddress = Address;
     notifyListeners();
   }
 
@@ -186,4 +200,65 @@ class ApiConfigurationStatee extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(prefs_ApiLanEndpoint, apiEndpoint);
   }
+
+  //added newly by youssef for multiple gens//
+  Future<ConfigurationModel> getSelectedConfigurationModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
+    // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
+    // GeneratorID = prefs.getString(prefs_GeneratorId)!;
+    String test=prefs.getString('Configurations').toString();
+    if(prefs.getString('Configurations')==null)
+      configModel=ConfigurationModel(ssid: "", password: "", refreshRate:0, cloudUser: "",cloudPassword:"",cloudMode:0, generatorId:"", generatorName:"", espapiendpoint:"", controllerAddress: "");
+    else {
+      List<ConfigurationModel> configsList = (json.decode(
+          prefs.getString('Configurations').toString()) as List)
+          .map((data) => ConfigurationModel.fromJson(data))
+          .toList();
+      ConfigurationModel config = ConfigurationModel.fromJson(
+          json.decode(prefs.getString('SelectedConfigurationModel')!));
+      configModel = config;
+    }
+    return configModel;
+  }
+  Future<List<ConfigurationModel>> getListConfigurationModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
+    // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
+    // GeneratorID = prefs.getString(prefs_GeneratorId)!;
+    String test=prefs.getString('Configurations').toString();
+    if(prefs.getString('Configurations')==null)
+      configsList=[];
+    else {
+      configsList = (json.decode(prefs.getString('Configurations').toString()) as List)
+          .map((data) => ConfigurationModel.fromJson(data))
+          .toList();
+    }
+    // ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
+    // configModel=config;
+    return configsList;
+  }
+
+  Future<List<Generator>> getListGenerators() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
+    // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
+    // GeneratorID = prefs.getString(prefs_GeneratorId)!;
+    String test=prefs.getString('Generators').toString();
+    if(prefs.getString('Generators')==null)
+      gens=[];
+    else {
+     gens = (json.decode(prefs.getString('Generators').toString()) as List)
+          .map((data) => Generator.fromJson(data))
+          .toList();
+    }
+    // ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
+    // configModel=config;
+    return gens;
+  }
+  void resetPreferences(String Url) async {
+    service.resetESP(Url);
+    notifyListeners();
+  }
+
 }

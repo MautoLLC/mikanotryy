@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
@@ -13,7 +14,11 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../State/ApiConfigurationStatee.dart';
+import '../../../models/ConfigurationModel.dart';
 import '../../widgets/Custom_GaugeWidget.dart';
+import 'CloudDashboard_Index.dart';
+import 'FetchGenerators.dart';
 
 class LanDashboard_Index extends StatefulWidget {
   final int RefreshRate;
@@ -26,10 +31,11 @@ class LanDashboard_Index extends StatefulWidget {
 class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   late Timer timer;
   bool? isFetched;
-
+  late final ConfigurationModel configModel;
   @override
   void initState() {
     super.initState();
+    getSelectedConfigurationModel();
     isDataFetched().whenComplete(() {
       setState(() {});
     });
@@ -43,9 +49,31 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   }
 
   Future<void> isDataFetched() async {
+    //await getListConfigurationModel();
+    //await getSelectedConfigurationModel();
+    await Provider.of<LanGeneratorState>(context,listen: false)
+        .ReinitiateLanService();
     isFetched = await Provider.of<LanGeneratorState>(context, listen: false)
         .FetchData();
   }
+  Future<ConfigurationModel> getSelectedConfigurationModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String test=prefs.getString('Configurations').toString();
+    List<ConfigurationModel> configsList = (json.decode(prefs.getString('Configurations')!) as List)
+        .map((data) => ConfigurationModel.fromJson(data))
+        .toList();
+    ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel=config;
+    return configModel;
+  }
+  // Future<List<ConfigurationModel>> getListConfigurationModel() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String test=prefs.getString('Configurations').toString();
+  //   configsList = (json.decode(prefs.getString('Configurations')!) as List)
+  //       .map((data) => ConfigurationModel.fromJson(data))
+  //       .toList();
+  //   return configsList;
+  // }
 
   @override
   void dispose() {
@@ -55,7 +83,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ApiConfigurationState, LanGeneratorState>(
+    return Consumer2<ApiConfigurationStatee, LanGeneratorState>(
         builder: (context, value, lan, child) => Scaffold(
               backgroundColor: Colors.white,
               body: SafeArea(
@@ -83,10 +111,10 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 Spacer(),
                                 IconButton(
                                     onPressed: () {
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  ApiConfigurationPage()));
+                                                  FetchGenerators()));
                                     },
                                     icon: Icon(Icons.settings)),
 
@@ -102,12 +130,61 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         child: Material(
                                           color: Colors.white,
                                           child: InkWell(
-                                            onTap: () {
-                                              value.resetPreferences();
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ApiConfigurationPage()));
+                                            onTap: () async {
+                                              value.resetPreferences(configModel.espapiendpoint);
+                                              value.generatorNameList.add(
+                                                  configModel.generatorName);
+
+                                              //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                              value.configsList.remove(
+                                                  configModel);
+                                              if (value.configsList != 1)
+                                                value.configModel =
+                                                    value.configsList.elementAt(
+                                                        0);
+                                              SharedPreferences sharedPreferences = await SharedPreferences
+                                                  .getInstance();
+                                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                              await sharedPreferences
+                                                  .setStringList(
+                                                  "genneratorNameList",
+                                                  value.generatorNameList);
+                                              String Configs = jsonEncode(
+                                                  value.configsList);
+                                              if (value.configsList != 1) {
+                                                String SelectedConfigurationModel = jsonEncode(
+                                                    configModel);
+                                                await sharedPreferences.setString(
+                                                    'SelectedConfigurationModel',
+                                                    SelectedConfigurationModel);
+                                              }
+                                              await sharedPreferences.setString(
+                                                  'Configurations', Configs);
+                                              if (value.configsList != 1) {
+                                                Navigator.of(context)
+                                                    .pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            FetchGenerators()));
+                                              }
+                                              else {
+                                                if(configModel.cloudMode==1){
+                                                  Navigator.of(context).pushReplacement(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              CloudDashboard_Index(
+                                                                  RefreshRate: configModel
+                                                                      .refreshRate)));}
+                                                else{
+                                                  Navigator.of(context).pushReplacement(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              LanDashboard_Index(
+                                                                  RefreshRate: configModel
+                                                                      .refreshRate)));
+                                                }
+                                              }
                                             },
                                             child: Column(
                                               mainAxisAlignment:
@@ -134,6 +211,54 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                             ),
                             SizedBox(
                               height: 40,
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 25),
+                                  width: MediaQuery.of(context).size.width / 2.3,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border:
+                                      Border.all(color: mainGreyColorTheme)),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                        isExpanded: true,
+                                        hint: Text(
+                                          lbl_Generator_ID,
+                                          style: TextStyle(
+                                              color: mainGreyColorTheme,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                        icon: Icon(
+                                          Icons.arrow_drop_down,
+                                          color: mainGreyColorTheme,
+                                        ),
+                                        items: value.configsList
+                                            .map(buildMenuItem)
+                                            .toList(),
+                                        //value:value.selectedConfigurationModel.generatorId,
+                                        value:value.configModel.generatorId,
+                                        onChanged: (item) async {
+                                          ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
+                                          value.configModel=model;
+                                          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                          String SelectedConfigurationModel=jsonEncode(value.configModel);
+                                          await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
+                                          if(model.cloudMode==1) {
+                                            Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CloudDashboard_Index(RefreshRate: model.refreshRate)));
+                                          }
+                                          else{
+                                            initState();
+                                          }
+                                        }),
+                                  ),
+                                ),
+                              ],
                             ),
                             Container(
                               decoration: BoxDecoration(
@@ -435,7 +560,10 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                     )),
               ),
             ));
+
   }
+  DropdownMenuItem<String> buildMenuItem(ConfigurationModel model) =>
+      DropdownMenuItem(value: model.generatorId, child: Text(model.generatorName));
 }
 
 class infotile extends StatelessWidget {

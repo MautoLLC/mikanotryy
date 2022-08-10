@@ -20,7 +20,7 @@ class ApiConfigurationService {
   }
 
   Future<String> Connecttossid(String id, String pass, String cloudUsername,
-      String cloudPassword, String cloudMode, String generatorId) async {
+      String cloudPassword, String cloudMode, String generatorId,String ControllerAddress) async {
     final response = await http.get(Uri.parse(ssidUrl +
         '/setting?ssid=' +
         id +
@@ -33,7 +33,8 @@ class ApiConfigurationService {
         '&cmode=' +
         cloudMode +
         '&GeneratorId=' +
-        generatorId));
+        generatorId +
+        '&controllerAddress=' + ControllerAddress));
     if (response.statusCode == 200) {
       debugPrint(response.body.toString());
       return (response.body.toString());

@@ -6,14 +6,33 @@ import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../models/ConfigurationModel.dart';
+
 class LanDashBoard_Service {
   //final String ApiEndPoint;
-  String apiLanEndpoint = "http://" + lanESPUrl;
-  LanDashBoard_Service(/*{required this.ApiEndPoint}*/);
-  Future<LANSensor> FetchSensorData(String param) async {
+  // String apiLanEndpoint = "http://" + lanESPUrl;
+  // LanDashBoard_Service(/*{required this.ApiEndPoint}*/);
+  late final ConfigurationModel configModel;
+  LanDashBoard_Service(){
+    getSelectedConfigurationModel();
+  }
+  Future<ConfigurationModel> getSelectedConfigurationModel() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
-
+    // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
+    // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
+    // GeneratorID = prefs.getString(prefs_GeneratorId)!;
+    String test=prefs.getString('Configurations').toString();
+    List<ConfigurationModel> configsList = (json.decode(prefs.getString('Configurations')!) as List)
+        .map((data) => ConfigurationModel.fromJson(data))
+        .toList();
+    ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel=config;
+    return configModel;
+  }
+  Future<LANSensor> FetchSensorData(String param) async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     final response =
         await http.get(Uri.parse(apiLanEndpoint + '/getValue?params=' + param));
     if (response.statusCode == 200) {
@@ -32,9 +51,9 @@ class LanDashBoard_Service {
   }
 
   Future<bool> SwitchControllerMode(bool status) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
-
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     int Mode;
     if (status)
       Mode = 2;
@@ -58,8 +77,9 @@ class LanDashBoard_Service {
   }
 
   Future<bool> SwitchMCBMode(bool status) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     int Mode;
     if (status)
       Mode = 1;
@@ -83,8 +103,9 @@ class LanDashBoard_Service {
   }
 
   Future<bool> SwitchGCBMode(bool status) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     int Mode;
     if (status)
       Mode = 0;
@@ -108,8 +129,9 @@ class LanDashBoard_Service {
   }
 
   Future<bool> TurnGeneratorEngineOnOff(bool status) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     int Command;
     if (status)
       Command = 1;
