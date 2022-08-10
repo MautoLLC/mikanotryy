@@ -14,16 +14,18 @@ import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-
+import 'package:mymikano_app/views/screens/Dashboard/SettingScreen.dart';
 import 'ApiConfigurationPage.dart';
 
 class Dashboard_Index extends StatefulWidget {
   @override
-  _Dashboard_IndexState createState() => _Dashboard_IndexState();
+  _Dashboard_IndexState createState() => _Dashboard_IndexState();  
 }
 
-class _Dashboard_IndexState extends State<Dashboard_Index> {
-  bool? isFetched;
+class _Dashboard_IndexState extends State<Dashboard_Index> {   
+  bool? isFetched;  
+
+ 
 
   @override
   void initState() {
@@ -41,7 +43,8 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ApiConfigurationState, WSVGeneratorState>(
+   return RefreshIndicator(onRefresh: () {  return isDataFetched(); },
+   child: Consumer2<ApiConfigurationState, WSVGeneratorState>(
         builder: (context, value, wsv, child) => Scaffold(
               backgroundColor: Colors.white,
               body: SafeArea(
@@ -64,60 +67,33 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                 ),
                                 Spacer(),
                                 TitleText(
-                                  title: lbl_Generator,
+                                
+                                 title: lbl_Generator,
                                 ),
-                                Spacer(),
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ApiConfigurationPage()));
-                                    },
-                                    icon: Icon(Icons.settings)),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    SizedBox.fromSize(
-                                      size: Size(40, 50),
-                                      child: ClipOval(
-                                        child: Material(
-                                          color: Colors.white,
-                                          child: InkWell(
-                                            onTap: () {
-                                              value.resetPreferences();
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ApiConfigurationPage()));
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Icon(Icons.refresh), // <-- Icon
-                                                Text(lbl_Reset), // <-- Text
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(width: 5),
+                                   IconButton(
+                                  onPressed: () {
+                                  
+                                  },
+                                  icon: Icon(Icons.keyboard_arrow_down)),
+                            
+                              Spacer(),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SettingScreen()));
+                                  },
+                                  icon: Icon(Icons.settings)),
                                 GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  GeneratorAlertsPage()));
-                                    },
-                                    child: commonCacheImageWidget(ic_error, 22))
-                              ],
-                            ),
+                                   onTap: () {
+                                     Navigator.of(context).push(MaterialPageRoute(
+                                         builder: (context) =>
+                                             GeneratorAlertsPage()));
+                                   },  
+                                  child: Icon(Icons.warning)),
+                            ],  
+                          ),
                             SizedBox(
                               height: 40,
                             ),
@@ -135,7 +111,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                     color: Colors.transparent,
                                   ),
                                   isExpanded: true,
-                                  hint: lbl_Generator == ""
+                                  hint: lbl_Generator == ""  
                                       ? Text(
                                           lbl_Generator,
                                           style: TextStyle(
@@ -145,7 +121,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                         )
                                       : Text(
                                           lbl_Generator,
-                                          style: TextStyle(
+                                          style: TextStyle(   
                                               fontSize: 15,
                                               fontFamily: PoppinsFamily,
                                               color: DropDownHintTextColor),
@@ -175,7 +151,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                             ),
                             Row(
                               children: [
-                                Column(
+                                Column(  
                                   children: [
                                     Container(
                                         height: 160,
@@ -381,40 +357,141 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                               height: 20,
                             ),
                             Column(
-                              children: [
-                                infotile(
-                                  title: lbl_Engine,
-                                  value: wsv.EngineState.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Breaker,
-                                  value: wsv.BreakState.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Running_Hours,
-                                  value: wsv.RunningHours.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Battery,
-                                  value: wsv.BatteryVoltage.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Pressure,
-                                  value: wsv.OilPressure.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Temperature,
-                                  value: wsv.CoolantTemp.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Gas,
-                                  value: wsv.EngineState.value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Load,
-                                  value: wsv.GeneratorLoad.value.toString(),
-                                ),
-                              ],
+                                children: <Widget>[
+                             ExpansionTile(
+         
+                title: Text(lbl_Engine),
+                children: [
+                  
+                     ListView(
+                      physics: const ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                         infotile(
+                                title: lbl_Pressure,
+                                 value: wsv.OilPressure.value.toString(),
+                              ),
+                             infotile(
+                                title: lbl_Temperature,
+                                value: wsv.CoolantTemp.value.toString(),
+                              ),
+                              infotile(
+                                title: "Fuel Level",
+                                value: wsv.FuelLevel.value.toString(),    
+                              ),
+                              infotile(
+                                title: "Running Hours",
+                               value: wsv.RunningHours.value.toString(), 
+                              ),
+                              infotile(
+                                title: "Battery Voltage",
+                               value: wsv.BatteryVoltage.value.toString(),
+                              ),
+                                
+                      ],
+                    ),
+                           
+                ],
+              ),
+                             
+                             ExpansionTile(
+                
+                title: Text("Alternator"),  
+                children: [
+                  
+                    ListView(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      children: [
+                       
+                         infotile(
+                                title: "L1-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L2-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L3-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L1",
+                                value: "A",
+                              ),   
+                        infotile(
+                                title: "L2",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "L3",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "Hz",
+                                value: " ",
+                              ),     
+                        infotile(
+                                title: "Pf",
+                                value: " ",
+                              ),   
+                      ],
+                      
+                    ),
+                 
+                ],
+              ),
+                 ExpansionTile(
+           
+                title: Text("Mains"),  
+                children: [
+                
+              ListView(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      children: [
+                         infotile(
+                                title: "L1-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L2-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L3-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L1",
+                                value: "A",
+                              ),   
+                        infotile(
+                                title: "L2",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "L3",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "Hz",
+                                value: " ",
+                              ),     
+                        infotile(
+                                title: "Pf",
+                                value: " ",
+                              ),   
+                      ],
+                    ),
+                  
+                ],
+              ),
+                            ],
                             )
                           ]),
                         ],
@@ -436,15 +513,16 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                   color: Colors.black,
                                   size: 65,
                                 ),
-                              ],
-                            ),
-                          )
-                        ]
-                      ],
-                    )),
+                            ],
+                          ),
+                        )
+                      ]
+                    ],
+                  ),
+                ),
               ),
-            ));
-  }
+            )));
+  } 
 }
 
 class infotile extends StatelessWidget {
