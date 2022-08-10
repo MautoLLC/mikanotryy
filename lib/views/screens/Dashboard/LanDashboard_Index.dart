@@ -8,6 +8,8 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/SettingScreen.dart';
 import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
@@ -83,7 +85,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ApiConfigurationStatee, LanGeneratorState>(
+   return RefreshIndicator(onRefresh: () {  return isDataFetched(); },
+   child:  Consumer2<ApiConfigurationStatee, LanGeneratorState>(
         builder: (context, value, lan, child) => Scaffold(
               backgroundColor: Colors.white,
               body: SafeArea(
@@ -108,107 +111,29 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 TitleText(
                                   title: lbl_Generator,
                                 ),
-                                Spacer(),
                                 IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  FetchGenerators()));
-                                    },
-                                    icon: Icon(Icons.settings)),
-
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 40,
-                                      height: 50,
-                                      child: ClipOval(
-                                        child: Material(
-                                          color: Colors.white,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              value.resetPreferences(configModel.espapiendpoint);
-                                              value.generatorNameList.add(
-                                                  configModel.generatorName);
-
-                                              //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
-                                              value.configsList.remove(
-                                                  configModel);
-                                              if (value.configsList != 1)
-                                                value.configModel =
-                                                    value.configsList.elementAt(
-                                                        0);
-                                              SharedPreferences sharedPreferences = await SharedPreferences
-                                                  .getInstance();
-                                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                                              //String Configs=jsonEncode(value.ConfigurationModelsList);
-                                              await sharedPreferences
-                                                  .setStringList(
-                                                  "genneratorNameList",
-                                                  value.generatorNameList);
-                                              String Configs = jsonEncode(
-                                                  value.configsList);
-                                              if (value.configsList != 1) {
-                                                String SelectedConfigurationModel = jsonEncode(
-                                                    configModel);
-                                                await sharedPreferences.setString(
-                                                    'SelectedConfigurationModel',
-                                                    SelectedConfigurationModel);
-                                              }
-                                              await sharedPreferences.setString(
-                                                  'Configurations', Configs);
-                                              if (value.configsList != 1) {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            FetchGenerators()));
-                                              }
-                                              else {
-                                                if(configModel.cloudMode==1){
-                                                  Navigator.of(context).pushReplacement(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              CloudDashboard_Index(
-                                                                  RefreshRate: configModel
-                                                                      .refreshRate)));}
-                                                else{
-                                                  Navigator.of(context).pushReplacement(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              LanDashboard_Index(
-                                                                  RefreshRate: configModel
-                                                                      .refreshRate)));
-                                                }
-                                              }
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Icon(Icons.refresh), // <-- Icon
-                                                Text(lbl_Reset), // <-- Text
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                // GestureDetector(
-                                //     onTap: () {
-                                //       Navigator.of(context).push(MaterialPageRoute(
-                                //           builder: (context) =>
-                                //               GeneratorAlertsPage()));
-                                //     },
-                                //     child: commonCacheImageWidget(ic_error, 22))
-                              ],
-                            ),
+                                  onPressed: () {
+                                  
+                                  },
+                                  icon: Icon(Icons.keyboard_arrow_down)),
+                                Spacer(),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SettingScreen()));
+                                  },
+                                  icon: Icon(Icons.settings)),
+                                  GestureDetector(
+                                   onTap: () {
+                                     Navigator.of(context).push(MaterialPageRoute(
+                                         builder: (context) =>
+                                             GeneratorAlertsPage()));
+                                   },  
+                                  child: Icon(Icons.warning)),
+                            ],
+                          ),
                             SizedBox(
                               height: 40,
                             ),
@@ -483,57 +408,155 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                               height: 20,
                             ),
                             Column(
-                              children: [
-                                infotile(
-                                  title: lbl_Engine,
-                                  value: lan.EnState.keys
-                                      .elementAt(lan.EngineState.return_value)
-                                      .toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Breaker,
-                                  value: lan.BrState.keys
-                                      .elementAt(lan.BreakState.return_value)
-                                      .toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Running_Hours,
-                                  value:
-                                      lan.RunningHours.return_value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Battery,
-                                  value: ((lan.BatteryVoltage.return_value
+                            children: <Widget>[
+                             ExpansionTile(
+         
+                title: Text(lbl_Engine),
+                children: [
+                  
+                     ListView(
+                      physics: const ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      children: <Widget>[
+                         infotile(
+                                title: lbl_Pressure,
+                               value: ((lan.OilPressure.return_value
                                               .toDouble()) /
                                           10)
                                       .toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Pressure,
-                                  value: ((lan.OilPressure.return_value
-                                              .toDouble()) /
-                                          10)
-                                      .toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Temperature,
-                                  value:
+                              ),
+                             infotile(
+                                title: lbl_Temperature,
+                                 value:
                                       lan.CoolantTemp.return_value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Gas,
-                                  value:
-                                      lan.EngineState.return_value.toString(),
-                                ),
-                                infotile(
-                                  title: lbl_Load,
-                                  value:
-                                  (lan.GeneratorLoad.return_value).toString(),
-                                ),
-                              ],
-                            )
-                          ]),
-                        ],
+                              ),
+                              infotile(
+                                title: "Fuel Level",
+                                value: lan.FuelLevel.return_value.toString(),    
+                              ),
+                              infotile(
+                                title: "Running Hours",
+                               value:
+                                      lan.RunningHours.return_value.toString(), 
+                              ),
+                              infotile(
+                                title: "Battery Voltage",
+                                value: ((lan.BatteryVoltage.return_value
+                                              .toDouble()) /
+                                          10)
+                                      .toString(),
+                              ),
+                                
+                      ],
+                    ),
+                           
+                ],
+              ),
+                             
+                             ExpansionTile(
+                
+                title: Text("Alternator"),  
+                children: [
+                  
+                    ListView(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      children: [
+                       
+                         infotile(
+                                title: "L1-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L2-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L3-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L1",
+                                value: "A",
+                              ),   
+                        infotile(
+                                title: "L2",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "L3",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "Hz",
+                                value: " ",
+                              ),     
+                        infotile(
+                                title: "Pf",
+                                value: " ",
+                              ),   
+                      ],
+                      
+                    ),
+                 
+                ],
+              ),
+                 ExpansionTile(
+           
+                title: Text("Mains"),  
+                children: [
+                
+              ListView(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      children: [
+                         infotile(
+                                title: "L1-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L2-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L3-N",
+                                value: "V",
+                              ),
+                        infotile(
+                                title: "L1",
+                                value: "A",
+                              ),   
+                        infotile(
+                                title: "L2",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "L3",
+                                value: "A",
+                              ),  
+                        infotile(
+                                title: "Hz",
+                                value: " ",
+                              ),     
+                        infotile(
+                                title: "Pf",
+                                value: " ",
+                              ),   
+                      ],
+                    ),
+                  
+                ],
+              ),
+                            ],
+                          )
+                        ] 
+                        ),
+                  
+                  
+                      ],
                         if (isFetched == false) ...[
                           Custom_Alert(
                               Title: 'Error Has Occured',
@@ -551,17 +574,17 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 SpinKitCircle(
                                   color: Colors.black,
                                   size: 65,
-                                ),
-                              ],
                             ),
-                          )
-                        ]
-                      ],
-                    )),
+                            ],
+                          ),
+                        )
+                      ]
+                    ],
+                  ),
+                ),
               ),
-            ));
-
-  }
+            )));
+  } 
   DropdownMenuItem<String> buildMenuItem(ConfigurationModel model) =>
       DropdownMenuItem(value: model.generatorId, child: Text(model.generatorName));
 }
