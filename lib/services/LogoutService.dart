@@ -11,13 +11,14 @@ logout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("DeviceToken").toString();
   try {
-    var response = await http.delete(
-        Uri.parse(
-            deleteDeviceUrl + '/${prefs.get("UserID")}?deviceToken=${token}"'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer ${prefs.getString("accessToken")}"
-        });
+    if(token != "null")
+      var response = await http.delete(
+          Uri.parse(
+              deleteDeviceUrl + '/${prefs.get("UserID")}?deviceToken=${token}"'),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${prefs.getString("accessToken")}"
+          });
 
     if (!await prefs.getBool('GuestLogin')!) gps.canceled = true;
     prefs.clear();

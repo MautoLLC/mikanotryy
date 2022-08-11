@@ -46,7 +46,7 @@ class DashboardState extends State<Dashboard> {
 
   void sendGpsCoord() async {
     gps.canceled = false;
-    // gps.StartTimer();
+    gps.StartTimer();
   }
 
   @override
