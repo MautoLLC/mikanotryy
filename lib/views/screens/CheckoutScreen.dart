@@ -256,7 +256,7 @@ class CheckoutScreen extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         Text(
-                          '${currencyState.currency!.currencySymbol}' + "0.00",
+                          '${currencyState.currency.currencySymbol}' + "0.00",
                           style: TextStyle(fontSize: 14),
                         ),
                       ],
@@ -290,7 +290,7 @@ class CheckoutScreen extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                         Text(
-                          '${currencyState.currency!.currencySymbol}' +
+                          '${currencyState.currency.currencySymbol}' +
                               "${productState.selectedProductsPrice.toStringAsFixed(2)}",
                           style: TextStyle(fontSize: 14, color: mainColorTheme),
                         ),

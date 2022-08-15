@@ -81,7 +81,7 @@ class HorizontalItemElement extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${Provider.of<CurrencyState>(context, listen: false).currency!.currencySymbol} ${product.Price.toStringAsFixed(2)}",
+                    "${Provider.of<CurrencyState>(context, listen: false).currency.currencySymbol} ${product.Price.toStringAsFixed(2)}",
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: "Poppins",

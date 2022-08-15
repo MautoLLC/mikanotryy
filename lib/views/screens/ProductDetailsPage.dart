@@ -155,7 +155,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${Provider.of<CurrencyState>(context, listen: false).currency!.currencySymbol} ${widget.product.Price.toStringAsFixed(2)}',
+                          '${Provider.of<CurrencyState>(context, listen: false).currency.currencySymbol} ${widget.product.Price.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontSize: 20, fontFamily: PoppinsFamily),
                         ),

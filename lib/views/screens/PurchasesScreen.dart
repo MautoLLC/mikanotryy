@@ -60,7 +60,7 @@ class _PurchasesScreenState extends State<PurchasesScreen> {
                               Text("Order ${temp.id.toString()}"),
                               Spacer(),
                               Text(
-                                  "${temp.orderTotal.toString()} ${currencyState.currency!.currencySymbol}")
+                                  "${temp.orderTotal.toString()} ${currencyState.currency.currencySymbol}")
                             ],
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),

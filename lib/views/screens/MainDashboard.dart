@@ -26,8 +26,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   bool guestLogin = true;
 
   init() async {
-    await Provider.of<CurrencyState>(context, listen: false).update();
-    Provider.of<ProductState>(context, listen: false).update();
+    
     pages.add(MenuScreen());
     pages.add(ListPage(
       title: lbl_Search,
@@ -49,6 +48,12 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
       await PaymentService()
           .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
     });
+    try{
+      await Provider.of<CurrencyState>(context, listen: false).update();
+      await Provider.of<ProductState>(context, listen: false).update();
+    } catch (e){
+      debugPrint(e.toString());
+    }
   }
 
   @override
