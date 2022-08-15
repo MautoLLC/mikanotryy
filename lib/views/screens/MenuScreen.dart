@@ -30,10 +30,10 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  SharedPreferences? prefs;
   bool guestLogin = true;
   bool DashboardFirstTimeAccess = true;
   int RefreshRate = 60;
+  String generatorType = '';
 
   @override
   void initState() {
@@ -44,12 +44,14 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Future<void> initializePreference() async {
-    this.prefs = await SharedPreferences.getInstance();
-    // this.guestLogin = await prefs!.getBool("GuestLogin")!;
-    this.guestLogin = Provider.of<UserState>(context, listen: false).guestLogin;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.guestLogin = await prefs.getBool("GuestLogin")!;
+    Provider.of<UserState>(context, listen: false).guestLogin = this.guestLogin;
+    // this.guestLogin = Provider.of<UserState>(context, listen: false).guestLogin;
     this.DashboardFirstTimeAccess =
-        await prefs!.getBool(prefs_DashboardFirstTimeAccess)!;
-    this.RefreshRate = await prefs!.getInt(prefs_RefreshRate)!;
+        await prefs.getBool(prefs_DashboardFirstTimeAccess)!;
+    this.RefreshRate = await prefs.getInt(prefs_RefreshRate)!;
+    this.generatorType = await  prefs.getString(prefs_ApiConfigurationOption).toString();
   }
 
   // void notFirstTimeDashboardAccess() async {
@@ -58,11 +60,11 @@ class _MenuScreenState extends State<MenuScreen> {
   // }
 
   Widget getPage() {
-    if (this.prefs?.getString(prefs_ApiConfigurationOption) == 'cloud') {
+    if (this.generatorType == 'cloud') {
       return CloudDashboard_Index(
           /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/ RefreshRate:
               this.RefreshRate);
-    } else if (this.prefs?.getString(prefs_ApiConfigurationOption) == 'comap') {
+    } else if (this.generatorType == 'comap') {
       return Dashboard_Index();
     } else {
       return LanDashboard_Index(
@@ -73,7 +75,6 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final searchController = TextEditingController();
     final user = Provider.of<UserState>(context, listen: false);
 
     List<String> MenuListNames = [
