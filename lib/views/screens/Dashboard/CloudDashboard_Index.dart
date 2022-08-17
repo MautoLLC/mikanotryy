@@ -9,6 +9,7 @@ import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
@@ -35,6 +36,10 @@ class CloudDashboard_Index extends StatefulWidget {
 class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   late Timer timer;
   bool? isFetched;
+  int _value = 0;
+   bool isOnleft = false;
+   bool isOnMiddle = false;
+   bool isOnRight = false;
   late  ConfigurationModel configModel;
   //late final List<ConfigurationModel> configsList;
 
@@ -113,12 +118,65 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               TitleText(
                                 title: lbl_Generator,
                               ),
-                             IconButton(
+                            Container(
+                             child: IconButton(
                                   onPressed: () {
-                                  
+                                    
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                                        lbl_Generator_ID,
+                                        style: TextStyle(
+                                            color: mainGreyColorTheme,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                        content: new ListView(
+                          children: <Widget>[
+                            new Column(
+                              children: <Widget>[
+                                new DropdownButton<String>(
+                                   isExpanded: true,
+                                  items: value.configsList
+                                          .map(buildMenuItem)
+                                          .toList(),
+                                      //value:value.selectedConfigurationModel.generatorId,
+                                      value:configModel.generatorId,
+                                      onChanged: (item) async {
+                                       ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
+                                      value.configModel=model;
+                                       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                       String SelectedConfigurationModel=jsonEncode(configModel);
+                                       await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
+                                       if(model.cloudMode==0) {
+                                         Navigator.of(context).pushReplacement(
+                                             MaterialPageRoute(
+                                               builder: (BuildContext context) => Provider(
+                                                 create: (context) => CloudGeneratorState(),
+                                                 builder: (context, child) =>LanDashboard_Index(RefreshRate: model.refreshRate)
+                                               ),
+                                             ),);
+                                       }
+                                       else{
+                                         // Navigator.of(context).push(
+                                         //     // MaterialPageRoute(
+                                         //     //     builder: (context) =>
+                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
+                                         initState();
+                                       }
+                                      }),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              
+                                    
                                   },
                                   icon: Icon(Icons.keyboard_arrow_down)),
-                            
+                            ),
                               Spacer(),
                               IconButton(
                                   onPressed: () {
@@ -148,94 +206,267 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   child: Icon(Icons.warning)),
                             ],
                           ),
-                          SizedBox(
-                            height: 40,
+                           Row(
+                              
+                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                       shape: 
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      label: Text("Auto"),
+                                      selected: _value == 0,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 0 : null)!;
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                      shape: 
+                                RoundedRectangleBorder( 
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                      label: Text("Manual"),
+                                      selected: _value == 1,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 1 : null)!;
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                       shape: 
+                                RoundedRectangleBorder( 
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                      label: Text("Off"),
+                                      selected: _value == 2,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 2 : null)!;
+                                        });
+                                      },
+                                    ),  
+                                  ],
+                                ),            
+                           SizedBox(
+                            height: 20,
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 25),
-                                width: MediaQuery.of(context).size.width / 2.3,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border:
-                                    Border.all(color: mainGreyColorTheme)),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      hint: Text(
-                                        lbl_Generator_ID,
-                                        style: TextStyle(
-                                            color: mainGreyColorTheme,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                      icon: Icon(
-                                        Icons.arrow_drop_down,
-                                        color: mainGreyColorTheme,
-                                      ),
-                                      items: value.configsList
-                                          .map(buildMenuItem)
-                                          .toList(),
-                                      //value:value.selectedConfigurationModel.generatorId,
-                                      value:configModel.generatorId,
-                                      onChanged: (item) async {
-                                       ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
-                                      value.configModel=model;
-                                       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                                       String SelectedConfigurationModel=jsonEncode(configModel);
-                                       await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
-                                       if(model.cloudMode==0) {
-                                         Navigator.of(context).pushReplacement(
-                                             MaterialPageRoute(
-                                               builder: (BuildContext context) => Provider(
-                                                 create: (context) => CloudGeneratorState(),
-                                                 builder: (context, child) =>LanDashboard_Index(RefreshRate: model.refreshRate)
-                                               ),
-                                             ),);
-                                       }
-                                       else{
-                                         // Navigator.of(context).push(
-                                         //     // MaterialPageRoute(
-                                         //     //     builder: (context) =>
-                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
-                                         initState();
-                                       }
-                                      }),
-                                ),
+                          Padding(
+        padding: EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
+                          child: Container(
+      
+                                                                          
+                                  width: 350,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                      color : Color.fromRGBO(255, 255, 255, 1),
                               ),
-                            ],
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Positioned(
+                                    top: 4,
+                                    left: 15,
+                                    child: Container(
+                                    width: 90,
+                                    height: 61,
+                                   child: IconButton(
+                                  
+                                      icon: Image.asset(ic_tower,  color: isOnleft ? mainColorTheme : mainGreyColorTheme),
+                                      onPressed: () {  },
+                   
+                                    )
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 80,
+                               
+                                    child: Container(
+                                    width: 40,
+                                    height: 48,
+                                    
+                                    child: ImageIcon(
+                                    AssetImage(ic_line),
+                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 72,
+                                    left: 232,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                  setState(() 
+                                    {
+                                      isOnleft = false;
+                                      isOnMiddle = false;
+                                      isOnRight = false;
+                                       });
+                                          },
+                                    child: Container(
+                                    width: 65,
+                                    height: 48,
+                                    decoration: BoxDecoration( 
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_o),                                   
+                                      fit: BoxFit.fitWidth
+                                      
+                                  ),
+                              )
+                                  )
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 4,
+                                    left: 241,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                     
+                                if((double.parse(cloud.GeneratorVoltage.value)) > 0){
+                                  setState(()   
+                                    {
+                                      isOnRight = true;
+                                       });
+                                  } 
+                                if(cloud.MCBModeStatus == true){
+                                   setState(()   
+                                    {
+                                      isOnleft = true;
+                                       });
+                                }
+                                if(cloud.isGCB == true){
+                                   setState(()   
+                                    {
+                                      isOnMiddle = true;
+                                       });
+                                }
+                                          },       
+                                    child: Container(  
+                                    width: 48,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_i),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
+                                    ),
+                                  ),
+                                  
+                                  Positioned(
+                                    top: 24,
+                                    left: 185,
+                                    child: Container(
+                                    width: 60,
+                                    height: 28,
+                                    child: ImageIcon(
+                                    AssetImage(ic_g),
+                                     color: isOnRight ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 150,
+                               
+                                    child: Container(
+                                    width: 50,
+                                    height: 48,
+                                    
+                                    child: ImageIcon(
+                                    AssetImage(ic_line),
+                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                    
+                                  ),
+                                  Positioned(
+                                    top: 24,
+                                    left: 115,
+                                    child: Container(
+                                    width: 40,
+                                    height: 26,
+                                     child: ImageIcon(
+                                    AssetImage(ic_factory),
+                                   color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme,
+                                ),
+                                  )
+                                  ),Positioned(
+                                    top: 72,
+                                    left: 67,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                   Switch(
+                                                    value: cloud.MCBModeStatus,
+                                                    onChanged: (result) {
+                                                      cloud.changeMCBModeStatus(
+                                                          result);
+                                                    });
+                                          },
+                                    child: Container(
+                                    width: 60,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_io),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
+                                    ),
+                                  ),Positioned(
+                                    top: 72,
+                                    left: 147,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                      Switch(
+                                                      value: cloud.isGCB,
+                                                      onChanged: (result) {
+                                                        cloud.changeIsGCB(result);
+                                                      });
+                                    },
+                                    child: Container(
+                                    width: 60,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_io),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
+                                    ),
+                                  ),
+                                    ]
+                                  )
+                                ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: mainGreyColorTheme2,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-                            ),
+                                SizedBox(
+                            height: 10,
                           ),
-                          SizedBox(
-                            height: 30,
-                          ),
+                        
                           Row(
                             children: [
                               Column(
                                 children: [
-                                  Container(
-                                      height: 160,
-                                      width: 160,
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Custom_GaugeWidget(
-                                          title: lbl_RPM,
-                                          value:
-                                              (double.parse(cloud.Rpm.value)),
-                                      min:0,max:3000)),
+                                
                                   SizedBox(height: 10),
-                                  Container(
+                                  
+                                 Container(
+                                 
                                       height: 160,
                                       width: 160,
                                       decoration: BoxDecoration(
@@ -247,179 +478,44 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           value:
                                               (double.parse(cloud.GeneratorLoad.value)/1000),
                                           needleColor: mainColorTheme,min:0,max: 200,)),
+                                          
+
                                 ],
                               ),
-                              SizedBox(width: 10),
+                              Spacer(),
+                              SizedBox(height: 10),
                               Column(
                                 children: [
-                                  Container(
-                                    width: 167,
-                                    height: 89,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 25),
-                                    decoration: BoxDecoration(
-                                      color: mainGreyColorTheme2,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        SubTitleText(title: lbl_Mode),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              cloud.ControllerModeStatus
-                                                  ? lbl_Auto
-                                                  : lbl_Manual,
-                                              style: TextStyle(
-                                                  fontFamily: PoppinsFamily,
-                                                  fontSize: 14,
-                                                  color: mainGreyColorTheme),
-                                            ),
-                                            Spacer(),
-                                            Switch(
-                                                value:
-                                                    cloud.ControllerModeStatus,
-                                                onChanged: (result) {
-                                                  cloud
-                                                      .changeControllerModeStatus(
-                                                          result);
-                                                })
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: 167,
-                                    height: 89,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 25),
-                                    decoration: BoxDecoration(
-                                      color: mainGreyColorTheme2,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        SubTitleText(title: lbl_IO),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              cloud.isIO ? lbl_ON : lbl_OFF,
-                                              style: TextStyle(
-                                                  fontFamily: PoppinsFamily,
-                                                  fontSize: 14,
-                                                  color: mainGreyColorTheme),
-                                            ),
-                                            Spacer(),
-                                            Switch(
-                                                value: cloud.isIO,
-                                                onChanged: (result) {
-                                                  cloud.changeIsIO(result);
-                                                })
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Row(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.only(top: 15),
-                                        decoration: BoxDecoration(
-                                          color: mainGreyColorTheme2,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        height: 129,
-                                        width: 80,
-                                        child: Column(
-                                          children: [
-                                            SubTitleText(title: lbl_MCB),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Row(children: [
-                                              SizedBox(
-                                                width: 2,
-                                              ),
-                                              Text(
-                                                cloud.MCBModeStatus
-                                                    ? lbl_ON
-                                                    : lbl_OFF,
-                                                style: TextStyle(
-                                                    fontFamily: PoppinsFamily,
-                                                    fontSize: 12,
-                                                    color: mainGreyColorTheme),
-                                              ),
-                                              SizedBox(
-                                                width: 2,
-                                              ),
-                                              Switch(
-                                                  value: cloud.MCBModeStatus,
-                                                  onChanged: (result) {
-                                                    cloud.changeMCBModeStatus(
-                                                        result);
-                                                  })
-                                            ]),
-                                          ],
-                                        ),
+                                      height: 160,
+                                      width: 160,
+                                      
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(top: 15),
-                                        decoration: BoxDecoration(
-                                          color: mainGreyColorTheme2,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        height: 129,
-                                        width: 84,
-                                        child: Column(
-                                          children: [
-                                            SubTitleText(title: lbl_GCB),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Row(
-                                              children: [
-                                                SizedBox(width: 2),
-                                                Text(
-                                                  cloud.isGCB
-                                                      ? lbl_ON
-                                                      : lbl_OFF,
-                                                  style: TextStyle(
-                                                      fontFamily: PoppinsFamily,
-                                                      fontSize: 12,
-                                                      color:
-                                                          mainGreyColorTheme),
-                                                ),
-                                                SizedBox(
-                                                  width: 2,
-                                                ),
-                                                Switch(
-                                                    value: cloud.isGCB,
-                                                    onChanged: (result) {
-                                                      cloud.changeIsGCB(result);
-                                                    })
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                      child: Custom_GaugeWidget(
+                                          title: lbl_RPM,
+                                          value:
+                                              (double.parse(cloud.Rpm.value)),
+                                      min:0,max:3000)), 
+                                      
                                     ],
                                   ),
+                              
+
+
                                 ],
                               ),
                             ],
                           ),
+                          
                             SizedBox(
                             height: 20,
                           ),
@@ -441,7 +537,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                 title: lbl_Pressure,
                                 value: (double.parse(cloud.OilPressure.value))
                                     .toString(),
-                              ),
+                              ),  
                              infotile(
                                 title: lbl_Temperature,
                                 value: cloud.CoolantTemp.value.toString(),

@@ -204,7 +204,7 @@ class LanGeneratorState extends ChangeNotifier {
 
       if (MCBMode.return_value == 1)
         MCBModeStatus = true;
-      else
+      else   
         MCBModeStatus = false;
 
       if (GCBMode.return_value == 1)
