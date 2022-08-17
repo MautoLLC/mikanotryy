@@ -6,6 +6,7 @@ import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
@@ -33,6 +34,10 @@ class LanDashboard_Index extends StatefulWidget {
 class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   late Timer timer;
   bool? isFetched;
+  int _value = 0;
+   bool isOnleft = false;
+   bool isOnMiddle = false;
+   bool isOnRight = false;
   late final ConfigurationModel configModel;
   @override
   void initState() {
@@ -111,11 +116,62 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 TitleText(
                                   title: lbl_Generator,
                                 ),
-                                IconButton(
+                               Container(
+                             child: IconButton(
                                   onPressed: () {
-                                  
+                                    
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                                        lbl_Generator_ID,
+                                        style: TextStyle(
+                                            color: mainGreyColorTheme,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                        content: new ListView(
+                          children: <Widget>[
+                            new Column(
+                              children: <Widget>[
+                                new DropdownButton<String>(
+                                   isExpanded: true,
+                                  items: value.configsList
+                                          .map(buildMenuItem)
+                                          .toList(),
+                                      //value:value.selectedConfigurationModel.generatorId,
+                                      value:configModel.generatorId,
+                                      onChanged: (item) async {
+                                       ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
+                                      value.configModel=model;
+                                       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                                       String SelectedConfigurationModel=jsonEncode(configModel);
+                                       await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
+                                       if(model.cloudMode==0) {
+                                         Navigator.of(context).pushReplacement(
+                                             MaterialPageRoute(
+                                               builder: (BuildContext context) => Provider(
+                                                 create: (context) => LanGeneratorState(),
+                                                 builder: (context, child) =>LanDashboard_Index(RefreshRate: model.refreshRate)
+                                               ),
+                                             ),);
+                                       }
+                                       else{
+                                    
+                                         initState();
+                                       }
+                                      }),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+                             
+                                    
                                   },
-                                  icon: Icon(Icons.keyboard_arrow_down)),
+                                 icon: Icon(Icons.keyboard_arrow_down)),
+                            ),
                                 Spacer(),
                               IconButton(
                                   onPressed: () {
@@ -134,276 +190,315 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                   child: Icon(Icons.warning)),
                             ],
                           ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 25),
-                                  width: MediaQuery.of(context).size.width / 2.3,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border:
-                                      Border.all(color: mainGreyColorTheme)),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                        isExpanded: true,
-                                        hint: Text(
-                                          lbl_Generator_ID,
-                                          style: TextStyle(
-                                              color: mainGreyColorTheme,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                        icon: Icon(
-                                          Icons.arrow_drop_down,
-                                          color: mainGreyColorTheme,
-                                        ),
-                                        items: value.configsList
-                                            .map(buildMenuItem)
-                                            .toList(),
-                                        //value:value.selectedConfigurationModel.generatorId,
-                                        value:value.configModel.generatorId,
-                                        onChanged: (item) async {
-                                          ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
-                                          value.configModel=model;
-                                          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                                          String SelectedConfigurationModel=jsonEncode(value.configModel);
-                                          await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
-                                          if(model.cloudMode==1) {
-                                            Navigator.of(context).pushReplacement(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        CloudDashboard_Index(RefreshRate: model.refreshRate)));
-                                          }
-                                          else{
-                                            initState();
-                                          }
-                                        }),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: mainGreyColorTheme2,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 4.0, 8.0, 4.0),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                        height: 160,
-                                        width: 160,
-                                        decoration: BoxDecoration(
-                                          color: mainGreyColorTheme2,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Custom_GaugeWidget(
-                                            title: lbl_RPM,
-                                            value: ((lan.Rpm.return_value.toDouble())),
-                                        min:0,max: 3000,)),
-                                    SizedBox(height: 10),
-                                    Container(
-                                        height: 160,
-                                        width: 160,
-                                        decoration: BoxDecoration(
-                                          color: mainGreyColorTheme2,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Custom_GaugeWidget(
-                                            title: lbl_Actual_Power,
-                                            value: ((lan
-                                                    .GeneratorLoad.return_value)
-                                                .toDouble()),
-                                            min:0,
-                                            max:200,
-                                            needleColor: mainColorTheme)),
+                          Row(
+                              
+                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                       shape: 
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      label: Text("Auto"),
+                                      selected: _value == 0,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 0 : null)!;
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                      shape: 
+                                RoundedRectangleBorder( 
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                      label: Text("Manual"),
+                                      selected: _value == 1,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 1 : null)!;
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                       shape: 
+                                RoundedRectangleBorder( 
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                      label: Text("Off"),
+                                      selected: _value == 2,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 2 : null)!;
+                                        });
+                                      },
+                                    ),  
                                   ],
+                                ),      
+                    SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+        padding: EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
+                          child: Container(
+      
+                                                                          
+                                  width: 350,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                      color : Color.fromRGBO(255, 255, 255, 1),
+                              ),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Positioned(
+                                    top: 4,
+                                    left: 15,
+                                    child: Container(
+                                    width: 90,
+                                    height: 61,
+                                   child: IconButton(
+                                  
+                                      icon: Image.asset(ic_tower,  color: isOnleft ? mainColorTheme : mainGreyColorTheme),
+                                      onPressed: () {  },
+                   
+                                    )
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 80,
+                               
+                                    child: Container(
+                                    width: 40,
+                                    height: 48,
+                                    
+                                    child: ImageIcon(
+                                    AssetImage(ic_line),
+                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
                                 ),
-                                SizedBox(width: 10),
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: 167,
-                                      height: 89,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 25),
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SubTitleText(title: lbl_Mode),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                lan.ControllerModeStatus
-                                                    ? lbl_Auto
-                                                    : lbl_Manual,
-                                                style: TextStyle(
-                                                    fontFamily: PoppinsFamily,
-                                                    fontSize: 14,
-                                                    color: mainGreyColorTheme),
-                                              ),
-                                              Spacer(),
-                                              Switch(
-                                                  value:
-                                                      lan.ControllerModeStatus,
-                                                  onChanged: (result) {
-                                                    lan.changeControllerModeStatus(
-                                                        result);
-                                                  })
-                                            ],
-                                          )
-                                        ],
-                                      ),
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 72,
+                                    left: 232,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                  setState(() 
+                                    {
+                                      isOnleft = false;
+                                      isOnMiddle = false;
+                                      isOnRight = false;
+                                       });
+                                          },
+                                    child: Container(
+                                    width: 65,
+                                    height: 48,
+                                    decoration: BoxDecoration( 
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_o),                                   
+                                      fit: BoxFit.fitWidth
+                                      
+                                  ),
+                              )
+                                  )
                                     ),
-                                    SizedBox(
-                                      height: 10,
+                                  ),
+                                  Positioned(
+                                    top: 4,
+                                    left: 241,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                     
+                                if((double.parse(lan.GeneratorVoltage.return_value)) > 0){
+                                  setState(()   
+                                    {
+                                      isOnRight = true;
+                                       });
+                                  } 
+                                if(lan.MCBModeStatus == true){
+                                   setState(()   
+                                    {
+                                      isOnleft = true;
+                                       });
+                                }
+                                if(lan.isGCB == true){
+                                   setState(()   
+                                    {
+                                      isOnMiddle = true;
+                                       });
+                                }
+                                          },         
+                                    child: Container(
+                                    width: 48,  
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_i),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
                                     ),
-                                    Container(
-                                      width: 167,
-                                      height: 89,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 25),
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SubTitleText(title: lbl_IO),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                lan.isIO ? lbl_ON : lbl_OFF,
-                                                style: TextStyle(
-                                                    fontFamily: PoppinsFamily,
-                                                    fontSize: 14,
-                                                    color: mainGreyColorTheme),
-                                              ),
-                                              Spacer(),
-                                              Switch(
-                                                  value: lan.isIO,
-                                                  onChanged: (result) {
-                                                    lan.changeIsIO(result);
-                                                  })
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(top: 15),
-                                          decoration: BoxDecoration(
-                                            color: mainGreyColorTheme2,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          height: 129,
-                                          width: 80,
-                                          child: Column(
-                                            children: [
-                                              SubTitleText(title: lbl_MCB),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Row(children: [
-                                                SizedBox(
-                                                  width: 2,
-                                                ),
-                                                Text(
-                                                  lan.MCBModeStatus
-                                                      ? lbl_ON
-                                                      : lbl_OFF,
-                                                  style: TextStyle(
-                                                      fontFamily: PoppinsFamily,
-                                                      fontSize: 12,
-                                                      color:
-                                                          mainGreyColorTheme),
-                                                ),
-                                                SizedBox(
-                                                  width: 2,
-                                                ),
-                                                Switch(
+                                  ),
+                                  
+                                  Positioned(
+                                    top: 24,
+                                    left: 185,
+                                    child: Container(
+                                    width: 60,
+                                    height: 28,
+                                    child: ImageIcon(
+                                    AssetImage(ic_g),
+                                     color: isOnRight ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 150,
+                               
+                                    child: Container(
+                                    width: 50,
+                                    height: 48,
+                                    
+                                    child: ImageIcon(
+                                    AssetImage(ic_line),
+                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                    
+                                  ),
+                                  Positioned(
+                                    top: 24,
+                                    left: 115,
+                                    child: Container(
+                                    width: 40,
+                                    height: 26,
+                                     child: ImageIcon(
+                                    AssetImage(ic_factory),
+                                   color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme,
+                                ),
+                                  )
+                                  ),Positioned(
+                                    top: 72,
+                                    left: 67,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                   Switch(
                                                     value: lan.MCBModeStatus,
                                                     onChanged: (result) {
                                                       lan.changeMCBModeStatus(
                                                           result);
-                                                    })
-                                              ]),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(top: 15),
-                                          decoration: BoxDecoration(
-                                            color: mainGreyColorTheme2,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          height: 129,
-                                          width: 80,
-                                          child: Column(
-                                            children: [
-                                              SubTitleText(title: lbl_GCB),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  SizedBox(width: 2),
-                                                  Text(
-                                                    lan.isGCB
-                                                        ? lbl_ON
-                                                        : lbl_OFF,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            PoppinsFamily,
-                                                        fontSize: 12,
-                                                        color:
-                                                            mainGreyColorTheme),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Switch(
+                                                    });
+                                          },
+                                    child: Container(
+                                    width: 60,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_io),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
+                                    ),
+                                  ),Positioned(
+                                    top: 72,
+                                    left: 147,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                      Switch(
                                                       value: lan.isGCB,
                                                       onChanged: (result) {
                                                         lan.changeIsGCB(result);
-                                                      })
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                                      });
+                                    },
+                                    child: Container(
+                                    width: 60,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_io),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
                                     ),
-                                  ],
+                                  ),
+                                    ]
+                                  )
                                 ),
-                              ],
-                            ),
+                          ),
+                                SizedBox(
+                            height: 10,
+                          ),
+                        
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                
+                                  SizedBox(height: 10),
+                                  
+                                 Container(
+                                 
+                                      height: 160,
+                                      width: 160,
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Custom_GaugeWidget(
+                                          title: lbl_Actual_Power,
+                                          value:
+                                              (lan.GeneratorLoad.return_value),
+                                          needleColor: mainColorTheme,min:0,max: 200,)),
+                                          
+
+                                ],
+                              ),
+                              Spacer(),
+                              SizedBox(height: 10),
+                              Column(
+                                children: [
+                                
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                      height: 160,
+                                      width: 160,
+                                      
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Custom_GaugeWidget(
+                                          title: lbl_RPM,
+                                          value:
+                                              (lan.Rpm.return_value.toDouble()),
+                                      min:0,max:3000)), 
+                                      
+                                    ],
+                                  ),
+                              
+
+
+                                ],
+                              ),
+                            ],
+                          ),
                             SizedBox(
                               height: 20,
                             ),

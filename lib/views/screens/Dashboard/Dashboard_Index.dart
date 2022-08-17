@@ -15,6 +15,7 @@ import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:mymikano_app/views/screens/Dashboard/SettingScreen.dart';
+import '../../widgets/Custom_GaugeWidget.dart';
 import 'ApiConfigurationPage.dart';
 
 class Dashboard_Index extends StatefulWidget {
@@ -24,7 +25,10 @@ class Dashboard_Index extends StatefulWidget {
 
 class _Dashboard_IndexState extends State<Dashboard_Index> {   
   bool? isFetched;  
-
+int _value = 0;
+   bool isOnleft = false;
+   bool isOnMiddle = false;
+   bool isOnRight = false;
  
 
   @override
@@ -94,265 +98,314 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                   child: Icon(Icons.warning)),
                             ],  
                           ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: mainGreyColorTheme2,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 4.0, 8.0, 4.0),
-                                child: DropdownButton(
-                                  onChanged: (value) {},
-                                  underline: Divider(
-                                    thickness: 0.0,
-                                    color: Colors.transparent,
-                                  ),
-                                  isExpanded: true,
-                                  hint: lbl_Generator == ""  
-                                      ? Text(
-                                          lbl_Generator,
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: PoppinsFamily,
-                                              color: DropDownHintTextColor),
-                                        )
-                                      : Text(
-                                          lbl_Generator,
-                                          style: TextStyle(   
-                                              fontSize: 15,
-                                              fontFamily: PoppinsFamily,
-                                              color: DropDownHintTextColor),
-                                        ),
-                                  icon: Icon(Icons.keyboard_arrow_down),
-                                  iconEnabledColor: mainGreyColorTheme,
-                                  iconDisabledColor: mainGreyColorTheme,
-                                  items: [
-                                    DropdownMenuItem(
-                                        value: lbl_Generator,
-                                        child: new Text(lbl_Generator)),
-                                    DropdownMenuItem(
-                                        value: lbl_Generator,
-                                        child: new Text(lbl_Generator))
-                                  ],
-                                  // onChanged: (Entry? value) {
-                                  //   setState(() {
-                                  //     selectedSubCateg = value!.title;
-                                  //     selectedSubCategId = value.idEntry;
-                                  //   });
-                                  // },
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
                             Row(
-                              children: [
-                                Column(  
-                                  children: [
-                                    Container(
-                                        height: 160,
-                                        width: 160,
-                                        decoration: BoxDecoration(
-                                          color: mainGreyColorTheme2,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: GaugeWidget(
-                                            title: lbl_RPM,
-                                            value: ((wsv.Rpm.value)))),
-                                    SizedBox(height: 10),
-                                    Container(
-                                        height: 160,
-                                        width: 160,
-                                        decoration: BoxDecoration(
-                                          color: mainGreyColorTheme2,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: GaugeWidget(
-                                            title: lbl_Actual_Power,
-                                            value: ((wsv.Rpm.value) / 100),
-                                            needleColor: mainColorTheme)),
+                              
+                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                       shape: 
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      label: Text("Auto"),
+                                      selected: _value == 0,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 0 : null)!;
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                      shape: 
+                                RoundedRectangleBorder( 
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                      label: Text("Manual"),
+                                      selected: _value == 1,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 1 : null)!;
+                                        });
+                                      },
+                                    ),
+                                    ChoiceChip(
+                                      pressElevation: 0.0,
+                                       shape: 
+                                RoundedRectangleBorder( 
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    side: BorderSide(color: mainGreyColorTheme2)),
+                                      selectedColor:  mainColorTheme,
+                                      backgroundColor: mainGreyColorTheme2,
+                                      label: Text("Off"),
+                                      selected: _value == 2,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _value = (selected ? 2 : null)!;
+                                        });
+                                      },
+                                    ),  
                                   ],
+                                ),      
+                    SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+        padding: EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
+                          child: Container(
+      
+                                                                          
+                                  width: 350,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                      color : Color.fromRGBO(255, 255, 255, 1),
+                              ),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Positioned(
+                                    top: 4,
+                                    left: 15,
+                                    child: Container(
+                                    width: 90,
+                                    height: 61,
+                                   child: IconButton(
+                                  
+                                      icon: Image.asset(ic_tower,  color: isOnleft ? mainColorTheme : mainGreyColorTheme),
+                                      onPressed: () {  },
+                   
+                                    )
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 80,
+                               
+                                    child: Container(
+                                    width: 40,
+                                    height: 48,
+                                    
+                                    child: ImageIcon(
+                                    AssetImage(ic_line),
+                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
                                 ),
-                                SizedBox(width: 10),
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: 167,
-                                      height: 89,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 25),
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SubTitleText(title: lbl_Mode),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                wsv.ControllerModeStatus
-                                                    ? lbl_Manual
-                                                    : lbl_Auto,
-                                                style: TextStyle(
-                                                    fontFamily: PoppinsFamily,
-                                                    fontSize: 14,
-                                                    color: mainGreyColorTheme),
-                                              ),
-                                              Spacer(),
-                                              Switch(
-                                                  value:
-                                                      wsv.ControllerModeStatus,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    wsv.changeControllerModeStatus(
-                                                        result);
-                                                  })
-                                            ],
-                                          )
-                                        ],
-                                      ),
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 72,
+                                    left: 232,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                  setState(() 
+                                    {
+                                      isOnleft = false;
+                                      isOnMiddle = false;
+                                      isOnRight = false;
+                                       });
+                                          },
+                                    child: Container(
+                                    width: 65,
+                                    height: 48,
+                                    decoration: BoxDecoration( 
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_o),                                   
+                                      fit: BoxFit.fitWidth
+                                      
+                                  ),
+                              )
+                                  )
                                     ),
-                                    SizedBox(
-                                      height: 10,
+                                  ),
+                                  Positioned(
+                                    top: 4,
+                                    left: 241,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                     
+                                if((wsv.GeneratorVoltage.value) > 0){
+                                  setState(()   
+                                    {
+                                      isOnRight = true;
+                                       });
+                                  } 
+                                if(wsv.isMCB == true){
+                                   setState(()   
+                                    {
+                                      isOnleft = true;
+                                       });
+                                }
+                                if(wsv.isGCB == true){
+                                   setState(()   
+                                    {
+                                      isOnMiddle = true;
+                                       });
+                                }
+                                          },         
+                                    child: Container(
+                                    width: 48,  
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_i),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
                                     ),
-                                    Container(
-                                      width: 167,
-                                      height: 89,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 25),
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          SubTitleText(title: lbl_IO),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                wsv.isIO ? lbl_ON : lbl_OFF,
-                                                style: TextStyle(
-                                                    fontFamily: PoppinsFamily,
-                                                    fontSize: 14,
-                                                    color: mainGreyColorTheme),
-                                              ),
-                                              Spacer(),
-                                              Switch(
-                                                  value: wsv.isIO,
-                                                  onChanged: (result) {
-                                                    // TODO logic
-                                                    wsv.changeIsIO(result);
-                                                  })
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(top: 15),
-                                          decoration: BoxDecoration(
-                                            color: mainGreyColorTheme2,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          height: 129,
-                                          width: 80,
-                                          child: Column(
-                                            children: [
-                                              SubTitleText(title: lbl_MCB),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  SizedBox(width: 2),
-                                                  Text(
-                                                    wsv.isMCB
-                                                        ? lbl_ON
-                                                        : lbl_OFF,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            PoppinsFamily,
-                                                        fontSize: 12,
-                                                        color:
-                                                            mainGreyColorTheme),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Switch(
-                                                      value: wsv.isMCB,
+                                  ),
+                                  
+                                  Positioned(
+                                    top: 24,
+                                    left: 185,
+                                    child: Container(
+                                    width: 60,
+                                    height: 28,
+                                    child: ImageIcon(
+                                    AssetImage(ic_g),
+                                     color: isOnRight ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                  ),
+                                  Positioned(
+                                    top: 15,
+                                    left: 150,
+                               
+                                    child: Container(
+                                    width: 50,
+                                    height: 48,
+                                    
+                                    child: ImageIcon(
+                                    AssetImage(ic_line),
+                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
+                                ),
+                                  )
+                                    
+                                  ),
+                                  Positioned(
+                                    top: 24,
+                                    left: 115,
+                                    child: Container(
+                                    width: 40,
+                                    height: 26,
+                                     child: ImageIcon(
+                                    AssetImage(ic_factory),
+                                   color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme,
+                                ),
+                                  )
+                                  ),Positioned(
+                                    top: 72,
+                                    left: 67,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                   Switch(
+                                                     value: wsv.isMCB,
                                                       onChanged: (result) {
                                                         wsv.changeIsMCB(result);
-                                                      })
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(top: 15),
-                                          decoration: BoxDecoration(
-                                            color: mainGreyColorTheme2,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          height: 129,
-                                          width: 80,
-                                          child: Column(
-                                            children: [
-                                              SubTitleText(title: lbl_GCB),
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  SizedBox(width: 2),
-                                                  Text(
-                                                    wsv.isGCB
-                                                        ? lbl_ON
-                                                        : lbl_OFF,
-                                                    style: TextStyle(
-                                                        fontFamily:
-                                                            PoppinsFamily,
-                                                        fontSize: 12,
-                                                        color:
-                                                            mainGreyColorTheme),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Switch(
+                                                    });
+                                          },
+                                    child: Container(
+                                    width: 60,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_io),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
+                                    ),
+                                  ),Positioned(
+                                    top: 72,
+                                    left: 147,
+                                    child: new GestureDetector(
+                                    onTap: (){
+                                      Switch(
                                                       value: wsv.isGCB,
                                                       onChanged: (result) {
                                                         wsv.changeIsGCB(result);
-                                                      })
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                                      });
+                                    },
+                                    child: Container(
+                                    width: 60,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      image : DecorationImage(
+                                      image: AssetImage(ic_io),
+                                      fit: BoxFit.fitWidth
+                                  ),
+                              )
+                                  )
                                     ),
-                                  ],
+                                  ),
+                                    ]
+                                  )
                                 ),
-                              ],
-                            ),
+                          ),
+                                SizedBox(
+                            height: 10,
+                          ),
+                        
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                
+                                  SizedBox(height: 10),
+                                  
+                                 Container(
+                                 
+                                      height: 160,
+                                      width: 160,
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Custom_GaugeWidget(
+                                          title: lbl_Actual_Power,
+                                          value:
+                                              (wsv.GeneratorLoad.value),
+                                          needleColor: mainColorTheme,min:0,max: 200,)),
+                                          
+
+                                ],
+                              ),
+                              Spacer(),
+                              SizedBox(height: 10),
+                              Column(
+                                children: [
+                                
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                      height: 160,
+                                      width: 160,
+                                      
+                                      decoration: BoxDecoration(
+                                        color: mainGreyColorTheme2,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Custom_GaugeWidget(
+                                          title: lbl_RPM,
+                                          value:
+                                              (wsv.Rpm.value),
+                                      min:0,max:3000)), 
+                                      
+                                    ],
+                                  ),
+                              
+
+
+                                ],
+                              ),
+                            ],
+                          ),
                             SizedBox(
                               height: 20,
                             ),
