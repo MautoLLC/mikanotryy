@@ -15,9 +15,9 @@ class UserState extends ChangeNotifier {
   bool guestLogin = true;
   List<Address> listofAddresses = [];
 
-  UserState() {
-    update();
-  }
+  // UserState() {
+  //   update();
+  // }
 
   void clear() {
     User = TechnicianModel("1", 'null', '', 'null', 'null');

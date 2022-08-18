@@ -50,7 +50,7 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     });
     try{
       await Provider.of<CurrencyState>(context, listen: false).update();
-      await Provider.of<ProductState>(context, listen: false).update();
+      await Provider.of<ProductState>(context, listen: false).update(isGuestLogin: guestLogin);
     } catch (e){
       debugPrint(e.toString());
     }

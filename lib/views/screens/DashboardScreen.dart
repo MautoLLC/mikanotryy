@@ -40,7 +40,9 @@ class DashboardState extends State<Dashboard> {
     if (!guestLogin) {
       sendGpsCoord();
     }
-    guestLogin ? null : Provider.of<UserState>(context, listen: false).update();
+    guestLogin ?
+     null : 
+     Provider.of<UserState>(context, listen: false).update();
     setState(() {});
   }
 

@@ -5,12 +5,15 @@ import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/services/getNewTokenService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'LoggingInterceptor.dart';
+
 class DioClass {
   DioClass();
 
   static Future<Dio> getDio() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Dio dio = Dio();
+    dio.interceptors.add(LoggingInterceptor());
     dio.interceptors.add(
         InterceptorsWrapper(onRequest: (RequestOptions options, handler) async {
       DateTime now = new DateTime.now();

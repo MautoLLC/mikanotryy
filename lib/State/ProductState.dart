@@ -64,11 +64,12 @@ class ProductState extends ChangeNotifier {
   }
 
   ProductState() {
-    update();
+    update(isGuestLogin: true);
   }
 
-  update() async {
-    await getFavorites();
+  update({isGuestLogin = false}) async {
+    if(!isGuestLogin)
+      await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
       if (isInFavorite(item)) {
@@ -94,7 +95,7 @@ class ProductState extends ChangeNotifier {
     final set = Set();
     allCategories.retainWhere((element) => set.add(element.id));
     
-    await updateCart();
+    if(!isGuestLogin)await updateCart();
     notifyListeners();
   }
 
