@@ -49,6 +49,7 @@ dependencies:
   isw_mobile_sdk: ^1.0.8
   url_launcher: ^6.1.5
   confirm_dialog: ^1.0.1 
+  localstorage: ^4.0.0+1
 #  flutter_absolute_path:
 #    git:
 #      url: https://github.com/kornperkus/flutter_absolute_path.git

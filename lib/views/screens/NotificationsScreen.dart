@@ -1,11 +1,28 @@
+import 'package:audioplayers/notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/NotificationState.dart';
 import 'package:mymikano_app/models/NotificationModel.dart';
+import 'package:mymikano_app/services/LocalStorageService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/NotificationItem.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
+import 'package:provider/provider.dart';
 
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+class NotificationsPage extends StatefulWidget {
+  NotificationsPage({Key? key}) : super(key: key);
+
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<NotificationState>(context, listen: false).update();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +37,11 @@ class NotificationsPage extends StatelessWidget {
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: Provider.of<NotificationState>(context).notificationCount,
                   itemBuilder: (context, index) {
                     NotificationModel notification = NotificationModel(
-                        Message:
-                            "Generator unit has been turned off and verification needed.");
-                    return NotificationItem(
+                        Message: Provider.of<NotificationState>(context).notifications[index].Message);
+                        return NotificationItem(
                         Message: notification.Message, Date: notification.Date);
                   },
                 ),

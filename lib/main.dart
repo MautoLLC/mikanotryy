@@ -6,6 +6,7 @@ import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
+import 'package:mymikano_app/State/NotificationState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/State/WSVGeneratorState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
@@ -24,10 +25,6 @@ import 'package:flutter/services.dart';
 final GlobalKey<NavigatorState> navigator =
     GlobalKey<NavigatorState>(); //Create a key for navigator
 
-Future<void> _messageHandler(RemoteMessage message) async {
-  debugPrint('background message ${message.notification!.body}');
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -40,7 +37,6 @@ Future<void> main() async {
           )));
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");
-  FirebaseMessaging.onBackgroundMessage(_messageHandler);
   runApp(MyApp());
 }
 
@@ -48,7 +44,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseMessaging _fcm = FirebaseMessaging.instance;
-    PushNotificationService(_fcm).initialise(context);
+    PushNotificationService notificationService = PushNotificationService(_fcm);
+    notificationService.initialise(context);
+    FirebaseMessaging.onBackgroundMessage(notificationService.messageHandler);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ProductState>(
@@ -76,6 +74,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => LoadCalculationState())),
         ChangeNotifierProvider<MainDashboardState>(
             create: ((context) => MainDashboardState())),
+        ChangeNotifierProvider<NotificationState>(
+            create: ((context) => NotificationState())),
       ],
       child: MaterialApp(
         navigatorKey: navigator,

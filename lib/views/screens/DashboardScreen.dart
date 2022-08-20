@@ -8,6 +8,7 @@ import 'package:mymikano_app/State/UserState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/views/widgets/NotificationBell.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
 import 'package:mymikano_app/views/widgets/itemElement.dart';
@@ -84,12 +85,12 @@ class DashboardState extends State<Dashboard> {
                       Align(
                           alignment: Alignment.center,
                           child: commonCacheImageWidget(ic_AppLogo, 60)),
-                      // !guestLogin
-                      //     ? Align(
-                      //         alignment: Alignment.centerRight,
-                      //         child: NotificationBell(),
-                      //       )
-                      //     : Container()
+                      !guestLogin
+                          ? Align(
+                              alignment: Alignment.centerRight,
+                              child: NotificationBell(),
+                            )
+                          : Container()
                     ],
                   ),
                 ),

@@ -30,11 +30,11 @@ class NotificationItem extends StatelessWidget {
             Message,
             style: TextStyle(fontSize: 14, color: mainBlackColorTheme),
           ),
-          SizedBox(height: 11.0),
-          Text(
-            Date,
-            style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
-          )
+          // SizedBox(height: 11.0),
+          // Text(
+          //   Date,
+          //   style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
+          // )
         ],
       ),
     );
