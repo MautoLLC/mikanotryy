@@ -8,7 +8,7 @@ class NotificationState extends ChangeNotifier{
 
   update() async{
     LocalStorageService localStorageService = LocalStorageService();
-    dynamic tempCount = await localStorageService.getItem("Count");
+    dynamic tempCount = await localStorageService.getItem("Count")??"0";
     Clear();
     setNotificationCount(int.parse(tempCount));
     for(int i=0; i<_notificationCount;i++){
