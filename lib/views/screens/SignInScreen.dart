@@ -160,7 +160,7 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Theme5Dashboard()));
+                            builder: (context) => Theme5Dashboard(), settings:RouteSettings(name: 'dashboard')));
                   },
                   child: Text(lbl_Guest_Login,
                       style: TextStyle(fontSize: 15, color: mainColorTheme)),

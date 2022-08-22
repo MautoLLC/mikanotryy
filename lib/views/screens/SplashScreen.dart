@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           // Provider.of<ProductState>(context, listen: false).update();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+            MaterialPageRoute(builder: (context) => Theme5Dashboard(), settings:RouteSettings(name: 'dashboard')),
           );
         } else {
           Navigator.pushReplacement(

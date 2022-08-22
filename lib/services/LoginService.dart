@@ -89,7 +89,7 @@ Login(String username, String password, BuildContext context) async {
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Theme5Dashboard()),
+        MaterialPageRoute(builder: (context) => Theme5Dashboard(), settings:RouteSettings(name: 'dashboard')),
       );
     } on Exception catch (e) {
       FailedToast();

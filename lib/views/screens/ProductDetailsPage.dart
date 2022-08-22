@@ -92,9 +92,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                              onPressed: () => finish(context),
-                              icon: Icon(Icons.arrow_back_ios_new)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              IconButton(
+                                  onPressed: () => finish(context),
+                                  icon: Icon(Icons.arrow_back_ios_new)),
+                              IconButton(
+                                  onPressed: () {
+                                    // Pop until dashboard screen
+                                    Navigator.popUntil(
+                                        context,
+                                        ModalRoute.withName('dashboard'));
+                                  },
+                                  icon: Icon(Icons.home)),
+                            ],
+                          ),
                           userState.guestLogin
                               ? Container()
                               : Consumer<ProductState>(
