@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
+import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPagee.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
@@ -89,7 +90,7 @@ class _SettingScreenState extends State<SettingScreen> {
              Navigator.of(context).push(
              MaterialPageRoute(
              builder: (context) =>
-             ApiConfigurationPage()));
+             ApiConfigurationPagee()));
             }
             return print('pressedCancel');
             }),

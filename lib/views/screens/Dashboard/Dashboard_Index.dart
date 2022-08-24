@@ -195,6 +195,7 @@ int _value = 0;
                                 ),
                                   )
                                   ),
+                                  if(_value != 0)
                                   Positioned(
                                     top: 72,
                                     left: 232,
@@ -220,6 +221,7 @@ int _value = 0;
                                   )
                                     ),
                                   ),
+                                  if(_value != 0)
                                   Positioned(
                                     top: 4,
                                     left: 241,
@@ -296,7 +298,9 @@ int _value = 0;
                                    color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme,
                                 ),
                                   )
-                                  ),Positioned(
+                                  ),
+                                  if(_value != 0)
+                                  Positioned(
                                     top: 72,
                                     left: 67,
                                     child: new GestureDetector(
@@ -318,7 +322,9 @@ int _value = 0;
                               )
                                   )
                                     ),
-                                  ),Positioned(
+                                  ),
+                                  if(_value != 0)
+                                  Positioned(
                                     top: 72,
                                     left: 147,
                                     child: new GestureDetector(
