@@ -337,6 +337,10 @@ class FetchGenerators extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Spacer(),
+                          SizedBox(
+                            height: 20,
+                          ),
                           TextFormField(
                             onChanged: (address) =>
                                 value.changeControllerAddress(address),
@@ -347,6 +351,7 @@ class FetchGenerators extends StatelessWidget {
                             cursorColor: black,
                             controller: ControllerAddressController,
                             keyboardType: TextInputType.number,
+                            
                             decoration: InputDecoration(
                               contentPadding:
                               EdgeInsets.fromLTRB(26, 14, 4, 14),
@@ -367,6 +372,7 @@ class FetchGenerators extends StatelessWidget {
                               ),
                             ),
                           ),
+                           Spacer(),
                           SizedBox(height: 10),
                           Spacer(),
                           if (value.loading == true)

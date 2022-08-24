@@ -113,30 +113,27 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                   },
                                 ),
                                 Spacer(),
-                                TitleText(
-                                  title: lbl_Generator,
-                                ),
-                               Container(
-                             child: IconButton(
-                                  onPressed: () {
-                                    
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
+                                  Container(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                width: MediaQuery.of(context).size.width / 2.3,
+                                
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      hint: Text(
                                         lbl_Generator_ID,
                                         style: TextStyle(
-                                            color: mainGreyColorTheme,
-                                            fontWeight: FontWeight.bold),
+                                           fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "Poppins",
+                                          color: Colors.black,),
                                       ),
-                        content: new ListView(
-                          children: <Widget>[
-                            new Column(
-                              children: <Widget>[
-                                new DropdownButton<String>(
-                                   isExpanded: true,
-                                  items: value.configsList
+                                      
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down,  
+                                        color: Colors.black,
+                                      ),
+                                      items: value.configsList
                                           .map(buildMenuItem)
                                           .toList(),
                                       //value:value.selectedConfigurationModel.generatorId,
@@ -157,31 +154,122 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                              ),);
                                        }
                                        else{
-                                    
+                                         // Navigator.of(context).push(
+                                         //     // MaterialPageRoute(
+                                         //     //     builder: (context) =>
+                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
                                          initState();
                                        }
                                       }),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-                             
-                                    
-                                  },
-                                 icon: Icon(Icons.keyboard_arrow_down)),
-                            ),
-                                Spacer(),
+                                ),
+                              ),
+                            Spacer(),
+                              SizedBox(
+                                    width: 45,
+                                    height: 50,
+                                    child: ClipOval(
+                      
+                                      child: Material(
+                                        color: Colors.white,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            value.resetPreferences(configModel.espapiendpoint);
+                                            // Navigator.of(context).push(
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) =>
+                                            //             ApiConfigurationPage()));
+                                            value.generatorNameList.add(
+                                                configModel.generatorName);
+
+                                            //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                            value.configsList.remove(
+                                                configModel);
+                                            if (value.configsList != 1)
+                                              value.configModel =
+                                                  value.configsList.elementAt(
+                                                      0);
+                                            SharedPreferences sharedPreferences = await SharedPreferences
+                                                .getInstance();
+                                            //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                            //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                            await sharedPreferences
+                                                .setStringList(
+                                                "genneratorNameList",
+                                                value.generatorNameList);
+                                            String Configs = jsonEncode(
+                                                value.configsList);
+                                            if (value.configsList != 1) {
+                                              String SelectedConfigurationModel = jsonEncode(
+                                                  configModel);
+                                              await sharedPreferences.setString(
+                                                  'SelectedConfigurationModel',
+                                                  SelectedConfigurationModel);
+                                            }
+                                            await sharedPreferences.setString(
+                                                'Configurations', Configs);
+                                            if (value.configsList != 1) {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FetchGenerators()));
+                                            }
+                                            else {
+                                              if(configModel.cloudMode==1){
+                                              Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          CloudDashboard_Index(
+                                                              RefreshRate: configModel
+                                                                  .refreshRate)));}
+                                              else{
+                                                Navigator.of(context).pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            LanDashboard_Index(
+                                                                RefreshRate: configModel
+                                                                    .refreshRate)));
+                                              }
+                                            }
+                                          },
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Icon(Icons.refresh), // <-- Icon
+                                              Text(lbl_Reset), // <-- Text
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                          ),
+                              ),
+                               
+                             Spacer(),
                               IconButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ApiConfigurationPage()));
+                                    Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                SettingScreen()));
+                                                FetchGenerators()));
                                   },
                                   icon: Icon(Icons.settings)),
-                                  GestureDetector(
+                                 // Spacer(),
+                                 // IconButton(
+                               //   onPressed: () {
+                               //     Navigator.of(context).push(
+                               //         MaterialPageRoute(
+                              //              builder: (context) =>
+                              //                  GeneratorAlertsPage()));
+                              //    },
+                              //    icon: Icon(Icons.warning)),
+                             
+
+                               GestureDetector(
                                    onTap: () {
                                      Navigator.of(context).push(MaterialPageRoute(
                                          builder: (context) =>
@@ -287,6 +375,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 ),
                                   )
                                   ),
+                                  if(_value != 0)
                                   Positioned(
                                     top: 72,
                                     left: 232,
@@ -312,6 +401,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                   )
                                     ),
                                   ),
+                                  if(_value != 0)
                                   Positioned(
                                     top: 4,
                                     left: 241,
@@ -388,7 +478,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                    color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme,
                                 ),
                                   )
-                                  ),Positioned(
+                                  ),
+                                  if(_value != 0)
+                                  Positioned(
                                     top: 72,
                                     left: 67,
                                     child: new GestureDetector(
@@ -411,7 +503,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                               )
                                   )
                                     ),
-                                  ),Positioned(
+                                  ),
+                                  if(_value != 0)
+                                  Positioned(
                                     top: 72,
                                     left: 147,
                                     child: new GestureDetector(
