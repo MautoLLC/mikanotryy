@@ -6,7 +6,6 @@ import 'package:mymikano_app/models/StoreModels/OrderModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
-import 'package:mymikano_app/models/TechnicianModel.dart';
 import 'package:mymikano_app/services/DioClass.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -51,7 +50,7 @@ class CustomerService {
             "zip_postal_code": "1001",
             "phone_number": address.phoneNumber,
           });
-              
+
       if (response.statusCode == 200 && response2.statusCode == 200) {
         toast("Address Added Successfully");
         return true;
@@ -522,59 +521,56 @@ class CustomerService {
           .then((response) {
         if (response.statusCode == 200) {
           Order order = Order.fromJson(response.data['orders'][0]);
-          if(byCard){
-            try{
-
-
-            dio
-          .post((MikanoShopPlaceOrder),
-          queryParameters: {
-            "id": order.id
-          },
-          data: {
-                "order": {
-                  "payment_status": "Paid",
-                  "billing_address": {
-                    "first_name": add.firstName,
-                    "last_name": add.lastName,
-                    "email": add.email,
-                    "company": add.company,
-                    "country_id": add.countryId,
-                    "country": add.country,
-                    "state_province_id": add.stateProvinceId,
-                    "city": add.city,
-                    "address1": add.address1,
-                    "address2": add.address2,
-                    "zip_postal_code": add.zipPostalCode,
-                    "phone_number": add.phoneNumber,
-                    "fax_number": add.faxNumber,
-                    "customer_attributes": add.customerAttributes,
-                    "created_on_utc": add.createdOnUtc,
-                    "province": add.province,
-                    "id": add.id
-                  },
-                  "shipping_address": {
-                    "first_name": add.firstName,
-                    "last_name": add.lastName,
-                    "email": add.email,
-                    "company": add.company,
-                    "country_id": add.countryId,
-                    "country": add.country,
-                    "state_province_id": add.stateProvinceId,
-                    "city": add.city,
-                    "address1": add.address1,
-                    "address2": add.address2,
-                    "zip_postal_code": add.zipPostalCode,
-                    "phone_number": add.phoneNumber,
-                    "fax_number": add.faxNumber,
-                    "customer_attributes": add.customerAttributes,
-                    "created_on_utc": add.createdOnUtc,
-                    "province": add.province,
-                    "id": add.id
-                  },
-                }
-              },);
-                          } catch(e){
+          if (byCard) {
+            try {
+              dio.post(
+                (MikanoShopPlaceOrder),
+                queryParameters: {"id": order.id},
+                data: {
+                  "order": {
+                    "payment_status": "Paid",
+                    "billing_address": {
+                      "first_name": add.firstName,
+                      "last_name": add.lastName,
+                      "email": add.email,
+                      "company": add.company,
+                      "country_id": add.countryId,
+                      "country": add.country,
+                      "state_province_id": add.stateProvinceId,
+                      "city": add.city,
+                      "address1": add.address1,
+                      "address2": add.address2,
+                      "zip_postal_code": add.zipPostalCode,
+                      "phone_number": add.phoneNumber,
+                      "fax_number": add.faxNumber,
+                      "customer_attributes": add.customerAttributes,
+                      "created_on_utc": add.createdOnUtc,
+                      "province": add.province,
+                      "id": add.id
+                    },
+                    "shipping_address": {
+                      "first_name": add.firstName,
+                      "last_name": add.lastName,
+                      "email": add.email,
+                      "company": add.company,
+                      "country_id": add.countryId,
+                      "country": add.country,
+                      "state_province_id": add.stateProvinceId,
+                      "city": add.city,
+                      "address1": add.address1,
+                      "address2": add.address2,
+                      "zip_postal_code": add.zipPostalCode,
+                      "phone_number": add.phoneNumber,
+                      "fax_number": add.faxNumber,
+                      "customer_attributes": add.customerAttributes,
+                      "created_on_utc": add.createdOnUtc,
+                      "province": add.province,
+                      "id": add.id
+                    },
+                  }
+                },
+              );
+            } catch (e) {
               debugPrint(e.toString());
               return false;
             }
@@ -640,7 +636,8 @@ class CustomerService {
     try {
       Response response = await dio.delete(
         MikanoShopDeleteAddress.replaceAll(
-            '{customerId}', prefs.getString("StoreCustomerId").toString()).replaceAll("{addressId}", id.toString()),
+                '{customerId}', prefs.getString("StoreCustomerId").toString())
+            .replaceAll("{addressId}", id.toString()),
         options: Options(headers: {
           "Authorization": "Bearer ${prefs.getString("StoreToken")}"
         }),
@@ -674,35 +671,34 @@ class CustomerService {
     }
   }
 
-      Future<bool> requestAQuote(RFQ rfq, int productId) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      //Todo the logic
-      try {
-        Response response = await dio.post(
-          MikanoShopRfq,
-          data: {
-            "rfq": {
-              "name": rfq.name,
-              "email": rfq.email,
-              "phone": rfq.phone,
-              "address": rfq.address,
-              "note": rfq.note,
-              "product_id": productId,
-              "customer_id": prefs.getString("StoreCustomerId").toString(),
-            } 
-          },
-          options: Options(headers: {
-            "Authorization": "Bearer ${prefs.getString("StoreToken")}"
-          }),
-        );
-        if (response.statusCode == 200) {
-          return true;
-        } else {
-          return false;
-        }
-      } catch (e) {
+  Future<bool> requestAQuote(RFQ rfq, int productId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Todo the logic
+    try {
+      Response response = await dio.post(
+        MikanoShopRfq,
+        data: {
+          "rfq": {
+            "name": rfq.name,
+            "email": rfq.email,
+            "phone": rfq.phone,
+            "address": rfq.address,
+            "note": rfq.note,
+            "product_id": productId,
+            "customer_id": prefs.getString("StoreCustomerId").toString(),
+          }
+        },
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
         return false;
       }
+    } catch (e) {
+      return false;
     }
-
+  }
 }

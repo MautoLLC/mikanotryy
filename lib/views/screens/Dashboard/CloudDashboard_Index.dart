@@ -1,24 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
-import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
-import 'package:mymikano_app/views/screens/Dashboard/SettingScreen.dart';
-import 'package:mymikano_app/views/widgets/GaugeWidget.dart';
-import 'package:mymikano_app/views/widgets/SubTitleText.dart';
-import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -37,11 +30,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   late Timer timer;
   bool? isFetched;
   int _value = 0;
-   bool isOnleft = false;
-   bool isOnMiddle = false;
-   bool isOnRight = false;
-   
-  late  ConfigurationModel configModel;
+  bool isOnleft = false;
+  bool isOnMiddle = false;
+  bool isOnRight = false;
+
+  late ConfigurationModel configModel;
   //late final List<ConfigurationModel> configsList;
 
   @override
@@ -61,19 +54,22 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   }
 
   Future<void> isDataFetched() async {
-    await Provider.of<CloudGeneratorState>(context,listen: false)
+    await Provider.of<CloudGeneratorState>(context, listen: false)
         .ReinitiateCloudService();
-    isFetched = await Provider.of<CloudGeneratorState>(context,listen: false)
+    isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
         .FetchData();
   }
+
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String test=prefs.getString('Configurations').toString();
-    List<ConfigurationModel> configsList = (json.decode(prefs.getString('Configurations')!) as List)
-        .map((data) => ConfigurationModel.fromJson(data))
-        .toList();
-    ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
-    configModel=config;
+    String test = prefs.getString('Configurations').toString();
+    List<ConfigurationModel> configsList =
+        (json.decode(prefs.getString('Configurations')!) as List)
+            .map((data) => ConfigurationModel.fromJson(data))
+            .toList();
+    ConfigurationModel config = ConfigurationModel.fromJson(
+        json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel = config;
     return configModel;
   }
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
@@ -93,117 +89,141 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(onRefresh: () {  return isDataFetched(); },
-   child:  Consumer2<ApiConfigurationStatee, CloudGeneratorState>(
-        builder: (context, value, cloud, child) => Scaffold(
-              backgroundColor: Colors.white,
-              body: SafeArea(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    children: [
-                      if (isFetched == true) ...[
-                        Column(children: [
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: backArrowColor,
-                                ),
-                                onPressed: () {
-                                  finish(context);
-                                },
-                              ),
-                              Spacer(),
-                           Container(
-                                padding: EdgeInsets.symmetric(horizontal: 25),
-                                width: MediaQuery.of(context).size.width / 2.3,
-                                
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                      isExpanded: true,
-                                      hint: Text(
-                                        lbl_Generator_ID,
-                                        style: TextStyle(
-                                           fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Poppins",
-                                          color: Colors.black,),
-                                      ),
-                                      
-                                      icon: Icon(
-                                        Icons.keyboard_arrow_down,  
-                                        color: Colors.black,
-                                      ),
-                                      items: value.configsList
-                                          .map(buildMenuItem)
-                                          .toList(),
-                                      //value:value.selectedConfigurationModel.generatorId,
-                                      value:configModel.generatorId,
-                                      onChanged: (item) async {
-                                       ConfigurationModel model=value.configsList.firstWhere((element) => element.generatorId==item);
-                                      value.configModel=model;
-                                       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                                       String SelectedConfigurationModel=jsonEncode(configModel);
-                                       await sharedPreferences.setString('SelectedConfigurationModel', SelectedConfigurationModel);
-                                       if(model.cloudMode==0) {
-                                         Navigator.of(context).pushReplacement(
-                                             MaterialPageRoute(
-                                               builder: (BuildContext context) => Provider(
-                                                 create: (context) => CloudGeneratorState(),
-                                                 builder: (context, child) =>LanDashboard_Index(RefreshRate: model.refreshRate)
-                                               ),
-                                             ),);
-                                       }
-                                       else{
-                                         // Navigator.of(context).push(
-                                         //     // MaterialPageRoute(
-                                         //     //     builder: (context) =>
-                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
-                                         initState();
-                                       }
-                                      }),
-                                ),
-                              ),
-                            Spacer(),
-                              SizedBox(
+    return RefreshIndicator(
+        onRefresh: () {
+          return isDataFetched();
+        },
+        child: Consumer2<ApiConfigurationStatee, CloudGeneratorState>(
+            builder: (context, value, cloud, child) => Scaffold(
+                  backgroundColor: Colors.white,
+                  body: SafeArea(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        children: [
+                          if (isFetched == true) ...[
+                            Column(children: [
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: backArrowColor,
+                                    ),
+                                    onPressed: () {
+                                      finish(context);
+                                    },
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 25),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.3,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                          isExpanded: true,
+                                          hint: Text(
+                                            lbl_Generator_ID,
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "Poppins",
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          icon: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: Colors.black,
+                                          ),
+                                          items: value.configsList
+                                              .map(buildMenuItem)
+                                              .toList(),
+                                          //value:value.selectedConfigurationModel.generatorId,
+                                          value: configModel.generatorId,
+                                          onChanged: (item) async {
+                                            ConfigurationModel model = value
+                                                .configsList
+                                                .firstWhere((element) =>
+                                                    element.generatorId ==
+                                                    item);
+                                            value.configModel = model;
+                                            SharedPreferences
+                                                sharedPreferences =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            String SelectedConfigurationModel =
+                                                jsonEncode(configModel);
+                                            await sharedPreferences.setString(
+                                                'SelectedConfigurationModel',
+                                                SelectedConfigurationModel);
+                                            if (model.cloudMode == 0) {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      Provider(
+                                                          create: (context) =>
+                                                              CloudGeneratorState(),
+                                                          builder: (context,
+                                                                  child) =>
+                                                              LanDashboard_Index(
+                                                                  RefreshRate: model
+                                                                      .refreshRate)),
+                                                ),
+                                              );
+                                            } else {
+                                              // Navigator.of(context).push(
+                                              //     // MaterialPageRoute(
+                                              //     //     builder: (context) =>
+                                              //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
+                                              initState();
+                                            }
+                                          }),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  SizedBox(
                                     width: 45,
                                     height: 50,
                                     child: ClipOval(
-                      
                                       child: Material(
                                         color: Colors.white,
                                         child: InkWell(
                                           onTap: () async {
-                                            value.resetPreferences(configModel.espapiendpoint);
+                                            value.resetPreferences(
+                                                configModel.espapiendpoint);
                                             // Navigator.of(context).push(
                                             //     MaterialPageRoute(
                                             //         builder: (context) =>
                                             //             ApiConfigurationPage()));
-                                            value.generatorNameList.add(
-                                                configModel.generatorName);
+                                            value.generatorNameList
+                                                .add(configModel.generatorName);
 
                                             //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
-                                            value.configsList.remove(
-                                                configModel);
+                                            value.configsList
+                                                .remove(configModel);
                                             if (value.configsList != 1)
-                                              value.configModel =
-                                                  value.configsList.elementAt(
-                                                      0);
-                                            SharedPreferences sharedPreferences = await SharedPreferences
-                                                .getInstance();
+                                              value.configModel = value
+                                                  .configsList
+                                                  .elementAt(0);
+                                            SharedPreferences
+                                                sharedPreferences =
+                                                await SharedPreferences
+                                                    .getInstance();
                                             //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
                                             //String Configs=jsonEncode(value.ConfigurationModelsList);
                                             await sharedPreferences
                                                 .setStringList(
-                                                "genneratorNameList",
-                                                value.generatorNameList);
-                                            String Configs = jsonEncode(
-                                                value.configsList);
+                                                    "genneratorNameList",
+                                                    value.generatorNameList);
+                                            String Configs =
+                                                jsonEncode(value.configsList);
                                             if (value.configsList != 1) {
-                                              String SelectedConfigurationModel = jsonEncode(
-                                                  configModel);
+                                              String
+                                                  SelectedConfigurationModel =
+                                                  jsonEncode(configModel);
                                               await sharedPreferences.setString(
                                                   'SelectedConfigurationModel',
                                                   SelectedConfigurationModel);
@@ -213,25 +233,26 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             if (value.configsList != 1) {
                                               Navigator.of(context)
                                                   .pushReplacement(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          FetchGenerators()));
-                                            }
-                                            else {
-                                              if(configModel.cloudMode==1){
-                                              Navigator.of(context).pushReplacement(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          CloudDashboard_Index(
-                                                              RefreshRate: configModel
-                                                                  .refreshRate)));}
-                                              else{
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              FetchGenerators()));
+                                            } else {
+                                              if (configModel.cloudMode == 1) {
+                                                Navigator.of(context).pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            CloudDashboard_Index(
+                                                                RefreshRate:
+                                                                    configModel
+                                                                        .refreshRate)));
+                                              } else {
                                                 Navigator.of(context).pushReplacement(
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             LanDashboard_Index(
-                                                                RefreshRate: configModel
-                                                                    .refreshRate)));
+                                                                RefreshRate:
+                                                                    configModel
+                                                                        .refreshRate)));
                                               }
                                             }
                                           },
@@ -245,545 +266,505 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           ),
                                         ),
                                       ),
-                                          ),
-                              ),
-                               
-                             Spacer(),
-                              IconButton(
-                                  onPressed: () {
-                                    // Navigator.of(context).push(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             ApiConfigurationPage()));
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                FetchGenerators()));
-                                  },
-                                  icon: Icon(Icons.settings)),
-                                 // Spacer(),
-                                 // IconButton(
-                               //   onPressed: () {
-                               //     Navigator.of(context).push(
-                               //         MaterialPageRoute(
-                              //              builder: (context) =>
-                              //                  GeneratorAlertsPage()));
-                              //    },
-                              //    icon: Icon(Icons.warning)),
-                             
+                                    ),
+                                  ),
 
-                               GestureDetector(
-                                   onTap: () {
-                                     Navigator.of(context).push(MaterialPageRoute(
-                                         builder: (context) =>
-                                             GeneratorAlertsPage()));
-                                   },  
-                                  child: Icon(Icons.warning)),
-                            ],
-                          ),
-                           Row(
-                              
-                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    ChoiceChip(
-                                      pressElevation: 0.0,
-                                      selectedColor:  mainColorTheme,
-                                      backgroundColor: mainGreyColorTheme2,
-                                       shape: 
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    side: BorderSide(color: mainGreyColorTheme2)),
-                                      label: Text("Auto"),
-                                      selected: _value == 0,
-                                      onSelected: (bool selected) {
-                                        setState(() {
-                                          _value = (selected ? 0 : null)!;
-                                         
-                                        });
+                                  Spacer(),
+                                  IconButton(
+                                      onPressed: () {
+                                        // Navigator.of(context).push(
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             ApiConfigurationPage()));
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FetchGenerators()));
                                       },
-                                    ),
-                                    ChoiceChip(  
-                                      pressElevation: 0.0,
-                                      shape: 
-                                RoundedRectangleBorder( 
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    side: BorderSide(color: mainGreyColorTheme2)),
-                                      selectedColor:  mainColorTheme,
-                                      backgroundColor: mainGreyColorTheme2,
-                                      label: Text("Manual"),
-                                      selected: _value == 1,
-                                      onSelected: (bool selected) {
-                                        setState(() {
-                                          _value = (selected ? 1 : null)!;
-                                        });
+                                      icon: Icon(Icons.settings)),
+                                  // Spacer(),
+                                  // IconButton(
+                                  //   onPressed: () {
+                                  //     Navigator.of(context).push(
+                                  //         MaterialPageRoute(
+                                  //              builder: (context) =>
+                                  //                  GeneratorAlertsPage()));
+                                  //    },
+                                  //    icon: Icon(Icons.warning)),
+
+                                  GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    GeneratorAlertsPage()));
                                       },
-                                    ),
-                                    ChoiceChip(
-                                      pressElevation: 0.0,
-                                       shape: 
-                                RoundedRectangleBorder( 
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    side: BorderSide(color: mainGreyColorTheme2)),
-                                      selectedColor:  mainColorTheme,
-                                      backgroundColor: mainGreyColorTheme2,
-                                      label: Text("Off"),
-                                      selected: _value == 2,
-                                      onSelected: (bool selected) {
-                                        setState(() {
-                                          _value = (selected ? 2 : null)!;
-                                        });
-                                      },
-                                    ),  
-                                  ],
-                                ), 
-                               
-                           SizedBox(
-                            height: 20,
-                          ),
-                         
-                          Padding(
-        padding: EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
-          
-                          child: Container(
-                                padding: EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
-                                                                          
-                                  width: 350,
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                      color : Color.fromRGBO(255, 255, 255, 1),
+                                      child: Icon(Icons.warning)),
+                                ],
                               ),
-                           
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Positioned(
-                                    top: 4,
-                                    left: 15,
-                                    child: Container(
-                                    width: 90,
-                                    height: 61,
-                                   child: IconButton(
-                                  
-                                      icon: Image.asset(ic_tower,  color: isOnleft ? mainColorTheme : mainGreyColorTheme),
-                                      onPressed: () {  },
-                   
-                                    )
-                                  )
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  ChoiceChip(
+                                    pressElevation: 0.0,
+                                    selectedColor: mainColorTheme,
+                                    backgroundColor: mainGreyColorTheme2,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        side: BorderSide(
+                                            color: mainGreyColorTheme2)),
+                                    label: Text("Auto"),
+                                    selected: _value == 0,
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        _value = (selected ? 0 : null)!;
+                                      });
+                                    },
                                   ),
-                                  Positioned(
-                                    top: 15,
-                                    left: 80,
-                               
-                                    child: Container(
-                                    width: 40,
-                                    height: 48,
-                                    
-                                    child: ImageIcon(
-                                    AssetImage(ic_line),
-                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
-                                ),
-                                  )
+                                  ChoiceChip(
+                                    pressElevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        side: BorderSide(
+                                            color: mainGreyColorTheme2)),
+                                    selectedColor: mainColorTheme,
+                                    backgroundColor: mainGreyColorTheme2,
+                                    label: Text("Manual"),
+                                    selected: _value == 1,
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        _value = (selected ? 1 : null)!;
+                                      });
+                                    },
                                   ),
-                                  if(_value != 0)
-                                  Positioned(
-                                    top: 72,
-                                    left: 232,
-                                    child: new GestureDetector(
-                                    onTap: (){
-                                  setState(() 
-                                    {
-                                      isOnleft = false;
-                                      isOnMiddle = false;
-                                      isOnRight = false;
-                                       });
-                                          },
-                                    child: Container(
-                                    width: 65,
-                                    height: 48,
-                                    decoration: BoxDecoration( 
-                                      image : DecorationImage(
-                                      image: AssetImage(ic_o),                                   
-                                      fit: BoxFit.fitWidth
-                                      
+                                  ChoiceChip(
+                                    pressElevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                        side: BorderSide(
+                                            color: mainGreyColorTheme2)),
+                                    selectedColor: mainColorTheme,
+                                    backgroundColor: mainGreyColorTheme2,
+                                    label: Text("Off"),
+                                    selected: _value == 2,
+                                    onSelected: (bool selected) {
+                                      setState(() {
+                                        _value = (selected ? 2 : null)!;
+                                      });
+                                    },
                                   ),
-                              )
-                                  )
-                                    ),
-                                  ),
-                                  if(_value != 0)
-                                  Positioned(
-                                    top: 4,
-                                    left: 241,
-                                    child: new GestureDetector(
-                                    onTap: (){
-                                     
-                                if((double.parse(cloud.GeneratorVoltage.value)) > 0){
-                                  setState(()   
-                                    {
-                                      isOnRight = true;
-                                       });
-                                  } 
-                                if(cloud.MCBModeStatus == true){
-                                   setState(()   
-                                    {
-                                      isOnleft = true;
-                                       });
-                                }
-                                if(cloud.isGCB == true){
-                                   setState(()   
-                                    {
-                                      isOnMiddle = true;
-                                       });
-                                }
-                                          },       
-                                    child: Container(  
-                                    width: 48,
-                                    height: 48,
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
+                                child: Container(
+                                    padding:
+                                        EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
+                                    width: 350,
+                                    height: 150,
                                     decoration: BoxDecoration(
-                                      image : DecorationImage(
-                                      image: AssetImage(ic_i),
-                                      fit: BoxFit.fitWidth 
-                                  ),
-                              )
-                                  )
+                                      color: Color.fromRGBO(255, 255, 255, 1),
                                     ),
-                                  ),
-                                  
-                                  Positioned(
-                                    top: 24,
-                                    left: 185,
-                                    child: Container(
-                                    width: 60,
-                                    height: 28,
-                                    child: ImageIcon(
-                                    AssetImage(ic_g),
-                                     color: isOnRight ? GreenpowerColor : mainGreyColorTheme, 
-                                ),
-                                  )
-                                  ),
-                                  Positioned(
-                                    top: 15,
-                                    left: 150,
-                               
-                                    child: Container(
-                                    width: 50,
-                                    height: 48,
-                                    
-                                    child: ImageIcon(
-                                    AssetImage(ic_line),
-                                     color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme, 
-                                ),
-                                  )
-                                    
-                                  ),
-                                  Positioned(
-                                    top: 24,
-                                    left: 115,
-                                    child: Container(
-                                    width: 40,
-                                    height: 26,
-                                     child: ImageIcon(
-                                    AssetImage(ic_factory),
-                                   color: isOnMiddle ? GreenpowerColor : mainGreyColorTheme,
-                                ),
-                                  )
-                                  ),
-                                  if(_value != 0)
-                                  Positioned(
-                                    top: 72,
-                                    left: 67,
-                                    child: new GestureDetector(
-                                    onTap: (){
-                                   Switch(
+                                    child: Stack(children: <Widget>[
+                                      Positioned(
+                                          top: 4,
+                                          left: 15,
+                                          child: Container(
+                                              width: 90,
+                                              height: 61,
+                                              child: IconButton(
+                                                icon: Image.asset(ic_tower,
+                                                    color: isOnleft
+                                                        ? mainColorTheme
+                                                        : mainGreyColorTheme),
+                                                onPressed: () {},
+                                              ))),
+                                      Positioned(
+                                          top: 15,
+                                          left: 80,
+                                          child: Container(
+                                            width: 40,
+                                            height: 48,
+                                            child: ImageIcon(
+                                              AssetImage(ic_line),
+                                              color: isOnMiddle
+                                                  ? GreenpowerColor
+                                                  : mainGreyColorTheme,
+                                            ),
+                                          )),
+                                      if (_value != 0)
+                                        Positioned(
+                                          top: 72,
+                                          left: 232,
+                                          child: new GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  isOnleft = false;
+                                                  isOnMiddle = false;
+                                                  isOnRight = false;
+                                                });
+                                              },
+                                              child: Container(
+                                                  width: 65,
+                                                  height: 48,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(ic_o),
+                                                        fit: BoxFit.fitWidth),
+                                                  ))),
+                                        ),
+                                      if (_value != 0)
+                                        Positioned(
+                                          top: 4,
+                                          left: 241,
+                                          child: new GestureDetector(
+                                              onTap: () {
+                                                if ((double.parse(cloud
+                                                        .GeneratorVoltage
+                                                        .value)) >
+                                                    0) {
+                                                  setState(() {
+                                                    isOnRight = true;
+                                                  });
+                                                }
+                                                if (cloud.MCBModeStatus ==
+                                                    true) {
+                                                  setState(() {
+                                                    isOnleft = true;
+                                                  });
+                                                }
+                                                if (cloud.isGCB == true) {
+                                                  setState(() {
+                                                    isOnMiddle = true;
+                                                  });
+                                                }
+                                              },
+                                              child: Container(
+                                                  width: 48,
+                                                  height: 48,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage(ic_i),
+                                                        fit: BoxFit.fitWidth),
+                                                  ))),
+                                        ),
+                                      Positioned(
+                                          top: 24,
+                                          left: 185,
+                                          child: Container(
+                                            width: 60,
+                                            height: 28,
+                                            child: ImageIcon(
+                                              AssetImage(ic_g),
+                                              color: isOnRight
+                                                  ? GreenpowerColor
+                                                  : mainGreyColorTheme,
+                                            ),
+                                          )),
+                                      Positioned(
+                                          top: 15,
+                                          left: 150,
+                                          child: Container(
+                                            width: 50,
+                                            height: 48,
+                                            child: ImageIcon(
+                                              AssetImage(ic_line),
+                                              color: isOnMiddle
+                                                  ? GreenpowerColor
+                                                  : mainGreyColorTheme,
+                                            ),
+                                          )),
+                                      Positioned(
+                                          top: 24,
+                                          left: 115,
+                                          child: Container(
+                                            width: 40,
+                                            height: 26,
+                                            child: ImageIcon(
+                                              AssetImage(ic_factory),
+                                              color: isOnMiddle
+                                                  ? GreenpowerColor
+                                                  : mainGreyColorTheme,
+                                            ),
+                                          )),
+                                      if (_value != 0)
+                                        Positioned(
+                                          top: 72,
+                                          left: 67,
+                                          child: new GestureDetector(
+                                              onTap: () {
+                                                Switch(
                                                     value: cloud.MCBModeStatus,
                                                     onChanged: (result) {
                                                       cloud.changeMCBModeStatus(
                                                           result);
                                                     });
-                                          },
-                                    child: Container(
-                                    width: 60,
-                                    height: 48,
-                                    decoration: BoxDecoration(
-                                      image : DecorationImage(
-                                      image: AssetImage(ic_io),
-                                      fit: BoxFit.fitWidth
-                                  ),
-                              )
-                                  )
-                                    ),
-                                  ),
-                                  if(_value != 0)
-                                  Positioned(
-                                    top: 72,
-                                    left: 147,
-                                    child: new GestureDetector(
-                                    onTap: (){
-                                      Switch(
-                                                      value: cloud.isGCB,
-                                                      onChanged: (result) {
-                                                        cloud.changeIsGCB(result);
-                                                      });
-                                    },
-                                    child: Container(
-                                    width: 60,
-                                    height: 48,
-                                    decoration: BoxDecoration(
-                                      image : DecorationImage(
-                                      image: AssetImage(ic_io),
-                                      fit: BoxFit.fitWidth
-                                  ),
-                              )
-                                  )
-                                    ),
-                                  ),
-                                    ]
-                                  )
-                                ),
-          
-                          ),
-                         
-                                SizedBox(
-                            height: 10,
-                          ),
-                        
-                          Row(
-                            children: [
-                              Column(
-                                children: [
-                                
-                                  SizedBox(height: 10),
-                                  
-                                 Container(
-                                 
-                                      height: 160,
-                                      width: 160,
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Custom_GaugeWidget(
-                                          title: lbl_Actual_Power,
-                                          value:
-                                              (double.parse(cloud.GeneratorLoad.value)/1000),
-                                          needleColor: mainColorTheme,min:0,max: 200,)),
-                                          
-
-                                ],
+                                              },
+                                              child: Container(
+                                                  width: 60,
+                                                  height: 48,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image:
+                                                            AssetImage(ic_io),
+                                                        fit: BoxFit.fitWidth),
+                                                  ))),
+                                        ),
+                                      if (_value != 0)
+                                        Positioned(
+                                          top: 72,
+                                          left: 147,
+                                          child: new GestureDetector(
+                                              onTap: () {
+                                                Switch(
+                                                    value: cloud.isGCB,
+                                                    onChanged: (result) {
+                                                      cloud.changeIsGCB(result);
+                                                    });
+                                              },
+                                              child: Container(
+                                                  width: 60,
+                                                  height: 48,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image:
+                                                            AssetImage(ic_io),
+                                                        fit: BoxFit.fitWidth),
+                                                  ))),
+                                        ),
+                                    ])),
                               ),
-                              Spacer(),
-                              SizedBox(height: 10),
-                              Column(
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
                                 children: [
-                                
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
+                                  Column(
                                     children: [
+                                      SizedBox(height: 10),
                                       Container(
-                                      height: 160,
-                                      width: 160,
-                                      
-                                      decoration: BoxDecoration(
-                                        color: mainGreyColorTheme2,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Custom_GaugeWidget(
-                                          title: lbl_RPM,
-                                          value:
-                                              (double.parse(cloud.Rpm.value)),
-                                      min:0,max:3000)), 
-                                      
+                                          height: 160,
+                                          width: 160,
+                                          decoration: BoxDecoration(
+                                            color: mainGreyColorTheme2,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Custom_GaugeWidget(
+                                            title: lbl_Actual_Power,
+                                            value: (double.parse(
+                                                    cloud.GeneratorLoad.value) /
+                                                1000),
+                                            needleColor: mainColorTheme,
+                                            min: 0,
+                                            max: 200,
+                                          )),
                                     ],
                                   ),
-                              
-
-
+                                  Spacer(),
+                                  SizedBox(height: 10),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                              height: 160,
+                                              width: 160,
+                                              decoration: BoxDecoration(
+                                                color: mainGreyColorTheme2,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Custom_GaugeWidget(
+                                                  title: lbl_RPM,
+                                                  value: (double.parse(
+                                                      cloud.Rpm.value)),
+                                                  min: 0,
+                                                  max: 3000)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ],
-                          ),
-                          
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  ExpansionTile(
+                                    title: Text(lbl_Engine),
+                                    children: [
+                                      ListView(
+                                        physics: const ScrollPhysics(),
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        children: <Widget>[
+                                          infotile(
+                                            title: lbl_Pressure,
+                                            value: (double.parse(
+                                                    cloud.OilPressure.value))
+                                                .toString(),
+                                          ),
+                                          infotile(
+                                            title: lbl_Temperature,
+                                            value: cloud.CoolantTemp.value
+                                                .toString(),
+                                          ),
+                                          infotile(
+                                            title: "Fuel Level",
+                                            value: cloud.FuelLevel.value
+                                                .toString(),
+                                          ),
+                                          infotile(
+                                            title: "Running Hours",
+                                            value: cloud.RunningHours.value
+                                                .toString(),
+                                          ),
+                                          infotile(
+                                            title: "Battery Voltage",
+                                            value: cloud.BatteryVoltage.value
+                                                .toString(),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  ExpansionTile(
+                                    title: Text("Alternator"),
+                                    children: [
+                                      ListView(
+                                        shrinkWrap: true,
+                                        physics: const ScrollPhysics(),
+                                        padding: EdgeInsets.zero,
+                                        children: [
+                                          infotile(
+                                            title: "L1-N",
+                                            value: "V",
+                                          ),
+                                          infotile(
+                                            title: "L2-N",
+                                            value: "V",
+                                          ),
+                                          infotile(
+                                            title: "L3-N",
+                                            value: "V",
+                                          ),
+                                          infotile(
+                                            title: "L1",
+                                            value: "A",
+                                          ),
+                                          infotile(
+                                            title: "L2",
+                                            value: "A",
+                                          ),
+                                          infotile(
+                                            title: "L3",
+                                            value: "A",
+                                          ),
+                                          infotile(
+                                            title: "Hz",
+                                            value: " ",
+                                          ),
+                                          infotile(
+                                            title: "Pf",
+                                            value: " ",
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  ExpansionTile(
+                                    title: Text("Mains"),
+                                    children: [
+                                      ListView(
+                                        shrinkWrap: true,
+                                        physics: const ScrollPhysics(),
+                                        padding: EdgeInsets.zero,
+                                        children: [
+                                          infotile(
+                                            title: "L1-N",
+                                            value: "V",
+                                          ),
+                                          infotile(
+                                            title: "L2-N",
+                                            value: "V",
+                                          ),
+                                          infotile(
+                                            title: "L3-N",
+                                            value: "V",
+                                          ),
+                                          infotile(
+                                            title: "L1",
+                                            value: "A",
+                                          ),
+                                          infotile(
+                                            title: "L2",
+                                            value: "A",
+                                          ),
+                                          infotile(
+                                            title: "L3",
+                                            value: "A",
+                                          ),
+                                          infotile(
+                                            title: "Hz",
+                                            value: " ",
+                                          ),
+                                          infotile(
+                                            title: "Pf",
+                                            value: " ",
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ]),
+                          ],
+                          if (isFetched == false) ...[
+                            Custom_Alert(
+                                Title: 'Error Has Occured',
+                                Description:
+                                    "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
+                          ],
+                          if (isFetched == null) ...[
                             SizedBox(
-                            height: 20,
-                          ),
-               
-                  Column(
-                     
-                            children: <Widget>[
-                             ExpansionTile(
-         
-                title: Text(lbl_Engine),
-                children: [
-                  
-                     ListView(
-                      physics: const ScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      children: <Widget>[
-                         infotile(
-                                title: lbl_Pressure,
-                                value: (double.parse(cloud.OilPressure.value))
-                                    .toString(),
-                              ),  
-                             infotile(
-                                title: lbl_Temperature,
-                                value: cloud.CoolantTemp.value.toString(),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SpinKitCircle(
+                                    color: Colors.black,
+                                    size: 65,
+                                  ),
+                                ],
                               ),
-                              infotile(
-                                title: "Fuel Level",
-                                value: cloud.FuelLevel.value.toString(),    
-                              ),
-                              infotile(
-                                title: "Running Hours",
-                                value: cloud.RunningHours.value.toString(),  
-                              ),
-                              infotile(
-                                title: "Battery Voltage",
-                                value: cloud.BatteryVoltage.value.toString(),  
-                              ),
-                                
-                      ],
+                            )
+                          ]
+                        ],
+                      ),
                     ),
-                           
-                ],
-              ),
-                             
-                             ExpansionTile(
-                
-                title: Text("Alternator"),  
-                children: [
-                  
-                    ListView(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      children: [
-                       
-                         infotile(
-                                title: "L1-N",
-                                value: "V",
-                              ),
-                        infotile(
-                                title: "L2-N",
-                                value: "V",
-                              ),
-                        infotile(
-                                title: "L3-N",
-                                value: "V",
-                              ),
-                        infotile(
-                                title: "L1",
-                                value: "A",
-                              ),   
-                        infotile(
-                                title: "L2",
-                                value: "A",
-                              ),  
-                        infotile(
-                                title: "L3",
-                                value: "A",
-                              ),  
-                        infotile(
-                                title: "Hz",
-                                value: " ",
-                              ),     
-                        infotile(
-                                title: "Pf",
-                                value: " ",
-                              ),   
-                      ],
-                      
-                    ),
-                 
-                ],
-              ),
-                 ExpansionTile(
-           
-                title: Text("Mains"),  
-                children: [
-                
-              ListView(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      children: [
-                         infotile(
-                                title: "L1-N",
-                                value: "V",
-                              ),
-                        infotile(
-                                title: "L2-N",
-                                value: "V",
-                              ),
-                        infotile(
-                                title: "L3-N",
-                                value: "V",
-                              ),
-                        infotile(
-                                title: "L1",
-                                value: "A",
-                              ),   
-                        infotile(
-                                title: "L2",
-                                value: "A",
-                              ),  
-                        infotile(
-                                title: "L3",
-                                value: "A",
-                              ),  
-                        infotile(
-                                title: "Hz",
-                                value: " ",
-                              ),     
-                        infotile(
-                                title: "Pf",
-                                value: " ",
-                              ),   
-                      ],
-                    ),
-                  
-                ],
-              ),
-                            ],
-                          )
-                        ] 
-                        ),
-                  
-                  
-                      ],
-                      if (isFetched == false) ...[
-                        Custom_Alert(
-                            Title: 'Error Has Occured',
-                            Description:
-                                "Something Went Wrong!, Please Check Your Internet Connection And Wait For The Next Reload.")
-                      ],
-                      if (isFetched == null) ...[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SpinKitCircle(
-                                color: Colors.black,
-                                size: 65,
-                              ),
-                            ],
-                          ),
-                        )
-                      ]
-                    ],
                   ),
-                ),
-              ),
-            )));
-  } 
-
+                )));
+  }
 
   DropdownMenuItem<String> buildMenuItem(ConfigurationModel model) =>
-      DropdownMenuItem(value: model.generatorId, child: Text(model.generatorName));
+      DropdownMenuItem(
+          value: model.generatorId, child: Text(model.generatorName));
 }
 
 class infotile extends StatelessWidget {
@@ -791,7 +772,7 @@ class infotile extends StatelessWidget {
   infotile({Key? key, required this.title, required this.value})
       : super(key: key);
 
-  @override  
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

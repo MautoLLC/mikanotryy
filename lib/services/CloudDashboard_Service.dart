@@ -1,21 +1,19 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:mymikano_app/State/ApiConfigurationStatee.dart';
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:provider/provider.dart';
 
 class CloudDashBoard_Service {
   //final String ApiEndPoint;
   //String GeneratorID = "";
   //aded by youssef//
   late final ConfigurationModel configModel;
-  CloudDashBoard_Service(){
+  CloudDashBoard_Service() {
     getSelectedConfigurationModel();
     //configModel=model;
   }
@@ -25,12 +23,14 @@ class CloudDashBoard_Service {
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     // GeneratorID = prefs.getString(prefs_GeneratorId)!;
-    String test=prefs.getString('Configurations').toString();
-    List<ConfigurationModel> configsList = (json.decode(prefs.getString('Configurations')!) as List)
-        .map((data) => ConfigurationModel.fromJson(data))
-        .toList();
-    ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
-    configModel=config;
+    String test = prefs.getString('Configurations').toString();
+    List<ConfigurationModel> configsList =
+        (json.decode(prefs.getString('Configurations')!) as List)
+            .map((data) => ConfigurationModel.fromJson(data))
+            .toList();
+    ConfigurationModel config = ConfigurationModel.fromJson(
+        json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel = config;
     return configModel;
   }
   //fin added by youssef//
@@ -38,8 +38,6 @@ class CloudDashBoard_Service {
   late List<CloudSensor> cloudsensors = [];
 
   Future<List<CloudSensor>> FetchData() async {
-
-
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
           'Content-Type': 'application/json',

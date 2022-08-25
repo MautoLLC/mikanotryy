@@ -4,12 +4,13 @@ import 'package:mymikano_app/State/MainDashboardState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
+import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:mymikano_app/views/widgets/BankingBottomNavigationBar.dart';
-import 'package:mymikano_app/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+
 import 'CartPage.dart';
 import 'DashboardScreen.dart';
 import 'ListPage.dart';
@@ -26,7 +27,6 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   bool guestLogin = true;
 
   init() async {
-    
     pages.add(MenuScreen());
     pages.add(ListPage(
       title: lbl_Search,
@@ -48,10 +48,11 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
       await PaymentService()
           .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
     });
-    try{
+    try {
       await Provider.of<CurrencyState>(context, listen: false).update();
-      await Provider.of<ProductState>(context, listen: false).update(isGuestLogin: guestLogin);
-    } catch (e){
+      await Provider.of<ProductState>(context, listen: false)
+          .update(isGuestLogin: guestLogin);
+    } catch (e) {
       debugPrint(e.toString());
     }
   }
@@ -66,66 +67,68 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
   Widget build(BuildContext context) {
     return Consumer<MainDashboardState>(
       builder: ((context, mainDashboardState, child) => WillPopScope(
-        onWillPop: ()async {
-          bool toExit = false;
-          await showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Exit Dialog'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Are you sure you want to exit the app?'),
-              ],
+            onWillPop: () async {
+              bool toExit = false;
+              await showDialog<void>(
+                context: context,
+                barrierDismissible: false, // user must tap button!
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Exit Dialog'),
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: const <Widget>[
+                          Text('Are you sure you want to exit the app?'),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Yes'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          toExit = true;
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('No'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          toExit = false;
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              return toExit;
+            },
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              bottomNavigationBar: BankingBottomNavigationBar(
+                backgroundColor: bottomNavigationBarColor,
+                selectedItemColor: bottomNavigationBarSelectedItemColor,
+                unselectedItemColor: Colors.white,
+                items: <BankingBottomNavigationBarItem>[
+                  BankingBottomNavigationBarItem(icon: ic_menu),
+                  BankingBottomNavigationBarItem(icon: ic_search),
+                  BankingBottomNavigationBarItem(icon: ic_dog_house),
+                  if (!guestLogin)
+                    BankingBottomNavigationBarItem(icon: ic_handcart),
+                  if (!guestLogin)
+                    BankingBottomNavigationBarItem(icon: ic_customer),
+                ],
+                currentIndex: mainDashboardState.selectedIndex(),
+                unselectedIconTheme:
+                    IconThemeData(color: mainGreyColorTheme, size: 20),
+                selectedIconTheme: IconThemeData(
+                    color: bottomNavigationBarSelectedItemColor, size: 20),
+                onTap: mainDashboardState.setSelectedIndex,
+                type: BankingBottomNavigationBarType.fixed,
+              ),
+              body: pages[mainDashboardState.selectedIndex()],
             ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Yes'),
-              onPressed: () {
-                Navigator.pop(context);
-                toExit = true;
-              },
-            ),
-            TextButton(
-              child: const Text('No'),
-              onPressed: () {
-                Navigator.pop(context);
-                toExit = false;
-              },
-            ),
-          ],
-        );
-      },
-      );
-      return toExit;    
-        },
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          bottomNavigationBar: BankingBottomNavigationBar(
-            backgroundColor: bottomNavigationBarColor,
-            selectedItemColor: bottomNavigationBarSelectedItemColor,
-            unselectedItemColor: Colors.white,
-            items: <BankingBottomNavigationBarItem>[
-              BankingBottomNavigationBarItem(icon: ic_menu),
-              BankingBottomNavigationBarItem(icon: ic_search),
-              BankingBottomNavigationBarItem(icon: ic_dog_house),
-              if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_handcart),
-              if (!guestLogin) BankingBottomNavigationBarItem(icon: ic_customer),
-            ],
-            currentIndex: mainDashboardState.selectedIndex(),
-            unselectedIconTheme: IconThemeData(color: mainGreyColorTheme, size: 20),
-            selectedIconTheme: IconThemeData(
-                color: bottomNavigationBarSelectedItemColor, size: 20),
-            onTap: mainDashboardState.setSelectedIndex,
-            type: BankingBottomNavigationBarType.fixed,
-          ),
-          body: pages[mainDashboardState.selectedIndex()],
-        ),
-      )
-      ),
+          )),
     );
   }
 }

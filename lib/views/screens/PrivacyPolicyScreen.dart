@@ -4,7 +4,6 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/SubTitleText.dart';
-import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +26,10 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TopRowBar(title: 'END USER LICENSE AGREEMENT', textSize: 18,),
+              TopRowBar(
+                title: 'END USER LICENSE AGREEMENT',
+                textSize: 18,
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
                 child: Column(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/services/RegisterService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
-import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
+
 import 'SignInScreen.dart';
 
 class T13SignUpScreen extends StatefulWidget {

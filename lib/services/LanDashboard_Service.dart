@@ -1,10 +1,9 @@
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/LanSensor_Model.dart';
-import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:mymikano_app/utils/strings.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:flutter/material.dart';
 
 import '../models/ConfigurationModel.dart';
 
@@ -13,7 +12,7 @@ class LanDashBoard_Service {
   // String apiLanEndpoint = "http://" + lanESPUrl;
   // LanDashBoard_Service(/*{required this.ApiEndPoint}*/);
   late final ConfigurationModel configModel;
-  LanDashBoard_Service(){
+  LanDashBoard_Service() {
     getSelectedConfigurationModel();
   }
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
@@ -21,14 +20,17 @@ class LanDashBoard_Service {
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     // GeneratorID = prefs.getString(prefs_GeneratorId)!;
-    String test=prefs.getString('Configurations').toString();
-    List<ConfigurationModel> configsList = (json.decode(prefs.getString('Configurations')!) as List)
-        .map((data) => ConfigurationModel.fromJson(data))
-        .toList();
-    ConfigurationModel config = ConfigurationModel.fromJson(json.decode(prefs.getString('SelectedConfigurationModel')!));
-    configModel=config;
+    String test = prefs.getString('Configurations').toString();
+    List<ConfigurationModel> configsList =
+        (json.decode(prefs.getString('Configurations')!) as List)
+            .map((data) => ConfigurationModel.fromJson(data))
+            .toList();
+    ConfigurationModel config = ConfigurationModel.fromJson(
+        json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel = config;
     return configModel;
   }
+
   Future<LANSensor> FetchSensorData(String param) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;

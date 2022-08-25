@@ -7,7 +7,8 @@ import 'TitleText.dart';
 class TopRowBar extends StatelessWidget {
   final String title;
   final double textSize;
-  const TopRowBar({Key? key, required this.title, this.textSize = 24}) : super(key: key);
+  const TopRowBar({Key? key, required this.title, this.textSize = 24})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

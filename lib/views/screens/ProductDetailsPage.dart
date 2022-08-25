@@ -44,7 +44,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   void initState() {
     // TODO: implement initState
-    Provider.of<ProductState>(context, listen: false).getRelatedProducts(widget.product.id);
+    Provider.of<ProductState>(context, listen: false)
+        .getRelatedProducts(widget.product.id);
   }
 
   @override
@@ -101,8 +102,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               IconButton(
                                   onPressed: () {
                                     // Pop until dashboard screen
-                                    Navigator.popUntil(
-                                        context,
+                                    Navigator.popUntil(context,
                                         ModalRoute.withName('dashboard'));
                                   },
                                   icon: Icon(Icons.home)),
@@ -189,9 +189,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         SizedBox(height: 11),
                         Text(
                           widget.product.Description
-                          .replaceAll("</p>", "")
-                          .replaceAll("<p>", "")
-                          .replaceAll("&nbsp;", ""),
+                              .replaceAll("</p>", "")
+                              .replaceAll("<p>", "")
+                              .replaceAll("&nbsp;", ""),
                           maxLines: 1000,
                           style: TextStyle(
                               fontSize: 12,
@@ -199,140 +199,145 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               color: mainGreyColorTheme),
                         ),
                         SizedBox(height: 30),
-                        if(widget.product.dataSheetLabel.toString() != "")
+                        if (widget.product.dataSheetLabel.toString() != "")
                           TitleText(title: lbl_Data_Sheet),
                         SizedBox(height: 11),
-                        if(widget.product.dataSheetLabel.toString() != "")
+                        if (widget.product.dataSheetLabel.toString() != "")
                           GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PDFViewScreen(
-                                    Path: widget.product.dataSheet.toString(),
-                                    Code: widget.product.Code)));
-                          },
-                          child: Text(
-                            widget.product.dataSheetLabel.toString(),
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: PoppinsFamily,
-                                color: Colors.lightBlue),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => PDFViewScreen(
+                                      Path: widget.product.dataSheet.toString(),
+                                      Code: widget.product.Code)));
+                            },
+                            child: Text(
+                              widget.product.dataSheetLabel.toString(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: PoppinsFamily,
+                                  color: Colors.lightBlue),
+                            ),
                           ),
-                        ),
                         SizedBox(height: 50),
                       ],
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    if(state.relatedProducts.length != 0)
+                    if (state.relatedProducts.length != 0)
                       TitleText(title: lbl_Related_Products),
-                    if(state.relatedProducts.length != 0)
+                    if (state.relatedProducts.length != 0)
                       SizedBox(
                         height: 250,
                         child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.relatedProducts.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: SizedBox(
-                                      width: 140,
-                                      child: ItemElement(
-                                        product: state.relatedProducts[index],
-                                      ),
-                                    ),
-                                  );
-                                }),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.relatedProducts.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: SizedBox(
+                                  width: 140,
+                                  child: ItemElement(
+                                    product: state.relatedProducts[index],
+                                  ),
+                                ),
+                              );
+                            }),
                       ),
                     SizedBox(
                       height: 50,
                     ),
                   ]),
             ),
-            if (userState.guestLogin) Container() else if(!widget.product.call_for_price) Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
+            if (userState.guestLogin)
+              Container()
+            else if (!widget.product.call_for_price)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 60,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () async {
+                              CartProduct p = CartProduct(
+                                  product: widget.product, quantity: Quantity);
+                              state.addProduct(p);
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => CartPage())));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                color: mainBlackColorTheme,
+                              ),
+                              child: Center(
+                                  child: Text(lbl_Buy_Now,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: PoppinsFamily))),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              CartProduct p = CartProduct(
+                                  product: widget.product, quantity: Quantity);
+                              state.addProduct(p);
+                              toast("${widget.product.Name} added to cart");
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                color: mainColorTheme,
+                              ),
+                              child: Center(
+                                  child: Text(lbl_Add_To_Cart,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: PoppinsFamily))),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            else
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
                       height: 60,
                       color: Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  CartProduct p = CartProduct(
-                                      product: widget.product,
-                                      quantity: Quantity);
-                                  state.addProduct(p);
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) => CartPage())));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50.0)),
-                                    color: mainBlackColorTheme,
-                                  ),
-                                  child: Center(
-                                      child: Text(lbl_Buy_Now,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontFamily: PoppinsFamily))),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  CartProduct p = CartProduct(
-                                      product: widget.product,
-                                      quantity: Quantity);
-                                  state.addProduct(p);
-                                  toast("${widget.product.Name} added to cart");
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50.0)),
-                                    color: mainColorTheme,
-                                  ),
-                                  child: Center(
-                                      child: Text(lbl_Add_To_Cart,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontFamily: PoppinsFamily))),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                  else
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 60,
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: T13Button(textContent: 'Request For Quote', onPressed: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RFQFormScreen(id: widget.product.id)));
-                          }),
-                        )))
+                        child: T13Button(
+                            textContent: 'Request For Quote',
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      RFQFormScreen(id: widget.product.id)));
+                            }),
+                      )))
           ]),
         ),
       )),

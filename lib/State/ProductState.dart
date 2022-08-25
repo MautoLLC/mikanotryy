@@ -68,8 +68,7 @@ class ProductState extends ChangeNotifier {
   }
 
   update({isGuestLogin = false}) async {
-    if(!isGuestLogin)
-      await getFavorites();
+    if (!isGuestLogin) await getFavorites();
     await getAllProducts();
     for (var item in allProducts) {
       if (isInFavorite(item)) {
@@ -94,18 +93,18 @@ class ProductState extends ChangeNotifier {
     allCategories.addAll(AllFiltersForCategories);
     final set = Set();
     allCategories.retainWhere((element) => set.add(element.id));
-    
-    if(!isGuestLogin)await updateCart();
+
+    if (!isGuestLogin) await updateCart();
     notifyListeners();
   }
 
-  getRelatedProducts(int id) async{
+  getRelatedProducts(int id) async {
     relatedProducts.clear();
     relatedProducts = await ProductsService().getRelatedProducts(id);
     notifyListeners();
   }
 
-  setSearchTerm(String term) async{
+  setSearchTerm(String term) async {
     _searchTerm = term;
     page = 1;
     ListOfProducts.clear();
@@ -115,29 +114,30 @@ class ProductState extends ChangeNotifier {
 
   String searchTerm() => _searchTerm;
 
-  setselectedCategoryId(int id){
+  setselectedCategoryId(int id) {
     selectedCategoryId = id;
     notifyListeners();
   }
 
-  addFilter(int filterID){
+  addFilter(int filterID) {
     categoryFilters.add(filterID);
     notifyListeners();
   }
 
-  removeFilter(int filterID){
+  removeFilter(int filterID) {
     categoryFilters.removeWhere((item) => item == filterID);
     notifyListeners();
   }
 
-  bool checkIfFilterApplied(int filterID){
+  bool checkIfFilterApplied(int filterID) {
     return categoryFilters.contains(filterID);
   }
 
   fetchBrandCategories() async {
     brandCategories.clear();
     for (ProductCategory item in mainCategories) {
-      List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
+      List<ProductCategory> tempResult =
+          await ProductsService().getCategories(parentId: item.id!);
       brandCategories.addAll(tempResult);
     }
     final categories = Set();
@@ -148,11 +148,13 @@ class ProductState extends ChangeNotifier {
   fetchFilterCategories() async {
     AllFiltersForCategories.clear();
     for (ProductCategory item in brandCategories) {
-      List<ProductCategory> tempResult = await ProductsService().getCategories(parentId: item.id!);
+      List<ProductCategory> tempResult =
+          await ProductsService().getCategories(parentId: item.id!);
       AllFiltersForCategories.addAll(tempResult);
     }
     final categories = Set();
-    AllFiltersForCategories.retainWhere((element) => categories.add(element.id));
+    AllFiltersForCategories.retainWhere(
+        (element) => categories.add(element.id));
     notifyListeners();
   }
 
@@ -248,8 +250,11 @@ class ProductState extends ChangeNotifier {
   }
 
   Future<void> getListOfProducts([int categoryID = -1]) async {
-    ListOfProducts.addAll(await ProductsService()
-        .getProducts(limit: ItemsPerPage, page: page, categoryID: categoryID, searchTerm: _searchTerm));
+    ListOfProducts.addAll(await ProductsService().getProducts(
+        limit: ItemsPerPage,
+        page: page,
+        categoryID: categoryID,
+        searchTerm: _searchTerm));
     notifyListeners();
   }
 
@@ -269,24 +274,32 @@ class ProductState extends ChangeNotifier {
           product.liked = false;
           item.product.liked = false;
           favoriteProducts.remove(item);
-          await CustomerService()
-              .deleteFavoriteItemsforLoggedInUser([item.id]);
+          await CustomerService().deleteFavoriteItemsforLoggedInUser([item.id]);
           break;
         }
       }
-      try{
-        topDealProducts.where((element) => element.id == product.id).first.liked = false;
-      } catch (e){
+      try {
+        topDealProducts
+            .where((element) => element.id == product.id)
+            .first
+            .liked = false;
+      } catch (e) {
         debugPrint(e.toString());
       }
-      try{
-        featuredProducts.where((element) => element.id == product.id).first.liked = false;
-      } catch (e){
+      try {
+        featuredProducts
+            .where((element) => element.id == product.id)
+            .first
+            .liked = false;
+      } catch (e) {
         debugPrint(e.toString());
       }
-      try{
-        trendingProducts.where((element) => element.id == product.id).first.liked = false;
-      } catch (e){
+      try {
+        trendingProducts
+            .where((element) => element.id == product.id)
+            .first
+            .liked = false;
+      } catch (e) {
         debugPrint(e.toString());
       }
       toast("Product removed from favorites");

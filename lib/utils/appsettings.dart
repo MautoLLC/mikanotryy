@@ -84,7 +84,8 @@ const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
 const MikanoShopGetTopDealsProductsURL = '$MikanoShopMainURl/products/topDeals';
 const MikanoShopGetFeaturedProductsURL = '$MikanoShopMainURl/products/featured';
-const MikanoShopGetRelatedProductsById = '$MikanoShopMainURl/Relatedproducts/{Id}';
+const MikanoShopGetRelatedProductsById =
+    '$MikanoShopMainURl/Relatedproducts/{Id}';
 const MikanoShopAddShippingAddress =
     '$MikanoShopMainURl/customers/{customerId}/shippingaddress';
 const MikanoShopAddBillingAddress =
@@ -104,20 +105,23 @@ const MikanoShopPrimaryCurrency = '$MikanoShopMainURl/currencies/primary';
 const MikanoShopGetOrdersByCustomerIdURL =
     '$MikanoShopMainURl/orders/customer/{customerID}';
 const MikanoShopCategoriesURL = '$MikanoShopMainURl/categories';
-const MikanoShopCategoriesKva = '$MikanoShopMainURl/categories/generators/{kva}';
-const MikanoShopRfq= "$MikanoShopMainURl/rfq";
+const MikanoShopCategoriesKva =
+    '$MikanoShopMainURl/categories/generators/{kva}';
+const MikanoShopRfq = "$MikanoShopMainURl/rfq";
 
 const MikanoLoadCalculationURL = isProduction
-          ?"https://services.mikano-intl.com/load-calculation-api/api"
-          :"";
+    ? "https://services.mikano-intl.com/load-calculation-api/api"
+    : "";
 const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
-const MikanoLoadCalculationCategoriesWithId = "$MikanoLoadCalculationURL/Categories/{id}";
+const MikanoLoadCalculationCategoriesWithId =
+    "$MikanoLoadCalculationURL/Categories/{id}";
 const MikanoLoadCalculationEquipments = "$MikanoLoadCalculationURL/Equipments";
-const MikanoLoadCalculationEquipmentsWithId = "$MikanoLoadCalculationURL/Equipments/{id}";
+const MikanoLoadCalculationEquipmentsWithId =
+    "$MikanoLoadCalculationURL/Equipments/{id}";
 const MikanoLoadCalculationUnits = "$MikanoLoadCalculationURL/Units";
 const MikanoLoadCalculationUnitsWithId = "$MikanoLoadCalculationURL/Units/{id}";
-const MikanoLoadCalculationCalculation= "$MikanoLoadCalculationURL/LoadCalculation/{util}";
-
+const MikanoLoadCalculationCalculation =
+    "$MikanoLoadCalculationURL/LoadCalculation/{util}";
 
 const mainAppName = 'My Mikano App';
 

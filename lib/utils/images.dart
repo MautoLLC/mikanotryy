@@ -53,7 +53,6 @@ const ic_sorting = "assets/icons8-sorting.png";
 const ic_KVA = "assets/KVA_icon.svg";
 const ic_Mauto = "assets/Mauto_Logo.svg";
 
-
 const ic_tower = "assets/electricaltower.png";
 const ic_i = "assets/icons8-i.png";
 const ic_o = "assets/icons8-o.png";

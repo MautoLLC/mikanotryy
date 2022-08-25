@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
@@ -13,6 +14,7 @@ import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
+
 import 'State/ApiConfigurationStatee.dart';
 import 'State/CarouselState.dart';
 import 'State/InspectionsState.dart';
@@ -20,7 +22,6 @@ import 'State/LoadCalculationState.dart';
 import 'State/MainDashboardState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
-import 'package:flutter/services.dart';
 
 final GlobalKey<NavigatorState> navigator =
     GlobalKey<NavigatorState>(); //Create a key for navigator

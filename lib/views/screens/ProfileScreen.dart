@@ -10,6 +10,7 @@ import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+
 import 'PrivacyPolicyScreen.dart';
 import 'ProfileEditScreen.dart';
 import 'PurchasesScreen.dart';
@@ -306,42 +307,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                      context: context, 
-                                      builder: (context) => AlertDialog(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
                                         title: Text("Delete Account"),
-                                        content: Text("Are you sure you want to delete your account?"),
+                                        content: Text(
+                                            "Are you sure you want to delete your account?"),
                                         actions: <Widget>[
                                           ElevatedButton(
                                             style: ElevatedButton.styleFrom(
                                               primary: Colors.white,
                                               elevation: 0,
-                                              shape:
-                                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          24.0)),
                                               padding: EdgeInsets.all(0.0),
                                             ),
-                                            onPressed: () async{
-                                              if(await CustomerService().deleteAccount()){
-                                                toast("Account deleted successfully");
+                                            onPressed: () async {
+                                              if (await CustomerService()
+                                                  .deleteAccount()) {
+                                                toast(
+                                                    "Account deleted successfully");
                                                 logout();
                                               } else {
-                                                toast("Failed to delete account");
+                                                toast(
+                                                    "Failed to delete account");
                                                 Navigator.of(context).pop();
                                               }
                                             },
                                             child: Center(
                                               child: Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 14.0,
+                                                    vertical: 12.0),
                                                 child: Text(
                                                   "Yes",
-                                                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.grey),
                                                   textAlign: TextAlign.center,
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          SizedBox(height: 20,),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
                                           T13Button(
                                             textContent: "No",
                                             onPressed: () {
@@ -349,23 +362,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             },
                                           ),
                                         ],
-                                      )
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 0.0, 8.0, 0.0),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            color: mainGreyColorTheme),
-                                        child: Icon(
-                                          Icons.keyboard_arrow_right_outlined,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                )
+                                      ));
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 0.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: mainGreyColorTheme),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_right_outlined,
+                                    color: Colors.white,
+                                  )),
+                            ),
+                          )
                         ],
                       ),
                     ),

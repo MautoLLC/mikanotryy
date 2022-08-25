@@ -34,8 +34,8 @@ const txt_Terms =
 const lbl_Use_License = 'TERMS & CONDITIONS';
 const txt_Use_License =
     "• The Company authorizes the End User non-exclusive right to use and operate the data storing software, DataSave.\n\n"
-"• The End User is prohibited from modifying and adapting the Company’s software for commercial purposes.\n\n"
-"• The End User is not allowed to decompile , Reverse engineer , or share any sensitive data with third parties.\n\n";
+    "• The End User is prohibited from modifying and adapting the Company’s software for commercial purposes.\n\n"
+    "• The End User is not allowed to decompile , Reverse engineer , or share any sensitive data with third parties.\n\n";
 
 const lbl_SubCategory = 'Sub Category';
 const lbl_Address = 'Address';

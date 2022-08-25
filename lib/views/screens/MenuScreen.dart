@@ -6,14 +6,12 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'AboutUsScreen.dart';
 import 'AddressScreen.dart';
 import 'ContactUsScreen.dart';
 import 'Dashboard/ApiConfigurationPagee.dart';
@@ -51,7 +49,8 @@ class _MenuScreenState extends State<MenuScreen> {
     this.DashboardFirstTimeAccess =
         await prefs.getBool(prefs_DashboardFirstTimeAccess)!;
     this.RefreshRate = await prefs.getInt(prefs_RefreshRate)!;
-    this.generatorType = await  prefs.getString(prefs_ApiConfigurationOption).toString();
+    this.generatorType =
+        await prefs.getString(prefs_ApiConfigurationOption).toString();
   }
 
   // void notFirstTimeDashboardAccess() async {

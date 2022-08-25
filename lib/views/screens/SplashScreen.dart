@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mymikano_app/State/CurrencyState.dart';
-import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/EntryPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:provider/provider.dart';
 
 import 'MainDashboard.dart';
 
@@ -25,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     Future.delayed(Duration(seconds: 4), () {
       checkIfLoggedIn().then((value) {
         if (value) {
@@ -34,7 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
           // Provider.of<ProductState>(context, listen: false).update();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Theme5Dashboard(), settings:RouteSettings(name: 'dashboard')),
+            MaterialPageRoute(
+                builder: (context) => Theme5Dashboard(),
+                settings: RouteSettings(name: 'dashboard')),
           );
         } else {
           Navigator.pushReplacement(

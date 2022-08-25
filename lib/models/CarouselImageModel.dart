@@ -5,7 +5,8 @@ class CarouselImageModel {
   String? linkType;
   String? link;
 
-  CarouselImageModel({this.id, this.url, this.position, this.link, this.linkType});
+  CarouselImageModel(
+      {this.id, this.url, this.position, this.link, this.linkType});
 
   factory CarouselImageModel.fromJson(Map<String, dynamic> json) =>
       CarouselImageModel(

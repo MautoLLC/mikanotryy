@@ -16,8 +16,12 @@ class ProfileEditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var temp = Provider.of<UserState>(context);
-    String firstName = temp.getUser.username.isEmptyOrNull?"":temp.getUser.username.split(' ')[0];
-    String lastName = temp.getUser.username.isEmptyOrNull?"":temp.getUser.username.split(' ')[1];
+    String firstName = temp.getUser.username.isEmptyOrNull
+        ? ""
+        : temp.getUser.username.split(' ')[0];
+    String lastName = temp.getUser.username.isEmptyOrNull
+        ? ""
+        : temp.getUser.username.split(' ')[1];
     FirstNameController.text = "${firstName}";
     LastNameController.text = "${lastName}";
     PhoneNumberController.text =

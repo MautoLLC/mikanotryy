@@ -16,15 +16,17 @@ class gps {
     LocationSettingsModel settings = await gps().GetLocationSettings();
     timer =
         Timer.periodic(Duration(seconds: settings.refreshRate!), (timer) async {
-          String endtime = settings.endTime!.split(" ")[1];
-          String startTime = settings.startTime!.split(" ")[1];
-          DateTime now = DateTime.now();
-          now = DateFormat('HH:mm').parse(DateFormat('HH:mm').parse(now.toString().split(" ")[1]).toUtc().toString().split(" ")[1]);
-          bool isBeforeEndTime = now.isBefore(DateFormat('HH:mm').parse(endtime));
-          bool isAfterStartTime = now.isAfter(DateFormat('HH:mm').parse(startTime));
-      if (canceled ||
-          !(isBeforeEndTime &&
-              isAfterStartTime)) {
+      String endtime = settings.endTime!.split(" ")[1];
+      String startTime = settings.startTime!.split(" ")[1];
+      DateTime now = DateTime.now();
+      now = DateFormat('HH:mm').parse(DateFormat('HH:mm')
+          .parse(now.toString().split(" ")[1])
+          .toUtc()
+          .toString()
+          .split(" ")[1]);
+      bool isBeforeEndTime = now.isBefore(DateFormat('HH:mm').parse(endtime));
+      bool isAfterStartTime = now.isAfter(DateFormat('HH:mm').parse(startTime));
+      if (canceled || !(isBeforeEndTime && isAfterStartTime)) {
         stopTimer(timer);
         return;
       }

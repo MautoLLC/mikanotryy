@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
-import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 
 class CloudGeneratorState extends ChangeNotifier {
-  late  CloudDashBoard_Service cloudService;
+  late CloudDashBoard_Service cloudService;
   //CloudDashBoard_Service cloudService=new CloudDashBoard_Service();
   CloudSensor EngineState = CloudSensor(
       sensorID: "Error",
@@ -219,7 +218,8 @@ class CloudGeneratorState extends ChangeNotifier {
     CloudSensor sensor = cloudsensors.elementAt(index);
     return sensor;
   }
-  Future <void> ReinitiateCloudService() async {
-    cloudService=new CloudDashBoard_Service();
+
+  Future<void> ReinitiateCloudService() async {
+    cloudService = new CloudDashBoard_Service();
   }
 }

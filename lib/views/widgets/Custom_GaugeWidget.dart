@@ -14,9 +14,8 @@ class Custom_GaugeWidget extends StatefulWidget {
       required this.title,
       required this.value,
       this.needleColor = mainBlackColorTheme,
-        required this.min,
-        required this.max
-      })
+      required this.min,
+      required this.max})
       : super(key: key);
 
   @override

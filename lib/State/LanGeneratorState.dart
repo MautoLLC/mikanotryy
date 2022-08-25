@@ -3,7 +3,7 @@ import 'package:mymikano_app/models/LanSensor_Model.dart';
 import 'package:mymikano_app/services/LanDashboard_Service.dart';
 
 class LanGeneratorState extends ChangeNotifier {
-  late  LanDashBoard_Service LanService;
+  late LanDashBoard_Service LanService;
   //LanDashBoard_Service LanService = LanDashBoard_Service();
   final Map EnState = {
     'Init': 0,
@@ -204,7 +204,7 @@ class LanGeneratorState extends ChangeNotifier {
 
       if (MCBMode.return_value == 1)
         MCBModeStatus = true;
-      else   
+      else
         MCBModeStatus = false;
 
       if (GCBMode.return_value == 1)
@@ -227,7 +227,8 @@ class LanGeneratorState extends ChangeNotifier {
       return false;
     }
   }
-  Future <void> ReinitiateLanService() async {
-    LanService=new LanDashBoard_Service();
+
+  Future<void> ReinitiateLanService() async {
+    LanService = new LanDashBoard_Service();
   }
 }

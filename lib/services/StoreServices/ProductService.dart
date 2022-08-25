@@ -12,9 +12,13 @@ class ProductsService {
   String Params =
       "full_description, name, id, price, images, sku, Category, approved_rating_sum, is_top_deal, display_order, call_for_price";
   Future<List<Product>> getProducts(
-      {int limit = -1, int page = -1, int categoryID = -1, String searchTerm = '', List<int> ids = const []}) async {
+      {int limit = -1,
+      int page = -1,
+      int categoryID = -1,
+      String searchTerm = '',
+      List<int> ids = const []}) async {
     Map<String, dynamic> params = {};
-    if(ids.isNotEmpty){
+    if (ids.isNotEmpty) {
       params["ids"] = ids;
     }
     if (limit != -1) {
@@ -26,7 +30,7 @@ class ProductsService {
     if (categoryID != -1) {
       params["CategoryId"] = categoryID;
     }
-    if(searchTerm != ''){
+    if (searchTerm != '') {
       params["Name"] = searchTerm;
     }
     params['Fields'] = Params;
@@ -175,10 +179,11 @@ class ProductsService {
     }
   }
 
-    Future<List<Product>> getRelatedProducts(int id) async {
+  Future<List<Product>> getRelatedProducts(int id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      Response response = await dio.get(MikanoShopGetRelatedProductsById.replaceAll('{Id}', id.toString()),
+      Response response = await dio.get(
+          MikanoShopGetRelatedProductsById.replaceAll('{Id}', id.toString()),
           options: Options(headers: {
             'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
           }));

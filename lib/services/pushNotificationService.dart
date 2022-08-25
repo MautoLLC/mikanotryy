@@ -28,14 +28,15 @@ class PushNotificationService {
       debugPrint(event.notification!.title);
       int count = 0;
       localStorageService.getItem("Count").then((value) async {
-        try{
+        try {
           count = int.parse(value);
-        } catch (e){
+        } catch (e) {
           count = -1;
         }
         await localStorageService.setItem("Count", (count + 1).toString());
       });
-      await localStorageService.setItem("notification ${count + 1}", event.notification!.body);
+      await localStorageService.setItem(
+          "notification ${count + 1}", event.notification!.body);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
@@ -50,13 +51,14 @@ class PushNotificationService {
     debugPrint('background message ${message.notification!.body}');
     int count = 0;
     localStorageService.getItem("Count").then((value) async {
-      try{
+      try {
         count = int.parse(value);
-      } catch (e){
+      } catch (e) {
         count = -1;
       }
       await localStorageService.setItem("Count", (count + 1).toString());
     });
-    await localStorageService.setItem("notification ${count + 1}", message.notification!.body);
+    await localStorageService.setItem(
+        "notification ${count + 1}", message.notification!.body);
   }
 }

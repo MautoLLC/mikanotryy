@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart';
+import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
-import 'package:http/http.dart' as http;
-import 'package:html/dom.dart' as dom;
-import 'package:flutter/material.dart';
 
 class ApiConfigurationService {
   void resetESP(String url) async {
@@ -19,8 +19,14 @@ class ApiConfigurationService {
     }
   }
 
-  Future<String> Connecttossid(String id, String pass, String cloudUsername,
-      String cloudPassword, String cloudMode, String generatorId,String ControllerAddress) async {
+  Future<String> Connecttossid(
+      String id,
+      String pass,
+      String cloudUsername,
+      String cloudPassword,
+      String cloudMode,
+      String generatorId,
+      String ControllerAddress) async {
     final response = await http.get(Uri.parse(ssidUrl +
         '/setting?ssid=' +
         id +
@@ -34,7 +40,8 @@ class ApiConfigurationService {
         cloudMode +
         '&GeneratorId=' +
         generatorId +
-        '&controllerAddress=' + ControllerAddress));
+        '&controllerAddress=' +
+        ControllerAddress));
     if (response.statusCode == 200) {
       debugPrint(response.body.toString());
       return (response.body.toString());

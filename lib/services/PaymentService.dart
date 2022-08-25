@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:isw_mobile_sdk/isw_mobile_sdk.dart';
 import 'package:mymikano_app/models/Currency.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
@@ -47,10 +46,14 @@ class PaymentService {
       String Code =
           currencyCodes[currency!.currencyCode!.toUpperCase().toString()]
               .toString();
-              
-      String merchantId = isProduction?"IKIA8DD112A28B31DEEF547D195D0EE9A07394867D16":"IKIA4CC6EB8D10397B7361C0DE33FBE4A852F2147614",
-          merchantCode = isProduction?"MX58951":"MX90186",
-          merchantSecret = isProduction?"2BRaMgxtJcs0mJNdgMsQGsElseN62jSeU2ieXhWv/zM=":"28yytagm991ulDt",
+
+      String merchantId = isProduction
+              ? "IKIA8DD112A28B31DEEF547D195D0EE9A07394867D16"
+              : "IKIA4CC6EB8D10397B7361C0DE33FBE4A852F2147614",
+          merchantCode = isProduction ? "MX58951" : "MX90186",
+          merchantSecret = isProduction
+              ? "2BRaMgxtJcs0mJNdgMsQGsElseN62jSeU2ieXhWv/zM="
+              : "28yytagm991ulDt",
           currencyCode = Code; // e.g  566 for NGN
       // String merchantId = "IKIA8DD112A28B31DEEF547D195D0EE9A07394867D16",
       //     merchantCode = "MX58951",
@@ -63,7 +66,7 @@ class PaymentService {
       // initialize the sdk
       // await IswMobileSdk.initialize(config);
       // intialize with environment, default is Environment.TEST
-    
+
       // await IswMobileSdk.initialize(config, isProduction?Environment.PRODUCTION:Environment.TEST);
       await IswMobileSdk.initialize(config, Environment.PRODUCTION);
     } catch (e) {

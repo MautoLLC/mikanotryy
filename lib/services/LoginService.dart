@@ -1,13 +1,14 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
 
 Login(String username, String password, BuildContext context) async {
   Dio dio = new Dio();
@@ -89,7 +90,9 @@ Login(String username, String password, BuildContext context) async {
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Theme5Dashboard(), settings:RouteSettings(name: 'dashboard')),
+        MaterialPageRoute(
+            builder: (context) => Theme5Dashboard(),
+            settings: RouteSettings(name: 'dashboard')),
       );
     } on Exception catch (e) {
       FailedToast();

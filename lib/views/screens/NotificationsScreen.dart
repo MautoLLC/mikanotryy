@@ -1,8 +1,6 @@
-import 'package:audioplayers/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/NotificationState.dart';
 import 'package:mymikano_app/models/NotificationModel.dart';
-import 'package:mymikano_app/services/LocalStorageService.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/NotificationItem.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
@@ -16,7 +14,6 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,11 +34,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                  itemCount: Provider.of<NotificationState>(context).notificationCount,
+                  itemCount:
+                      Provider.of<NotificationState>(context).notificationCount,
                   itemBuilder: (context, index) {
                     NotificationModel notification = NotificationModel(
-                        Message: Provider.of<NotificationState>(context).notifications[index].Message);
-                        return NotificationItem(
+                        Message: Provider.of<NotificationState>(context)
+                            .notifications[index]
+                            .Message);
+                    return NotificationItem(
                         Message: notification.Message, Date: notification.Date);
                   },
                 ),

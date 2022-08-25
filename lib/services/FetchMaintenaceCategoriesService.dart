@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mymikano_app/models/MaintenaceCategoryModel.dart';
-import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/services/DioClass.dart';
+import 'package:mymikano_app/utils/appsettings.dart';
 
 class Service {
   var headers;

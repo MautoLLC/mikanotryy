@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
-import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:mymikano_app/views/widgets/HorizontalItemElement.dart';
+import 'package:mymikano_app/views/widgets/SubTitleText.dart';
 import 'package:provider/provider.dart';
 
 class SearchItemSubPage extends StatelessWidget {

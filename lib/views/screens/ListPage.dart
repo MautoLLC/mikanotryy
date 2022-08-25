@@ -34,22 +34,22 @@ class _ListPageState extends State<ListPage> {
     // TODO: implement initState
     super.initState();
     Provider.of<ProductState>(context, listen: false).clearListOfProducts();
-    if(Provider.of<ProductState>(context, listen: false).AllFiltersForCategories.length == 0){
-      Provider.of<ProductState>(context, listen: false)
-          .fetchFilterCategories();
+    if (Provider.of<ProductState>(context, listen: false)
+            .AllFiltersForCategories
+            .length ==
+        0) {
+      Provider.of<ProductState>(context, listen: false).fetchFilterCategories();
     }
     if (widget.categoryID != -1) {
       Provider.of<ProductState>(context, listen: false)
           .getProductsByCategory(widget.categoryID);
-      Provider.of<ProductState>(context, listen: false)
-          .selectedCategoryId = widget.categoryID;
-      Provider.of<ProductState>(context, listen: false)
-          .mainParentCategory = widget.categoryID;
+      Provider.of<ProductState>(context, listen: false).selectedCategoryId =
+          widget.categoryID;
+      Provider.of<ProductState>(context, listen: false).mainParentCategory =
+          widget.categoryID;
     } else {
-      Provider.of<ProductState>(context, listen: false)
-          .mainParentCategory = -1;
-          Provider.of<ProductState>(context, listen: false)
-          .selectedCategoryId = -1;
+      Provider.of<ProductState>(context, listen: false).mainParentCategory = -1;
+      Provider.of<ProductState>(context, listen: false).selectedCategoryId = -1;
     }
   }
 
@@ -136,7 +136,7 @@ class _ListPageState extends State<ListPage> {
                       child: ButtonTheme(
                         alignedDropdown: true,
                         child: DropdownButton(
-                          isDense: true,
+                            isDense: true,
                             elevation: 0,
                             icon: Icon(Icons.sort, color: black),
                             items: [
@@ -175,51 +175,74 @@ class _ListPageState extends State<ListPage> {
                             }),
                       ),
                     ),
-                    IconButton(onPressed: (){
-                      showModalBottomSheet(context: context, 
-                      builder: (context){      
-                           return Consumer<ProductState>(
-                            builder: (context, value, child) => Container(
-                              child: ListView(
-                                children: List.generate(
-                                  value.selectedCategoryId!=-1?
-                                  value.allCategories
-                                                  .where((element) => element.parentCategoryId == value.selectedCategoryId)
+                    IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return Consumer<ProductState>(
+                                  builder: (context, value, child) => Container(
+                                    child: ListView(
+                                      children: List.generate(
+                                          value.selectedCategoryId != -1
+                                              ? value.allCategories
+                                                  .where((element) =>
+                                                      element
+                                                          .parentCategoryId ==
+                                                      value.selectedCategoryId)
                                                   .length
-                                                  :value.mainCategories.length
-                                                  , (index) { 
-                                                    ProductCategory obj = value.selectedCategoryId!=-1?
-                                                  value.allCategories.where((element) => element.parentCategoryId == value.selectedCategoryId).elementAt(index):
-                                                  value.mainCategories.elementAt(index);
-                                                  return ListTile(
-                                                    trailing: Icon(Icons.arrow_forward_ios),
-                                                    onTap: () {
-                                                                                                            value.setselectedCategoryId(obj.id.toString().toInt());
-                                                      if(value.allCategories
-                                                                      .where((element) => element.parentCategoryId == value.selectedCategoryId)
-                                                                      .length == 0){
-                                                                        value.setselectedCategoryId(value.mainParentCategory);
-                                                                        Navigator.pop(context);
-                                                                      }
-                                                      value.ListOfProducts.clear();
-                                                      value.getListOfProducts(obj.id.toString().toInt());
-                                                    },
-                                                    title: value.selectedCategoryId!=-1?
-                                                  Text(obj.name.toString())
-                                                  :Text(obj.name.toString()),
-                                                  );
-    }),
-                              ),
-                            ),
-                          );
-
-                      });
-                    }, icon: Icon(Icons.filter, color: Colors.black)),                        
-                    IconButton(onPressed: (){
-                      state.setselectedCategoryId(state.mainParentCategory);
-                      state.ListOfProducts.clear();
-                      state.getListOfProducts(state.mainParentCategory);
-                        }, icon: Icon(Icons.restore))
+                                              : value.mainCategories.length,
+                                          (index) {
+                                        ProductCategory obj = value
+                                                    .selectedCategoryId !=
+                                                -1
+                                            ? value.allCategories
+                                                .where((element) =>
+                                                    element.parentCategoryId ==
+                                                    value.selectedCategoryId)
+                                                .elementAt(index)
+                                            : value.mainCategories
+                                                .elementAt(index);
+                                        return ListTile(
+                                          trailing:
+                                              Icon(Icons.arrow_forward_ios),
+                                          onTap: () {
+                                            value.setselectedCategoryId(
+                                                obj.id.toString().toInt());
+                                            if (value.allCategories
+                                                    .where((element) =>
+                                                        element
+                                                            .parentCategoryId ==
+                                                        value
+                                                            .selectedCategoryId)
+                                                    .length ==
+                                                0) {
+                                              value.setselectedCategoryId(
+                                                  value.mainParentCategory);
+                                              Navigator.pop(context);
+                                            }
+                                            value.ListOfProducts.clear();
+                                            value.getListOfProducts(
+                                                obj.id.toString().toInt());
+                                          },
+                                          title: value.selectedCategoryId != -1
+                                              ? Text(obj.name.toString())
+                                              : Text(obj.name.toString()),
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                        icon: Icon(Icons.filter, color: Colors.black)),
+                    IconButton(
+                        onPressed: () {
+                          state.setselectedCategoryId(state.mainParentCategory);
+                          state.ListOfProducts.clear();
+                          state.getListOfProducts(state.mainParentCategory);
+                        },
+                        icon: Icon(Icons.restore))
                   ],
                 ),
                 Expanded(
@@ -232,9 +255,9 @@ class _ListPageState extends State<ListPage> {
                         mainAxisSpacing: 10),
                     itemCount: state.ListOfProducts.length,
                     itemBuilder: (context, index) {
-                        return ItemElement(
-                          product: state.ListOfProducts[index],
-                        );
+                      return ItemElement(
+                        product: state.ListOfProducts[index],
+                      );
                     },
                   ),
                 ),

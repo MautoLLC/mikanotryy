@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:record/record.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 
 class Recorder extends StatefulWidget {
   final Function save;

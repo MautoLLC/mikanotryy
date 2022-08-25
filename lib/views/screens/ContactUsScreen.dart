@@ -80,18 +80,22 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                     0.0, 0.0, 0.0, 20.0),
                                 child: Row(
                                   children: [
-                                    ImageBox(image: ListIcons[1], color: Colors.black),
+                                    ImageBox(
+                                        image: ListIcons[1],
+                                        color: Colors.black),
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           14.3, 0.0, 0.0, 0.0),
                                       child: SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.5,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         child: Text(
                                           snapshot.data!.companyPhoneNumber
                                               .toString(),
-                                              maxLines: 5,
-                                              softWrap: true,
-                                              overflow: TextOverflow.ellipsis,
+                                          maxLines: 5,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: PoppinsFamily),
@@ -111,13 +115,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                       padding: const EdgeInsets.fromLTRB(
                                           14.3, 0.0, 0.0, 0.0),
                                       child: SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.5,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         child: Text(
                                           snapshot.data!.companyAddress
                                               .toString(),
-                                              maxLines: 5,
-                                              softWrap: true,
-                                              overflow: TextOverflow.ellipsis,
+                                          maxLines: 5,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontFamily: PoppinsFamily),

@@ -49,7 +49,7 @@ class Currency {
     createdOnUtc = json['created_on_utc'];
     updatedOnUtc = json['updated_on_utc'];
     roundingType = json['rounding_type'];
-    storeIds = json['store_ids'] == null? []:json['store_ids'].cast<int>();
+    storeIds = json['store_ids'] == null ? [] : json['store_ids'].cast<int>();
     id = json['id'];
     currencySymbol = getCurrency(json['currency_code']);
   }

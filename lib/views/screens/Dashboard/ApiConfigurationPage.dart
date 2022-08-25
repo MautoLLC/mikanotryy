@@ -173,7 +173,7 @@ class ApiConfigurationPage extends StatelessWidget {
                                   color: value.option == 'comap'
                                       ? Colors.white
                                       : mainColorTheme),
-                              textAlign: TextAlign.center,  
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),
@@ -474,14 +474,15 @@ class ApiConfigurationPage extends StatelessWidget {
                                       value.cloudMode,
                                       value.chosenGeneratorId);
                                 }
-                              
+
                                 await value.service.Connecttossid(
                                     value.chosenSSID,
                                     passwordController.text,
                                     cloudUsernameController.text,
                                     cloudPasswordController.text,
                                     value.cloudMode.toString(),
-                                    value.chosenGeneratorId,"");
+                                    value.chosenGeneratorId,
+                                    "");
 
                                 // value.service.RestartESP();
                                 Timer(Duration(seconds: 15), () {

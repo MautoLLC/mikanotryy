@@ -1,29 +1,21 @@
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
+import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPagee.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:confirm_dialog/confirm_dialog.dart';
-import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPage.dart';
-import 'package:mymikano_app/State/ApiConfigurationState.dart';
 import 'package:provider/provider.dart';
-import 'package:mymikano_app/utils/AppColors.dart';
+
 class SettingScreen extends StatefulWidget {
   @override
   _SettingScreenState createState() => _SettingScreenState();
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  
-
-
-
   @override
-
-
   @override
   Widget build(BuildContext context) {
-     
-
     Widget mOption(var icon, var heading) {
       return Padding(
         padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -36,7 +28,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 16.width,
                 Text(heading, style: primaryTextStyle()),
               ],
-            ), 
+            ),
             Icon(Icons.keyboard_arrow_right, color: Color(0xFFA6A7AA))
           ],
         ),
@@ -48,57 +40,45 @@ class _SettingScreenState extends State<SettingScreen> {
     }
 
     return SafeArea(
-      
-      child:  Consumer2<ApiConfigurationState, CloudGeneratorState>(
+      child: Consumer2<ApiConfigurationState, CloudGeneratorState>(
         builder: (context, value, cloud, child) => Scaffold(
-        appBar: AppBar(
-          
-      
-          
-          leading: IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: backArrowColor,
-                                ),
-                                onPressed: () {
-                                  finish(context);
-                                },
-                              ),
-        
-        
-          title: Text('Settings', style: boldTextStyle(size: 20)),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          automaticallyImplyLeading: true,       
-       
-        ),
-        body: Column(
-          children: <Widget>[
-            
-            mDivider(),
-            mOption(Icons.refresh, "Reset").onTap(()
-            async{
-               if (await confirm(
-              context,
-              title: const Text('Confirm'),
-              content: const Text('Are you sure you want to reset your settings?'),
-              textOK: const Text('Yes'),
-              textCancel: const Text('No'),
-            )) {
-              
-             value.resetPreferences();
-             Navigator.of(context).push(
-             MaterialPageRoute(
-             builder: (context) =>
-             ApiConfigurationPagee()));
-            }
-            return print('pressedCancel');
-            }),
-            
-          ],
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: backArrowColor,
+              ),
+              onPressed: () {
+                finish(context);
+              },
+            ),
+            title: Text('Settings', style: boldTextStyle(size: 20)),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            automaticallyImplyLeading: true,
+          ),
+          body: Column(
+            children: <Widget>[
+              mDivider(),
+              mOption(Icons.refresh, "Reset").onTap(() async {
+                if (await confirm(
+                  context,
+                  title: const Text('Confirm'),
+                  content: const Text(
+                      'Are you sure you want to reset your settings?'),
+                  textOK: const Text('Yes'),
+                  textCancel: const Text('No'),
+                )) {
+                  value.resetPreferences();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ApiConfigurationPagee()));
+                }
+                return print('pressedCancel');
+              }),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }

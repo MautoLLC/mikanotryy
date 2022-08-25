@@ -46,7 +46,8 @@ class Product {
           listsplit[1].split('"')[2].indexOf('>') + 1,
           listsplit[1].split('"')[2].indexOf('</a>'));
     }
-    double price = double.parse(double.parse(json['price'].toString()).toStringAsFixed(2));
+    double price =
+        double.parse(double.parse(json['price'].toString()).toStringAsFixed(2));
     return Product(
         id: json['id'],
         Name: json['name'],
