@@ -466,7 +466,7 @@ class DashboardState extends State<Dashboard> {
                                           child: commonCacheImageWidget(
                                               state.brandCategories[index]
                                                   .image!.src,
-                                              300)),
+                                              100)),
                                     ),
                                   ),
                                 );
