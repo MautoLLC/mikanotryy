@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/MainDashboardState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
-import 'package:mymikano_app/services/PaymentService.dart';
+// import 'package:mymikano_app/services/PaymentService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -44,10 +44,10 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     }
     Provider.of<MainDashboardState>(context, listen: false).setSelectedIndex(2);
     setState(() {});
-    Future.delayed(Duration(seconds: 5), () async {
-      await PaymentService()
-          .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
-    });
+    // Future.delayed(Duration(seconds: 5), () async {
+    //   await PaymentService()
+    //       .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
+    // });
     try {
       await Provider.of<CurrencyState>(context, listen: false).update();
       await Provider.of<ProductState>(context, listen: false)

@@ -302,12 +302,13 @@ class CheckoutScreen extends StatelessWidget {
                           if (state.checkedValueForOrder) {
                             TechnicianModel user = state.User;
                             if (!productState.getCashOnDelivery) {
-                              if (await PaymentService().pay(
-                                  user.id,
-                                  user.username,
-                                  user.email,
-                                  user.phoneNumber,
-                                  productState.selectedProductsPrice.toInt())) {
+                              // if (await PaymentService().pay(
+                              //     user.id,
+                              //     user.username,
+                              //     user.email,
+                              //     user.phoneNumber,
+                              //     productState.selectedProductsPrice.toInt())) {
+                              if (false) {
                                 Fluttertoast.showToast(
                                     msg: "Payment Successful",
                                     toastLength: Toast.LENGTH_SHORT,
