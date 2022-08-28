@@ -4,7 +4,13 @@ import 'package:mymikano_app/models/NotificationModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/NotificationItem.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+
+import '../../utils/AppColors.dart';
+import '../widgets/TitleText.dart';
+import 'MainDashboard.dart';
+import 'MaintenanceHome.dart';
 
 class NotificationsPage extends StatefulWidget {
   NotificationsPage({Key? key}) : super(key: key);
@@ -30,12 +36,38 @@ class _NotificationsPageState extends State<NotificationsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TopRowBar(title: lbl_Notifications),
+              Stack(alignment: Alignment.center, children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: backArrowColor,
+                    ),
+                    onPressed: () async {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Theme5Dashboard()),
+                      );
+                    },
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: TitleText(
+                    title: lbl_Notifications,
+                    textSize: 24,
+                  ),
+                ),
+              ]),
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                  itemCount:
-                      Provider.of<NotificationState>(context).notificationCount,
+                  itemCount: Provider.of<NotificationState>(context)
+                      .notifications
+                      .length,
                   itemBuilder: (context, index) {
                     NotificationModel notification = NotificationModel(
                         Message: Provider.of<NotificationState>(context)

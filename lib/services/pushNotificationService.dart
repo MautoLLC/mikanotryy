@@ -5,6 +5,8 @@ import 'package:mymikano_app/views/screens/MaintenanceHome.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../views/screens/NotificationsScreen.dart';
+
 class PushNotificationService {
   final FirebaseMessaging _fcm;
 
@@ -21,44 +23,52 @@ class PushNotificationService {
     String? token = await _fcm.getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("DeviceToken", token.toString());
+    debugPrint("Device Token: $token");
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
       debugPrint("message recieved");
       debugPrint(event.notification!.body);
       debugPrint(event.notification!.title);
       int count = 0;
-      localStorageService.getItem("Count").then((value) async {
-        try {
-          count = int.parse(value);
-        } catch (e) {
-          count = -1;
-        }
-        await localStorageService.setItem("Count", (count + 1).toString());
-      });
-      await localStorageService.setItem(
-          "notification ${count + 1}", event.notification!.body);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => T5Maintenance()),
-      );
-    });
-  }
-
-  Future<void> messageHandler(RemoteMessage message) async {
-    debugPrint('background message ${message.notification!.body}');
-    int count = 0;
-    localStorageService.getItem("Count").then((value) async {
+      var value = await localStorageService.getItem("Count");
       try {
         count = int.parse(value);
       } catch (e) {
         count = -1;
       }
       await localStorageService.setItem("Count", (count + 1).toString());
+      await localStorageService.setItem(
+          "notification ${count + 1}", event.notification!.body);
+      Fluttertoast.showToast(
+          msg: event.notification!.body.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
     });
-    await localStorageService.setItem(
-        "notification ${count + 1}", message.notification!.body);
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
+      int count = 0;
+      var value = await localStorageService.getItem("Count");
+      try {
+        count = int.parse(value);
+      } catch (e) {
+        count = -1;
+      }
+      await localStorageService.setItem("Count", (count + 1).toString());
+      await localStorageService.setItem(
+          "notification ${count + 1}", message.notification!.body);
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NotificationsPage()),
+      );
+    });
   }
+
+  // Future<void> messageHandler(RemoteMessage message) async {
+  //   debugPrint('background message ${message.notification!.body}');
+  //
+  // }
 }

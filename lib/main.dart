@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
     FirebaseMessaging _fcm = FirebaseMessaging.instance;
     PushNotificationService notificationService = PushNotificationService(_fcm);
     notificationService.initialise(context);
-    FirebaseMessaging.onBackgroundMessage(notificationService.messageHandler);
+    // FirebaseMessaging.onBackgroundMessage(notificationService.messageHandler);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ProductState>(

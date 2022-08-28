@@ -11,7 +11,7 @@ class NotificationState extends ChangeNotifier {
     dynamic tempCount = await localStorageService.getItem("Count") ?? "0";
     Clear();
     setNotificationCount(int.parse(tempCount));
-    for (int i = 0; i < _notificationCount; i++) {
+    for (int i = 0; i < _notificationCount + 1; i++) {
       dynamic TempMessage =
           await localStorageService.getItem("notification $i");
       String data = TempMessage.toString();
