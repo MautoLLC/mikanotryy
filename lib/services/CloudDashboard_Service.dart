@@ -13,8 +13,8 @@ class CloudDashBoard_Service {
   //String GeneratorID = "";
   //aded by youssef//
   late final ConfigurationModel configModel;
-  CloudDashBoard_Service() {
-    getSelectedConfigurationModel();
+  CloudDashBoard_Service() {   
+    getSelectedConfigurationModel();   
     //configModel=model;
   }
 
@@ -144,7 +144,7 @@ class CloudDashBoard_Service {
       Mode = "Close-Off";
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json',   
         },
         body: jsonEncode(<String, String>{
           'email': configModel.cloudUser,

@@ -7,7 +7,10 @@ import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/services/LanDashboard_Service.dart';
+
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/viewmodels/CloudDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +36,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool isOnleft = false;
   bool isOnMiddle = false;
   bool isOnRight = false;
+   late LanDashBoard_Service LanService;
   late final ConfigurationModel configModel;
   @override
   void initState() {
@@ -403,10 +407,14 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 232,
                                           child: new GestureDetector(
                                               onTap: () {
+                                              
                                                 setState(() {
                                                   isOnleft = false;
                                                   isOnMiddle = false;
                                                   isOnRight = false;
+                                                   CloudDashBoard_ModelView
+                                                            r = new CloudDashBoard_ModelView();
+                                                        r.SwitchOnOff(false); 
                                                 });
                                               },
                                               child: Container(
@@ -424,10 +432,17 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 241,
                                           child: new GestureDetector(
                                               onTap: () {
+                                              
+                                               setState(() {
+                                                     CloudDashBoard_ModelView
+                                                            r = new CloudDashBoard_ModelView();
+                                                        r.SwitchOnOff(true); 
+                                                    });
+                                                 
                                                 if ((double.parse(lan
                                                         .GeneratorVoltage
                                                         .return_value)) >
-                                                    0) {
+                                                    0) {  
                                                   setState(() {
                                                     isOnRight = true;
                                                   });

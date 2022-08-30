@@ -15,7 +15,7 @@ class CarouselImageModel {
         position: json["imageposition"],
         linkType: json["linkType"],
         link: json["link"],
-      );
+      ); 
 
   Map<String, dynamic> toJson() => {
         "id": id,
