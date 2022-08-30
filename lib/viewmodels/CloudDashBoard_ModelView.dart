@@ -96,6 +96,6 @@ class CloudDashBoard_ModelView {
   }
 
   Future<bool> SwitchOnOff(bool status) async {
-    return await DashBoardService.TurnGeneratorEngineOnOff(status);
+    return await DashBoardService.TurnGeneratorEngineOnOff(status); 
   }
 }

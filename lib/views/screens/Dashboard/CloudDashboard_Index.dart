@@ -9,12 +9,13 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
+import 'package:mymikano_app/viewmodels/CloudDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-
+import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 import '../../../State/ApiConfigurationStatee.dart';
 import '../../widgets/Custom_GaugeWidget.dart';
 
@@ -33,7 +34,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   bool isOnleft = false;
   bool isOnMiddle = false;
   bool isOnRight = false;
-
+ late CloudDashBoard_Service CloudService;
   late ConfigurationModel configModel;
   //late final List<ConfigurationModel> configsList;
 
@@ -404,15 +405,19 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         Positioned(
                                           top: 72,
                                           left: 232,
-                                          child: new GestureDetector(
+                                          child: new GestureDetector( 
                                               onTap: () {
+                                           
                                                 setState(() {
-                                                  isOnleft = false;
+                                                  isOnleft = false;  
                                                   isOnMiddle = false;
                                                   isOnRight = false;
+                                                   CloudDashBoard_ModelView
+                                                            r = new CloudDashBoard_ModelView();
+                                                        r.SwitchOnOff(false); 
                                                 });
                                               },
-                                              child: Container(
+                                              child: Container(  
                                                   width: 65,
                                                   height: 48,
                                                   decoration: BoxDecoration(
@@ -426,16 +431,24 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           top: 4,
                                           left: 241,
                                           child: new GestureDetector(
-                                              onTap: () {
+                                              onTap: (){
+                                            
+                                                    
+                                                  setState(() {
+                                                     CloudDashBoard_ModelView
+                                                            r = new CloudDashBoard_ModelView();
+                                                        r.SwitchOnOff(true); 
+                                                    });
+                                                   
                                                 if ((double.parse(cloud
-                                                        .GeneratorVoltage
+                                                        .GeneratorVoltage  
                                                         .value)) >
                                                     0) {
-                                                  setState(() {
-                                                    isOnRight = true;
+                                                  setState(() { 
+                                                    isOnRight = true;  
                                                   });
                                                 }
-                                                if (cloud.MCBModeStatus ==
+                                                if (cloud.MCBModeStatus == 
                                                     true) {
                                                   setState(() {
                                                     isOnleft = true;
@@ -460,7 +473,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           top: 24,
                                           left: 185,
                                           child: Container(
-                                            width: 60,
+                                            width: 60,  
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),

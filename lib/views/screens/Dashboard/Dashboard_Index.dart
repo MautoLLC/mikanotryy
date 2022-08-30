@@ -86,8 +86,8 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                       },
                                       icon: Icon(Icons.settings)),
                                   GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
+                                      onTap: () {    
+                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     GeneratorAlertsPage()));

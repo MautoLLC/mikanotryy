@@ -20,7 +20,7 @@ class CloudGeneratorState extends ChangeNotifier {
       timeStamp: "Error");
   CloudSensor RunningHours = CloudSensor(
       sensorID: "Error",
-      sensorName: "Error",
+      sensorName: "Error", 
       value: "100",
       unit: "Error",
       timeStamp: "Error");
