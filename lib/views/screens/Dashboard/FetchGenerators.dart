@@ -457,7 +457,9 @@ class FetchGenerators extends StatelessWidget {
                                   generatorName: value.chosenGeneratorName,
                                   espapiendpoint: apiEndpointLanController.text,
                                   controllerAddress:
-                                      ControllerAddressController.text);
+                                      ControllerAddressController.text,
+                                      
+                                      );
                               SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
                               //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
@@ -530,7 +532,9 @@ class FetchGenerators extends StatelessWidget {
                                   generatorId: value.chosenGeneratorId,
                                   generatorName: value.chosenGeneratorName,
                                   espapiendpoint: "",
-                                  controllerAddress: ""));
+                                  controllerAddress: "",
+                             
+                                  ));
                               //await getListConfigurationModel();
                               //configsList.add(ConfigurationModel(ssid:"", password:"", refreshRate:10, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: ""));
                               //value.configModel=null;
@@ -544,7 +548,9 @@ class FetchGenerators extends StatelessWidget {
                                   generatorId: value.chosenGeneratorId,
                                   generatorName: value.chosenGeneratorName,
                                   espapiendpoint: "",
-                                  controllerAddress: "");
+                                  controllerAddress: "",
+                                
+                                  );
                               SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
                               //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;

@@ -72,7 +72,7 @@ class LanDashBoard_Service {
       isSuccess = true;
     } else {
       // If the server did not return a 201 CREATED response,
-      // then throw an exception.
+      // then throw an exception. 
       throw Exception('Failed to send command.');
     }
     return isSuccess;
