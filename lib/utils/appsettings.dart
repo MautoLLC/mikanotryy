@@ -110,16 +110,16 @@ const MikanoShopCategoriesKva =
 const MikanoShopRfq = "$MikanoShopMainURl/rfq";
 
 const MikanoLoadCalculationURL = isProduction
-    ? "https://services.mikano-intl.com/load-calculation-api/api"
+    ? "https://services.mikano-intl.com/load-calculation-api/api" 
     : "";
-const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
+const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories"; 
 const MikanoLoadCalculationCategoriesWithId =
     "$MikanoLoadCalculationURL/Categories/{id}";
-const MikanoLoadCalculationEquipments = "$MikanoLoadCalculationURL/Equipments";
+const MikanoLoadCalculationEquipments = "$MikanoLoadCalculationURL/Equipments"; 
 const MikanoLoadCalculationEquipmentsWithId =
     "$MikanoLoadCalculationURL/Equipments/{id}";
 const MikanoLoadCalculationUnits = "$MikanoLoadCalculationURL/Units";
-const MikanoLoadCalculationUnitsWithId = "$MikanoLoadCalculationURL/Units/{id}";
+const MikanoLoadCalculationUnitsWithId = "$MikanoLoadCalculationURL/Units/{id}";  
 const MikanoLoadCalculationCalculation =
     "$MikanoLoadCalculationURL/LoadCalculation/{util}";
 
@@ -151,7 +151,7 @@ const ssidRestartUrl = ssidUrl + '/restart';
 const cloudIotMautoUrl = "https://iotapi.mauto.co/api";
 const cloudIotMautoAuthUrl = cloudIotMautoUrl + "/User/token";
 const cloudIotMautoSensorsUrl = cloudIotMautoUrl + "/generators/values/";
-const cloudIotMautoUserGeneratorsUrl = cloudIotMautoUrl + "/generators/list/";
+const cloudIotMautoUserGeneratorsUrl = cloudIotMautoUrl + "/generators/list/"; 
 const lanESPUrl = "espapiendpoint";
 const resetESPUrl = "http://" + lanESPUrl + "/reset";
 

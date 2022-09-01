@@ -9,17 +9,20 @@ class ConfigurationModel {
   final String generatorName;
   final String espapiendpoint;
   final String controllerAddress;
-  ConfigurationModel(
+  
+  ConfigurationModel(  
       {required this.ssid,
       required this.password,
       required this.refreshRate,
-      required this.cloudUser,
+      required this.cloudUser,   
       required this.cloudPassword,
       required this.cloudMode,
       required this.generatorId,
       required this.generatorName,
       required this.espapiendpoint,
-      required this.controllerAddress});
+      required this.controllerAddress,
+      
+      });
 
   factory ConfigurationModel.fromJson(Map<String, dynamic> parsedJson) {
     return new ConfigurationModel(
@@ -33,6 +36,7 @@ class ConfigurationModel {
       generatorName: parsedJson['generatorName'] ?? "",
       espapiendpoint: parsedJson['espapiendpoint'] ?? "",
       controllerAddress: parsedJson['controllerAddress'] ?? "",
+     
     );
   }
 
@@ -48,6 +52,7 @@ class ConfigurationModel {
       "generatorName": this.generatorName,
       "espapiendpoint": this.espapiendpoint,
       "controllerAddress": this.controllerAddress,
+      
     };
   }
 }

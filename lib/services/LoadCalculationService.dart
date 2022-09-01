@@ -17,7 +17,7 @@ class LoadCalculationService {
   Future<List<Equipment>> fetchAllEquipments() async {
     await PrepareCall();
 
-    Response response;
+    Response response; 
     List<Equipment> listresult = [];
 
     try {
@@ -38,7 +38,7 @@ class LoadCalculationService {
   Future<List<ProductCategory>> fetchGeneratorsResult(double kva) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Response response;
-    List<ProductCategory> listresult = [];
+    List<ProductCategory> listresult = [];  
 
     try {
       response = await Dio()
@@ -48,7 +48,7 @@ class LoadCalculationService {
               }));
       if (response.statusCode == 200) {
         for (var item in response.data['categories']) {
-          listresult.add(ProductCategory.fromJson(item));
+          listresult.add(ProductCategory.fromJson(item));  
         }
         return listresult;
       }

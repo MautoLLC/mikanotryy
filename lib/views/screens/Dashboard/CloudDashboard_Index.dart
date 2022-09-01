@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
+import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -29,6 +30,7 @@ class CloudDashboard_Index extends StatefulWidget {
 
 class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   late Timer timer;
+ 
   bool? isFetched;
   int _value = 0;
   bool isOnleft = false;
@@ -36,15 +38,20 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   bool isOnRight = false;
  late CloudDashBoard_Service CloudService;
   late ConfigurationModel configModel;
-  //late final List<ConfigurationModel> configsList;
-
+  late Generator ConfigGenerator;
+  
+  //late final List<ConfigurationModel> configsList;  
+  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getSelectedConfigurationModel();
+    isGeneratorDataFetched();
+    getSelectedGeneratorModel();
     isDataFetched().whenComplete(() {
-      setState(() {});
+      setState(() {}); 
+      
     });
 
     timer = Timer.periodic(Duration(seconds: widget.RefreshRate), (Timer t) {
@@ -60,19 +67,33 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
         .FetchData();
   }
-
+    Future<void> isGeneratorDataFetched() async {
+    await Provider.of<CloudGeneratorState>(context, listen: false)
+        .ReinitiateCloudService();
+    isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
+        .FetchGeneratorData();  
+  }
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();    
     String test = prefs.getString('Configurations').toString();
-    List<ConfigurationModel> configsList =
+   List<ConfigurationModel> configsList =
         (json.decode(prefs.getString('Configurations')!) as List)
             .map((data) => ConfigurationModel.fromJson(data))
-            .toList();
+            .toList(); 
     ConfigurationModel config = ConfigurationModel.fromJson(
         json.decode(prefs.getString('SelectedConfigurationModel')!));
     configModel = config;
     return configModel;
   }
+ Future<Generator> getSelectedGeneratorModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();     
+     
+    Generator configGen = Generator.fromJson(
+        json.decode(prefs.getString('SelectedGeneratorModel')!));
+    ConfigGenerator = configGen;
+    return ConfigGenerator;
+  }
+  
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String test=prefs.getString('Configurations').toString();
@@ -257,7 +278,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               }
                                             }
                                           },
-                                          child: Column(
+                                          child: Column( 
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
@@ -434,10 +455,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               onTap: (){
                                             
                                                     
-                                                  setState(() {
+                                                  setState(() async{
                                                      CloudDashBoard_ModelView
                                                             r = new CloudDashBoard_ModelView();
                                                         r.SwitchOnOff(true); 
+                                                      
                                                     });
                                                    
                                                 if ((double.parse(cloud
@@ -571,16 +593,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
+                                          
                                           child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
-                                            value: (double.parse(
-                                                    cloud.GeneratorLoad.value) /
-                                                1000),
+                                            value: (((double.parse(
+                                                     cloud.GeneratorLoad.value))*100)/double.parse(
+                                                     cloud.nominalLoadkW.nominalLoadkW)),  
+                                                    
                                             needleColor: mainColorTheme,
                                             min: 0,
                                             max: 200,
                                           )),
-                                    ],
+                                    ], 
                                   ),
                                   Spacer(),
                                   SizedBox(height: 10),
@@ -777,7 +801,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
 
   DropdownMenuItem<String> buildMenuItem(ConfigurationModel model) =>
       DropdownMenuItem(
-          value: model.generatorId, child: Text(model.generatorName));
+          value: model.generatorId, child: Text(model.generatorName)); 
 }
 
 class infotile extends StatelessWidget {

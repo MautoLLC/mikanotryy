@@ -4,12 +4,15 @@ class CloudSensor {
   late final dynamic value;
   late final dynamic unit;
   final String timeStamp;
+  
   CloudSensor(
       {required this.sensorID,
       required this.sensorName,
       required this.value,
       required this.unit,
-      required this.timeStamp});
+      required this.timeStamp,
+      
+      });
 
   factory CloudSensor.fromJson(Map<String, dynamic> JsonData) {
     return CloudSensor(
@@ -17,6 +20,9 @@ class CloudSensor {
         sensorName: JsonData['sensorName'],
         value: JsonData['value'],
         unit: JsonData['unit'],
-        timeStamp: JsonData['timeStamp']);
+        timeStamp: JsonData['timeStamp'],
+       
+        );
+        
   }
 }

@@ -5,19 +5,20 @@ import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 class CloudDashBoard_ModelView {
   //final String ApiEnd;
   late List<CloudSensor> cloudsensors = [];
+
   late CloudDashBoard_Service DashBoardService;
 
   Future<void> GetListCloudSensors() async {
     cloudsensors = await DashBoardService.FetchData();
   }
-
+ 
   CloudSensor FindSensor(String param) {
     final index =
         cloudsensors.indexWhere((element) => element.sensorID == param);
     CloudSensor sensor = cloudsensors.elementAt(index);
     return sensor;
   }
-
+  
   CloudDashBoard_ModelView(/*{required this.ApiEnd}*/) {
     DashBoardService = new CloudDashBoard_Service();
   }
@@ -91,7 +92,7 @@ class CloudDashBoard_ModelView {
     return await DashBoardService.SwitchControllerMode(status);
   }
 
-  Future<bool> SwitchMCBMode(bool status) async {
+  Future<bool> SwitchMCBMode(bool status) async { 
     return await DashBoardService.SwitchMCBMode(status);
   }
 
