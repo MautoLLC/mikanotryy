@@ -88,7 +88,7 @@ class CloudDashBoard_Service {
       debugPrint(response.body);
        Map<String, dynamic> data = json.decode(response.body);    
       cloudnominalload =
-          (data['values'] as List).map((s) => Generator.fromJson(s)).toList();   
+          (data['nominalLoadkW'] as List).map((s) => Generator.fromJson(s)).toList();   
       return cloudnominalload;   
        
     } else {

@@ -314,14 +314,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   //    },
                                   //    icon: Icon(Icons.warning)),
 
-                                  GestureDetector(
+                            /*      GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     GeneratorAlertsPage()));
                                       },
-                                      child: Icon(Icons.warning)),
+                                      child: Icon(Icons.warning)),  */
                                 ],
                               ),
                               Row(
@@ -342,6 +342,12 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     onSelected: (bool selected) {
                                       setState(() {
                                         _value = (selected ? 0 : null)!;
+                                        
+                                                      CloudGeneratorState
+                                                          m =
+                                                          new CloudGeneratorState(
+                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
+                                                      m.changeControllerModeStatus(_value);
                                       });
                                     },
                                   ),
@@ -359,6 +365,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     onSelected: (bool selected) {
                                       setState(() {
                                         _value = (selected ? 1 : null)!;
+                                          CloudGeneratorState
+                                                          m =
+                                                          new CloudGeneratorState(
+                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
+                                                      m.changeControllerModeStatus(_value);
                                       });
                                     },
                                   ),
@@ -376,6 +387,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     onSelected: (bool selected) {
                                       setState(() {
                                         _value = (selected ? 2 : null)!;
+                                        CloudGeneratorState
+                                                          m =
+                                                          new CloudGeneratorState(
+                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
+                                                      m.changeIsIO(true);
                                       });
                                     },
                                   ),
@@ -459,7 +475,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                      CloudDashBoard_ModelView
                                                             r = new CloudDashBoard_ModelView();
                                                         r.SwitchOnOff(true); 
-                                                      
+                                                     
                                                     });
                                                    
                                                 if ((double.parse(cloud
@@ -596,16 +612,15 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           
                                           child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
-                                            value: (((double.parse(
-                                                     cloud.GeneratorLoad.value))*100)/double.parse(
-                                                     cloud.nominalLoadkW.nominalLoadkW)),  
+                                            value: (double.parse(
+                                                     cloud.GeneratorLoad.value)),   
                                                     
                                             needleColor: mainColorTheme,
-                                            min: 0,
-                                            max: 200,
+                                            min: 0,  
+                                            max: double.parse(cloud.nominalLoadkW.nominalLoadkW),
                                           )),
                                     ], 
-                                  ),
+                                  ), 
                                   Spacer(),
                                   SizedBox(height: 10),
                                   Column(

@@ -113,11 +113,11 @@ Generator nominalLoadkW= Generator(
   bool PowerStatus = false;
   bool isGCB = false;
   bool isIO = false;
-
+ 
   changeControllerModeStatus(value) async {
     bool isSuccess = await cloudService.SwitchControllerMode(value);
     if (isSuccess == true) { 
-      ControllerModeStatus = value;
+      ControllerModeStatus = value;  
       notifyListeners();
     }
   }
@@ -149,6 +149,7 @@ Generator nominalLoadkW= Generator(
   Future<bool> FetchData() async {
     List<CloudSensor> cloudsensors = [];
     cloudsensors = await cloudService.FetchData();
+    
 
     if (cloudsensors == []) {
       return false;
@@ -165,7 +166,7 @@ Generator nominalLoadkW= Generator(
       //                 double.parse(Hours)) *
       //             60)
       //         .round()
-      //         .toString()
+      //         .toString() 
       //     : "Restricted";
       Rpm = FindSensor(cloudsensors, dotenv.env['Rpm_id'].toString());
       BatteryVoltage =
@@ -237,8 +238,9 @@ Future<bool> FetchGeneratorData() async {
   }
   CloudSensor FindSensor(List<CloudSensor> cloudsensors, String param) {
     final index =
-        cloudsensors.indexWhere((element) => element.sensorID == param);
+        cloudsensors.indexWhere((element) => element.sensorID == param); 
     CloudSensor sensor = cloudsensors.elementAt(index);
+    
     return sensor;
   }
 Generator FindNominalLoad(List<Generator> cloudnominalload, String param) {
