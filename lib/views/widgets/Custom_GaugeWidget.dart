@@ -51,7 +51,7 @@ class Custom_GaugeWidgetState extends State<Custom_GaugeWidget> {
           ],
           ranges: [
             GaugeRange(
-              startValue: 0,
+              startValue: 0,  
               endValue: widget.value,
               color: widget.needleColor,
               startWidth: 3,
