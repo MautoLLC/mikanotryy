@@ -338,16 +338,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         side: BorderSide(
                                             color: mainGreyColorTheme2)),
                                     label: Text("Auto"),
-                                    selected: _value == 0,
+                                    selected: cloud.ControllerModeStatus?true:false,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        _value = (selected ? 0 : null)!;
-                                        
-                                                      CloudGeneratorState
-                                                          m =
-                                                          new CloudGeneratorState(
-                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
-                                                      m.changeControllerModeStatus(_value);
+                                       // _value = (selected ? 0 : null)!;
+                                                      cloud.changeControllerModeStatus(true);
                                       });
                                     },
                                   ),
@@ -361,15 +356,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
                                     label: Text("Manual"),
-                                    selected: _value == 1,
+                                    selected: cloud.ControllerModeStatus?false:true,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        _value = (selected ? 1 : null)!;
-                                          CloudGeneratorState
-                                                          m =
-                                                          new CloudGeneratorState(
-                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
-                                                      m.changeControllerModeStatus(_value);
+                                        //_value = (selected ? 1 : null)!;
+                                        cloud.changeControllerModeStatus(false);
                                       });
                                     },
                                   ),
@@ -386,12 +377,12 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     selected: _value == 2,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        _value = (selected ? 2 : null)!;
-                                        CloudGeneratorState
-                                                          m =
-                                                          new CloudGeneratorState(
-                                                              /*ApiEnd: this.widget.ApiEndPoint*/);
-                                                      m.changeIsIO(true);
+                                        // _value = (selected ? 2 : null)!;
+                                        // CloudGeneratorState
+                                        //                   m =
+                                        //                   new CloudGeneratorState(
+                                        //                       /*ApiEnd: this.widget.ApiEndPoint*/);
+                                        //               m.changeIsIO(true);
                                       });
                                     },
                                   ),

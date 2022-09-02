@@ -57,9 +57,9 @@ class CloudDashBoard_Service {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response.statusCode == 200) {  
       debugPrint(response.body);
-       Map<String, dynamic> data = json.decode(response.body);    
+       Map<String, dynamic> data = json.decode(response.body);
       cloudsensors =
-          (data['values'] as List).map((s) => CloudSensor.fromJson(s)).toList();   
+          (data['values'] as List).map((s) => CloudSensor.fromJson(s)).toList();
       return cloudsensors;   
        
     } else {
