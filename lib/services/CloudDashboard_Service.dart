@@ -73,7 +73,7 @@ class CloudDashBoard_Service {
     }
   }
   
-  Future<bool> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(int status) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
@@ -89,10 +89,12 @@ class CloudDashBoard_Service {
     String Mode;
     bool isSuccess = false;
 
-    if (status)
+    if (status==1)
       Mode = "AUTO"; 
-    else
+    else if (status==0)
       Mode = "MAN";
+    else 
+      Mode = "Off";
 
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {

@@ -325,11 +325,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         side: BorderSide(
                                             color: mainGreyColorTheme2)),
                                     label: Text("Auto"),
-                                    selected: cloud.ControllerModeStatus?true:false,
+                                    selected: cloud.ControllerModeStatus == 1,
                                     onSelected: (bool selected) {
                                       setState(() {
                                        // _value = (selected ? 0 : null)!;
-                                                      cloud.changeControllerModeStatus(true);
+                                       cloud.changeControllerModeStatus(1);
                                       });
                                     },
                                   ),
@@ -343,11 +343,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
                                     label: Text("Manual"),
-                                    selected: cloud.ControllerModeStatus?false:true,
+                                    selected: cloud.ControllerModeStatus == 0,
                                     onSelected: (bool selected) {
                                       setState(() {
                                         //_value = (selected ? 1 : null)!;
-                                        cloud.changeControllerModeStatus(false);
+                                        cloud.changeControllerModeStatus(0);
                                       });
                                     },
                                   ),
@@ -361,13 +361,13 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
                                     label: Text("Off"),
-                                     selected: cloud.ControllerModeStatus?false:true,
+                                     selected: cloud.ControllerModeStatus == 2,
                                     onSelected: (bool selected) {
                                       setState(() {
                                         //_value = (selected ? 1 : null)!;
-                                        cloud.changeControllerModeStatus(false);
+                                        cloud.changeControllerModeStatus(2); 
                                         if(cloud.isIO == true){
-                                        cloud.changeIsIO(false);
+                                        cloud.changeIsIO(false); 
                                         }
                                         else{
                                           cloud.changeIsIO(true);
@@ -419,7 +419,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                   : mainGreyColorTheme,
                                             ),
                                           )),
-                                      if (cloud.ControllerModeStatus != true)
+                                      if (cloud.ControllerModeStatus != 1)
                                         Positioned(
                                           top: 72,
                                           left: 232,
@@ -430,9 +430,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                   isOnleft = false;  
                                                   isOnMiddle = false;
                                                   isOnRight = false;
-                                                   CloudDashBoard_ModelView
-                                                            r = new CloudDashBoard_ModelView();
-                                                        r.SwitchOnOff(false); 
+                                                   cloud.changeIsIO(false); 
                                                 });
                                               },
                                               child: Container(  
@@ -444,7 +442,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (cloud.ControllerModeStatus != true)
+                                      if (cloud.ControllerModeStatus != 1)
                                         Positioned(
                                           top: 4,
                                           left: 241,
@@ -453,11 +451,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             
                                                     
                                                   setState(() async{
-                                                     CloudDashBoard_ModelView
-                                                            r = new CloudDashBoard_ModelView();
-                                                        r.SwitchOnOff(true); 
-                                                     
-                                                    });
+                                                    
+                                                    
+                                                    cloud.changeIsIO(true);
+                                                  }
+                                                   );
                                                    
                                                 if ((double.parse(cloud
                                                         .GeneratorVoltage  
@@ -527,7 +525,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                   : mainGreyColorTheme,
                                             ),
                                           )),
-                                      if (cloud.ControllerModeStatus != true)
+                                      if (cloud.ControllerModeStatus != 1)
                                         Positioned(
                                           top: 72,
                                           left: 67,
@@ -556,7 +554,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (cloud.ControllerModeStatus != true)
+                                      if (cloud.ControllerModeStatus != 1)
                                         Positioned(
                                           top: 72,
                                           left: 147,
