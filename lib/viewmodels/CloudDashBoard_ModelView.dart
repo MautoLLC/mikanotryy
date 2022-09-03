@@ -88,7 +88,7 @@ class CloudDashBoard_ModelView {
     return FindSensor(dotenv.env['MCBMode_id'].toString());
   }
 
-  Future<bool> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(int status) async {
     return await DashBoardService.SwitchControllerMode(status);
   }
 

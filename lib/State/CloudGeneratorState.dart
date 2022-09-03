@@ -1,8 +1,10 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
-import 'package:mymikano_app/models/GeneratorModel.dart';
+
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 
 class CloudGeneratorState extends ChangeNotifier {
@@ -108,7 +110,7 @@ class CloudGeneratorState extends ChangeNotifier {
       unit: "Error",
       timeStamp: "Error");   
   
-  bool ControllerModeStatus = false;
+  int ControllerModeStatus = 0;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
   bool isGCB = false;
@@ -195,9 +197,11 @@ class CloudGeneratorState extends ChangeNotifier {
       //MCBMode = await DashModelView.GetControllerMode();
   
       if (ControllerMode.value == "AUTO")
-        ControllerModeStatus = true;
-      else
-        ControllerModeStatus = false;
+        ControllerModeStatus = 1;
+      else if (ControllerMode.value == "Manual")
+        ControllerModeStatus = 0;
+      else 
+        ControllerModeStatus = 2;
 
       //for testing purposes only 
       //MCBMode.value="1";
