@@ -39,7 +39,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
  late CloudDashBoard_Service CloudService;
   late ConfigurationModel configModel;
   late Generator ConfigGenerator;
-  
+
   //late final List<ConfigurationModel> configsList;  
   
   @override
@@ -47,8 +47,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     // TODO: implement initState
     super.initState();
     getSelectedConfigurationModel();
-    isGeneratorDataFetched();
-    getSelectedGeneratorModel();
+   
     isDataFetched().whenComplete(() {
       setState(() {}); 
       
@@ -67,12 +66,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
         .FetchData();
   }
-    Future<void> isGeneratorDataFetched() async {
-    await Provider.of<CloudGeneratorState>(context, listen: false)
-        .ReinitiateCloudService();
-    isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
-        .FetchGeneratorData();  
-  }
+    
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();    
     String test = prefs.getString('Configurations').toString();
@@ -85,14 +79,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     configModel = config;
     return configModel;
   }
- Future<Generator> getSelectedGeneratorModel() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();     
-     
-    Generator configGen = Generator.fromJson(
-        json.decode(prefs.getString('SelectedGeneratorModel')!));
-    ConfigGenerator = configGen;
-    return ConfigGenerator;
-  }
+ 
   
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -374,15 +361,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
                                     label: Text("Off"),
-                                    selected: _value == 2,
+                                     selected: cloud.ControllerModeStatus?false:true,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        // _value = (selected ? 2 : null)!;
-                                        // CloudGeneratorState
-                                        //                   m =
-                                        //                   new CloudGeneratorState(
-                                        //                       /*ApiEnd: this.widget.ApiEndPoint*/);
-                                        //               m.changeIsIO(true);
+                                        //_value = (selected ? 1 : null)!;
+                                        cloud.changeControllerModeStatus(false);
+                                        if(cloud.isIO == true){
+                                        cloud.changeIsIO(false);
+                                        }
+                                        else{
+                                          cloud.changeIsIO(true);
+                                        }
+                                        
                                       });
                                     },
                                   ),
@@ -429,7 +419,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                   : mainGreyColorTheme,
                                             ),
                                           )),
-                                      if (_value != 0)
+                                      if (cloud.ControllerModeStatus != true)
                                         Positioned(
                                           top: 72,
                                           left: 232,
@@ -454,7 +444,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (_value != 0)
+                                      if (cloud.ControllerModeStatus != true)
                                         Positioned(
                                           top: 4,
                                           left: 241,
@@ -537,20 +527,26 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                   : mainGreyColorTheme,
                                             ),
                                           )),
-                                      if (_value != 0)
+                                      if (cloud.ControllerModeStatus != true)
                                         Positioned(
                                           top: 72,
                                           left: 67,
+                                          
                                           child: new GestureDetector(
                                               onTap: () {
-                                                Switch(
-                                                    value: cloud.MCBModeStatus,
-                                                    onChanged: (result) {
+                                                    if(cloud.MCBModeStatus == false){
+
                                                       cloud.changeMCBModeStatus(
-                                                          result);
-                                                    });
+                                                          true);  
+                                                    }
+                                                    else{
+                                                      cloud.changeMCBModeStatus(
+                                                          false); 
+                                                    }
+                                                    
                                               },
                                               child: Container(
+                                                
                                                   width: 60,
                                                   height: 48,
                                                   decoration: BoxDecoration(
@@ -560,17 +556,23 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (_value != 0)
+                                      if (cloud.ControllerModeStatus != true)
                                         Positioned(
                                           top: 72,
                                           left: 147,
                                           child: new GestureDetector(
+                                          
                                               onTap: () {
-                                                Switch(
-                                                    value: cloud.isGCB,
-                                                    onChanged: (result) {
-                                                      cloud.changeIsGCB(result);
-                                                    });
+                                                
+                                                 if(cloud.isGCB==false){
+                                                   
+                                                    
+                                                      cloud.changeIsGCB(true);
+                                                 }
+                                                 else{
+                                                  cloud.changeIsGCB(false);
+                                                 }
+                                                    
                                               },
                                               child: Container(
                                                   width: 60,
@@ -608,13 +610,13 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                     
                                             needleColor: mainColorTheme,
                                             min: 0,  
-                                            max: double.parse(cloud.nominalLoadkW.nominalLoadkW),
+                                            max: cloud.nominalLoadkW.value.toDouble(),
                                           )),
                                     ], 
                                   ), 
                                   Spacer(),
                                   SizedBox(height: 10),
-                                  Column(
+                                  Column( 
                                     children: [
                                       SizedBox(
                                         height: 10,

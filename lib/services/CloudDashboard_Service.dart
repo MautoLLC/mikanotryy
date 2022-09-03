@@ -38,7 +38,7 @@ class CloudDashBoard_Service {
   //fin added by youssef//
 
   late List<CloudSensor> cloudsensors = [];
-   late List<Generator> cloudnominalload = [];
+   
   Future<List<CloudSensor>> FetchData() async {
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
@@ -58,8 +58,12 @@ class CloudDashBoard_Service {
     if (response.statusCode == 200) {  
       debugPrint(response.body);
        Map<String, dynamic> data = json.decode(response.body);
+       data['nominalLoadkW'];
+       print(data['nominalLoadkW']);
+      CloudSensor nominalLoadkW=CloudSensor(sensorID: "0000-1111", sensorName: "nominalLoadkW", value: data['nominalLoadkW'], unit: '', timeStamp: '');
       cloudsensors =
           (data['values'] as List).map((s) => CloudSensor.fromJson(s)).toList();
+      cloudsensors.add(nominalLoadkW);
       return cloudsensors;   
        
     } else {
@@ -68,35 +72,7 @@ class CloudDashBoard_Service {
       return emptylist;
     }
   }
-  Future<List<Generator>> FetchGeneratorData() async {
-    final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: jsonEncode(<String, String>{ 
-          'email': configModel.cloudUser,
-          'password': configModel.cloudPassword, 
-        }));
-
-    final token = jsonDecode((responseAuth.body))['token'];
- 
-    final response = await http.get(
-        Uri.parse(/*ApiEndPoint + GeneratorID*/ cloudIotMautoSensorsUrl +  
-            configModel.generatorId),  
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response.statusCode == 200) {  
-      debugPrint(response.body);
-       Map<String, dynamic> data = json.decode(response.body);    
-      cloudnominalload =
-          (data['nominalLoadkW'] as List).map((s) => Generator.fromJson(s)).toList();   
-      return cloudnominalload;   
-       
-    } else {
-      debugPrint(response.toString()); 
-      List<Generator> emptylist = [];  
-      return emptylist;
-    }
-  }    
+  
   Future<bool> SwitchControllerMode(bool status) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;

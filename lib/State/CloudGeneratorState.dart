@@ -101,12 +101,12 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");   
-Generator nominalLoadkW= Generator(
-  generatorId: "Error",
-  name: "Error",
-  ownerId: "Error",
-  owner: "Error",
-  nominalLoadkW: "100");
+  CloudSensor nominalLoadkW = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");   
   
   bool ControllerModeStatus = false;
   bool MCBModeStatus = false;
@@ -190,7 +190,7 @@ Generator nominalLoadkW= Generator(
       GCBMode = FindSensor(cloudsensors, dotenv.env['GCB_id'].toString());
       Engine =  
           FindSensor(cloudsensors, dotenv.env['EngineOnOff_id'].toString());     
-  
+      nominalLoadkW = FindSensor(cloudsensors,  dotenv.env['nominalLoad_id'].toString()); 
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
   
@@ -199,7 +199,7 @@ Generator nominalLoadkW= Generator(
       else
         ControllerModeStatus = false;
 
-      //for testing purposes only
+      //for testing purposes only 
       //MCBMode.value="1";
       if (MCBMode.value == "Close-On")
         MCBModeStatus = true;
@@ -224,18 +224,7 @@ Generator nominalLoadkW= Generator(
       return true;
     }
   }
-Future<bool> FetchGeneratorData() async {
-    List<Generator> cloudnominalload = [];
-    cloudnominalload = await cloudService.FetchGeneratorData();
 
-    if (cloudnominalload == []) {
-      return false;
-    } else {
-     nominalLoadkW =
-          FindNominalLoad(cloudnominalload, dotenv.env['Generator_id'].toString());
-     return true;
-    }
-  }
   CloudSensor FindSensor(List<CloudSensor> cloudsensors, String param) {
     final index =
         cloudsensors.indexWhere((element) => element.sensorID == param); 
@@ -243,12 +232,7 @@ Future<bool> FetchGeneratorData() async {
     
     return sensor;
   }
-Generator FindNominalLoad(List<Generator> cloudnominalload, String param) {
-    final index =
-        cloudnominalload.indexWhere((element) => element.generatorId == param);
-    Generator nominalload = cloudnominalload.elementAt(index);
-    return nominalload;
-  }
+
   Future <void> ReinitiateCloudService() async {
     cloudService=new CloudDashBoard_Service();
   }
