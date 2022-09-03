@@ -89,9 +89,9 @@ class CloudDashBoard_Service {
     String Mode;
     bool isSuccess = false;
 
-    if (status==1)
+    if (status==2)
       Mode = "AUTO"; 
-    else if (status==0)
+    else if (status==1) 
       Mode = "MAN";
     else 
       Mode = "Off";
