@@ -59,6 +59,7 @@ class _MenuScreenState extends State<MenuScreen> {
   // }
 
   Widget getPage() {
+    
     if (this.generatorType == 'cloud') {
       return CloudDashboard_Index(
           /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/ RefreshRate:
@@ -126,6 +127,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                   child: GestureDetector(
                     onTap: () {
+                      print(this.DashboardFirstTimeAccess);
                       if (index == 1 && this.DashboardFirstTimeAccess == true) {
                         //notFirstTimeDashboardAccess();
                         // prefs!.setBool("DashboardFirstTimeAccess", true);

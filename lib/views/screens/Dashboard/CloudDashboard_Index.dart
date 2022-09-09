@@ -14,6 +14,7 @@ import 'package:mymikano_app/viewmodels/CloudDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
+import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
@@ -39,7 +40,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
  late CloudDashBoard_Service CloudService;
   late ConfigurationModel configModel;
   late Generator ConfigGenerator;
-
+  bool isReset = false;
   //late final List<ConfigurationModel> configsList;  
   
   @override
@@ -47,7 +48,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     // TODO: implement initState
     super.initState();
     getSelectedConfigurationModel();
-   
+    
     isDataFetched().whenComplete(() {
       setState(() {}); 
       
@@ -74,6 +75,10 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
         (json.decode(prefs.getString('Configurations')!) as List)
             .map((data) => ConfigurationModel.fromJson(data))
             .toList(); 
+    if(configsList.length != 0){
+       prefs.setBool(
+       prefs_DashboardFirstTimeAccess, false);
+    }
     ConfigurationModel config = ConfigurationModel.fromJson(
         json.decode(prefs.getString('SelectedConfigurationModel')!));
     configModel = config;
@@ -96,7 +101,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     super.dispose();
   }
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return RefreshIndicator(
         onRefresh: () {
@@ -120,7 +125,10 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       color: backArrowColor,
                                     ),
                                     onPressed: () {
-                                      finish(context);
+                                     Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MenuScreen()));
                                     },
                                   ),
                                   Spacer(),
@@ -138,8 +146,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: "Poppins",
-                                              color: Colors.black,
-                                            ),
+                                              color: Colors.black, 
+                                            ),   
                                           ),
                                           icon: Icon(
                                             Icons.keyboard_arrow_down,
@@ -150,45 +158,49 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               .toList(),
                                           //value:value.selectedConfigurationModel.generatorId,
                                           value: configModel.generatorId,
-                                          onChanged: (item) async {
+                                          onChanged: (item) async { 
+                              
                                             ConfigurationModel model = value
                                                 .configsList
                                                 .firstWhere((element) =>
                                                     element.generatorId ==
                                                     item);       
                                             value.configModel = model;
-                                            SharedPreferences
-                                                sharedPreferences =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            String SelectedConfigurationModel =
-                                                jsonEncode(configModel);
-                                            await sharedPreferences.setString(
-                                                'SelectedConfigurationModel',
-                                                SelectedConfigurationModel);
-                                            if (model.cloudMode == 0) {
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      Provider(
-                                                          create: (context) =>
-                                                              CloudGeneratorState(),
-                                                          builder: (context,
-                                                                  child) =>
-                                                              LanDashboard_Index(
-                                                                  RefreshRate: model
-                                                                      .refreshRate)),
-                                                ),
-                                              );
-                                            } else {
-                                              // Navigator.of(context).push(
-                                              //     // MaterialPageRoute(
-                                              //     //     builder: (context) =>
-                                              //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
-                                              initState();
-                                            }
+                                            
+                                            SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+                              String Configs = jsonEncode(value.configsList);
+                              String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                              await sharedPreferences.setString(
+                                  'Configurations', Configs);
+                              await sharedPreferences.setString(
+                                  'SelectedConfigurationModel',
+                                  SelectedConfigurationModel);
+                              
+                              List<String> gens = await sharedPreferences
+                                  .getStringList("generatorNameList")!;
+                            
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0);
+                              Generator Chosen = value.gens.firstWhere(
+                                  (element) =>
+                                      element.name ==
+                                      value.chosenGeneratorName);
+                              value.chosenGeneratorId = Chosen.generatorId;
+                              await sharedPreferences.setStringList(
+                                  "generatorNameList", gens);
+
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CloudDashboard_Index(
+                                              RefreshRate: configModel
+                                                                  .refreshRate)));
+                              value.isNotFirstTime(); 
+                              
                                           }),
                                     ),
                                   ),
@@ -200,7 +212,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       child: Material(
                                         color: Colors.white,
                                         child: InkWell(
+                                          
                                          onTap: () async {
+                                        
                                             value.resetPreferences(configModel.espapiendpoint);
                                             // Navigator.of(context).push(
                                             //     MaterialPageRoute(
@@ -210,56 +224,59 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                 configModel.generatorName);
 
                                             //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
-                                            value.configsList.remove(
-                                                configModel);
-                                            if (value.configsList != 1)
+                                            value.configsList.removeWhere(
+                                                (element) =>
+                                                    element.generatorId ==
+                                                    configModel.generatorId);
+                                            
+                                            if (value.configsList.length != 0){
                                               value.configModel =
                                                   value.configsList.elementAt(
                                                       0);
-                                            SharedPreferences sharedPreferences = await SharedPreferences
-                                                .getInstance();
-                                            //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                                            //String Configs=jsonEncode(value.ConfigurationModelsList);
-                                            await sharedPreferences
-                                                .setStringList(
-                                                "genneratorNameList",
-                                                value.generatorNameList);
-                                            String Configs = jsonEncode(
-                                                value.configsList);
-                                            if (value.configsList != 1) {
-                                              String SelectedConfigurationModel = jsonEncode(
-                                                  configModel);
-                                              await sharedPreferences.setString(
-                                                  'SelectedConfigurationModel',
-                                                  SelectedConfigurationModel);
+                                             SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+                              String Configs = jsonEncode(value.configsList);
+                              String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                              await sharedPreferences.setString(
+                                  'Configurations', Configs);
+                              await sharedPreferences.setString(
+                                  'SelectedConfigurationModel',
+                                  SelectedConfigurationModel);
+                              
+                              List<String> gens = await sharedPreferences
+                                  .getStringList("generatorNameList")!;
+                           
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0);
+                              Generator Chosen = value.gens.firstWhere(
+                                  (element) =>
+                                      element.name ==
+                                      value.chosenGeneratorName);
+                              value.chosenGeneratorId = Chosen.generatorId;
+                              await sharedPreferences.setStringList(
+                                  "generatorNameList", gens);
+
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CloudDashboard_Index(
+                                              RefreshRate: configModel
+                                                                  .refreshRate)));
+                              value.isNotFirstTime();
                                             }
-                                            await sharedPreferences.setString(
-                                                'Configurations', Configs);
-                                            if (value.configsList != 1) {
-                                              Navigator.of(context)
+                                    
+                                              else{
+                                                 Navigator.of(context)
                                                   .pushReplacement(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           FetchGenerators()));
-                                            }
-                                            else {
-                                              if(configModel.cloudMode==1){
-                                              Navigator.of(context).pushReplacement(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          CloudDashboard_Index(
-                                                              RefreshRate: configModel
-                                                                  .refreshRate)));}
-                                              else{
-                                                Navigator.of(context).pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            LanDashboard_Index(
-                                                                RefreshRate: configModel
-                                                                    .refreshRate)));
                                               }
-                                            }
-                                          },
+                                            },
+                                          
                                           child: Column(
                                             
                                             mainAxisAlignment:
@@ -275,7 +292,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       ),
                                     ),
                                   ),
-
+                                  
                                   Spacer(),
                                   IconButton(
                                       onPressed: () {
@@ -283,11 +300,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         //     MaterialPageRoute(
                                         //         builder: (context) =>
                                         //             ApiConfigurationPage()));
-                                        
-                                   Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    FetchGenerators())); 
+                                                     
+                             
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0); 
+                           
+                                    Navigator.of(context)
+                                                  .pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FetchGenerators()));
+                                         
+                                            
                                       },
                                       icon: Icon(Icons.settings)),
                                   // Spacer(),
@@ -410,9 +434,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: isOnMiddle
+                                              color: cloud.MCBModeStatus  
                                                   ? GreenpowerColor
-                                                  : mainGreyColorTheme,
+                                                  : mainColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -505,7 +529,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: isOnMiddle
                                                   ? GreenpowerColor
-                                                  : mainGreyColorTheme,
+                                                  : mainColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -690,35 +714,35 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: "V",
+                                            value: cloud.generatorL1N.value.toString(),
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: "V",
+                                            value: cloud.generatorL2N.value.toString(),
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: "V",
+                                            value: cloud.generatorL3N.value.toString(),
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: "A",
+                                            value: cloud.LoadAL1.value.toString(),
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: "A",
+                                            value: cloud.LoadAL2.value.toString(),
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: "A",
+                                            value: cloud.LoadAL3.value.toString(),
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: " ",
+                                            value: cloud.GeneratorFrequency.value.toString(),
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: " ",
+                                            value: cloud.LoadPowerFactor.value.toString(),
                                           ),
                                         ],
                                       ),
@@ -734,35 +758,35 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: "V",
+                                            value: cloud.mainsvoltageL1N.value.toString(),
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: "V",
+                                            value: cloud.mainsvoltageL2N.value.toString(),
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: "V",
+                                            value: cloud.mainsvoltageL3N.value.toString(),
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: "A",
+                                            value: cloud.LoadAL1.value.toString(),
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: "A",
+                                            value: cloud.LoadAL2.value.toString(),
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: "A",
+                                            value: cloud.LoadAL3.value.toString(),
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: " ",
+                                            value: cloud.mainsFrequency.value.toString(),
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: " ",
+                                            value: cloud.LoadPowerFactor.value.toString(),
                                           ),
                                         ],
                                       ),
