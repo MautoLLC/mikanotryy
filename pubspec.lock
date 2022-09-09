@@ -272,6 +272,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.2"
+  flutter_paystack:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: a4a33c3dd0a12f46d655a2e63d11e9f20ba82d01
+      resolved-ref: a4a33c3dd0a12f46d655a2e63d11e9f20ba82d01
+      url: "https://github.com/definitelyme/flutter_paystack.git"
+    source: git
+    version: "1.0.5+1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -394,13 +403,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  isw_mobile_sdk:
-    dependency: "direct main"
-    description:
-      name: isw_mobile_sdk
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
   js:
     dependency: transitive
     description:
@@ -638,42 +640,42 @@ packages:
       name: record
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.1.1"
   record_linux:
     dependency: transitive
     description:
       name: record_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.3"
+    version: "0.1.0"
   record_macos:
     dependency: transitive
     description:
       name: record_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.1.0"
   record_platform_interface:
     dependency: transitive
     description:
       name: record_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.3.0"
   record_web:
     dependency: transitive
     description:
       name: record_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.3.1"
   record_windows:
     dependency: transitive
     description:
       name: record_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2"
+    version: "0.4.3"
   rxdart:
     dependency: transitive
     description:
@@ -967,5 +969,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.5 <3.0.0"
+  dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"

@@ -117,7 +117,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('Utils: ${loadCalculationState.utils()}',
+                  Text('Utilization factor: ${loadCalculationState.utils()}',
                       style: TextStyle(color: Colors.black, fontSize: 18)),
                   Column(
                     children: [

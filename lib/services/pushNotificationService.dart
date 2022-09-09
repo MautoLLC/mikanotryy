@@ -5,6 +5,7 @@ import 'package:mymikano_app/views/screens/MaintenanceHome.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
 import '../views/screens/NotificationsScreen.dart';
 
 class PushNotificationService {
@@ -15,7 +16,7 @@ class PushNotificationService {
   LocalStorageService localStorageService = LocalStorageService();
 
   Future initialise(BuildContext context) async {
-    // _fcm.requestPermission();
+    _fcm.requestPermission();
 
     // If you want to test the push notification locally,
     // you need to get the token and input to the Firebase console
@@ -60,15 +61,9 @@ class PushNotificationService {
       await localStorageService.setItem("Count", (count + 1).toString());
       await localStorageService.setItem(
           "notification ${count + 1}", message.notification!.body);
-      await Navigator.push(
-        context,
+      await navigator.currentState?.push(
         MaterialPageRoute(builder: (context) => NotificationsPage()),
       );
     });
   }
-
-  // Future<void> messageHandler(RemoteMessage message) async {
-  //   debugPrint('background message ${message.notification!.body}');
-  //
-  // }
 }

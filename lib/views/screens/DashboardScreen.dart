@@ -39,7 +39,7 @@ class DashboardState extends State<Dashboard> {
 
     guestLogin = await prefs.getBool("GuestLogin")!;
     if (!guestLogin) {
-      // sendGpsCoord();
+      sendGpsCoord();
     }
     guestLogin ? null : Provider.of<UserState>(context, listen: false).update();
     setState(() {});

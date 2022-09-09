@@ -1,12 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:isw_mobile_sdk/isw_mobile_sdk.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
+// import 'package:isw_mobile_sdk/isw_mobile_sdk.dart';
 import 'package:mymikano_app/models/Currency.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 
 class PaymentService {
-  PaymentService();
+  static final PaymentService _instance = PaymentService._internal();
+  factory PaymentService() => _instance;
+  PaymentService._internal();
+  // TODO Public key prod and dev
+  var publicKey = 'pk_test_949f98de6a4c434159f774c71ce9fc0d7a6fe794';
+  final plugin = PaystackPlugin();
 
   // generate Map of the top 100 currency codes as NGN is 566
   static Map<String, String> currencyCodes = {
@@ -39,70 +45,30 @@ class PaymentService {
   String _getRandomString(int length) => String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
-  // messages to SDK are asynchronous, so we initialize in an async method.
-  Future<void> initSdk(Currency? currency) async {
-    // messages may fail, so we use a try/catch PlatformException.
-    try {
-      String Code =
-          currencyCodes[currency!.currencyCode!.toUpperCase().toString()]
-              .toString();
-
-      String merchantId = isProduction
-              ? "IKIA8DD112A28B31DEEF547D195D0EE9A07394867D16"
-              : "IKIA4CC6EB8D10397B7361C0DE33FBE4A852F2147614",
-          merchantCode = isProduction ? "MX58951" : "MX90186",
-          merchantSecret = isProduction
-              ? "2BRaMgxtJcs0mJNdgMsQGsElseN62jSeU2ieXhWv/zM="
-              : "28yytagm991ulDt",
-          currencyCode = Code; // e.g  566 for NGN
-      // String merchantId = "IKIA8DD112A28B31DEEF547D195D0EE9A07394867D16",
-      //     merchantCode = "MX58951",
-      //     merchantSecret = "2BRaMgxtJcs0mJNdgMsQGsElseN62jSeU2ieXhWv/zM=",
-      //     currencyCode = "566"; // e.g  566 for NGN
-
-      var config = new IswSdkConfig(
-          merchantId, merchantSecret, merchantCode, currencyCode);
-
-      // initialize the sdk
-      // await IswMobileSdk.initialize(config);
-      // intialize with environment, default is Environment.TEST
-
-      // await IswMobileSdk.initialize(config, isProduction?Environment.PRODUCTION:Environment.TEST);
-      await IswMobileSdk.initialize(config, Environment.PRODUCTION);
-    } catch (e) {
-      print(e.toString());
-    }
+  Future<void> initSdk() async {
+    await plugin.initialize(publicKey: publicKey);
   }
 
-  Future<bool> pay(String customer_ID, String customer_Name,
-      String customer_Email, String customer_Phone, int amount) async {
-    var customerId = customer_ID,
-        customerName = customer_Name,
-        customerEmail = customer_Email,
-        customerMobile = customer_Phone,
-        // generate a unique random
-        // reference for each transaction
-        reference = _getRandomString(12);
+  Future<bool> pay(
+      String customer_ID,
+      String customer_Name,
+      String customer_Email,
+      String customer_Phone,
+      int amount,
+      BuildContext context) async {
+    Charge charge = Charge();
+    charge
+      ..amount = amount * 100
+      ..email = customer_Email
+      ..reference = _getRandomString(12)
+      ..putCustomField('Charged From', 'Mikano Mobile')
+      ..putCustomField('Customer ID', customer_ID)
+      ..putCustomField('Customer Name', customer_Name);
 
-    // initialize amount
-    // amount expressed in lowest
-    // denomination (e.g. kobo): "N500.00" -> 50000
-    int amountInKobo = amount * 100;
-
-    // create payment info
-    var iswPaymentInfo = new IswPaymentInfo(customerId, customerName,
-        customerEmail, customerMobile, reference, amountInKobo);
-
-    try {
-      // trigger payment
-      var result = await IswMobileSdk.pay(iswPaymentInfo);
-
-      return result.value.isSuccessful;
-    } catch (e) {
-      debugPrint(e.toString());
-      return false;
-    }
-
-    // process result
+    CheckoutResponse response = await plugin.checkout(
+      context, charge: charge,
+      method: CheckoutMethod.card, // Defaults to CheckoutMethod.selectable
+    );
+    return response.status;
   }
 }

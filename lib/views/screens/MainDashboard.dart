@@ -44,10 +44,11 @@ class _Theme5DashboardState extends State<Theme5Dashboard> {
     }
     Provider.of<MainDashboardState>(context, listen: false).setSelectedIndex(2);
     setState(() {});
-    Future.delayed(Duration(seconds: 5), () async {
-      await PaymentService()
-          .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
-    });
+    await PaymentService().initSdk();
+    // Future.delayed(Duration(seconds: 5), () async {
+    //   await PaymentService()
+    //       .initSdk(Provider.of<CurrencyState>(context, listen: false).currency);
+    // });
     try {
       await Provider.of<CurrencyState>(context, listen: false).update();
       await Provider.of<ProductState>(context, listen: false)

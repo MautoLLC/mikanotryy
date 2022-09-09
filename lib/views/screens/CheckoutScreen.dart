@@ -133,82 +133,6 @@ class CheckoutScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    // if (!productState.getCashOnDelivery)
-                    //   Wrap(
-                    //     children: [
-                    //       Row(
-                    //         mainAxisAlignment: MainAxisAlignment.end,
-                    //         children: [
-                    //           GestureDetector(
-                    //             onTap: () {
-                    //               Navigator.of(context).push(
-                    //                   MaterialPageRoute(
-                    //                       builder: (context) =>
-                    //                           CardsScreen()));
-                    //             },
-                    //             child: Text(
-                    //               lbl_Add_Card,
-                    //               style: TextStyle(
-                    //                   fontSize: 15,
-                    //                   color: mainGreyColorTheme),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       SizedBox(height: 10.0),
-                    //       Container(
-                    //         decoration: BoxDecoration(
-                    //             border: Border(
-                    //                 bottom: BorderSide(
-                    //                     color: lightBorderColor,
-                    //                     width: 1.0))),
-                    //         padding: const EdgeInsets.fromLTRB(
-                    //             0.0, 0.0, 0.0, 20.0),
-                    //         child: Row(
-                    //           children: [
-                    //             ImageBox(
-                    //               image: ic_visa,
-                    //             ),
-                    //             Padding(
-                    //               padding: const EdgeInsets.fromLTRB(
-                    //                   14.3, 0.0, 0.0, 0.0),
-                    //               child: Column(
-                    //                 mainAxisAlignment:
-                    //                     MainAxisAlignment.center,
-                    //                 crossAxisAlignment:
-                    //                     CrossAxisAlignment.start,
-                    //                 children: [
-                    //                   Text(
-                    //                     "*** 8901",
-                    //                     style: TextStyle(fontSize: 14),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             Spacer(),
-                    //             GestureDetector(
-                    //               onTap: () {
-                    //                 //TODO : Delete Card
-                    //               },
-                    //               child: Container(
-                    //                 decoration: BoxDecoration(
-                    //                     color: mainGreyColorTheme,
-                    //                     borderRadius:
-                    //                         BorderRadius.circular(24)),
-                    //                 height: 20,
-                    //                 width: 20,
-                    //                 child: Icon(
-                    //                   Icons.keyboard_arrow_down_rounded,
-                    //                   color: Colors.white,
-                    //                   size: 20,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
                     Row(
                       children: [
                         Checkbox(
@@ -307,7 +231,8 @@ class CheckoutScreen extends StatelessWidget {
                                   user.username,
                                   user.email,
                                   user.phoneNumber,
-                                  productState.selectedProductsPrice.toInt())) {
+                                  productState.selectedProductsPrice.toInt(),
+                                  context)) {
                                 Fluttertoast.showToast(
                                     msg: "Payment Successful",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -333,6 +258,37 @@ class CheckoutScreen extends StatelessWidget {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               }
+                              // if (await PaymentService().pay(
+                              //     user.id,
+                              //     user.username,
+                              //     user.email,
+                              //     user.phoneNumber,
+                              //     productState.selectedProductsPrice.toInt())) {
+                              //   Fluttertoast.showToast(
+                              //       msg: "Payment Successful",
+                              //       toastLength: Toast.LENGTH_SHORT,
+                              //       gravity: ToastGravity.BOTTOM,
+                              //       timeInSecForIosWeb: 1,
+                              //       backgroundColor: Colors.green,
+                              //       textColor: Colors.white,
+                              //       fontSize: 16.0);
+                              //   productState
+                              //       .checkout(state.ChosenAddress, byCard: true)
+                              //       .then((value) {
+                              //     if (value) {
+                              //       Navigator.pop(context);
+                              //     }
+                              //   });
+                              // } else {
+                              //   Fluttertoast.showToast(
+                              //       msg: "Payment Failed",
+                              //       toastLength: Toast.LENGTH_SHORT,
+                              //       gravity: ToastGravity.BOTTOM,
+                              //       timeInSecForIosWeb: 1,
+                              //       backgroundColor: Colors.red,
+                              //       textColor: Colors.white,
+                              //       fontSize: 16.0);
+                              // }
                             } else {
                               productState
                                   .checkout(state.ChosenAddress)
