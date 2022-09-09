@@ -12,6 +12,7 @@ import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/T13Widget.dart';
+import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,7 @@ import '../../../State/ApiConfigurationStatee.dart';
 class FetchGenerators extends StatelessWidget {
   FetchGenerators({Key? key}) : super(key: key);
   final ControllerAddressController = TextEditingController();
-  final refreshRateController = TextEditingController();
+  final refreshRateController = TextEditingController(); 
   final passwordController = TextEditingController();
   final apiEndpointLanController = TextEditingController(text: lanESPUrl);
   //late final List<ConfigurationModel> configsList;
@@ -34,10 +35,15 @@ class FetchGenerators extends StatelessWidget {
               child: CustomScrollView(scrollDirection: Axis.vertical, slivers: [
                 SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Padding(
+                  child: Padding( 
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(children: [
-                      TopRowBar(title: lbl_API_Configuration),
+                      
+                       TitleText(
+                                  title: lbl_API_Configuration,
+                                ),
+ 
+                      
                       SizedBox(  
                         height: 35,
                       ),

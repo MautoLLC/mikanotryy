@@ -4,7 +4,7 @@ import 'package:mymikano_app/models/CloudSensor_Model.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart'; 
 
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
-
+  
 class CloudGeneratorState extends ChangeNotifier {
   late  CloudDashBoard_Service cloudService;
   //CloudDashBoard_Service cloudService=new CloudDashBoard_Service();
@@ -179,7 +179,7 @@ class CloudGeneratorState extends ChangeNotifier {
   bool isGCB = false;
   bool isIO = false;
  
-  changeControllerModeStatus(value) async {
+  changeControllerModeStatus(value) async { 
     bool isSuccess = await cloudService.SwitchControllerMode(value);
     if (isSuccess == true) { 
       ControllerModeStatus = value;  
@@ -275,7 +275,7 @@ class CloudGeneratorState extends ChangeNotifier {
   
       if (ControllerMode.value == "AUTO")
         ControllerModeStatus = 2;
-      else if (ControllerMode.value == "Manual")
+      else if (ControllerMode.value == "MAN")
         ControllerModeStatus = 1;
       else if (ControllerMode.value == "Off")
         ControllerModeStatus = 0;

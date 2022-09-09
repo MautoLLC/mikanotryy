@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/CloudGeneratorState.dart';
@@ -20,6 +19,9 @@ import 'package:provider/provider.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 import '../../../State/ApiConfigurationStatee.dart';
 import '../../widgets/Custom_GaugeWidget.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
+
+
 
 class CloudDashboard_Index extends StatefulWidget {
   final int RefreshRate;
@@ -29,7 +31,7 @@ class CloudDashboard_Index extends StatefulWidget {
   _CloudDashboard_IndexState createState() => _CloudDashboard_IndexState();
 }
 
-class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
+class _CloudDashboard_IndexState extends State<CloudDashboard_Index> with ChangeNotifier {
   late Timer timer;
  
   bool? isFetched;
@@ -66,6 +68,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
         .ReinitiateCloudService();
     isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
         .FetchData();
+   notifyListeners();     
   }
     
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
@@ -74,7 +77,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
    List<ConfigurationModel> configsList =
         (json.decode(prefs.getString('Configurations')!) as List)
             .map((data) => ConfigurationModel.fromJson(data))
-            .toList(); 
+            .toList();   
     if(configsList.length != 0){
        prefs.setBool(
        prefs_DashboardFirstTimeAccess, false);
@@ -82,9 +85,10 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     ConfigurationModel config = ConfigurationModel.fromJson(
         json.decode(prefs.getString('SelectedConfigurationModel')!));
     configModel = config;
+    notifyListeners();
     return configModel;
   }
- 
+  
   
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -157,9 +161,10 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               .map(buildMenuItem)
                                               .toList(),
                                           //value:value.selectedConfigurationModel.generatorId,
-                                          value: configModel.generatorId,
+                                          value: configModel.generatorId, 
+                                          
                                           onChanged: (item) async { 
-                              
+                                          
                                             ConfigurationModel model = value
                                                 .configsList
                                                 .firstWhere((element) =>
@@ -182,7 +187,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               
                               List<String> gens = await sharedPreferences
                                   .getStringList("generatorNameList")!;
-                            
+                              
                               value.chosenGeneratorName =
                                   value.generatorNameList.elementAt(0);
                               Generator Chosen = value.gens.firstWhere(
@@ -192,15 +197,27 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               value.chosenGeneratorId = Chosen.generatorId;
                               await sharedPreferences.setStringList(
                                   "generatorNameList", gens);
-
+                             if(model.cloudMode == 1){
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           CloudDashboard_Index(
-                                              RefreshRate: configModel
-                                                                  .refreshRate)));
-                              value.isNotFirstTime(); 
-                              
+                                              RefreshRate: model.refreshRate)));
+                             } 
+                             else if(model.cloudMode==0) {
+                                         Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LanDashboard_Index(
+                                              RefreshRate: model.refreshRate)));
+                                       }
+                                       else{
+                                         // Navigator.of(context).push(
+                                         //     // MaterialPageRoute(
+                                         //     //     builder: (context) =>
+                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
+                                         initState();
+                                       }                              
                                           }),
                                     ),
                                   ),
@@ -258,14 +275,15 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                               value.chosenGeneratorId = Chosen.generatorId;
                               await sharedPreferences.setStringList(
                                   "generatorNameList", gens);
-
+                             
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           CloudDashboard_Index(
-                                              RefreshRate: configModel
-                                                                  .refreshRate)));
+                                              RefreshRate: 10)));
+                            
                               value.isNotFirstTime();
+                         
                                             }
                                     
                                               else{
@@ -335,6 +353,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                 ],
                               ),
                               Row(
+                                
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
@@ -353,6 +372,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       setState(() {
                                        // _value = (selected ? 0 : null)!;
                                        cloud.changeControllerModeStatus(2);
+                                       
                                       });
                                     },
                                   ),
@@ -375,7 +395,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                     },
                                   ),
                                   ChoiceChip(
-                                    pressElevation: 0.0,
+                                    pressElevation: 0.0, 
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
