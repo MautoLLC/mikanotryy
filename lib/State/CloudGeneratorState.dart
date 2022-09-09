@@ -107,7 +107,72 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");   
-  
+  CloudSensor  LoadAL1= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");   
+      CloudSensor  LoadAL2= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+      CloudSensor  LoadAL3= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+  CloudSensor  generatorL1N= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+      CloudSensor  generatorL2N= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+      CloudSensor  generatorL3N= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+      CloudSensor  mainsvoltageL1N= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+       CloudSensor  mainsvoltageL2N= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+       CloudSensor  mainsvoltageL3N= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+    CloudSensor  mainsFrequency= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+       CloudSensor  LoadPowerFactor= CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
   int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
@@ -152,7 +217,7 @@ class CloudGeneratorState extends ChangeNotifier {
     
 
     if (cloudsensors == []) {
-      return false;
+      return false;  
     } else {
       EngineState =
           FindSensor(cloudsensors, dotenv.env['EngineState_id'].toString());
@@ -191,6 +256,20 @@ class CloudGeneratorState extends ChangeNotifier {
       Engine =  
           FindSensor(cloudsensors, dotenv.env['EngineOnOff_id'].toString());     
       nominalLoadkW = FindSensor(cloudsensors,  dotenv.env['nominalLoad_id'].toString()); 
+      
+     LoadAL3 = FindSensor(cloudsensors, dotenv.env['Load_A_L3_id'].toString());
+      LoadAL1 = FindSensor(cloudsensors, dotenv.env['Load_A_L1_id'].toString());
+      LoadAL2 = FindSensor(cloudsensors, dotenv.env['Load_A_L2_id'].toString());
+      generatorL1N=FindSensor(cloudsensors, dotenv.env['generator_L1-N_id'].toString());
+      generatorL2N=FindSensor(cloudsensors, dotenv.env['generator_L2-N_id'].toString());
+      generatorL3N=FindSensor(cloudsensors, dotenv.env['generator_L3-N_id'].toString());
+       mainsvoltageL1N=FindSensor(cloudsensors, dotenv.env['mainsvoltage_L1-N_id'].toString());
+        mainsvoltageL2N=FindSensor(cloudsensors, dotenv.env['mainsvoltage_L2-N_id'].toString());
+        mainsvoltageL3N=FindSensor(cloudsensors, dotenv.env['mainsvoltage_L3-N_id'].toString());
+      generatorL3N=FindSensor(cloudsensors, dotenv.env['generator_L3-N_id'].toString());
+      GeneratorFrequency=FindSensor(cloudsensors, dotenv.env['GeneratorFrequency_id'].toString());
+     mainsFrequency=FindSensor(cloudsensors, dotenv.env['Mains_Frequency_id'].toString());
+     LoadPowerFactor=FindSensor(cloudsensors, dotenv.env['Load_Power_Factor_id'].toString());
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
   

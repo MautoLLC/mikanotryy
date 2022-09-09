@@ -60,6 +60,7 @@ class CloudDashBoard_Service {
        Map<String, dynamic> data = json.decode(response.body);
        data['nominalLoadkW'];
        print(data['nominalLoadkW']);
+        printLongString(data['values'].toString());
       CloudSensor nominalLoadkW=CloudSensor(sensorID: "0000-1111", sensorName: "nominalLoadkW", value: data['nominalLoadkW'], unit: '', timeStamp: '');
       cloudsensors =
           (data['values'] as List).map((s) => CloudSensor.fromJson(s)).toList();
@@ -106,7 +107,7 @@ class CloudDashBoard_Service {
         }));
     final token = jsonDecode((responseAuth.body))['token'];
 
-    final response = await http.post(
+    final response = await http.post(  
       Uri.parse(cloudIotMautoSensorsUrl + configModel.generatorId),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -299,4 +300,8 @@ class CloudDashBoard_Service {
     return isSuccess;
   }
 
+}
+void printLongString(String text) {
+  final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((RegExpMatch match) =>   print(match.group(0)));
 }
