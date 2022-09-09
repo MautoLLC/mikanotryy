@@ -33,6 +33,7 @@ class CloudDashBoard_Service {
     ConfigurationModel config = ConfigurationModel.fromJson(
         json.decode(prefs.getString('SelectedConfigurationModel')!));
     configModel = config;
+    
     return configModel;
   }
   //fin added by youssef//
