@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
@@ -18,103 +19,108 @@ Login(String username, String password, BuildContext context) async {
         (X509Certificate cert, String host, int port) => true;
     return null;
   };
-  try {
-    Response response = await dio.post((authorizationEndpoint),
-        options: Options(headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        }),
-        data: {
+  int attempts = 0;
+  var response;
+  do {
+    response = await http.post(Uri.parse(authorizationEndpoint),
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
+    },
+        body: {
           "username": username,
           "password": password,
           "grant_type": "password",
           "client_id": "MymikanoAppLogin",
         });
-    var temp = (response.data);
-
-    final directory = await getApplicationDocumentsDirectory();
-    String appDocPath = directory.path;
-    File('$appDocPath/credentials.json').writeAsString(temp['access_token']);
-    File file = File('${directory.path}/credentials.json');
-    String fileContent = await file.readAsString();
-
-    Map<String, dynamic> jwtData = {};
-    JwtDecoder.decode(fileContent)!.forEach((key, value) {
-      jwtData[key] = value;
-    });
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString("accessToken", temp['access_token']);
-    await prefs.setString("refreshToken", temp['refresh_token']);
-    await prefs.setString("UserID", jwtData['sub']);
-    await prefs.setInt("tokenDuration", temp['expires_in']);
-    await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
-    await prefs.setInt("tokenStartTime", jwtData['iat']);
-
-    await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
-
-    if (prefs.getString(prefs_ApiConfigurationOption) == null) {
-      await prefs.setString(prefs_ApiConfigurationOption, 'lan');
-    }
-
-    if (prefs.getInt(prefs_RefreshRate) == null) {
-      await prefs.setInt(prefs_RefreshRate, 60);
-    }
-
-    try {
-      response = await dio.post(MikanoShopTokenURL, data: {
-        "guest": true,
-        "username": username,
-        "password": password,
-        "remember_me": true
-      });
-      await prefs.setString("StoreToken", response.data["access_token"]);
-      await prefs.setString(
-          "StoreCustomerId", response.data["customer_id"].toString());
-      await prefs.setString(
-          "StoreCustomerGuid", response.data["customer_guid"]);
-    } on Exception catch (e) {
-      FailedToast();
-      debugPrint(e.toString());
-      return false;
-    }
-    try {
-      await http.post(
-          Uri.parse(DeviceUrl.replaceAll("{sub}", jwtData['sub']).replaceAll(
-              "{token}", prefs.getString("DeviceToken").toString())),
-          headers: {
-            "Authorization": "Bearer ${prefs.getString("accessToken")}",
-            "Content-Type": "application/json"
-          });
-      await prefs.setBool("GuestLogin", false);
-      Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Theme5Dashboard(),
-            settings: RouteSettings(name: 'dashboard')),
-      );
-    } on Exception catch (e) {
-      FailedToast();
-      debugPrint(e.toString());
-      return false;
-    }
-    SuccessToast();
-    prefs.setBool('IsLoggedIn', true);
-    await prefs.setString("isTechnician", 'false');
-    for (var item in jwtData['roles']) {
-      if (item.toString() == "Technician") {
-        await prefs.setString("isTechnician", 'true');
-        break;
-      }
-    }
-    await prefs.setBool('GuestLogin', false);
-    return true;
-  } on Exception catch (e) {
-    debugPrint(e.toString());
-    FailedToast();
-    return false;
+  } while (response.statusCode != 200 && attempts++ != 3);
+  if (response.statusCode != 200) {
+    return failLogin();
   }
+  attempts = 0;
+  var temp = jsonDecode(response.body);
+
+  final directory = await getApplicationDocumentsDirectory();
+  String appDocPath = directory.path;
+  File('$appDocPath/credentials.json').writeAsString(temp['access_token']);
+  File file = File('${directory.path}/credentials.json');
+  String fileContent = await file.readAsString();
+
+  Map<String, dynamic> jwtData = {};
+  JwtDecoder.decode(fileContent)!.forEach((key, value) {
+    jwtData[key] = value;
+  });
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  await prefs.setString("accessToken", temp['access_token']);
+  await prefs.setString("refreshToken", temp['refresh_token']);
+  await prefs.setString("UserID", jwtData['sub']);
+  await prefs.setInt("tokenDuration", temp['expires_in']);
+  await prefs.setInt("refreshDuration", temp['refresh_expires_in']);
+  await prefs.setInt("tokenStartTime", jwtData['iat']);
+
+  await prefs.setBool(prefs_DashboardFirstTimeAccess, true);
+
+  if (prefs.getString(prefs_ApiConfigurationOption) == null) {
+    await prefs.setString(prefs_ApiConfigurationOption, 'lan');
+  }
+
+  if (prefs.getInt(prefs_RefreshRate) == null) {
+    await prefs.setInt(prefs_RefreshRate, 60);
+  }
+
+  do {
+    response = await dio.post((MikanoShopTokenURL), data: {
+      "guest": true,
+      "username": username,
+      "password": password,
+      "remember_me": true
+    });
+  } while (response.statusCode != 200 && attempts++ != 3);
+  if (response.statusCode != 200) {
+    return failLogin();
+  }
+  attempts = 0;
+  await prefs.setString("StoreToken", response.data["access_token"]);
+  await prefs.setString(
+      "StoreCustomerId", response.data["customer_id"].toString());
+  await prefs.setString("StoreCustomerGuid", response.data["customer_guid"]);
+  var tempResponse;
+  do {
+    print(prefs.getString("DeviceToken").toString());
+    tempResponse = await http.post(
+        Uri.parse(DeviceUrl.replaceAll("{sub}", jwtData['sub'])
+            .replaceAll("{token}", prefs.getString("DeviceToken").toString())),
+        headers: {
+          "Authorization": "Bearer ${prefs.getString("accessToken")}",
+          "Content-Type": "application/json"
+        });
+        print(tempResponse.reasonPhrase);
+        print(tempResponse.statusCode);
+  } while (tempResponse.statusCode != 200 && attempts++ != 3);
+  if (response.statusCode != 200) {
+    return failLogin();
+  }
+  attempts = 0;
+  await prefs.setBool("GuestLogin", false);
+  Navigator.popUntil(context, (route) => route.isFirst);
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+        builder: (context) => Theme5Dashboard(),
+        settings: RouteSettings(name: 'dashboard')),
+  );
+  prefs.setBool('IsLoggedIn', true);
+  await prefs.setString("isTechnician", 'false');
+  for (var item in jwtData['roles']) {
+    if (item.toString() == "Technician") {
+      await prefs.setString("isTechnician", 'true');
+      break;
+    }
+  }
+  await prefs.setBool('GuestLogin', false);
+  SuccessToast();
+  return true;
 }
 
 SuccessToast() {
@@ -144,4 +150,9 @@ GuestLogin() async {
   await prefs.setBool("GuestLogin", true);
   await prefs.setBool('IsLoggedIn', true);
   return true;
+}
+
+failLogin() {
+  FailedToast();
+  return false;
 }
