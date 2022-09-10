@@ -661,7 +661,14 @@ class CustomerService {
           "Authorization": "Bearer ${prefs.getString("StoreToken")}"
         }),
       );
-      if (response.statusCode == 200) {
+      Response res2 = await dio.delete(
+        userDeleteInfoUrl.replaceAll(
+            "{id}", prefs.getString('UserID').toString()),
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+        }),
+      );
+      if (response.statusCode == 200 && res2.statusCode == 200) {
         return true;
       } else {
         return false;
