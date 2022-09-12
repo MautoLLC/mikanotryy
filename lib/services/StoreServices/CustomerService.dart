@@ -665,10 +665,10 @@ class CustomerService {
         userDeleteInfoUrl.replaceAll(
             "{id}", prefs.getString('UserID').toString()),
         options: Options(headers: {
-          "Authorization": "Bearer ${prefs.getString("StoreToken")}"
+          "Authorization": "Bearer ${prefs.getString("accessToken")}"
         }),
       );
-      if (response.statusCode == 200 && res2.statusCode == 200) {
+      if (response.statusCode == 200 && res2.statusCode! >= 200) {
         return true;
       } else {
         return false;

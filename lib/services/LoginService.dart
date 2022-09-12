@@ -22,16 +22,14 @@ Login(String username, String password, BuildContext context) async {
   int attempts = 0;
   var response;
   do {
-    response = await http.post(Uri.parse(authorizationEndpoint),
-    headers: {
+    response = await http.post(Uri.parse(authorizationEndpoint), headers: {
       HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
-    },
-        body: {
-          "username": username,
-          "password": password,
-          "grant_type": "password",
-          "client_id": "MymikanoAppLogin",
-        });
+    }, body: {
+      "username": username,
+      "password": password,
+      "grant_type": "password",
+      "client_id": "MymikanoAppLogin",
+    });
   } while (response.statusCode != 200 && attempts++ != 3);
   if (response.statusCode != 200) {
     return failLogin();
@@ -95,10 +93,10 @@ Login(String username, String password, BuildContext context) async {
           "Authorization": "Bearer ${prefs.getString("accessToken")}",
           "Content-Type": "application/json"
         });
-        print(tempResponse.reasonPhrase);
-        print(tempResponse.statusCode);
+    print(tempResponse.reasonPhrase);
+    print(tempResponse.statusCode);
   } while (tempResponse.statusCode != 200 && attempts++ != 3);
-  if (response.statusCode != 200) {
+  if (tempResponse.statusCode != 200) {
     return failLogin();
   }
   attempts = 0;
