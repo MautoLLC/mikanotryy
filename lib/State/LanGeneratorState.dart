@@ -4,6 +4,7 @@ import 'package:mymikano_app/services/LanDashboard_Service.dart';
 
 class LanGeneratorState extends ChangeNotifier {
   late LanDashBoard_Service LanService;
+
   //LanDashBoard_Service LanService = LanDashBoard_Service();
   final Map EnState = {
     'Init': 0,
@@ -134,6 +135,7 @@ class LanGeneratorState extends ChangeNotifier {
       connected: "Error");
   bool ControllerModeStatus = false;
   bool MCBModeStatus = false;
+
   // bool PowerStatus = false;
 
   late bool MCBisAuto = MCBModeStatus;

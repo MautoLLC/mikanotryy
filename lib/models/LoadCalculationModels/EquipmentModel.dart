@@ -47,20 +47,35 @@ class Equipment {
   }
 
   int? get id => _id;
+
   set id(int? id) => _id = id;
+
   String? get name => _name;
+
   set name(String? name) => _name = name;
+
   int? get startPower => _startPower;
+
   set startPower(int? startPower) => _startPower = startPower;
+
   int? get runningPower => _runningPower;
+
   set runningPower(int? runningPower) => _runningPower = runningPower;
+
   int? get categoryId => _categoryId;
+
   set categoryId(int? categoryId) => _categoryId = categoryId;
+
   Category? get category => _category;
+
   set category(Category? category) => _category = category;
+
   int? get unitId => _unitId;
+
   set unitId(int? unitId) => _unitId = unitId;
+
   Unit? get unit => _unit;
+
   set unit(Unit? unit) => _unit = unit;
 
   Equipment.fromJson(Map<String, dynamic> json) {

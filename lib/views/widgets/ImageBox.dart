@@ -5,6 +5,7 @@ import 'package:mymikano_app/views/widgets/AppWidget.dart';
 class ImageBox extends StatelessWidget {
   String image;
   Color? color;
+
   ImageBox({
     Key? key,
     required this.image,

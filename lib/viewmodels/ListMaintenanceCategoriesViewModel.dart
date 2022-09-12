@@ -24,6 +24,7 @@ class ListCategViewModel {
 
 class CategViewModel {
   late final Categ? mcateg;
+
   CategViewModel(this.mcateg);
 
   @override

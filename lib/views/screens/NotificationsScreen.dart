@@ -3,14 +3,11 @@ import 'package:mymikano_app/State/NotificationState.dart';
 import 'package:mymikano_app/models/NotificationModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/widgets/NotificationItem.dart';
-import 'package:mymikano_app/views/widgets/TopRowBar.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/AppColors.dart';
 import '../widgets/TitleText.dart';
 import 'MainDashboard.dart';
-import 'MaintenanceHome.dart';
 
 class NotificationsPage extends StatefulWidget {
   NotificationsPage({Key? key}) : super(key: key);

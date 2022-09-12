@@ -11,14 +11,14 @@ class CloudDashBoard_ModelView {
   Future<void> GetListCloudSensors() async {
     cloudsensors = await DashBoardService.FetchData();
   }
- 
+
   CloudSensor FindSensor(String param) {
     final index =
         cloudsensors.indexWhere((element) => element.sensorID == param);
     CloudSensor sensor = cloudsensors.elementAt(index);
     return sensor;
   }
-  
+
   CloudDashBoard_ModelView(/*{required this.ApiEnd}*/) {
     DashBoardService = new CloudDashBoard_Service();
   }
@@ -92,11 +92,11 @@ class CloudDashBoard_ModelView {
     return await DashBoardService.SwitchControllerMode(status);
   }
 
-  Future<bool> SwitchMCBMode(bool status) async { 
+  Future<bool> SwitchMCBMode(bool status) async {
     return await DashBoardService.SwitchMCBMode(status);
   }
 
   Future<bool> SwitchOnOff(bool status) async {
-    return await DashBoardService.TurnGeneratorEngineOnOff(status); 
+    return await DashBoardService.TurnGeneratorEngineOnOff(status);
   }
 }

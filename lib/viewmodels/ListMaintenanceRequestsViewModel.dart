@@ -30,5 +30,6 @@ class ListMaintenanceRequestsViewModel {
 
 class MaintenanceRequestsViewModel {
   final MaintenanceRequestModel? mMaintenacerequest;
+
   MaintenanceRequestsViewModel(this.mMaintenacerequest);
 }

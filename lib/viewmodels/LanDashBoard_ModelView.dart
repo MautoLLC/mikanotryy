@@ -4,6 +4,7 @@ import 'package:mymikano_app/services/LanDashboard_Service.dart';
 class LanDashBoard_ModelView {
   //final String ApiEnd;
   late LanDashBoard_Service DashBoardService;
+
   LanDashBoard_ModelView(/*{required this.ApiEnd}*/) {
     DashBoardService = new LanDashBoard_Service(/*ApiEndPoint: ApiEnd*/);
   }

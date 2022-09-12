@@ -9,7 +9,6 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/MainDashboard.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:path_provider/path_provider.dart';
 
 Login(String username, String password, BuildContext context) async {
   Dio dio = new Dio();
@@ -37,14 +36,8 @@ Login(String username, String password, BuildContext context) async {
   attempts = 0;
   var temp = jsonDecode(response.body);
 
-  final directory = await getApplicationDocumentsDirectory();
-  String appDocPath = directory.path;
-  File('$appDocPath/credentials.json').writeAsString(temp['access_token']);
-  File file = File('${directory.path}/credentials.json');
-  String fileContent = await file.readAsString();
-
   Map<String, dynamic> jwtData = {};
-  JwtDecoder.decode(fileContent)!.forEach((key, value) {
+  JwtDecoder.decode(temp['access_token'])!.forEach((key, value) {
     jwtData[key] = value;
   });
 

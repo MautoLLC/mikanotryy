@@ -5,7 +5,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/CloudSensor_Model.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
-import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -14,67 +13,72 @@ class CloudDashBoard_Service {
   //String GeneratorID = "";
   //aded by youssef//
   late final ConfigurationModel configModel;
-  
-  CloudDashBoard_Service() {   
-    getSelectedConfigurationModel();   
+
+  CloudDashBoard_Service() {
+    getSelectedConfigurationModel();
     //configModel=model;
   }
-  
+
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     // GeneratorID = prefs.getString(prefs_GeneratorId)!;
     String test = prefs.getString('Configurations').toString();
-    List<ConfigurationModel> configsList =  
+    List<ConfigurationModel> configsList =
         (json.decode(prefs.getString('Configurations')!) as List)
             .map((data) => ConfigurationModel.fromJson(data))
             .toList();
     ConfigurationModel config = ConfigurationModel.fromJson(
         json.decode(prefs.getString('SelectedConfigurationModel')!));
     configModel = config;
-    
+
     return configModel;
   }
+
   //fin added by youssef//
 
   late List<CloudSensor> cloudsensors = [];
-   
+
   Future<List<CloudSensor>> FetchData() async {
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
-          'Content-Type': 'application/json', 
+          'Content-Type': 'application/json',
         },
-        body: jsonEncode(<String, String>{ 
+        body: jsonEncode(<String, String>{
           'email': configModel.cloudUser,
-          'password': configModel.cloudPassword, 
+          'password': configModel.cloudPassword,
         }));
 
     final token = jsonDecode((responseAuth.body))['token'];
- 
+
     final response = await http.get(
-        Uri.parse(/*ApiEndPoint + GeneratorID*/ cloudIotMautoSensorsUrl +  
-            configModel.generatorId),  
+        Uri.parse(/*ApiEndPoint + GeneratorID*/ cloudIotMautoSensorsUrl +
+            configModel.generatorId),
         headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response.statusCode == 200) {  
+    if (response.statusCode == 200) {
       debugPrint(response.body);
-       Map<String, dynamic> data = json.decode(response.body);
-       data['nominalLoadkW'];
-       print(data['nominalLoadkW']);
-        printLongString(data['values'].toString());
-      CloudSensor nominalLoadkW=CloudSensor(sensorID: "0000-1111", sensorName: "nominalLoadkW", value: data['nominalLoadkW'], unit: '', timeStamp: '');
+      Map<String, dynamic> data = json.decode(response.body);
+      data['nominalLoadkW'];
+      print(data['nominalLoadkW']);
+      printLongString(data['values'].toString());
+      CloudSensor nominalLoadkW = CloudSensor(
+          sensorID: "0000-1111",
+          sensorName: "nominalLoadkW",
+          value: data['nominalLoadkW'],
+          unit: '',
+          timeStamp: '');
       cloudsensors =
           (data['values'] as List).map((s) => CloudSensor.fromJson(s)).toList();
       cloudsensors.add(nominalLoadkW);
-      return cloudsensors;   
-       
+      return cloudsensors;
     } else {
-      debugPrint(response.toString()); 
-      List<CloudSensor> emptylist = [];  
+      debugPrint(response.toString());
+      List<CloudSensor> emptylist = [];
       return emptylist;
     }
   }
-  
+
   Future<bool> SwitchControllerMode(int status) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
@@ -91,11 +95,11 @@ class CloudDashBoard_Service {
     String Mode;
     bool isSuccess = false;
 
-    if (status==2)
-      Mode = "AUTO"; 
-    else if (status==1) 
+    if (status == 2)
+      Mode = "AUTO";
+    else if (status == 1)
       Mode = "MAN";
-    else 
+    else
       Mode = "Off";
 
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
@@ -108,7 +112,7 @@ class CloudDashBoard_Service {
         }));
     final token = jsonDecode((responseAuth.body))['token'];
 
-    final response = await http.post(  
+    final response = await http.post(
       Uri.parse(cloudIotMautoSensorsUrl + configModel.generatorId),
       headers: <String, String>{
         'Content-Type': 'application/json',
@@ -156,11 +160,11 @@ class CloudDashBoard_Service {
       Mode = "Close-Off";
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
-          'Content-Type': 'application/json',   
+          'Content-Type': 'application/json',
         },
         body: jsonEncode(<String, String>{
           'email': configModel.cloudUser,
-          'password': configModel.cloudPassword, 
+          'password': configModel.cloudPassword,
         }));
     final token = jsonDecode((responseAuth.body))['token'];
 
@@ -287,7 +291,7 @@ class CloudDashBoard_Service {
           'generatorSensorID': dotenv.env['EngineOnOff_id'].toString(),
           'value': Command.toString(),
           //'timeStamp':DateTime.now().toString()
-          'timeStamp': DateTime.now().toIso8601String(),  
+          'timeStamp': DateTime.now().toIso8601String(),
         }
       ]),
     );
@@ -300,9 +304,11 @@ class CloudDashBoard_Service {
     }
     return isSuccess;
   }
-
 }
+
 void printLongString(String text) {
   final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
-  pattern.allMatches(text).forEach((RegExpMatch match) =>   print(match.group(0)));
+  pattern
+      .allMatches(text)
+      .forEach((RegExpMatch match) => print(match.group(0)));
 }

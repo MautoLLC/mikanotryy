@@ -4,6 +4,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 class SubTitleText extends StatelessWidget {
   final String title;
   final Color color;
+
   const SubTitleText(
       {Key? key, required this.title, this.color = mainBlackColorTheme})
       : super(key: key);

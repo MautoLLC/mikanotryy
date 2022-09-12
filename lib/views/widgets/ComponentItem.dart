@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 class ComponentItem extends StatelessWidget {
   late ComponentModel Component;
   bool deletable;
+
   ComponentItem({Key? key, required this.Component, required this.deletable})
       : super(key: key);
 

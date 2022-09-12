@@ -4,6 +4,7 @@ class CartProduct {
   late Product product;
   late int quantity;
   int? id;
+
   CartProduct({required this.product, required this.quantity, this.id});
 
   CartProduct.fromJson(Map<String, dynamic> json) {

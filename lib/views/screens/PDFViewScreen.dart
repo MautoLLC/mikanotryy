@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 class PDFViewScreen extends StatelessWidget {
   String Path = '';
   String Code = '';
+
   PDFViewScreen({Key? key, required this.Path, required this.Code})
       : super(key: key);
 

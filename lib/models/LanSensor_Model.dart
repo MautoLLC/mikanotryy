@@ -4,6 +4,7 @@ class LANSensor {
   final String name;
   final String hardware;
   final dynamic connected;
+
   LANSensor(
       {required this.return_value,
       required this.id,

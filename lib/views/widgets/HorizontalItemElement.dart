@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 class HorizontalItemElement extends StatelessWidget {
   Product product;
+
   HorizontalItemElement({
     Key? key,
     required this.product,

@@ -44,20 +44,35 @@ class RFQ {
   }
 
   String? get name => _name;
+
   set name(String? name) => _name = name;
+
   String? get email => _email;
+
   set email(String? email) => _email = email;
+
   String? get phone => _phone;
+
   set phone(String? phone) => _phone = phone;
+
   String? get address => _address;
+
   set address(String? address) => _address = address;
+
   String? get note => _note;
+
   set note(String? note) => _note = note;
+
   int? get productId => _productId;
+
   set productId(int? productId) => _productId = productId;
+
   int? get customerId => _customerId;
+
   set customerId(int? customerId) => _customerId = customerId;
+
   int? get id => _id;
+
   set id(int? id) => _id = id;
 
   RFQ.fromJson(Map<String, dynamic> json) {

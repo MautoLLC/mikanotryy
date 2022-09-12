@@ -5,24 +5,23 @@ class Generator {
     required this.generatorId,
     required this.name,
     required this.ownerId,
-    this.owner,  
-    
+    this.owner,
   });
-       
+
   String generatorId;
-  String name;  
+  String name;
   String ownerId;
   dynamic owner;
   dynamic nominalLoadkW;
+
   List<Generator> generatorFromJson(String str) =>
       List<Generator>.from(json.decode(str).map((x) => Generator.fromJson(x)));
 
   factory Generator.fromJson(Map<String, dynamic> json) => Generator(
         generatorId: json["generatorID"],
         name: json["name"],
-        ownerId: json["ownerId"], 
+        ownerId: json["ownerId"],
         owner: json["owner"],
-       
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +29,6 @@ class Generator {
         "name": name,
         "ownerId": ownerId,
         "owner": owner,
-        "nominalLoadkW": nominalLoadkW, 
+        "nominalLoadkW": nominalLoadkW,
       };
 }

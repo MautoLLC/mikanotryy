@@ -14,6 +14,7 @@ class Product {
   bool liked;
   bool isTopDeal;
   bool call_for_price;
+
   Product(
       {required this.Name,
       required this.Price,

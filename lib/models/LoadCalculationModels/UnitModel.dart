@@ -12,8 +12,11 @@ class Unit {
   }
 
   int? get id => _id;
+
   set id(int? id) => _id = id;
+
   String? get name => _name;
+
   set name(String? name) => _name = name;
 
   Unit.fromJson(Map<String, dynamic> json) {

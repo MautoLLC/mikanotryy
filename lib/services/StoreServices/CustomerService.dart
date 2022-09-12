@@ -12,6 +12,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 class CustomerService {
   Dio dio = new Dio();
+
   Future<bool> addShippingAddress(Address address) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {

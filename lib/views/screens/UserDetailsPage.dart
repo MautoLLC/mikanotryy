@@ -10,6 +10,7 @@ import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 class UserDetailsPage extends StatelessWidget {
   int realEstateId;
   String userId;
+
   UserDetailsPage({required this.realEstateId, required this.userId});
 
   @override

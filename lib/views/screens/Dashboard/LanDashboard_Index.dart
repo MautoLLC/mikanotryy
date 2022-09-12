@@ -4,11 +4,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
+import 'package:mymikano_app/services/LanDashboard_Service.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
-import 'package:mymikano_app/services/LanDashboard_Service.dart';
-
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/CloudDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
@@ -23,6 +22,7 @@ import 'FetchGenerators.dart';
 
 class LanDashboard_Index extends StatefulWidget {
   final int RefreshRate;
+
   LanDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
 
   @override
@@ -36,8 +36,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool isOnleft = false;
   bool isOnMiddle = false;
   bool isOnRight = false;
-   late LanDashBoard_Service LanService;
+  late LanDashBoard_Service LanService;
   late final ConfigurationModel configModel;
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +76,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
     configModel = config;
     return configModel;
   }
+
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String test=prefs.getString('Configurations').toString();
@@ -407,14 +409,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 232,
                                           child: new GestureDetector(
                                               onTap: () {
-                                              
                                                 setState(() {
                                                   isOnleft = false;
                                                   isOnMiddle = false;
                                                   isOnRight = false;
-                                                   CloudDashBoard_ModelView
-                                                            r = new CloudDashBoard_ModelView();
-                                                        r.SwitchOnOff(false); 
+                                                  CloudDashBoard_ModelView r =
+                                                      new CloudDashBoard_ModelView();
+                                                  r.SwitchOnOff(false);
                                                 });
                                               },
                                               child: Container(
@@ -432,17 +433,16 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 241,
                                           child: new GestureDetector(
                                               onTap: () {
-                                              
-                                               setState(() {
-                                                     CloudDashBoard_ModelView
-                                                            r = new CloudDashBoard_ModelView();
-                                                        r.SwitchOnOff(true); 
-                                                    });
-                                                 
+                                                setState(() {
+                                                  CloudDashBoard_ModelView r =
+                                                      new CloudDashBoard_ModelView();
+                                                  r.SwitchOnOff(true);
+                                                });
+
                                                 if ((double.parse(lan
                                                         .GeneratorVoltage
                                                         .return_value)) >
-                                                    0) {  
+                                                    0) {
                                                   setState(() {
                                                     isOnRight = true;
                                                   });
@@ -784,6 +784,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
 class infotile extends StatelessWidget {
   String title, value;
+
   infotile({Key? key, required this.title, required this.value})
       : super(key: key);
 
@@ -834,7 +835,9 @@ class infotile extends StatelessWidget {
 class Custom_Alert extends StatelessWidget {
   String Title;
   String Description;
+
   Custom_Alert({required this.Title, required this.Description});
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

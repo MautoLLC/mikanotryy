@@ -158,6 +158,7 @@ class _CartPageState extends State<CartPage> {
 class CartItem extends StatelessWidget {
   final CartProduct product;
   final Function OnPressed;
+
   const CartItem({
     Key? key,
     required this.product,

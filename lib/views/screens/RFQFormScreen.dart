@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 class RFQFormScreen extends StatefulWidget {
   int id;
+
   RFQFormScreen({Key? key, required this.id}) : super(key: key);
 
   @override

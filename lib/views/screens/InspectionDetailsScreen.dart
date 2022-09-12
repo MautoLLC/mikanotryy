@@ -26,6 +26,7 @@ class InspectionDetailsScreen extends StatefulWidget {
   InspectionDetailsScreen(
       {Key? key, required this.mInspection, required this.Maintenance})
       : super(key: key);
+
   @override
   InspectionDetailsScreenState createState() => InspectionDetailsScreenState();
 }

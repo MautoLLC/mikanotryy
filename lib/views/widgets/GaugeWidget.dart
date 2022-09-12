@@ -7,6 +7,7 @@ class GaugeWidget extends StatefulWidget {
   final String title;
   final double value;
   final Color needleColor;
+
   const GaugeWidget(
       {Key? key,
       required this.title,

@@ -24,12 +24,14 @@ class MaintenanceRequestScreen extends StatefulWidget {
   final Categ mainCatg;
   final List<Entry> mydata;
   final int listlength;
+
   MaintenanceRequestScreen(
       {Key? key,
       required this.mainCatg,
       required this.mydata,
       required this.listlength})
       : super(key: key);
+
   @override
   MaintenanceRequestScreenState createState() =>
       MaintenanceRequestScreenState();

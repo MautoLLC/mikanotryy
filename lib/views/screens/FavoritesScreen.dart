@@ -95,6 +95,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 class FavoritesItem extends StatelessWidget {
   final FavoriteProduct product;
   final Function OnPressed;
+
   const FavoritesItem({
     Key? key,
     required this.product,

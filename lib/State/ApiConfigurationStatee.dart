@@ -34,6 +34,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   ///the list of configurations//
   late ConfigurationModel configModel;
   late List<ConfigurationModel> configsList;
+
   ApiConfigurationStatee() {
     //if(!DashBoardFirstTimeAccess)
     update();
@@ -209,7 +210,6 @@ class ApiConfigurationStatee extends ChangeNotifier {
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     // GeneratorID = prefs.getString(prefs_GeneratorId)!;
-    String test = prefs.getString('Configurations').toString();
     if (prefs.getString('Configurations') == null)
       configModel = ConfigurationModel(
           ssid: "",
@@ -258,7 +258,6 @@ class ApiConfigurationStatee extends ChangeNotifier {
     // String cloudUsername = prefs.getString(prefs_CloudUsername)!;
     // String cloudPassword = prefs.getString(prefs_CloudPassword)!;
     // GeneratorID = prefs.getString(prefs_GeneratorId)!;
-    String test = prefs.getString('Generators').toString();
     if (prefs.getString('Generators') == null)
       gens = [];
     else {

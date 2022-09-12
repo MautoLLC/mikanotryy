@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
-// import 'package:isw_mobile_sdk/isw_mobile_sdk.dart';
-import 'package:mymikano_app/models/Currency.dart';
-import 'package:mymikano_app/utils/appsettings.dart';
 
 class PaymentService {
   static final PaymentService _instance = PaymentService._internal();
+
   factory PaymentService() => _instance;
+
   PaymentService._internal();
+
   // TODO Public key prod and dev
   var publicKey = 'pk_test_949f98de6a4c434159f774c71ce9fc0d7a6fe794';
   final plugin = PaystackPlugin();

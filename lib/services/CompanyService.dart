@@ -4,6 +4,7 @@ import 'package:mymikano_app/utils/appsettings.dart';
 
 class CompanyService {
   Dio dio = Dio();
+
   Future<List<FounderModel>> fetchAboutUsInfo() async {
     List<FounderModel> founders = [];
     Response response = await dio.get(MikanoFoundersUrl);

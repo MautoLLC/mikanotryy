@@ -86,8 +86,8 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
                                       },
                                       icon: Icon(Icons.settings)),
                                   GestureDetector(
-                                      onTap: () {    
-                                         Navigator.of(context).push(
+                                      onTap: () {
+                                        Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     GeneratorAlertsPage()));
@@ -549,6 +549,7 @@ class _Dashboard_IndexState extends State<Dashboard_Index> {
 
 class infotile extends StatelessWidget {
   String title, value;
+
   infotile({Key? key, required this.title, required this.value})
       : super(key: key);
 
@@ -599,7 +600,9 @@ class infotile extends StatelessWidget {
 class Custom_Alert extends StatelessWidget {
   String Title;
   String Description;
+
   Custom_Alert({required this.Title, required this.Description});
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

@@ -181,7 +181,7 @@ class WSVGeneratorState extends ChangeNotifier {
           GetSensor(dotenv.env['GeneratorVoltage_Guid'].toString());
       GeneratorFrequency =
           GetSensor(dotenv.env['GeneratorFrequency_Guid'].toString());
-      GeneratorLoad = GetSensor(dotenv.env['GeneratorLoad_Guid'].toString());   
+      GeneratorLoad = GetSensor(dotenv.env['GeneratorLoad_Guid'].toString());
       ControllerMode = GetSensor(dotenv.env['Controller_Mode'].toString());
       if (ControllerMode.value == "AUTO")
         ControllerModeStatus = true;

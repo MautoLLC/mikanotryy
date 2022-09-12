@@ -11,6 +11,7 @@ import 'package:mymikano_app/views/widgets/ImageBox.dart';
 class MaintenanceGridListScreen extends StatelessWidget {
   ListCategViewModel listCategViewModel = new ListCategViewModel();
   bool pressed = false;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

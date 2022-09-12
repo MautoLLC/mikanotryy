@@ -12,6 +12,7 @@ import 'AppWidget.dart';
 
 class ItemElement extends StatefulWidget {
   final Product product;
+
   const ItemElement({Key? key, required this.product}) : super(key: key);
 
   @override

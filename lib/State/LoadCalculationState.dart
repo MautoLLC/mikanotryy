@@ -88,7 +88,9 @@ class LoadCalculationState extends ChangeNotifier {
   }
 
   int getcomponentQuatity(int index) => _componentQuantity[index];
+
   Equipment getcomponents(int index) => _components[index];
+
   Equipment getcomponentByName(String Name) =>
       _components.where((element) => element.name == Name).first;
 
@@ -103,6 +105,7 @@ class LoadCalculationState extends ChangeNotifier {
   }
 
   int getFieldsCount() => _fieldsCount;
+
   void setFieldsCount(int value) {
     _fieldsCount = value;
     CalculateKVA();
@@ -110,12 +113,14 @@ class LoadCalculationState extends ChangeNotifier {
   }
 
   double getrunningPower() => _runningPower;
+
   void setrunningPower(double value) {
     _runningPower = value;
     notifyListeners();
   }
 
   double getstartingPower() => _startingPower;
+
   void setstartingPower(double value) {
     _startingPower = value;
     notifyListeners();

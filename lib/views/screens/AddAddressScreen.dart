@@ -17,6 +17,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController CityController = TextEditingController();
   TextEditingController StateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserState>(

@@ -12,6 +12,7 @@ class Recorder extends StatefulWidget {
   final Function save;
 
   const Recorder({Key? key, required this.save}) : super(key: key);
+
   @override
   _RecorderState createState() => _RecorderState();
 }

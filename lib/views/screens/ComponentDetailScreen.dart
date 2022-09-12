@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 class ComponentDetailScreen extends StatefulWidget {
   ComponentModel item;
   String inspectionStatus;
+
   ComponentDetailScreen({required this.item, required this.inspectionStatus});
 
   @override

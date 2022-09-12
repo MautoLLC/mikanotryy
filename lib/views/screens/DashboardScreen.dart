@@ -514,6 +514,7 @@ class DashboardState extends State<Dashboard> {
 
 class ViewMoreBtn extends StatelessWidget {
   String title;
+
   ViewMoreBtn({Key? key, required this.title}) : super(key: key);
 
   @override

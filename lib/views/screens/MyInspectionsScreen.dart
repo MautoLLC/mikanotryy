@@ -19,6 +19,7 @@ class MyInspectionsScreen extends StatefulWidget {
   static var tag = "/MyInspectionsScreen";
 
   MyInspectionsScreen();
+
   @override
   MyInspectionsScreenState createState() => MyInspectionsScreenState();
 }
@@ -301,6 +302,7 @@ class MyInspectionsScreenState extends State<MyInspectionsScreen> {
 class FilterOption extends StatelessWidget {
   InspectionsState value;
   String option;
+
   FilterOption({Key? key, required this.value, required this.option})
       : super(key: key);
 

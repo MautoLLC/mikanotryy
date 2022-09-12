@@ -14,6 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 class RepairDetailsPage extends StatefulWidget {
   final int id;
+
   const RepairDetailsPage({required this.id});
 
   @override

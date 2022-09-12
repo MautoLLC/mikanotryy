@@ -6,6 +6,7 @@ import 'package:mymikano_app/views/widgets/itemElement.dart';
 
 class OrderDetailsPage extends StatelessWidget {
   Order order;
+
   OrderDetailsPage({Key? key, required this.order}) : super(key: key);
 
   @override

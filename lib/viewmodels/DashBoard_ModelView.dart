@@ -92,7 +92,7 @@ class DashBoard_ModelView {
 
   Future<bool> SwitchControllerMode(bool status) async {
     return await DashBoardService.SwitchControllerMode(status);
-  }    
+  }
 
   Future<String> SwitchOnOff(bool status) async {
     return await DashBoardService.TurnGeneratorOnOff(status);

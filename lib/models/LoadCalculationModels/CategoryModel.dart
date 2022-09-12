@@ -12,8 +12,11 @@ class Category {
   }
 
   int? get id => _id;
+
   set id(int? id) => _id = id;
+
   String? get name => _name;
+
   set name(String? name) => _name = name;
 
   Category.fromJson(Map<String, dynamic> json) {

@@ -12,5 +12,6 @@ class ListRealEstatesViewModel {
 
 class RealEstatesViewModel {
   final RealEstate? mrealEstate;
+
   RealEstatesViewModel(this.mrealEstate);
 }

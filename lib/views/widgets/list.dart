@@ -7,6 +7,7 @@ class _Presso extends StatelessWidget {
   final IconData ico;
   final VoidCallback onPressed;
   final Color color;
+
   const _Presso(
       {Key? key,
       required this.ico,
@@ -33,6 +34,7 @@ class _Presso extends StatelessWidget {
 class RecordsUrl extends StatefulWidget {
   final List<String> records;
   final bool isLocal;
+
   const RecordsUrl({
     Key? key,
     required this.records,
@@ -45,6 +47,7 @@ class RecordsUrl extends StatefulWidget {
 
 class _RecordsUrlState extends State<RecordsUrl> {
   int _totalTime = 0;
+
   // String voiceLength = "0:00:00";
   List<String> voiceLength = [];
   late int _currentTime;

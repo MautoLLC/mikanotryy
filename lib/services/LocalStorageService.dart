@@ -2,8 +2,11 @@ import 'package:localstorage/localstorage.dart';
 
 class LocalStorageService {
   static final LocalStorageService _instance = LocalStorageService._internal();
+
   factory LocalStorageService() => _instance;
+
   LocalStorageService._internal();
+
   final LocalStorage storage = LocalStorage('notifications');
 
   Future<void> setItem(String key, dynamic value) async {

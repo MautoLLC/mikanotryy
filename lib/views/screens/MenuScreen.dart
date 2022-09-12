@@ -59,11 +59,10 @@ class _MenuScreenState extends State<MenuScreen> {
   // }
 
   Widget getPage() {
-    
     if (this.generatorType == 'cloud') {
       return CloudDashboard_Index(
-          /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/ RefreshRate:
-              this.RefreshRate);
+          /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/
+          RefreshRate: this.RefreshRate);
     } else if (this.generatorType == 'comap') {
       return Dashboard_Index();
     } else {

@@ -9,6 +9,7 @@ class Custom_GaugeWidget extends StatefulWidget {
   final Color needleColor;
   final double min;
   final double max;
+
   const Custom_GaugeWidget(
       {Key? key,
       required this.title,
@@ -51,7 +52,7 @@ class Custom_GaugeWidgetState extends State<Custom_GaugeWidget> {
           ],
           ranges: [
             GaugeRange(
-              startValue: 0,  
+              startValue: 0,
               endValue: widget.value,
               color: widget.needleColor,
               startWidth: 3,

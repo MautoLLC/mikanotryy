@@ -9,6 +9,7 @@ class MainDashboardState extends ChangeNotifier {
   }
 
   int selectedIndex() => _selectedIndex;
+
   setSelectedIndex(int index) {
     refreshPage(index);
     _selectedIndex = index;

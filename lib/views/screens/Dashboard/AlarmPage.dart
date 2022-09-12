@@ -53,6 +53,7 @@ class AlarmPage extends StatelessWidget {
 
 class AlarmSwicth extends StatefulWidget {
   bool state;
+
   AlarmSwicth({Key? key, required this.state}) : super(key: key);
 
   @override
