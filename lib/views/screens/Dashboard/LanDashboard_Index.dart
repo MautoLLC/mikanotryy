@@ -4,13 +4,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
-import 'package:mymikano_app/services/LanDashboard_Service.dart';
+import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
+import 'package:mymikano_app/services/LanDashboard_Service.dart';
+import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/CloudDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
+import 'package:mymikano_app/views/screens/MenuScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +25,6 @@ import 'FetchGenerators.dart';
 
 class LanDashboard_Index extends StatefulWidget {
   final int RefreshRate;
-
   LanDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
 
   @override
@@ -36,9 +38,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool isOnleft = false;
   bool isOnMiddle = false;
   bool isOnRight = false;
-  late LanDashBoard_Service LanService;
+  late CloudGeneratorState cloud;
+   late LanDashBoard_Service LanService;
   late final ConfigurationModel configModel;
-
   @override
   void initState() {
     super.initState();
@@ -71,12 +73,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
         (json.decode(prefs.getString('Configurations')!) as List)
             .map((data) => ConfigurationModel.fromJson(data))
             .toList();
+     if(configsList.length != 0){
+       prefs.setBool(
+       prefs_DashboardFirstTimeAccess, false);
+    }
     ConfigurationModel config = ConfigurationModel.fromJson(
         json.decode(prefs.getString('SelectedConfigurationModel')!));
     configModel = config;
     return configModel;
   }
-
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String test=prefs.getString('Configurations').toString();
@@ -116,17 +121,20 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       color: backArrowColor,
                                     ),
                                     onPressed: () {
-                                      finish(context);
+                                      Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MenuScreen()));
                                     },
                                   ),
-                                  Spacer(),
+                             Spacer(),
                                   Container(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 25),
                                     width:
                                         MediaQuery.of(context).size.width / 2.3,
                                     child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
+                                      child: DropdownButtonFormField<String>(
                                           isExpanded: true,
                                           hint: Text(
                                             lbl_Generator_ID,
@@ -134,8 +142,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold,
                                               fontFamily: "Poppins",
-                                              color: Colors.black,
-                                            ),
+                                              color: Colors.black, 
+                                            ),   
                                           ),
                                           icon: Icon(
                                             Icons.keyboard_arrow_down,
@@ -145,50 +153,67 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               .map(buildMenuItem)
                                               .toList(),
                                           //value:value.selectedConfigurationModel.generatorId,
-                                          value: configModel.generatorId,
-                                          onChanged: (item) async {
+                                          value: configModel.generatorId, 
+                                          
+                                          onChanged: (item) async { 
+                                          
                                             ConfigurationModel model = value
                                                 .configsList
                                                 .firstWhere((element) =>
                                                     element.generatorId ==
-                                                    item);
+                                                    item);       
                                             value.configModel = model;
-                                            SharedPreferences
-                                                sharedPreferences =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            String SelectedConfigurationModel =
-                                                jsonEncode(configModel);
-                                            await sharedPreferences.setString(
-                                                'SelectedConfigurationModel',
-                                                SelectedConfigurationModel);
-                                            if (model.cloudMode == 0) {
-                                              Navigator.of(context)
-                                                  .pushReplacement(
-                                                MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      Provider(
-                                                          create: (context) =>
-                                                              LanGeneratorState(),
-                                                          builder: (context,
-                                                                  child) =>
-                                                              LanDashboard_Index(
-                                                                  RefreshRate: model
-                                                                      .refreshRate)),
-                                                ),
-                                              );
-                                            } else {
-                                              // Navigator.of(context).push(
-                                              //     // MaterialPageRoute(
-                                              //     //     builder: (context) =>
-                                              //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
-                                              initState();
-                                            }
+                                            
+                                            SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+                              String Configs = jsonEncode(value.configsList);
+                              String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                              await sharedPreferences.setString(
+                                  'Configurations', Configs);
+                              await sharedPreferences.setString(
+                                  'SelectedConfigurationModel',
+                                  SelectedConfigurationModel);
+                              
+                              List<String> gens = await sharedPreferences
+                                  .getStringList("generatorNameList")!;
+                              
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0);
+                              Generator Chosen = value.gens.firstWhere(
+                                  (element) =>
+                                      element.name ==
+                                      value.chosenGeneratorName);
+                              value.chosenGeneratorId = Chosen.generatorId;
+                              await sharedPreferences.setStringList(
+                                  "generatorNameList", gens);
+                             if(model.cloudMode == 1){
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CloudDashboard_Index(
+                                              RefreshRate: model.refreshRate)));
+                             } 
+                             else if(model.cloudMode==0) {
+                                         Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LanDashboard_Index(
+                                              RefreshRate: model.refreshRate)));
+                                       }
+                                       else{
+                                         // Navigator.of(context).push(
+                                         //     // MaterialPageRoute(
+                                         //     //     builder: (context) =>
+                                         //     //         CloudDashboard_Index(RefreshRate: model.refreshRate)));
+                                         initState();
+                                       }                              
                                           }),
                                     ),
                                   ),
-                                  Spacer(),
+                                   Spacer(),
                                   SizedBox(
                                     width: 45,
                                     height: 50,
@@ -196,84 +221,88 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       child: Material(
                                         color: Colors.white,
                                         child: InkWell(
-                                          onTap: () async {
-                                            value.resetPreferences(
-                                                configModel.espapiendpoint);
+                                          
+                                         onTap: () async {
+                                        
+                                            value.resetPreferences(configModel.espapiendpoint);
                                             // Navigator.of(context).push(
                                             //     MaterialPageRoute(
                                             //         builder: (context) =>
                                             //             ApiConfigurationPage()));
-                                            value.generatorNameList
-                                                .add(configModel.generatorName);
+                                            value.generatorNameList.add(
+                                                configModel.generatorName);
 
                                             //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
-                                            value.configsList
-                                                .remove(configModel);
-                                            if (value.configsList != 1)
-                                              value.configModel = value
-                                                  .configsList
-                                                  .elementAt(0);
-                                            SharedPreferences
-                                                sharedPreferences =
-                                                await SharedPreferences
-                                                    .getInstance();
-                                            //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                                            //String Configs=jsonEncode(value.ConfigurationModelsList);
-                                            await sharedPreferences
-                                                .setStringList(
-                                                    "genneratorNameList",
-                                                    value.generatorNameList);
-                                            String Configs =
-                                                jsonEncode(value.configsList);
-                                            if (value.configsList != 1) {
-                                              String
-                                                  SelectedConfigurationModel =
-                                                  jsonEncode(configModel);
-                                              await sharedPreferences.setString(
-                                                  'SelectedConfigurationModel',
-                                                  SelectedConfigurationModel);
+                                            value.configsList.removeWhere(
+                                                (element) =>
+                                                    element.generatorId ==
+                                                    configModel.generatorId);
+                                            
+                                            if (value.configsList.length != 0){
+                                              value.configModel =
+                                                  value.configsList.elementAt(
+                                                      0);
+                                             SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+                              String Configs = jsonEncode(value.configsList);
+                              String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                              await sharedPreferences.setString(
+                                  'Configurations', Configs);
+                              await sharedPreferences.setString(
+                                  'SelectedConfigurationModel',
+                                  SelectedConfigurationModel);
+                              
+                              List<String> gens = await sharedPreferences
+                                  .getStringList("generatorNameList")!;
+                           
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0);
+                              Generator Chosen = value.gens.firstWhere(
+                                  (element) =>
+                                      element.name ==
+                                      value.chosenGeneratorName);
+                              value.chosenGeneratorId = Chosen.generatorId;
+                              await sharedPreferences.setStringList(
+                                  "generatorNameList", gens);
+                             
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CloudDashboard_Index(
+                                              RefreshRate: 10)));
+                            
+                              value.isNotFirstTime();
+                         
                                             }
-                                            await sharedPreferences.setString(
-                                                'Configurations', Configs);
-                                            if (value.configsList != 1) {
-                                              Navigator.of(context)
+                                    
+                                              else{
+                                                 Navigator.of(context)
                                                   .pushReplacement(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              FetchGenerators()));
-                                            } else {
-                                              if (configModel.cloudMode == 1) {
-                                                Navigator.of(context).pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            CloudDashboard_Index(
-                                                                RefreshRate:
-                                                                    configModel
-                                                                        .refreshRate)));
-                                              } else {
-                                                Navigator.of(context).pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            LanDashboard_Index(
-                                                                RefreshRate:
-                                                                    configModel
-                                                                        .refreshRate)));
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FetchGenerators()));
                                               }
-                                            }
-                                          },
+                                            },
+                                          
                                           child: Column(
+                                            
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
                                               Icon(Icons.refresh), // <-- Icon
-                                              Text(lbl_Reset), // <-- Text
+                                              Text(lbl_Reset),
+                                              
+                                              // <-- Text
                                             ],
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-
+                                  
                                   Spacer(),
                                   IconButton(
                                       onPressed: () {
@@ -281,10 +310,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         //     MaterialPageRoute(
                                         //         builder: (context) =>
                                         //             ApiConfigurationPage()));
-                                        Navigator.of(context).pushReplacement(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    FetchGenerators()));
+                                                     
+                             
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0); 
+                           
+                                    Navigator.of(context)
+                                                  .pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FetchGenerators()));
+                                         
+                                            
                                       },
                                       icon: Icon(Icons.settings)),
                                   // Spacer(),
@@ -299,15 +336,16 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
                                   GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    GeneratorAlertsPage()));
+                                       // Navigator.of(context).push(
+                                           // MaterialPageRoute(
+                                             //   builder: (context) =>
+                                                 //   GeneratorAlertsPage()));
                                       },
                                       child: Icon(Icons.warning)),
                                 ],
                               ),
                               Row(
+                                
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
@@ -321,10 +359,12 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         side: BorderSide(
                                             color: mainGreyColorTheme2)),
                                     label: Text("Auto"),
-                                    selected: _value == 0,
+                                    selected: lan.ControllerModeStatus==2?true:false,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        _value = (selected ? 0 : null)!;
+                                       // _value = (selected ? 0 : null)!;
+                                       lan.changeControllerModeStatus(2);
+                                       
                                       });
                                     },
                                   ),
@@ -338,15 +378,16 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
                                     label: Text("Manual"),
-                                    selected: _value == 1,
+                                    selected: lan.ControllerModeStatus == 1?true:false,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        _value = (selected ? 1 : null)!;
+                                        //_value = (selected ? 1 : null)!;
+                                        lan.changeControllerModeStatus(1);
                                       });
                                     },
                                   ),
                                   ChoiceChip(
-                                    pressElevation: 0.0,
+                                    pressElevation: 0.0, 
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
@@ -355,10 +396,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
                                     label: Text("Off"),
-                                    selected: _value == 2,
+                                     selected: lan.ControllerModeStatus == 0?true:false,
                                     onSelected: (bool selected) {
                                       setState(() {
-                                        _value = (selected ? 2 : null)!;
+                                        //_value = (selected ? 1 : null)!;
+                                        lan.changeControllerModeStatus(0); 
+                                      
+                                        lan.changeIsIO(false); 
+                                       
+                                        
                                       });
                                     },
                                   ),
@@ -371,6 +417,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                 padding:
                                     EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
                                 child: Container(
+                                    padding:
+                                        EdgeInsets.fromLTRB(5.0, 4.0, 8.0, 8.0),
                                     width: 350,
                                     height: 150,
                                     decoration: BoxDecoration(
@@ -385,8 +433,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: isOnleft
-                                                        ? mainColorTheme
+                                                    color: lan.MCBModeStatus
+                                                        ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
                                               ))),
@@ -398,27 +446,26 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: isOnMiddle
+                                              color: lan.MCBModeStatus  
                                                   ? GreenpowerColor
-                                                  : mainGreyColorTheme,
+                                                  : mainColorTheme,  
                                             ),
                                           )),
-                                      if (_value != 0)
+                                      if (lan.ControllerModeStatus != 2)
                                         Positioned(
                                           top: 72,
                                           left: 232,
-                                          child: new GestureDetector(
+                                          child: new GestureDetector( 
                                               onTap: () {
+                                           
                                                 setState(() {
-                                                  isOnleft = false;
+                                                  isOnleft = false;  
                                                   isOnMiddle = false;
                                                   isOnRight = false;
-                                                  CloudDashBoard_ModelView r =
-                                                      new CloudDashBoard_ModelView();
-                                                  r.SwitchOnOff(false);
+                                                   lan.changeIsIO(false); 
                                                 });
                                               },
-                                              child: Container(
+                                              child: Container(  
                                                   width: 65,
                                                   height: 48,
                                                   decoration: BoxDecoration(
@@ -427,27 +474,31 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (_value != 0)
+                                      if (lan.ControllerModeStatus != 2)
                                         Positioned(
                                           top: 4,
                                           left: 241,
                                           child: new GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  CloudDashBoard_ModelView r =
-                                                      new CloudDashBoard_ModelView();
-                                                  r.SwitchOnOff(true);
-                                                });
-
+                                              onTap: (){
+                                            
+                                                    
+                                                  setState(() async{
+                                                    
+                                                    
+                                                    lan.changeIsIO(true);
+                                                  }
+                                                   );
+                                                   
                                                 if ((double.parse(lan
-                                                        .GeneratorVoltage
+                                                        .GeneratorVoltage  
                                                         .return_value)) >
                                                     0) {
-                                                  setState(() {
-                                                    isOnRight = true;
+                                                  setState(() { 
+                                                    isOnRight = true;  
                                                   });
                                                 }
-                                                if (lan.MCBModeStatus == true) {
+                                                if (lan.MCBModeStatus == 
+                                                    true) {
                                                   setState(() {
                                                     isOnleft = true;
                                                   });
@@ -471,7 +522,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 24,
                                           left: 185,
                                           child: Container(
-                                            width: 60,
+                                            width: 60,  
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),
@@ -490,7 +541,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: isOnMiddle
                                                   ? GreenpowerColor
-                                                  : mainGreyColorTheme,
+                                                  : mainColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -501,25 +552,31 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: isOnMiddle
+                                              color: lan.isGCB
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
                                           )),
-                                      if (_value != 0)
+                                      if (lan.ControllerModeStatus != 2)
                                         Positioned(
                                           top: 72,
                                           left: 67,
+                                          
                                           child: new GestureDetector(
                                               onTap: () {
-                                                Switch(
-                                                    value: lan.MCBModeStatus,
-                                                    onChanged: (result) {
+                                                    if(lan.MCBModeStatus == false){
+
                                                       lan.changeMCBModeStatus(
-                                                          result);
-                                                    });
+                                                          true);  
+                                                    }
+                                                    else{
+                                                      lan.changeMCBModeStatus(
+                                                          false); 
+                                                    }
+                                                    
                                               },
                                               child: Container(
+                                                
                                                   width: 60,
                                                   height: 48,
                                                   decoration: BoxDecoration(
@@ -529,17 +586,23 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (_value != 0)
+                                      if (lan.ControllerModeStatus != 2)
                                         Positioned(
                                           top: 72,
                                           left: 147,
                                           child: new GestureDetector(
+                                          
                                               onTap: () {
-                                                Switch(
-                                                    value: lan.isGCB,
-                                                    onChanged: (result) {
-                                                      lan.changeIsGCB(result);
-                                                    });
+                                                
+                                                 if(lan.isGCB==false){
+                                                   
+                                                    
+                                                      lan.changeIsGCB(true);
+                                                 }
+                                                 else{
+                                                  lan.changeIsGCB(false);
+                                                 }
+                                                    
                                               },
                                               child: Container(
                                                   width: 60,
@@ -569,19 +632,21 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
-                                          child: Custom_GaugeWidget(
+                                          
+                                         child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
-                                            value: (lan
-                                                .GeneratorLoad.return_value),
+                                            value: (double.parse(
+                                                     lan.GeneratorLoad.return_value)),   
+                                                    
                                             needleColor: mainColorTheme,
-                                            min: 0,
-                                            max: 200,
+                                            min: 0,  
+                                            max: cloud.nominalLoadkW.value.toDouble(),
                                           )),
-                                    ],
-                                  ),
+                                    ], 
+                                  ), 
                                   Spacer(),
                                   SizedBox(height: 10),
-                                  Column(
+                                  Column( 
                                     children: [
                                       SizedBox(
                                         height: 10,
@@ -598,8 +663,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               child: Custom_GaugeWidget(
                                                   title: lbl_RPM,
-                                                  value: (lan.Rpm.return_value
-                                                      .toDouble()),
+                                                  value: (double.parse(
+                                                      lan.Rpm.return_value)),
                                                   min: 0,
                                                   max: 3000)),
                                         ],
@@ -666,35 +731,35 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: "V",
+                                            value: lan.generatorL1N.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: "V",
+                                            value: lan.generatorL2N.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: "V",
+                                            value: lan.generatorL3N.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: "A",
+                                            value: lan.LoadAL1.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: "A",
+                                            value: lan.LoadAL2.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: "A",
+                                            value: lan.LoadAL3.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: " ",
+                                            value: lan.generatorFrequency.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: " ",
+                                            value: lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],
                                       ),
@@ -710,35 +775,35 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: "V",
+                                            value: lan.mainsvoltageL1N.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: "V",
+                                            value: lan.mainsvoltageL2N.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: "V",
+                                            value: lan.mainsvoltageL3N.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: "A",
+                                            value: lan.LoadAL1.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: "A",
+                                            value: lan.LoadAL2.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: "A",
+                                            value: lan.LoadAL3.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: " ",
+                                            value: lan.mainsFrequency.return_value.toString(),
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: " ",
+                                            value: lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],
                                       ),
@@ -784,7 +849,6 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
 class infotile extends StatelessWidget {
   String title, value;
-
   infotile({Key? key, required this.title, required this.value})
       : super(key: key);
 
@@ -835,9 +899,7 @@ class infotile extends StatelessWidget {
 class Custom_Alert extends StatelessWidget {
   String Title;
   String Description;
-
   Custom_Alert({required this.Title, required this.Description});
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
