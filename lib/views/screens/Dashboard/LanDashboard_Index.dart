@@ -9,7 +9,7 @@ import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/services/LanDashboard_Service.dart';
-import 'package:mymikano_app/State/CloudGeneratorState.dart';
+
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/viewmodels/CloudDashBoard_ModelView.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
@@ -38,7 +38,6 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool isOnleft = false;
   bool isOnMiddle = false;
   bool isOnRight = false;
-  late CloudGeneratorState cloud;
    late LanDashBoard_Service LanService;
   late final ConfigurationModel configModel;
   @override
@@ -395,14 +394,14 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             color: mainGreyColorTheme2)),
                                     selectedColor: mainColorTheme,
                                     backgroundColor: mainGreyColorTheme2,
-                                    label: Text("Off"),
+                                    label: Text("OFF"),
                                      selected: lan.ControllerModeStatus == 0?true:false,
                                     onSelected: (bool selected) {
                                       setState(() {
                                         //_value = (selected ? 1 : null)!;
                                         lan.changeControllerModeStatus(0); 
                                       
-                                        lan.changeIsIO(false); 
+                                        //lan.changeIsIO(false); 
                                        
                                         
                                       });
@@ -633,15 +632,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           
-                                         child: Custom_GaugeWidget(
+                                      /*    child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
                                             value: (double.parse(
                                                      lan.GeneratorLoad.return_value)),   
                                                     
                                             needleColor: mainColorTheme,
                                             min: 0,  
-                                            max: cloud.nominalLoadkW.value.toDouble(),
-                                          )),
+                                            max: lan.nominalLoadkW.value.toDouble(),
+                                          )*/),
                                     ], 
                                   ), 
                                   Spacer(),
