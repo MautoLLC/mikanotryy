@@ -34,7 +34,7 @@ Future<void> main() async {
       (value) => SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
             statusBarBrightness: Brightness.light,
             statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark, 
           )));
   await Firebase.initializeApp();
   await dotenv.load(fileName: ".env");

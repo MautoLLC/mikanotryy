@@ -17,16 +17,52 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../State/ApiConfigurationStatee.dart';
+class FetchGenerators extends StatefulWidget {
+  final int RefreshRate;
+  FetchGenerators({Key? key, required this.RefreshRate}) : super(key: key);
 
-class FetchGenerators extends StatelessWidget {
-  FetchGenerators({Key? key}) : super(key: key);
+  @override
+  _FetchGenerators createState() => _FetchGenerators();
+}
+
+class _FetchGenerators  extends State<FetchGenerators>{
+  
   final ControllerAddressController = TextEditingController();
   final refreshRateController = TextEditingController();
   final passwordController = TextEditingController();
   final apiEndpointLanController = TextEditingController(text: lanESPUrl);
+  late ConfigurationModel configModel;
 
   //late final List<ConfigurationModel> configsList;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   
+    
+   
+  }
+
+   Future<ConfigurationModel> getSelectedConfigurationModel() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();    
+    String test = prefs.getString('Configurations').toString();
+   List<ConfigurationModel> configsList =
+        (json.decode(prefs.getString('Configurations')!) as List)
+            .map((data) => ConfigurationModel.fromJson(data))
+            .toList(); 
+    if(configsList.length != 0){ 
+       prefs.setBool(
+       prefs_DashboardFirstTimeAccess, false);
+    }
+    ConfigurationModel config = ConfigurationModel.fromJson(
+        json.decode(prefs.getString('SelectedConfigurationModel')!));
+    configModel = config;
+    return configModel;
+  }
+
+
+  
+
   Widget build(BuildContext context) {
     return Consumer<ApiConfigurationStatee>(
         builder: (context, value, child) => Scaffold(
@@ -84,7 +120,7 @@ class FetchGenerators extends StatelessWidget {
                                   onChanged: (item) {
                                     value.ChooseGeneratorName(item.toString());
                                     int i = (value.gens).indexWhere((element) =>
-                                        element.name == item.toString());
+                                        element.name == item.toString()); 
                                     value.setChosenGeneratorId(
                                         value.gens.elementAt(i).generatorId);
                                     //value.setChosenGeneratorId(item.toString());
@@ -467,6 +503,7 @@ class FetchGenerators extends StatelessWidget {
                               );
                               SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
+                              
                               //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
                               //String Configs=jsonEncode(value.ConfigurationModelsList);
                               String Configs = jsonEncode(value.configsList);
@@ -475,7 +512,7 @@ class FetchGenerators extends StatelessWidget {
                               await sharedPreferences.setString(
                                   'Configurations', Configs);
                               await sharedPreferences.setString(
-                                  'SelectedConfigurationModel',
+                                  'SelectedConfigurationModel', 
                                   SelectedConfigurationModel);
                               sharedPreferences.setBool(
                                   prefs_DashboardFirstTimeAccess, false);

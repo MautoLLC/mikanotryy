@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
@@ -40,6 +41,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool isOnRight = false;
    late LanDashBoard_Service LanService;
   late final ConfigurationModel configModel;
+  late CloudGeneratorState cloud;
   @override
   void initState() {
     super.initState();
@@ -282,7 +284,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                   .pushReplacement(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          FetchGenerators()));
+                                                         FetchGenerators(RefreshRate: 10)));
                                               }
                                             },
                                           
@@ -318,7 +320,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                   .pushReplacement(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          FetchGenerators()));
+                                                         FetchGenerators(RefreshRate: 10)));
                                          
                                             
                                       },
@@ -333,14 +335,14 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                   //    },
                                   //    icon: Icon(Icons.warning)),
 
-                                  GestureDetector(
+                                /*  GestureDetector(
                                       onTap: () {
                                        // Navigator.of(context).push(
                                            // MaterialPageRoute(
                                              //   builder: (context) =>
                                                  //   GeneratorAlertsPage()));
                                       },
-                                      child: Icon(Icons.warning)),
+                                      child: Icon(Icons.warning)), */
                                 ],
                               ),
                               Row(
@@ -632,15 +634,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                 BorderRadius.circular(10),
                                           ),
                                           
-                                      /*    child: Custom_GaugeWidget(
+                                         child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
                                             value: (double.parse(
                                                      lan.GeneratorLoad.return_value)),   
                                                     
                                             needleColor: mainColorTheme,
                                             min: 0,  
-                                            max: lan.nominalLoadkW.value.toDouble(),
-                                          )*/),
+                                            max: cloud.nominalLoadkW.value.toDouble(),
+                                          )),
                                     ], 
                                   ), 
                                   Spacer(),
