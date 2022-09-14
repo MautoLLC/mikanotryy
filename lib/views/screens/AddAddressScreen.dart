@@ -53,6 +53,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 child: T13Button(
                     textContent: lbl_Add_Address,
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       state.addAddress(
                         addressController.text,
                         CityController.text,

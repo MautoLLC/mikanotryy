@@ -98,10 +98,12 @@ const MikanoShopGetLoggedInUser = '$MikanoShopMainURl/customers/me';
 const MikanoShopDeleteLoggedInUser = '$MikanoShopMainURl/customers/me';
 const MikanoFavoritAndCartItems = '$MikanoShopMainURl/shopping_cart_items';
 const MikanoDeleteFavoritAndCartItems =
-    '$MikanoShopMainURl/shopping_cart_items/delete';
+    '$MikanoShopMainURl/shopping_cart_items';
 const MikanoChangeQuantityCartItem =
     '$MikanoShopMainURl/shopping_cart_items/incrementqty';
 const MikanoShopPlaceOrder = '$MikanoShopMainURl/orders';
+const MikanoShopVerifyandMarkAsPaidOrder =
+    '$MikanoShopMainURl/orders/paid/{id}/{reference}';
 const MikanoShopPrimaryCurrency = '$MikanoShopMainURl/currencies/primary';
 const MikanoShopGetOrdersByCustomerIdURL =
     '$MikanoShopMainURl/orders/customer/{customerID}';

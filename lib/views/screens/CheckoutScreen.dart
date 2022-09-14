@@ -226,13 +226,16 @@ class CheckoutScreen extends StatelessWidget {
                           if (state.checkedValueForOrder) {
                             TechnicianModel user = state.User;
                             if (!productState.getCashOnDelivery) {
-                              if (await PaymentService().pay(
-                                  user.id,
-                                  user.username,
-                                  user.email,
-                                  user.phoneNumber,
-                                  productState.selectedProductsPrice.toInt(),
-                                  context)) {
+                              String? result = await PaymentService().pay(
+                                      user.id,
+                                      user.username,
+                                      user.email,
+                                      user.phoneNumber,
+                                      productState.selectedProductsPrice
+                                          .toInt(),
+                                      context) ??
+                                  "";
+                              if (result != "") {
                                 Fluttertoast.showToast(
                                     msg: "Payment Successful",
                                     toastLength: Toast.LENGTH_SHORT,
@@ -242,7 +245,8 @@ class CheckoutScreen extends StatelessWidget {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                                 productState
-                                    .checkout(state.ChosenAddress, byCard: true)
+                                    .checkout(state.ChosenAddress,
+                                        byCard: true, reference: result)
                                     .then((value) {
                                   if (value) {
                                     Navigator.pop(context);

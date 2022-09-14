@@ -406,20 +406,26 @@ class ProductState extends ChangeNotifier {
     }
   }
 
-  Future<bool> checkout(Address add, {bool byCard = false}) async {
-    bool success =
-        await CustomerService().Checkout(add, selectedProducts, byCard);
-    if (success) {
-      List<int?> ids = selectedProducts.map((e) => e.product.id).toList();
-      await CustomerService().deleteCartItemsforLoggedInUser(ids);
-      removecheckedProducts();
-      update();
-      toast("Checkout Successful");
-      return true;
-    } else {
+  Future<bool> checkout(Address add,
+      {bool byCard = false, String reference = ""}) async {
+    try {
+      bool success = await CustomerService()
+          .Checkout(add, selectedProducts, byCard, reference);
+      if (success) {
+        removecheckedProducts();
+        update();
+        toast("Checkout Successful");
+        notifyListeners();
+        return true;
+      } else {
+        toast("Checkout Failed");
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
       toast("Checkout Failed");
+      debugPrint(e.toString());
+      return false;
     }
-    notifyListeners();
-    return false;
   }
 }

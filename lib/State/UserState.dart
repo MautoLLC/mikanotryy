@@ -75,6 +75,12 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> addAddress(String address, String city) async {
+    debugPrint(User.phoneNumber);
+    debugPrint(User.phoneNumber.isEmptyOrNull.toString());
+    if (User.phoneNumber.isEmptyOrNull) {
+      toast("Please Add a phone number first");
+      return;
+    }
     Address newAddress = Address(
         address1: address,
         city: city,

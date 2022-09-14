@@ -49,7 +49,7 @@ class PaymentService {
     await plugin.initialize(publicKey: publicKey);
   }
 
-  Future<bool> pay(
+  Future<String?> pay(
       String customer_ID,
       String customer_Name,
       String customer_Email,
@@ -69,6 +69,6 @@ class PaymentService {
       context, charge: charge,
       method: CheckoutMethod.card, // Defaults to CheckoutMethod.selectable
     );
-    return response.status;
+    return response.status ? charge.reference : "";
   }
 }

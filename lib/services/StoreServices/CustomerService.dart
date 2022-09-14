@@ -60,7 +60,7 @@ class CustomerService {
         throw Exception('Failed to add shipping address');
       }
     } catch (e) {
-      debugPrint(e.toString());
+      toast(e.toString());
       return false;
     }
   }
@@ -184,7 +184,7 @@ class CustomerService {
 
   Future<void> deleteCartItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Response response = await dio.post(
+    Response response = await dio.delete(
       MikanoDeleteFavoritAndCartItems,
       queryParameters: {
         "Ids": arr,
@@ -462,133 +462,82 @@ class CustomerService {
     }
   }
 
-  Future<bool> Checkout(
-      Address add, List<CartProduct> products, bool byCard) async {
+  Future<bool> Checkout(Address add, List<CartProduct> products, bool byCard,
+      String reference) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     add.customerAttributes = "";
     add.address2 = add.address1;
     try {
-      await dio
-          .post((MikanoShopPlaceOrder),
-              data: {
-                "order": {
-                  "payment_method_system_name":
-                      byCard ? "Payments.Manual" : "Payments.CheckMoneyOrder",
-                  "shipping_method": "Shipping.FixedByWeightByTotal",
-                  "customer_id": prefs.getString("StoreCustomerId").toInt(),
-                  "billing_address": {
-                    "first_name": add.firstName,
-                    "last_name": add.lastName,
-                    "email": add.email,
-                    "company": add.company,
-                    "country_id": add.countryId,
-                    "country": add.country,
-                    "state_province_id": add.stateProvinceId,
-                    "city": add.city,
-                    "address1": add.address1,
-                    "address2": add.address2,
-                    "zip_postal_code": add.zipPostalCode,
-                    "phone_number": add.phoneNumber,
-                    "fax_number": add.faxNumber,
-                    "customer_attributes": add.customerAttributes,
-                    "created_on_utc": add.createdOnUtc,
-                    "province": add.province,
-                    "id": add.id
-                  },
-                  "shipping_address": {
-                    "first_name": add.firstName,
-                    "last_name": add.lastName,
-                    "email": add.email,
-                    "company": add.company,
-                    "country_id": add.countryId,
-                    "country": add.country,
-                    "state_province_id": add.stateProvinceId,
-                    "city": add.city,
-                    "address1": add.address1,
-                    "address2": add.address2,
-                    "zip_postal_code": add.zipPostalCode,
-                    "phone_number": add.phoneNumber,
-                    "fax_number": add.faxNumber,
-                    "customer_attributes": add.customerAttributes,
-                    "created_on_utc": add.createdOnUtc,
-                    "province": add.province,
-                    "id": add.id
-                  },
-                }
+      Response response = await dio.post((MikanoShopPlaceOrder),
+          data: {
+            "order": {
+              "payment_method_system_name": byCard
+                  ? "Payments.CheckMoneyOrder"
+                  : "Payments.CheckMoneyOrder",
+              "shipping_method": "Shipping.FixedByWeightByTotal",
+              "customer_id": prefs.getString("StoreCustomerId").toInt(),
+              "billing_address": {
+                "first_name": add.firstName,
+                "last_name": add.lastName,
+                "email": add.email,
+                "company": add.company,
+                "country_id": add.countryId,
+                "country": add.country,
+                "state_province_id": add.stateProvinceId,
+                "city": add.city,
+                "address1": add.address1,
+                "address2": add.address2,
+                "zip_postal_code": add.zipPostalCode,
+                "phone_number": add.phoneNumber,
+                "fax_number": add.faxNumber,
+                "customer_attributes": add.customerAttributes,
+                "created_on_utc": add.createdOnUtc,
+                "province": add.province,
+                "id": add.id
               },
+              "shipping_address": {
+                "first_name": add.firstName,
+                "last_name": add.lastName,
+                "email": add.email,
+                "company": add.company,
+                "country_id": add.countryId,
+                "country": add.country,
+                "state_province_id": add.stateProvinceId,
+                "city": add.city,
+                "address1": add.address1,
+                "address2": add.address2,
+                "zip_postal_code": add.zipPostalCode,
+                "phone_number": add.phoneNumber,
+                "fax_number": add.faxNumber,
+                "customer_attributes": add.customerAttributes,
+                "created_on_utc": add.createdOnUtc,
+                "province": add.province,
+                "id": add.id
+              },
+            }
+          },
+          options: Options(headers: {
+            'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
+          }));
+      if (response.statusCode == 200) {
+        Order order = Order.fromJson(response.data['orders'][0]);
+        if (byCard) {
+          await dio.put(
+              MikanoShopVerifyandMarkAsPaidOrder.replaceFirst(
+                      "{id}", order.id.toString())
+                  .replaceFirst("{reference}", reference.toString()),
               options: Options(headers: {
                 'Authorization': 'Bearer ${prefs.getString("StoreToken")}',
-              }))
-          .then((response) {
-        if (response.statusCode == 200) {
-          Order order = Order.fromJson(response.data['orders'][0]);
-          if (byCard) {
-            try {
-              dio.post(
-                (MikanoShopPlaceOrder),
-                queryParameters: {"id": order.id},
-                data: {
-                  "order": {
-                    "payment_status": "Paid",
-                    "billing_address": {
-                      "first_name": add.firstName,
-                      "last_name": add.lastName,
-                      "email": add.email,
-                      "company": add.company,
-                      "country_id": add.countryId,
-                      "country": add.country,
-                      "state_province_id": add.stateProvinceId,
-                      "city": add.city,
-                      "address1": add.address1,
-                      "address2": add.address2,
-                      "zip_postal_code": add.zipPostalCode,
-                      "phone_number": add.phoneNumber,
-                      "fax_number": add.faxNumber,
-                      "customer_attributes": add.customerAttributes,
-                      "created_on_utc": add.createdOnUtc,
-                      "province": add.province,
-                      "id": add.id
-                    },
-                    "shipping_address": {
-                      "first_name": add.firstName,
-                      "last_name": add.lastName,
-                      "email": add.email,
-                      "company": add.company,
-                      "country_id": add.countryId,
-                      "country": add.country,
-                      "state_province_id": add.stateProvinceId,
-                      "city": add.city,
-                      "address1": add.address1,
-                      "address2": add.address2,
-                      "zip_postal_code": add.zipPostalCode,
-                      "phone_number": add.phoneNumber,
-                      "fax_number": add.faxNumber,
-                      "customer_attributes": add.customerAttributes,
-                      "created_on_utc": add.createdOnUtc,
-                      "province": add.province,
-                      "id": add.id
-                    },
-                  }
-                },
-              );
-            } catch (e) {
-              debugPrint(e.toString());
-              return false;
-            }
-          }
-          toast("Checkout successfully");
-          return true;
-        } else {
-          toast("Failed to checkout");
-          return false;
+              }));
         }
-      });
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       debugPrint(e.toString());
-      toast("Failed to checkout");
       return false;
     }
-    return false;
   }
 
   Future<List<Order>> getOrdersByCustomerID(

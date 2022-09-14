@@ -30,8 +30,9 @@ class gps {
         stopTimer(timer);
         return;
       }
+
       Position position = await determinePosition();
-      updateLocation(position.longitude, position.latitude);
+      await updateLocation(position.longitude, position.latitude);
     });
   }
 
