@@ -286,7 +286,8 @@ class CloudGeneratorState extends ChangeNotifier {
         ControllerModeStatus = 2;
       else if (ControllerMode.value == "MAN")
         ControllerModeStatus = 1;
-      else if (ControllerMode.value == "Off") ControllerModeStatus = 0;
+      else if (ControllerMode.value == "Off") 
+      ControllerModeStatus = 0;
 
       //for testing purposes only
       //MCBMode.value="1";
