@@ -47,6 +47,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    
     getSelectedConfigurationModel();
     
     isDataFetched().whenComplete(() {
@@ -65,8 +66,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     await Provider.of<CloudGeneratorState>(context, listen: false)
         .ReinitiateCloudService();
     isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
-        .FetchData();
-  }
+        .FetchData(); 
+  }  
     
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();    
@@ -75,7 +76,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
         (json.decode(prefs.getString('Configurations')!) as List)
             .map((data) => ConfigurationModel.fromJson(data))
             .toList(); 
-    if(configsList.length != 0){
+    if(configsList.length != 0){ 
        prefs.setBool(
        prefs_DashboardFirstTimeAccess, false);
     }
@@ -84,7 +85,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     configModel = config;
     return configModel;
   }
- 
+
   
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -222,21 +223,20 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             //             ApiConfigurationPage()));
                                             value.generatorNameList.add(
                                                 configModel.generatorName);
-
+                                            
                                             //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
                                             value.configsList.removeWhere(
                                                 (element) =>
                                                     element.generatorId ==
                                                     configModel.generatorId);
+                                                     SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
                                             
                                             if (value.configsList.length != 0){
                                               value.configModel =
                                                   value.configsList.elementAt(
                                                       0);
-                                             SharedPreferences sharedPreferences =
-                                  await SharedPreferences.getInstance();
-                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+        
                               String Configs = jsonEncode(value.configsList);
                               String SelectedConfigurationModel =
                                   jsonEncode(value.configModel);
@@ -269,11 +269,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             }
                                     
                                               else{
+                            
                                                  Navigator.of(context)
                                                   .pushReplacement(
-                                                  MaterialPageRoute(
+                                                  MaterialPageRoute( 
                                                       builder: (context) =>
-                                                          FetchGenerators()));
+                                                          FetchGenerators(RefreshRate: 10)));
+                                                           sharedPreferences.setBool(
+                                                          prefs_DashboardFirstTimeAccess, true);      
                                               }
                                             },
                                           
@@ -309,7 +312,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                   .pushReplacement(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          FetchGenerators()));
+                                                          FetchGenerators(RefreshRate: 10)));
                                          
                                             
                                       },
@@ -324,14 +327,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   //    },
                                   //    icon: Icon(Icons.warning)),
 
-                                      GestureDetector(
+                                      /* GestureDetector(
                                       onTap: () {
                                      /*   Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     GeneratorAlertsPage())); */
                                       },
-                                      child: Icon(Icons.warning)),  
+                                      child: Icon(Icons.warning)),   */
                                 ],
                               ),
                               Row(
