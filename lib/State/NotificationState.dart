@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/models/NotificationModel.dart';
 import 'package:mymikano_app/services/LocalStorageService.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class NotificationState extends ChangeNotifier {
   int _notificationCount = 0;
@@ -15,7 +16,8 @@ class NotificationState extends ChangeNotifier {
       dynamic TempMessage =
           await localStorageService.getItem("notification $i");
       String data = TempMessage.toString();
-      addNotification(NotificationModel(Message: data));
+      if (!data.isEmptyOrNull)
+        addNotification(NotificationModel(Message: data));
     }
     notifyListeners();
   }

@@ -25,31 +25,7 @@ class PushNotificationService {
     await prefs.setString("DeviceToken", token.toString());
     debugPrint("Device Token: $token");
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
-      debugPrint("message recieved");
-      debugPrint(event.notification!.body);
-      debugPrint(event.notification!.title);
-      int count = 0;
-      var value = await localStorageService.getItem("Count");
-      try {
-        count = int.parse(value);
-      } catch (e) {
-        count = -1;
-      }
-      await localStorageService.setItem("Count", (count + 1).toString());
-      await localStorageService.setItem(
-          "notification ${count + 1}", event.notification!.body);
-      Fluttertoast.showToast(
-          msg: event.notification!.body.toString(),
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 3,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
+    messageHandler(RemoteMessage message) async {
       int count = 0;
       var value = await localStorageService.getItem("Count");
       try {
@@ -60,6 +36,36 @@ class PushNotificationService {
       await localStorageService.setItem("Count", (count + 1).toString());
       await localStorageService.setItem(
           "notification ${count + 1}", message.notification!.body);
+      Fluttertoast.showToast(
+          msg: message.notification!.body.toString(),
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+
+    RemoteMessage? message =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (message != null) {
+      Future.delayed(Duration(seconds: 4), () async {
+        toast("1");
+        messageHandler(message);
+        await navigator.currentState?.push(
+          MaterialPageRoute(builder: (context) => NotificationsPage()),
+        );
+      });
+    }
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
+      toast("2");
+      messageHandler(event);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
+      toast("3");
+      messageHandler(message);
       await navigator.currentState?.push(
         MaterialPageRoute(builder: (context) => NotificationsPage()),
       );
