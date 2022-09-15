@@ -893,8 +893,12 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
     appDir!.exists().then((value) {
       records!.clear();
       appDir!.list().listen((onData) {
-        if (onData.path.contains("audio.wav")) records!.add(onData.path);
+        if (onData.path.contains("audio") && onData.path.contains("m4a"))
+          records!.add(onData.path);
       }).onDone(() {
+        String lastRecording = records!.last;
+        records!.clear();
+        records!.add(lastRecording);
         setState(() {});
       });
     });
