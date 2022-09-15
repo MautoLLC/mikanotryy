@@ -115,12 +115,8 @@ class _RecorderState extends State<Recorder> {
   }
 
   _start() async {
-    Directory? d = await getTemporaryDirectory();
-    Directory appDir = Directory(d.path + "/audio.wav/");
-    appDir.delete(recursive: true);
-    appDir.create();
     AudioEncoder encoder = AudioEncoder.wav;
-    await audioRecorder.start(path: appDir.path, encoder: encoder);
+    await audioRecorder.start(encoder: encoder);
     timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       setState(() {
         duration = Time.toString();
@@ -152,8 +148,7 @@ class _RecorderState extends State<Recorder> {
   _stop() async {
     String? resultPath = await audioRecorder.stop();
     Time = 0;
-    widget.save(
-        resultPath.toString().substring(0, resultPath.toString().length - 10));
+    widget.save(resultPath.toString().split("audio")[0]);
     timer.cancel();
     Fluttertoast.showToast(msg: "Stop Recording , File Saved");
     _recordIcon = Icons.mic;
