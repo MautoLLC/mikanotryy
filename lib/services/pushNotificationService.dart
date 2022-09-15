@@ -51,7 +51,6 @@ class PushNotificationService {
 
     if (message != null) {
       Future.delayed(Duration(seconds: 4), () async {
-        toast("1");
         messageHandler(message);
         await navigator.currentState?.push(
           MaterialPageRoute(builder: (context) => NotificationsPage()),
@@ -59,12 +58,10 @@ class PushNotificationService {
       });
     }
     FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
-      toast("2");
       messageHandler(event);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      toast("3");
       messageHandler(message);
       await navigator.currentState?.push(
         MaterialPageRoute(builder: (context) => NotificationsPage()),
