@@ -62,6 +62,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
+                  reverse: true,
                   itemCount: Provider.of<NotificationState>(context)
                       .notifications
                       .length,
