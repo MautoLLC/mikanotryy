@@ -25,7 +25,8 @@ class PushNotificationService {
     await prefs.setString("DeviceToken", token.toString());
     debugPrint("Device Token: $token");
 
-    messageHandler(RemoteMessage message) async {
+    Future<void> messageHandler(RemoteMessage message,
+        {bool navigate = false}) async {
       int count = 0;
       var value = await localStorageService.getItem("Count");
       try {
@@ -44,6 +45,11 @@ class PushNotificationService {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
+      if (navigate) {
+        await navigator.currentState?.push(
+          MaterialPageRoute(builder: (context) => NotificationsPage()),
+        );
+      }
     }
 
     RemoteMessage? message =
@@ -51,10 +57,7 @@ class PushNotificationService {
 
     if (message != null) {
       Future.delayed(Duration(seconds: 4), () async {
-        messageHandler(message);
-        await navigator.currentState?.push(
-          MaterialPageRoute(builder: (context) => NotificationsPage()),
-        );
+        messageHandler(message, navigate: true);
       });
     }
     FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
@@ -62,10 +65,7 @@ class PushNotificationService {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      messageHandler(message);
-      await navigator.currentState?.push(
-        MaterialPageRoute(builder: (context) => NotificationsPage()),
-      );
+      messageHandler(message, navigate: true);
     });
   }
 }
