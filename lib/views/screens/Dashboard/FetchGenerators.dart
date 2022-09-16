@@ -32,6 +32,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
   final passwordController = TextEditingController();
   final apiEndpointLanController = TextEditingController(text: lanESPUrl);
   late ConfigurationModel configModel;
+   
 
   //late final List<ConfigurationModel> configsList;
   @override
@@ -43,25 +44,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
    
   }
 
-   Future<ConfigurationModel> getSelectedConfigurationModel() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();    
-    String test = prefs.getString('Configurations').toString();
-   List<ConfigurationModel> configsList =
-        (json.decode(prefs.getString('Configurations')!) as List)
-            .map((data) => ConfigurationModel.fromJson(data))
-            .toList(); 
-    if(configsList.length != 0){ 
-       prefs.setBool(
-       prefs_DashboardFirstTimeAccess, false);
-    }
-    ConfigurationModel config = ConfigurationModel.fromJson(
-        json.decode(prefs.getString('SelectedConfigurationModel')!));
-    configModel = config;
-    return configModel;
-  }
 
-
-  
 
   Widget build(BuildContext context) {
     return Consumer<ApiConfigurationStatee>(
