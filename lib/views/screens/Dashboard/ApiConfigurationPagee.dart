@@ -58,7 +58,7 @@ class ApiConfigurationPagee extends StatelessWidget {
                           hintText: lbl_Cloud_Username,
                           hintStyle:
                               primaryTextStyle(color: textFieldHintColor),
-                          filled: true,
+                          filled: true, 
                           fillColor: lightBorderColor,
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -134,13 +134,13 @@ class ApiConfigurationPagee extends StatelessWidget {
                             T13Button(
                                 textContent: lbl_Fetch_Generators,
                                 onPressed: () async {
+                                  
+                                 
                                   await value.getGeneratorIds(
                                       cloudUsernameController.text,
                                       cloudPasswordController.text);
                                   //we need to save the cloudusername and password to shared pref and then got to fetch generator page//
 
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
                                   //value.Loading(true);
                                   await value.saveCloudUser(
                                     cloudUsernameController.text,
