@@ -789,7 +789,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: cloud.LoadPowerFactor.value.toString() + " "+ "kW",
+                                            value: cloud.LoadPowerFactor.value.toString() + " "+ "Kw",
                                           ),
                                         ],
                                       ),
