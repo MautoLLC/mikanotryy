@@ -90,15 +90,14 @@ class ApiConfigurationService {
     }
   }
 
-  Future<List<Generator>> getGeneratorsOfUser(
-      String cloudUsername, String cloudPassword) async {
+  Future<List<Generator>> getGeneratorsOfUser(String cloudUsername, String cloudPassword,String DeviceToken) async {
     List<Generator> generators = [];
     Dio dio = Dio();
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
-      return null;
+      return null;  
     };
     try {
       final responseAuth = await dio.post(cloudIotMautoAuthUrl,
@@ -110,22 +109,20 @@ class ApiConfigurationService {
           data: {
             'email': cloudUsername,
             'password': cloudPassword,
+            'deviceToken' : DeviceToken,
           });
 
       final isAuthenticated = (responseAuth.data)['isAuthenticated'];
       if (isAuthenticated == false) {
         return [];
       }
-
       final token = (responseAuth.data)['token'];
       final userID = (responseAuth.data)['id'];
-
       final response = await dio.get(
         (cloudIotMautoUserGeneratorsUrl + userID),
         options:
             Options(headers: {'Authorization': 'Bearer ' + token.toString()}),
       );
-
       if (response.statusCode == 200) {
         generators = List<Generator>.from(
             response.data.map((x) => Generator.fromJson(x)));
