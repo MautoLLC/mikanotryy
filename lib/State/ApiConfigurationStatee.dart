@@ -33,7 +33,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
 
   ///the list of configurations//
   late ConfigurationModel configModel;
-  late List<ConfigurationModel> configsList;
+  late List<ConfigurationModel> configsList;  
 
   ApiConfigurationStatee() {
     //if(!DashBoardFirstTimeAccess)
@@ -64,7 +64,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   void isNotFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.DashBoardFirstTimeAccess = false;
-    prefs.setBool(prefs_DashboardFirstTimeAccess, false);
+    prefs.setBool(prefs_DashboardFirstTimeAccess, false); 
     notifyListeners();
   }
 

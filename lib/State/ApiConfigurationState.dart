@@ -171,10 +171,10 @@ class ApiConfigurationState extends ChangeNotifier {
   void resetPreferences() async {
     clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(prefs_DashboardFirstTimeAccess, true);
+    prefs.setBool(prefs_DashboardFirstTimeAccess, true);   
     prefs.remove(prefs_SSID);
     prefs.remove(prefs_Password);
-    prefs.remove(prefs_RefreshRate);
+    prefs.remove(prefs_RefreshRate); 
     prefs.remove(prefs_CloudUsername);
     prefs.remove(prefs_CloudPassword);
     prefs.remove(prefs_CloudMode);

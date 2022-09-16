@@ -125,7 +125,8 @@ class _MenuScreenState extends State<MenuScreen> {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async{
+                      
                       print(this.DashboardFirstTimeAccess);
                       if (index == 1 && this.DashboardFirstTimeAccess == true) {
                         //notFirstTimeDashboardAccess();
@@ -206,7 +207,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             color: Colors.white,
                             fontFamily: PoppinsFamily,
                             fontSize: 18,
-                          ),
+                          ),  
                         ),
                       ))
                 ],

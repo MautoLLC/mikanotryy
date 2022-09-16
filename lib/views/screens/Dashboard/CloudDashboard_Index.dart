@@ -681,27 +681,27 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: lbl_Pressure,
                                             value: (double.parse(
                                                     cloud.OilPressure.value))
-                                                .toString(),
+                                                .toString() + " "+ cloud.OilPressure.unit,
                                           ),
                                           infotile(
                                             title: lbl_Temperature,
                                             value: cloud.CoolantTemp.value
-                                                .toString(),
+                                                .toString() + " "+ cloud.CoolantTemp.unit,
                                           ),
                                           infotile(
                                             title: "Fuel Level",
                                             value: cloud.FuelLevel.value
-                                                .toString(),
+                                                .toString() + " "+ cloud.FuelLevel.unit,
                                           ),
                                           infotile(
                                             title: "Running Hours",
                                             value: cloud.RunningHours.value
-                                                .toString(),
+                                                .toString() + " "+ cloud.RunningHours.unit,
                                           ),
                                           infotile(
                                             title: "Battery Voltage",
                                             value: cloud.BatteryVoltage.value
-                                                .toString(),
+                                                .toString() + " "+ cloud.BatteryVoltage.unit,
                                           ),
                                         ],
                                       ),
@@ -717,35 +717,35 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: cloud.generatorL1N.value.toString(),
+                                            value: cloud.generatorL1N.value.toString() + " "+ cloud.generatorL1N.unit,
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: cloud.generatorL2N.value.toString(),
+                                            value: cloud.generatorL2N.value.toString() + " "+ cloud.generatorL2N.unit,
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: cloud.generatorL3N.value.toString(),
+                                            value: cloud.generatorL3N.value.toString() + " "+ cloud.generatorL3N.unit,
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: cloud.LoadAL1.value.toString(),
+                                            value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: cloud.LoadAL2.value.toString(),
+                                            value: cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: cloud.LoadAL3.value.toString(),
+                                            value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: cloud.GeneratorFrequency.value.toString(),
+                                            value: cloud.GeneratorFrequency.value.toString() + " "+ cloud.GeneratorFrequency.unit,
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: cloud.LoadPowerFactor.value.toString(),
+                                            value: cloud.LoadPowerFactor.value.toString() + " "+ "kW",
                                           ),
                                         ],
                                       ),
@@ -761,35 +761,35 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: cloud.mainsvoltageL1N.value.toString(),
+                                            value: cloud.mainsvoltageL1N.value.toString() + " "+ cloud.mainsvoltageL1N.unit,
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: cloud.mainsvoltageL2N.value.toString(),
+                                            value: cloud.mainsvoltageL2N.value.toString() + " "+ cloud.mainsvoltageL2N.unit,
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: cloud.mainsvoltageL3N.value.toString(),
+                                            value: cloud.mainsvoltageL3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: cloud.LoadAL1.value.toString(),
+                                            value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: cloud.LoadAL2.value.toString(),
+                                            value: cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: cloud.LoadAL3.value.toString(),
+                                            value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: cloud.mainsFrequency.value.toString(),
+                                            value: cloud.mainsFrequency.value.toString() + " "+ cloud.mainsFrequency.unit,
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: cloud.LoadPowerFactor.value.toString(),
+                                            value: cloud.LoadPowerFactor.value.toString() + " "+ "kW",
                                           ),
                                         ],
                                       ),
