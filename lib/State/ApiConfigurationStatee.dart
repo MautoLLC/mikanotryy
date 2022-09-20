@@ -81,7 +81,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
     }
     cloudUsername = prefs.getString(prefs_CloudUsername).toString();
     cloudPassword = prefs.getString(prefs_CloudPassword).toString(); 
-    DeviceToken = prefs.getString("DeviceToken").toString();
+     
     notifyListeners();  
   }
 

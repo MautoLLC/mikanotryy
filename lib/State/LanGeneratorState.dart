@@ -288,7 +288,7 @@ class LanGeneratorState extends ChangeNotifier {
         ControllerModeStatus = 2;  
       else if (ControllerMode.return_value == "MAN")
         ControllerModeStatus = 1;
-      else if (ControllerMode.return_value == "Off")
+      else if (ControllerMode.return_value == "OFF") 
         ControllerModeStatus = 0;
 
       if (MCBMode.return_value == 1)

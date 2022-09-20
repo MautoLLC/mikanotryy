@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/State/UserState.dart';
+import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
+import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +31,7 @@ class MenuScreen extends StatefulWidget {
   _MenuScreenState createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
   bool guestLogin = true;
   bool DashboardFirstTimeAccess = true;
   int RefreshRate = 60;
@@ -125,25 +129,28 @@ class _MenuScreenState extends State<MenuScreen> {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                   child: GestureDetector(
-                    onTap: () async{
-                      
+                    onTap: () async{                
                       print(this.DashboardFirstTimeAccess);
-                      if (index == 1 && this.DashboardFirstTimeAccess == true) {
-                        //notFirstTimeDashboardAccess();
-                        // prefs!.setBool("DashboardFirstTimeAccess", true);
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      if (index == 1 && this.DashboardFirstTimeAccess == true) {                     
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             // builder: (context) => ApiConfigurationPage(),
                             builder: (context) => ApiConfigurationPagee(),
                           ),
                         );
+                        
+                       
                       } else {
-                        // notFirstTimeDashboardAccess();
+                      
+   
+                       
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => MenuListScreens[index],
                           ),
                         );
+                       
                       }
                     },
                     child: Container(
