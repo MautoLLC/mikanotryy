@@ -72,7 +72,8 @@ class ApiConfigurationStatee extends ChangeNotifier {
   void update() async {
     await getListConfigurationModel();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!DashBoardFirstTimeAccess) {
+     bool dashboardaccess = prefs.getBool(prefs_DashboardFirstTimeAccess)!;
+    if (dashboardaccess == false) {
       await getSelectedConfigurationModel();
       await getListGenerators();
       generatorNameList = prefs.getStringList("generatorNameList")!;

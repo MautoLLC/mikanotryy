@@ -56,7 +56,12 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
     this.generatorType =
         await prefs.getString(prefs_ApiConfigurationOption).toString();
   }
-
+ void isNotFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.DashboardFirstTimeAccess = false;
+    prefs.setBool(prefs_DashboardFirstTimeAccess, false); 
+    notifyListeners();
+  } 
   // void notFirstTimeDashboardAccess() async {
   //   this.prefs = await SharedPreferences.getInstance();
   //   this.prefs?.setBool('DashboardFirstTimeAccess', false);
@@ -139,18 +144,24 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
                             builder: (context) => ApiConfigurationPagee(),
                           ),
                         );
-                        
+                        isNotFirstTime();
                        
                       } else {
                       
-   
-                       
+    if(this.DashboardFirstTimeAccess == true){ 
+                         Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => FetchGenerators(RefreshRate: 10),
+                          ),
+                        );
+    }
+                       else{
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => MenuListScreens[index],
                           ),
                         );
-                       
+                       }
                       }
                     },
                     child: Container(
