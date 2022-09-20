@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mymikano_app/State/UserState.dart';
+import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/services/LogoutService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/utils/strings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/CloudDashboard_Index.dart';
+import 'package:mymikano_app/views/screens/Dashboard/FetchGenerators.dart';
 import 'package:mymikano_app/views/screens/Dashboard/LanDashboard_Index.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +31,7 @@ class MenuScreen extends StatefulWidget {
   _MenuScreenState createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
   bool guestLogin = true;
   bool DashboardFirstTimeAccess = true;
   int RefreshRate = 60;
@@ -52,7 +56,12 @@ class _MenuScreenState extends State<MenuScreen> {
     this.generatorType =
         await prefs.getString(prefs_ApiConfigurationOption).toString();
   }
-
+ void isNotFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.DashboardFirstTimeAccess = false;
+    prefs.setBool(prefs_DashboardFirstTimeAccess, false); 
+    notifyListeners();
+  } 
   // void notFirstTimeDashboardAccess() async {
   //   this.prefs = await SharedPreferences.getInstance();
   //   this.prefs?.setBool('DashboardFirstTimeAccess', false);
@@ -125,24 +134,34 @@ class _MenuScreenState extends State<MenuScreen> {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async{                
                       print(this.DashboardFirstTimeAccess);
-                      if (index == 1 && this.DashboardFirstTimeAccess == true) {
-                        //notFirstTimeDashboardAccess();
-                        // prefs!.setBool("DashboardFirstTimeAccess", true);
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      if (index == 1 && this.DashboardFirstTimeAccess == true) {                     
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             // builder: (context) => ApiConfigurationPage(),
                             builder: (context) => ApiConfigurationPagee(),
                           ),
                         );
+                        isNotFirstTime();
+                       
                       } else {
-                        // notFirstTimeDashboardAccess();
+                      
+    if(index != 1 ){ 
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => MenuListScreens[index],
                           ),
                         );
+    }
+                       else{
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => FetchGenerators(RefreshRate: 10),
+                          ),
+                        );
+                       }
                       }
                     },
                     child: Container(
@@ -206,7 +225,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             color: Colors.white,
                             fontFamily: PoppinsFamily,
                             fontSize: 18,
-                          ),
+                          ),  
                         ),
                       ))
                 ],
