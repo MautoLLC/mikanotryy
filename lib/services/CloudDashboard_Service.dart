@@ -100,7 +100,7 @@ class CloudDashBoard_Service {
     else if (status == 1)
       Mode = "MAN";
     else
-      Mode = "Off";
+      Mode = "OFF";
 
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
         headers: {
