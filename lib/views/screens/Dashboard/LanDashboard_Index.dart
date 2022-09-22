@@ -637,11 +637,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                          child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
                                             value: (double.parse(
-                                                     lan.GeneratorLoad.return_value)),   
+                                                     lan.GeneratorLoad.return_value)),    
                                                     
                                             needleColor: mainColorTheme,
                                             min: 0,  
-                                            max: cloud.nominalLoadkW.value.toDouble(),
+                                            max: 150, 
                                           )),
                                     ], 
                                   ), 
