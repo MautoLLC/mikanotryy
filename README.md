@@ -1,16 +1,12 @@
 # mymikano_app
 
-A new Flutter application.
 
-## Getting Started
+## distribution for apple store
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. git pull
+2. Go to Xcode, open runner then
+3. Runner->General-> make sure that the bundleId and versions are correct
+4. Signing & capabilities : check the Team and identifier...
+5.product-scheme->choose scheme->in Runner -> any ios device
+6.Window->organizer->choose archive-> distribute
+7. make sure the SKU of the app is good
