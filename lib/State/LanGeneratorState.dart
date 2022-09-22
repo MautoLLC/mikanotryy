@@ -5,7 +5,7 @@ import 'package:mymikano_app/services/LanDashboard_Service.dart';
 class LanGeneratorState extends ChangeNotifier {
   late LanDashBoard_Service LanService;
   //LanDashBoard_Service LanService = LanDashBoard_Service();
-  final Map EnState = {
+  final Map EnState = {  
     'Init': 0,
     'Ready': 1,
     'NotReady': 2,
@@ -284,16 +284,16 @@ class LanGeneratorState extends ChangeNotifier {
       mainsFrequency = await LanService.FetchSensorData("MainFrequency");
       generatorFrequency = await LanService.FetchSensorData("Frequency");
       LoadPowerFactor = await LanService.FetchSensorData("PowerFactor");
-      if (ControllerMode.return_value == "AUTO")
+      if (ControllerMode.return_value == 2 )
         ControllerModeStatus = 2;  
-      else if (ControllerMode.return_value == "MAN")
+      else if (ControllerMode.return_value == 1 )
         ControllerModeStatus = 1;
-      else if (ControllerMode.return_value == "OFF") 
+      else if (ControllerMode.return_value == 0 ) 
         ControllerModeStatus = 0;
 
       if (MCBMode.return_value == 1)
         MCBModeStatus = true;
-      else
+      else 
         MCBModeStatus = false;
 
       if (GCBMode.return_value == 1)

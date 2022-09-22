@@ -144,25 +144,19 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
                             builder: (context) => ApiConfigurationPagee(),
                           ),
                         );
-                        isNotFirstTime();
+                        
                        
                       } else {
                       
-    if(this.DashboardFirstTimeAccess == true){ 
-                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => FetchGenerators(RefreshRate: 10),
-                          ),
-                        );
-    }
-                       else{
+  
+                       
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => MenuListScreens[index],
                           ),
                         );
                        }
-                      }
+                      
                     },
                     child: Container(
                       height: 50,
