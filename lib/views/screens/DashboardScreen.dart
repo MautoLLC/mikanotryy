@@ -110,6 +110,7 @@ class DashboardState extends State<Dashboard> {
                                   .length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
+                            bool pressed = false;
                             return Provider.of<CarouselState>(context,
                                             listen: false)
                                         .topImages[index]
@@ -121,6 +122,10 @@ class DashboardState extends State<Dashboard> {
                                         horizontal: 8.0),
                                     child: GestureDetector(
                                       onTap: () async {
+                                        if (pressed) {
+                                          return;
+                                        }
+                                        pressed = true;
                                         String link =
                                             Provider.of<CarouselState>(context,
                                                     listen: false)
@@ -172,6 +177,7 @@ class DashboardState extends State<Dashboard> {
                                                                   link.toInt())
                                                           .id!)));
                                         }
+                                        pressed = false;
                                       },
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
