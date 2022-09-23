@@ -73,12 +73,12 @@ class LanDashBoard_ModelView {
     return DashBoardService.FetchSensorData("MCB");
   }
 
-  Future<bool> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(int status) async {
     return await DashBoardService.SwitchControllerMode(status);
   }
 
   Future<bool> SwitchMCBMode(bool status) async {
-    return await DashBoardService.SwitchMCBMode(status);
+    return await DashBoardService.SwitchMCBMode(status); 
   }
 
   Future<bool> SwitchOnOff(bool status) async {

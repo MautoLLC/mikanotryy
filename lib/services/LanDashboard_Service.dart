@@ -54,15 +54,17 @@ class LanDashBoard_Service {
     }
   }
 
-  Future<bool> SwitchControllerMode(bool status) async {
+  Future<bool> SwitchControllerMode(int status) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
     String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     int Mode;
-    if (status)
-      Mode = 2;
-    else
+    if (status == 2)
+      Mode = 2;     
+    else if (status == 1)
       Mode = 1;
+     else
+      Mode = 0;
 
     bool isSuccess = false;
 

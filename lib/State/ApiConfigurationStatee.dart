@@ -29,11 +29,12 @@ class ApiConfigurationStatee extends ChangeNotifier {
   List<String> ssidList = [];
   List<String> generatorNameList = [];
   List<Generator> gens = [];
+  String DeviceToken = '';
   ApiConfigurationService service = new ApiConfigurationService();
 
   ///the list of configurations//
   late ConfigurationModel configModel;
-  late List<ConfigurationModel> configsList;
+  late List<ConfigurationModel> configsList;  
 
   ApiConfigurationStatee() {
     //if(!DashBoardFirstTimeAccess)
@@ -64,32 +65,35 @@ class ApiConfigurationStatee extends ChangeNotifier {
   void isNotFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.DashBoardFirstTimeAccess = false;
-    prefs.setBool(prefs_DashboardFirstTimeAccess, false);
+    prefs.setBool(prefs_DashboardFirstTimeAccess, false); 
     notifyListeners();
-  }
+  }  
 
   void update() async {
     await getListConfigurationModel();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!DashBoardFirstTimeAccess) {
+     bool dashboardaccess = prefs.getBool(prefs_DashboardFirstTimeAccess)!;
+    if (dashboardaccess == false) {
       await getSelectedConfigurationModel();
       await getListGenerators();
       generatorNameList = prefs.getStringList("generatorNameList")!;
       chosenGeneratorName = generatorNameList.elementAt(0);
+      
     }
     cloudUsername = prefs.getString(prefs_CloudUsername).toString();
-    cloudPassword = prefs.getString(prefs_CloudPassword).toString();
-    notifyListeners();
+    cloudPassword = prefs.getString(prefs_CloudPassword).toString(); 
+     
+    notifyListeners();  
   }
 
   Future<void> getGeneratorIds(clouduser, cloudpass) async {
     generatorNameList.clear();
+ SharedPreferences pref =
+ await SharedPreferences.getInstance();
+  DeviceToken = pref.getString("DeviceToken").toString();
     List<Generator> generators =
-        await service.getGeneratorsOfUser(clouduser, cloudpass);
-    // generators.forEach((element) {
-    //   generatorNameList.add(element.name);
-    // });
-    gens = generators;
+        await service.getGeneratorsOfUser(clouduser, cloudpass,DeviceToken);  
+    gens = generators; 
     //generatorNameList.add(generators.elementAt(0).name);
     if (gens.isEmpty) {
       isSuccess = false;
@@ -100,7 +104,6 @@ class ApiConfigurationStatee extends ChangeNotifier {
       });
       chosenGeneratorName = generatorNameList.elementAt(0);
       chosenGeneratorId = gens.elementAt(0).generatorId;
-      //generatorNameList.add(gens.elementAt(0).name);
       isSuccess = true;
       Message = 'Generators fetched successfully.';
     }
@@ -193,10 +196,11 @@ class ApiConfigurationStatee extends ChangeNotifier {
 
   Future<void> saveCloudUser(cloudUsername, cloudPassword) async {
     this.cloudUsername = cloudUsername;
-    this.cloudPassword = cloudPassword;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.cloudPassword = cloudPassword; 
+    SharedPreferences prefs = await SharedPreferences.getInstance();   
     prefs.setString(prefs_CloudUsername, cloudUsername);
     prefs.setString(prefs_CloudPassword, cloudPassword);
+    
   }
 
   void setApiLanEndpoint(String apiEndpoint) async {

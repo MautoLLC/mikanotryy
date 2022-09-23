@@ -637,11 +637,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                          child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
                                             value: (double.parse(
-                                                     lan.GeneratorLoad.return_value)),   
+                                                     lan.GeneratorLoad.return_value.toString())),    
                                                     
                                             needleColor: mainColorTheme,
                                             min: 0,  
-                                            max: cloud.nominalLoadkW.value.toDouble(),
+                                            max: 150, 
                                           )),
                                     ], 
                                   ), 
@@ -664,8 +664,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               child: Custom_GaugeWidget(
                                                   title: lbl_RPM,
-                                                  value: (double.parse(
-                                                      lan.Rpm.return_value)),
+                                                  value: (double.parse(  
+                                                      lan.Rpm.return_value.toString())),
                                                   min: 0,
                                                   max: 3000)),
                                         ],
@@ -693,22 +693,22 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                         .return_value
                                                         .toDouble()) /
                                                     10)
-                                                .toString(),
+                                                .toString() + " "+ "Bar",
                                           ),
                                           infotile(
                                             title: lbl_Temperature,
                                             value: lan.CoolantTemp.return_value
-                                                .toString(),
+                                                .toString() + " " + "Celsius ",
                                           ),
                                           infotile(
                                             title: "Fuel Level",
                                             value: lan.FuelLevel.return_value
-                                                .toString(),
+                                                .toString() + " "+ "L",
                                           ),
                                           infotile(
                                             title: "Running Hours",
                                             value: lan.RunningHours.return_value
-                                                .toString(),
+                                                .toString() + " "+ "h",
                                           ),
                                           infotile(
                                             title: "Battery Voltage",
@@ -716,7 +716,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                         .return_value
                                                         .toDouble()) /
                                                     10)
-                                                .toString(),
+                                                .toString()+ " "+ "V",
                                           ),
                                         ],
                                       ),
@@ -732,31 +732,31 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: lan.generatorL1N.return_value.toString(),
+                                            value: lan.generatorL1N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: lan.generatorL2N.return_value.toString(),
+                                            value: lan.generatorL2N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: lan.generatorL3N.return_value.toString(),
+                                            value: lan.generatorL3N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: lan.LoadAL1.return_value.toString(),
+                                            value: lan.LoadAL1.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: lan.LoadAL2.return_value.toString(),
+                                            value: lan.LoadAL2.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: lan.LoadAL3.return_value.toString(),
+                                            value: lan.LoadAL3.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: lan.generatorFrequency.return_value.toString(),
+                                            value: lan.generatorFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
                                             title: "Pf",
@@ -776,35 +776,35 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: lan.mainsvoltageL1N.return_value.toString(),
+                                            value: lan.mainsvoltageL1N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: lan.mainsvoltageL2N.return_value.toString(),
+                                            value: lan.mainsvoltageL2N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: lan.mainsvoltageL3N.return_value.toString(),
+                                            value: lan.mainsvoltageL3N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: lan.LoadAL1.return_value.toString(),
+                                            value: lan.LoadAL1.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: lan.LoadAL2.return_value.toString(),
+                                            value: lan.LoadAL2.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: lan.LoadAL3.return_value.toString(),
+                                            value: lan.LoadAL3.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: lan.mainsFrequency.return_value.toString(),
+                                            value: lan.mainsFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: lan.LoadPowerFactor.return_value.toString(),
+                                            value: lan.LoadPowerFactor.return_value.toString()+ " "+ "kW",
                                           ),
                                         ],
                                       ),
