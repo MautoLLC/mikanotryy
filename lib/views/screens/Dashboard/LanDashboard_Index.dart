@@ -637,7 +637,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                          child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
                                             value: (double.parse(
-                                                     lan.GeneratorLoad.return_value)),    
+                                                     lan.GeneratorLoad.return_value.toString())),    
                                                     
                                             needleColor: mainColorTheme,
                                             min: 0,  
@@ -664,8 +664,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               ),
                                               child: Custom_GaugeWidget(
                                                   title: lbl_RPM,
-                                                  value: (double.parse(
-                                                      lan.Rpm.return_value)),
+                                                  value: (double.parse(  
+                                                      lan.Rpm.return_value.toString())),
                                                   min: 0,
                                                   max: 3000)),
                                         ],
