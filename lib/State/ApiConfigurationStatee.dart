@@ -76,11 +76,12 @@ class ApiConfigurationStatee extends ChangeNotifier {
     if (dashboardaccess == false) {
       await getSelectedConfigurationModel();
       await getListGenerators();
+     
       generatorNameList = prefs.getStringList("generatorNameList")!;
       chosenGeneratorName = generatorNameList.elementAt(0);
       
     }
-    cloudUsername = prefs.getString(prefs_CloudUsername).toString();
+    cloudUsername = prefs.getString(prefs_CloudUsername).toString(); 
     cloudPassword = prefs.getString(prefs_CloudPassword).toString(); 
      
     notifyListeners();  
