@@ -11,7 +11,8 @@ class PaymentService {
   PaymentService._internal();
 
   // TODO Public key prod and dev
-  var publicKey = 'pk_test_949f98de6a4c434159f774c71ce9fc0d7a6fe794';
+  var publicKeyDev = 'pk_test_949f98de6a4c434159f774c71ce9fc0d7a6fe794';
+  var publicKeyLive = 'pk_live_20b68a3f13410da33e5eb9f44a6575955463b511';
   final plugin = PaystackPlugin();
 
   // generate Map of the top 100 currency codes as NGN is 566
@@ -46,7 +47,7 @@ class PaymentService {
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   Future<void> initSdk() async {
-    await plugin.initialize(publicKey: publicKey);
+    await plugin.initialize(publicKey: publicKeyLive);
   }
 
   Future<String?> pay(
