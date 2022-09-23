@@ -269,14 +269,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             }
                                     
                                               else{
-                            
+                                              String Configs = jsonEncode(value.configsList);
+                                               await sharedPreferences.setString(
+                                  'Configurations', Configs);
+                                             
                                                  Navigator.of(context)
                                                   .pushReplacement(
                                                   MaterialPageRoute( 
                                                       builder: (context) =>
                                                           FetchGenerators(RefreshRate: 10)));
                                                            sharedPreferences.setBool(
-                                                          prefs_DashboardFirstTimeAccess, true);      
+                                                          prefs_DashboardFirstTimeAccess, true);    
+                                                        
                                               }
                                             },
                                           
