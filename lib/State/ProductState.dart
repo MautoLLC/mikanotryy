@@ -268,13 +268,19 @@ class ProductState extends ChangeNotifier {
   int get getAllProductNumbers => allProductNumbers;
 
   void addorremoveProductToFavorite(Product product) async {
+    bool result = false;
     if (isInFavorite(product)) {
       for (var item in favoriteProducts) {
         if (item.product.id == product.id) {
+          result = await CustomerService()
+              .deleteFavoriteItemsforLoggedInUser([item.id]);
+          if (!result) {
+            toast("Something wrong happened!");
+            return;
+          }
           product.liked = false;
           item.product.liked = false;
           favoriteProducts.remove(item);
-          await CustomerService().deleteFavoriteItemsforLoggedInUser([item.id]);
           break;
         }
       }

@@ -158,10 +158,10 @@ class CustomerService {
     }
   }
 
-  Future<void> deleteFavoriteItemsforLoggedInUser(List<int?> arr) async {
+  Future<bool> deleteFavoriteItemsforLoggedInUser(List<int?> arr) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      Response response = await dio.post(
+      Response response = await dio.delete(
         MikanoDeleteFavoritAndCartItems,
         queryParameters: {
           "Ids": arr,
@@ -173,12 +173,13 @@ class CustomerService {
         }),
       );
       if (response.statusCode == 200) {
-        return;
+        return true;
       } else {
         throw Exception('Failed to delete item from favorites');
       }
     } catch (e) {
       debugPrint(e.toString());
+      throw Exception('Failed to delete item from favorites');
     }
   }
 
