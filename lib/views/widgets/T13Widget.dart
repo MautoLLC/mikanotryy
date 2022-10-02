@@ -7,6 +7,11 @@ import '../../utils/appsettings.dart';
 Widget t13EditTextStyle(var hintText, var contt,
     {isPassword = true, TextInputType keyboardType = TextInputType.text}) {
   return TextFormField(
+    validator: (value) {
+      if (value!.isEmpty) {
+        return "Please fill in the field";
+      }
+    },
     style: TextStyle(fontSize: textSizeMedium, fontFamily: PoppinsFamily),
     obscureText: isPassword,
     cursorColor: black,
