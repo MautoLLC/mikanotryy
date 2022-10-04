@@ -9,8 +9,15 @@
    <application
         android:label="My Mikano"
         android:exported="true"
-        android:icon="@drawable/ic_notification_icon"
+        android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
+       <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_icon"
+           android:resource="@drawable/ic_notification_icon" />
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_color"
+           android:value="@android:color/holo_red_dark" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,10 +27,7 @@
             android:hardwareAccelerated="true"
             android:requestLegacyExternalStorage="true"
             android:windowSoftInputMode="adjustResize">
-            <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
-            <meta-data
-                android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/ic_notification_icon" />
+
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
