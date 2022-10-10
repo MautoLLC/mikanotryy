@@ -762,7 +762,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             value: lan.generatorFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
-                                            title: "Pf",
+                                            title: "Pf ",
                                             value: lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],

@@ -776,7 +776,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             value: cloud.mainsFrequency.value.toString() + " "+ cloud.mainsFrequency.unit,
                                           ),
                                           infotile(
-                                            title: "Pf",
+                                            title: "Pf ",
                                             value: cloud.LoadPowerFactor.value.toString(),
                                           ),
                                         ],
