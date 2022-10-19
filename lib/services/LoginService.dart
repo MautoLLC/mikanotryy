@@ -21,13 +21,11 @@ Login(String username, String password, BuildContext context) async {
     };
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String deviceToken = prefs.getString("DeviceToken").toString();
-    Response result = await dio.post(
-        "https://services.mikano-intl.com/identity-mediator-api/api/Authorization/Login",
-        queryParameters: {
-          "Username": username,
-          "Password": password,
-          "Devicetoken": deviceToken
-        });
+    Response result = await dio.post(LoginUrl, queryParameters: {
+      "Username": username,
+      "Password": password,
+      // "Devicetoken": deviceToken
+    });
 
     if (result.statusCode == 200) {
       var resultData = result.data;

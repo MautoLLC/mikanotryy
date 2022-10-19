@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
+import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductModel.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/images.dart';
@@ -21,10 +23,19 @@ class ItemElement extends StatefulWidget {
 
 class _ItemElementState extends State<ItemElement> {
   bool guestLogin = true;
+  bool Liked = false;
 
   init() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     guestLogin = await prefs.getBool("GuestLogin")!;
+    List<FavoriteProduct> list =
+        Provider.of<ProductState>(context, listen: false).favoriteProducts;
+    for (var item in list) {
+      if (item.product.id == widget.product.id) {
+        Liked = true;
+        break;
+      }
+    }
     setState(() {});
   }
 
@@ -108,7 +119,7 @@ class _ItemElementState extends State<ItemElement> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "${Provider.of<CurrencyState>(context, listen: false).currency.currencySymbol} ${widget.product.Price.toStringAsFixed(2)}",
+                      "${Provider.of<CurrencyState>(context, listen: false).currency.currencySymbol} ${NumberFormat.decimalPattern().format(widget.product.Price)}",
                       style: TextStyle(
                         fontSize: 14,
                         color: mainBlackColorTheme,
@@ -130,10 +141,11 @@ class _ItemElementState extends State<ItemElement> {
                       child: GestureDetector(
                         onTap: () {
                           state.addorremoveProductToFavorite(widget.product);
+                          Liked = !Liked;
+                          setState(() {});
                         },
                         child: commonCacheImageWidget(ic_heart, 30,
-                            color:
-                                widget.product.liked ? mainColorTheme : null),
+                            color: Liked ? mainColorTheme : null),
                       ),
                     ),
                   ),

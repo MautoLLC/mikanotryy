@@ -1,4 +1,4 @@
-const bool isProduction = true;
+const bool isProduction = false;
 
 const KeyCloakBaseUrl = isProduction
     ? 'https://authorization.mikano-intl.com'
@@ -114,7 +114,7 @@ const MikanoShopRfq = "$MikanoShopMainURl/rfq";
 
 const MikanoLoadCalculationURL = isProduction
     ? "https://services.mikano-intl.com/load-calculation-api/api"
-    : "";
+    : "http://dev.codepickles.com:8095/api";
 const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
 const MikanoLoadCalculationCategoriesWithId =
     "$MikanoLoadCalculationURL/Categories/{id}";
@@ -125,6 +125,16 @@ const MikanoLoadCalculationUnits = "$MikanoLoadCalculationURL/Units";
 const MikanoLoadCalculationUnitsWithId = "$MikanoLoadCalculationURL/Units/{id}";
 const MikanoLoadCalculationCalculation =
     "$MikanoLoadCalculationURL/LoadCalculation/{util}";
+
+const LoginUrl = isProduction
+    ? "https://services.mikano-intl.com/identity-mediator-api/api/Authorization/Login"
+    : "http://dev.codepickles.com:8096/api/Authorization/Login";
+const NotificationsUrl = isProduction
+    ? "https://services.mikano-intl.com/identity-mediator-api/api/Notifications"
+    : "http://dev.codepickles.com:8096/api/Notifications";
+const NotificationsDeleteUrl = isProduction
+    ? "https://services.mikano-intl.com/identity-mediator-api/api/Notifications/{id}"
+    : "http://dev.codepickles.com:8096/api/Notifications/{id}";
 
 const mainAppName = 'My Mikano App';
 

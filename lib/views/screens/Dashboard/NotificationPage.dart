@@ -24,10 +24,9 @@ class NotificationPage extends StatelessWidget {
         itemCount: 9,
         itemBuilder: (context, index) {
           NotificationModel notification =
-              NotificationModel(Message: Notifications[index]);
+              NotificationModel(message: Notifications[index]);
           return NotificationItem(
-            Message: notification.Message,
-            Date: notification.Date,
+            notification: notification,
           );
         },
       ),

@@ -52,7 +52,7 @@ class UserService {
         throw Exception('Error');
       }
     } catch (e) {
-      throw Exception('Error');
+      throw Exception(e.toString());
     }
   }
 

@@ -9,7 +9,7 @@ class LoadCalculationState extends ChangeNotifier {
   int _fieldsCount = 0;
   double _runningPower = 0;
   double _startingPower = 0;
-  int _utils = 60;
+  int _utils = 70;
   double _KVA = 0;
   List<Equipment> _allComponents = [];
   List<Equipment> _components = [];
@@ -139,7 +139,7 @@ class LoadCalculationState extends ChangeNotifier {
     _runningPower = 0;
     _startingPower = 0;
     _KVA = 0;
-    _utils = 60;
+    _utils = 70;
     _components.clear();
     _componentQuantity.clear();
     notifyListeners();
