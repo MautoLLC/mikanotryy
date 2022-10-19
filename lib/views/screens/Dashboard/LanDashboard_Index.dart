@@ -527,7 +527,10 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),
-                                              color: isOnRight
+                                              color: (double.parse(lan
+                                                        .GeneratorVoltage  
+                                                        .return_value
+                                                        )) > 0 || lan.GeneratorFrequency.return_value > 0
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -540,7 +543,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: isOnMiddle
+                                              color: lan.isGCB
                                                   ? GreenpowerColor
                                                   : mainColorTheme,
                                             ),
@@ -553,7 +556,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: lan.isGCB
+                                              color: lan.isGCB || lan.MCBModeStatus
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -759,7 +762,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             value: lan.generatorFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
-                                            title: "Pf",
+                                            title: "Pf ",
                                             value: lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],

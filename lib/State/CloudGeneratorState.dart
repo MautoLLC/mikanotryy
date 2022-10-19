@@ -291,7 +291,7 @@ class CloudGeneratorState extends ChangeNotifier {
 
       //for testing purposes only
       //MCBMode.value="1";
-      if (MCBMode.value == "Close-On")
+      if (MCBMode.value == "Close-On")  
         MCBModeStatus = true; 
       else
         MCBModeStatus = false;
