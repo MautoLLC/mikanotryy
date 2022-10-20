@@ -42,19 +42,23 @@ class NotificationItem extends StatelessWidget {
                     width: 35,
                   ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                notification.message.toString(),
-                style: TextStyle(fontSize: 14, color: mainBlackColorTheme),
-              ),
-              SizedBox(height: 11.0),
-              Text(
-                notification.datetime.toString(),
-                style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
-              ),
-            ],
+          Expanded(
+            flex: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  notification.message.toString(),
+                  style: TextStyle(fontSize: 14, color: mainBlackColorTheme),
+                  maxLines: 4,
+                ),
+                SizedBox(height: 11.0),
+                Text(
+                  notification.datetime.toString(),
+                  style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
+                ),
+              ],
+            ),
           ),
           Spacer(),
           IconButton(
