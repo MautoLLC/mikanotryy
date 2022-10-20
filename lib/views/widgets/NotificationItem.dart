@@ -58,9 +58,9 @@ class NotificationItem extends StatelessWidget {
           ),
           Spacer(),
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 try {
-                  Provider.of<NotificationState>(context, listen: false)
+                  await Provider.of<NotificationState>(context, listen: false)
                       .deleteNotification(notification.notificationId!.toInt(),
                           notification.source.toString());
                   toast("Notification Deleted successfully");
