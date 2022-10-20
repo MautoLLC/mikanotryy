@@ -204,7 +204,30 @@ class LanGeneratorState extends ChangeNotifier {
       name: "Error",
       hardware: "Error",
       connected: "Error"); 
-  
+   LANSensor ReadyToLoad = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error"); 
+      LANSensor MainsHealthy = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
+     LANSensor MCBFeedback = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
+     LANSensor GCBFeedback = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
  int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   // bool PowerStatus = false;
@@ -212,7 +235,10 @@ class LanGeneratorState extends ChangeNotifier {
   late bool MCBisAuto = MCBModeStatus;
   bool isIO = false;
   bool isGCB = false;
-
+  bool isReadyToLoad = false;
+  bool MCBFeedbackState = false;
+  bool GCBFeedbackState = false;
+  bool MainsHealthyStatus = false; 
   changeControllerModeStatus(value) async {
     bool isSuccess = await LanService.SwitchControllerMode(value);
     if (isSuccess == true) {
@@ -238,7 +264,7 @@ class LanGeneratorState extends ChangeNotifier {
   }
 
   changeMCBModeStatus(value) async {
-    bool isSuccess = await LanService.SwitchMCBMode(value);
+    bool isSuccess = await LanService.SwitchMCBMode(value); 
     if (isSuccess == true) {
       MCBModeStatus = value;
       notifyListeners();
@@ -284,6 +310,10 @@ class LanGeneratorState extends ChangeNotifier {
       mainsFrequency = await LanService.FetchSensorData("MainFrequency");
       generatorFrequency = await LanService.FetchSensorData("Frequency");
       LoadPowerFactor = await LanService.FetchSensorData("PowerFactor");
+      ReadyToLoad = await LanService.FetchSensorData("ReadyToLoad");
+      MainsHealthy = await LanService.FetchSensorData("MainsHealthy");
+      MCBFeedback = await LanService.FetchSensorData("MCBFeedback");
+      GCBFeedback = await LanService.FetchSensorData("GCBFeedback");
       if (ControllerMode.return_value == 2 )
         ControllerModeStatus = 2;  
       else if (ControllerMode.return_value == 1 )
@@ -305,6 +335,14 @@ class LanGeneratorState extends ChangeNotifier {
         isIO = true;
       else
         isIO = false;
+      if(MCBFeedback.return_value == 1)
+      MCBFeedbackState = true;
+      else
+      MCBFeedbackState = false;
+      if(GCBFeedback.return_value == 1)
+      GCBFeedbackState = true;
+      else
+      GCBFeedbackState = false;
 
       // if (EngineState.return_value == 8 || EngineState.return_value == 7)
       //   PowerStatus = true;
