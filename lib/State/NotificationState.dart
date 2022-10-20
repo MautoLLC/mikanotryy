@@ -10,6 +10,7 @@ class NotificationState extends ChangeNotifier {
   List<NotificationModel> _notifications = [];
 
   update() async {
+    _notifications.clear();
     List<NotificationModel> notifications =
         await NotificationService().getNotificationsByLoggedInUser();
     _notifications.addAll(notifications);

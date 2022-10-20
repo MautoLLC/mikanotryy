@@ -54,11 +54,6 @@ class NotificationItem extends StatelessWidget {
                 notification.datetime.toString(),
                 style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
               ),
-              SizedBox(height: 11.0),
-              Text(
-                notification.userID.toString(),
-                style: TextStyle(fontSize: 14, color: mainGreyColorTheme),
-              )
             ],
           ),
           Spacer(),

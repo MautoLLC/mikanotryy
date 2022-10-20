@@ -24,7 +24,7 @@ Login(String username, String password, BuildContext context) async {
     Response result = await dio.post(LoginUrl, queryParameters: {
       "Username": username,
       "Password": password,
-      // "Devicetoken": deviceToken
+      "Devicetoken": deviceToken
     });
 
     if (result.statusCode == 200) {
