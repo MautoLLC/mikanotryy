@@ -428,7 +428,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: cloud.MCBModeStatus
+                                                    color: cloud.MCBModeStatus && cloud.MainsHealthyStatus == true
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -479,7 +479,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                     
                                                   setState(() async{
                                                     
-                                                    
+                                                    cloud.isReadyToLoad == true;
                                                     cloud.changeIsIO(true);
                                                   }
                                                    );
@@ -505,7 +505,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               AssetImage(ic_g),
                                               color: (double.parse(cloud
                                                         .GeneratorVoltage  
-                                                        .value)) > 0 || cloud.GeneratorFrequency.value > 0
+                                                        .value)) > 0 || cloud.GeneratorFrequency.value > 0 && cloud.isReadyToLoad == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ), 
@@ -518,7 +518,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.isGCB
+                                              color: cloud.isGCB && cloud.GCBFeedbackState == true
                                                   ? GreenpowerColor
                                                   : mainColorTheme,
                                             ),
@@ -531,7 +531,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: cloud.isGCB || cloud.MCBModeStatus
+                                              color: cloud.isGCB || cloud.MCBModeStatus && cloud.MainsHealthyStatus == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),

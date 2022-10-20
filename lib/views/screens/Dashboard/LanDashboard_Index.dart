@@ -434,7 +434,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: lan.MCBModeStatus
+                                                    color: lan.MCBModeStatus && lan.MainsHealthyStatus == true
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -442,7 +442,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       Positioned(
                                           top: 15,
                                           left: 80,
-                                          child: Container(
+                                          child: Container( 
                                             width: 40,
                                             height: 48,
                                             child: ImageIcon(
@@ -485,7 +485,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                     
                                                   setState(() async{
                                                     
-                                                    
+                                                    lan.isReadyToLoad == true;
                                                     lan.changeIsIO(true);
                                                   }
                                                    );
@@ -516,6 +516,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                         image: AssetImage(ic_i),
+                                                      
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
@@ -530,7 +531,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               color: (double.parse(lan
                                                         .GeneratorVoltage  
                                                         .return_value
-                                                        )) > 0 || lan.GeneratorFrequency.return_value > 0
+                                                        )) > 0 && lan.GeneratorFrequency.return_value > 0 && lan.isReadyToLoad == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -543,7 +544,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.isGCB
+                                              color: lan.isGCB && lan.GCBFeedbackState == true
                                                   ? GreenpowerColor
                                                   : mainColorTheme,
                                             ),
@@ -556,7 +557,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: lan.isGCB || lan.MCBModeStatus
+                                              color: lan.isGCB || lan.MCBModeStatus && lan.MainsHealthyStatus == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -770,7 +771,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     ],
                                   ),
                                   ExpansionTile(
-                                    title: Text("Mains"),
+                                    title: Text("Mains"), 
                                     children: [
                                       ListView(
                                         shrinkWrap: true,

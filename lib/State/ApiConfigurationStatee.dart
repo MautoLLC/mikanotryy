@@ -30,6 +30,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   List<String> generatorNameList = [];
   List<Generator> gens = [];
   String DeviceToken = '';
+  String userID = '';
   ApiConfigurationService service = new ApiConfigurationService();
 
   ///the list of configurations//
@@ -76,14 +77,14 @@ class ApiConfigurationStatee extends ChangeNotifier {
     if (dashboardaccess == false) {
       await getSelectedConfigurationModel();
       await getListGenerators();
-     
       generatorNameList = prefs.getStringList("generatorNameList")!;
       chosenGeneratorName = generatorNameList.elementAt(0);
       
     }
     cloudUsername = prefs.getString(prefs_CloudUsername).toString(); 
     cloudPassword = prefs.getString(prefs_CloudPassword).toString(); 
-     
+    userID = prefs.getString("IotUserID").toString();
+     print(userID);
     notifyListeners();  
   }
 
@@ -93,7 +94,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
  await SharedPreferences.getInstance();
   DeviceToken = pref.getString("DeviceToken").toString();
     List<Generator> generators =
-        await service.getGeneratorsOfUser(clouduser, cloudpass,DeviceToken);  
+        await service.getGeneratorsOfUser(clouduser, cloudpass,DeviceToken);   
     gens = generators; 
     //generatorNameList.add(generators.elementAt(0).name);
     if (gens.isEmpty) {
@@ -196,12 +197,13 @@ class ApiConfigurationStatee extends ChangeNotifier {
   }
 
   Future<void> saveCloudUser(cloudUsername, cloudPassword) async {
-    this.cloudUsername = cloudUsername;
+    this.cloudUsername = cloudUsername; 
     this.cloudPassword = cloudPassword; 
+    this.userID = userID;
     SharedPreferences prefs = await SharedPreferences.getInstance();   
     prefs.setString(prefs_CloudUsername, cloudUsername);
     prefs.setString(prefs_CloudPassword, cloudPassword);
-    
+   
   }
 
   void setApiLanEndpoint(String apiEndpoint) async {

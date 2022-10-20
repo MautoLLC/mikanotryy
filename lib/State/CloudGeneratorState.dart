@@ -177,7 +177,10 @@ class CloudGeneratorState extends ChangeNotifier {
   bool PowerStatus = false;
   bool isGCB = false;
   bool isIO = false;
-
+  bool isReadyToLoad = false;
+  bool MCBFeedbackState = false;
+  bool GCBFeedbackState = false;
+  bool MainsHealthyStatus = false;  
   changeControllerModeStatus(value) async {
     bool isSuccess = await cloudService.SwitchControllerMode(value);
     if (isSuccess == true) {

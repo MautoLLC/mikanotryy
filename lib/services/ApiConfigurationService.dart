@@ -8,6 +8,7 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:mymikano_app/models/GeneratorModel.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiConfigurationService {
   void resetESP(String url) async {
@@ -15,9 +16,9 @@ class ApiConfigurationService {
     if (response.statusCode == 200) {
       debugPrint(response.body.toString());
     } else {
-      throw Exception('Failed to reset ESP');
+      throw Exception('Failed to reset ESP'); 
     }
-  }
+  } 
 
   Future<String> Connecttossid(
       String id,
@@ -102,7 +103,7 @@ class ApiConfigurationService {
     try {
       final responseAuth = await dio.post(cloudIotMautoAuthUrl,
           options: Options(
-            headers: {
+            headers: { 
               'Content-Type': 'application/json',
             },
           ),
@@ -118,6 +119,9 @@ class ApiConfigurationService {
       }
       final token = (responseAuth.data)['token'];
       final userID = (responseAuth.data)['id'];
+     
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+       await prefs.setString("IotUserID", userID.toString());
       final response = await dio.get(
         (cloudIotMautoUserGeneratorsUrl + userID),
         options:
@@ -130,7 +134,7 @@ class ApiConfigurationService {
       } else {
         debugPrint(response.data.toString());
         return generators;
-      }
+      } 
     } catch (e) {
       debugPrint(e.toString());
       return generators;
