@@ -447,7 +447,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.MCBModeStatus  
+                                              color: lan.MCBModeStatus && lan.MCBFeedbackState == true
                                                   ? GreenpowerColor
                                                   : mainColorTheme,  
                                             ),
@@ -457,13 +457,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 72,
                                           left: 232,
                                           child: new GestureDetector( 
-                                              onTap: () {
+                                           onTap: () {
                                            
                                                 setState(() {
-                                                  isOnleft = false;  
-                                                  isOnMiddle = false;
-                                                  isOnRight = false;
-                                                   lan.changeIsIO(false); 
+                                                  lan.isReadyToLoad = false;
+                                                  lan.changeIsIO(false); 
                                                 });
                                               },
                                               child: Container(  
@@ -480,35 +478,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 4,
                                           left: 241,
                                           child: new GestureDetector(
-                                              onTap: (){
+                                               onTap: (){
                                             
                                                     
                                                   setState(() async{
                                                     
-                                                    lan.isReadyToLoad == true;
+                                                    lan.isReadyToLoad = true;
                                                     lan.changeIsIO(true);
                                                   }
-                                                   );
-                                                   
-                                                if ((double.parse(lan
-                                                        .GeneratorVoltage  
-                                                        .return_value)) >
-                                                    0) {
-                                                  setState(() { 
-                                                    isOnRight = true;  
-                                                  });
-                                                }
-                                                if (lan.MCBModeStatus == 
-                                                    true) {
-                                                  setState(() {
-                                                    isOnleft = true;
-                                                  });
-                                                }
-                                                if (lan.isGCB == true) {
-                                                  setState(() {
-                                                    isOnMiddle = true;
-                                                  });
-                                                }
+                                                   );                   
                                               },
                                               child: Container(
                                                   width: 48,
@@ -531,7 +509,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               color: (double.parse(lan
                                                         .GeneratorVoltage  
                                                         .return_value
-                                                        )) > 0 && lan.GeneratorFrequency.return_value > 0 && lan.isReadyToLoad == true
+                                                        )) > 0 || (double.parse(lan.GeneratorFrequency.return_value)) > 0 || lan.isReadyToLoad == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -557,7 +535,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: lan.isGCB || lan.MCBModeStatus && lan.MainsHealthyStatus == true
+                                              color: lan.isGCB && lan.MCBModeStatus && lan.MainsHealthyStatus == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
