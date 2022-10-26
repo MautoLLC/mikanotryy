@@ -343,7 +343,10 @@ class LanGeneratorState extends ChangeNotifier {
       GCBFeedbackState = true;
       else
       GCBFeedbackState = false;
-
+      if(ReadyToLoad.return_value == 1)
+      isReadyToLoad = true;
+      else
+      isReadyToLoad = false;
       // if (EngineState.return_value == 8 || EngineState.return_value == 7)
       //   PowerStatus = true;
       // else
