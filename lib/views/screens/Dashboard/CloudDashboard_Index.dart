@@ -428,7 +428,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: cloud.MCBModeStatus && cloud.MainsHealthyStatus == true
+                                                    color: cloud.MCBModeStatus && cloud.MainsHealthy.value == '1'
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -441,9 +441,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.MCBModeStatus && cloud.MCBFeedback == true 
+                                              color: cloud.MCBModeStatus && cloud.MCBFeedback.value == '1'
                                                   ? GreenpowerColor
-                                                  : cloud.MainsHealthy == true && cloud.MCBFeedback == false ? mainColorTheme: mainGreyColorTheme,  
+                                                  : cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -474,7 +474,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           child: new GestureDetector(
                                               onTap: (){
                                             
-                                                    
+                                                  
                                                   setState(() async{
                                                     
                                                     
@@ -499,7 +499,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(    
                                               AssetImage(ic_g),
-                                              color: cloud.isReadyToLoad == true
+                                              color: cloud.ReadyToLoad.value == '1'
                                                   ? GreenpowerColor 
                                                   : mainGreyColorTheme,
                                             ), 
@@ -512,9 +512,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.isGCB && cloud.GCBFeedbackState == true
+                                              color: cloud.isGCB && cloud.GCBFeedback.value == '1'
                                                   ? GreenpowerColor
-                                                  : cloud.isReadyToLoad == true && cloud.GCBFeedback == false ? mainColorTheme: mainGreyColorTheme,
+                                                  : cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -525,7 +525,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: (cloud.isReadyToLoad == true && cloud.GCBFeedback == true) || (cloud.MainsHealthy == true && cloud.MCBFeedback == true)
+                                              color: (cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '1') || (cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '1')
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),

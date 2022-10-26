@@ -447,9 +447,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.MCBModeStatus && lan.MCBFeedback == true 
+                                              color: lan.MCBModeStatus && lan.MCBFeedback.return_value == '1' 
                                                   ? GreenpowerColor
-                                                  : lan.MainsHealthy == true && lan.MCBFeedback == false ? mainColorTheme: mainGreyColorTheme,   
+                                                  : lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,   
                                             ),
                                           )),
                                       if (lan.ControllerModeStatus != 2)
@@ -506,7 +506,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),
-                                              color: lan.isReadyToLoad == true
+                                              color: lan.ReadyToLoad.return_value == '1'
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -519,9 +519,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.isGCB && lan.GCBFeedbackState == true
+                                              color: lan.isGCB && lan.GCBFeedback.return_value == '1'
                                                   ? GreenpowerColor
-                                                  : lan.isReadyToLoad == true && lan.GCBFeedback == false ? mainColorTheme: mainGreyColorTheme,
+                                                  : lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -532,7 +532,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: (lan.isReadyToLoad == true && lan.GCBFeedback == true) || (lan.MainsHealthy == true && lan.MCBFeedback == true)
+                                              color: (lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '1') || (lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '1')
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
