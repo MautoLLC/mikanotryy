@@ -447,9 +447,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.MCBModeStatus && lan.MCBFeedbackState == true
+                                              color: lan.MCBModeStatus && lan.MCBFeedback == true 
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,  
+                                                  : lan.MainsHealthy == true && lan.MCBFeedback == false ? mainColorTheme: mainGreyColorTheme,   
                                             ),
                                           )),
                                       if (lan.ControllerModeStatus != 2)
@@ -460,7 +460,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                            onTap: () {
                                            
                                                 setState(() {
-                                                  lan.isReadyToLoad = false;
+                                               
                                                   lan.changeIsIO(false); 
                                                 });
                                               },
@@ -483,7 +483,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                     
                                                   setState(() async{
                                                     
-                                                    lan.isReadyToLoad = true;
+                                                 
                                                     lan.changeIsIO(true);
                                                   }
                                                    );                   
@@ -506,10 +506,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),
-                                              color: (double.parse(lan
-                                                        .GeneratorVoltage  
-                                                        .return_value
-                                                        )) > 0 || (double.parse(lan.GeneratorFrequency.return_value)) > 0 || lan.isReadyToLoad == true
+                                              color: lan.isReadyToLoad == true
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -524,7 +521,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: lan.isGCB && lan.GCBFeedbackState == true
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,
+                                                  : lan.isReadyToLoad == true && lan.GCBFeedback == false ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -535,7 +532,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: lan.isGCB && lan.MCBModeStatus && lan.MainsHealthyStatus == true
+                                              color: (lan.isReadyToLoad == true && lan.GCBFeedback == true) || (lan.MainsHealthy == true && lan.MCBFeedback == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),

@@ -341,8 +341,6 @@ class CloudGeneratorState extends ChangeNotifier {
         PowerStatus = true;
       else
         PowerStatus = false;
-      
-      notifyListeners();
       if(MCBFeedback.value == 1)
       MCBFeedbackState = true;
       else
@@ -359,6 +357,12 @@ class CloudGeneratorState extends ChangeNotifier {
       GCBFeedbackState = true;
       else
       GCBFeedbackState = false;
+      if(ReadyToLoad.value == 1)
+      isReadyToLoad = true;
+      else
+      isReadyToLoad = false;
+      notifyListeners();
+      
       return true;
     }
   }

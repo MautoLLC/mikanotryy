@@ -441,9 +441,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.MCBModeStatus && cloud.GCBFeedback == true 
+                                              color: cloud.MCBModeStatus && cloud.MCBFeedback == true 
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,  
+                                                  : cloud.MainsHealthy == true && cloud.MCBFeedback == false ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -454,7 +454,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               onTap: () {
                                            
                                                 setState(() {
-                                                  cloud.isReadyToLoad = false;
+                                                 
                                                    cloud.changeIsIO(false); 
                                                 });
                                               },
@@ -477,7 +477,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                     
                                                   setState(() async{
                                                     
-                                                    cloud.isReadyToLoad = true;
+                                                    
                                                     cloud.changeIsIO(true);
                                                   }
                                                    );                   
@@ -499,9 +499,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(    
                                               AssetImage(ic_g),
-                                              color: (double.parse(cloud
-                                                        .GeneratorVoltage  
-                                                        .value)) > 0 || (double.parse(cloud.GeneratorFrequency.value)) > 0 || cloud.isReadyToLoad == true
+                                              color: cloud.isReadyToLoad == true
                                                   ? GreenpowerColor 
                                                   : mainGreyColorTheme,
                                             ), 
@@ -516,7 +514,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: cloud.isGCB && cloud.GCBFeedbackState == true
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,
+                                                  : cloud.isReadyToLoad == true && cloud.GCBFeedback == false ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -527,7 +525,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: cloud.isGCB && cloud.MCBModeStatus && cloud.MainsHealthyStatus == true
+                                              color: (cloud.isReadyToLoad == true && cloud.GCBFeedback == true) || (cloud.MainsHealthy == true && cloud.MCBFeedback == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
