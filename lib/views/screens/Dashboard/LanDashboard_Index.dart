@@ -434,7 +434,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: lan.MCBModeStatus && lan.MainsHealthyStatus == true
+                                                    color: ((double.parse(lan
+                                                        .mainsvoltageL1N 
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1'
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -447,9 +449,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.MCBModeStatus && lan.MCBFeedback.return_value == '1' 
+                                              color: ((double.parse(lan
+                                                        .mainsvoltageL1N 
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '1'
                                                   ? GreenpowerColor
-                                                  : lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,   
+                                                  : ((double.parse(lan
+                                                        .mainsvoltageL1N 
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (lan.ControllerModeStatus != 2)
@@ -519,7 +525,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.isGCB && lan.GCBFeedback.return_value == '1'
+                                              color: lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '1'
                                                   ? GreenpowerColor
                                                   : lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,
                                             ),
