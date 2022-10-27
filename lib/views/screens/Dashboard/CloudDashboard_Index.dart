@@ -428,7 +428,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: cloud.MCBModeStatus && cloud.MainsHealthy.value == '1'
+                                                    color: ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1'
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -441,9 +443,13 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.MCBModeStatus && cloud.MCBFeedback.value == '1'
+                                              color: ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '1'
                                                   ? GreenpowerColor
-                                                  : cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,  
+                                                  : ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -512,7 +518,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.isGCB && cloud.GCBFeedback.value == '1'
+                                              color: cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '1'
                                                   ? GreenpowerColor
                                                   : cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,
                                             ),
