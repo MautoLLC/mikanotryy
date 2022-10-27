@@ -172,6 +172,30 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
+   CloudSensor ReadyToLoad = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+    CloudSensor MainsHealthy = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+    CloudSensor MCBFeedback = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+    CloudSensor GCBFeedback = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
   int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
@@ -282,6 +306,10 @@ class CloudGeneratorState extends ChangeNotifier {
           FindSensor(cloudsensors, dotenv.env['Mains_Frequency_id'].toString());
       LoadPowerFactor = FindSensor(
           cloudsensors, dotenv.env['Load_Power_Factor_id'].toString());
+ ReadyToLoad = FindSensor(cloudsensors, dotenv.env['ReadyToLoad_id'].toString());
+      MainsHealthy = FindSensor(cloudsensors, dotenv.env['MainsHealthy_id'].toString());
+      MCBFeedback = FindSensor(cloudsensors, dotenv.env['MCBFeedback_id'].toString());
+      GCBFeedback = FindSensor(cloudsensors, dotenv.env['GCBFeedback_id'].toString());
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
 
@@ -313,7 +341,28 @@ class CloudGeneratorState extends ChangeNotifier {
         PowerStatus = true;
       else
         PowerStatus = false;
+      if(MCBFeedback.value == 1)
+      MCBFeedbackState = true;
+      else
+      MCBFeedbackState = false;
+      if(GCBFeedback.value == 1)
+      GCBFeedbackState = true;
+      else
+      GCBFeedbackState = false;
+       if(MCBFeedback.value == 1)
+      MCBFeedbackState = true;
+      else
+      MCBFeedbackState = false;
+      if(GCBFeedback.value == 1)
+      GCBFeedbackState = true;
+      else
+      GCBFeedbackState = false;
+      if(ReadyToLoad.value == 1)
+      isReadyToLoad = true;
+      else
+      isReadyToLoad = false;
       notifyListeners();
+      
       return true;
     }
   }

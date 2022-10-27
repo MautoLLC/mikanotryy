@@ -66,7 +66,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     await Provider.of<CloudGeneratorState>(context, listen: false)
         .ReinitiateCloudService();
     isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
-        .FetchData(); 
+        .FetchData();
   }  
     
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
@@ -428,7 +428,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: cloud.MCBModeStatus && cloud.MainsHealthyStatus == true
+                                                    color: ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1'
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -441,9 +443,13 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.MCBModeStatus    
+                                              color: ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '1'
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,  
+                                                  : ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -454,9 +460,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               onTap: () {
                                            
                                                 setState(() {
-                                                  isOnleft = false;  
-                                                  isOnMiddle = false;
-                                                  isOnRight = false;
+                                                 
                                                    cloud.changeIsIO(false); 
                                                 });
                                               },
@@ -476,15 +480,13 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           child: new GestureDetector(
                                               onTap: (){
                                             
-                                                    
+                                                  
                                                   setState(() async{
                                                     
-                                                    cloud.isReadyToLoad == true;
+                                                    
                                                     cloud.changeIsIO(true);
                                                   }
-                                                   );
-                                                   
-                                                
+                                                   );                   
                                               },
                                               child: Container(
                                                   width: 48,
@@ -503,24 +505,22 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(    
                                               AssetImage(ic_g),
-                                              color: (double.parse(cloud
-                                                        .GeneratorVoltage  
-                                                        .value)) > 0 || cloud.GeneratorFrequency.value > 0 && cloud.isReadyToLoad == true
-                                                  ? GreenpowerColor
+                                              color: cloud.ReadyToLoad.value == '1'
+                                                  ? GreenpowerColor 
                                                   : mainGreyColorTheme,
                                             ), 
                                           )),
                                       Positioned(
                                           top: 15,
                                           left: 150,
-                                          child: Container(
+                                          child: Container(  
                                             width: 50,
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.isGCB && cloud.GCBFeedbackState == true
+                                              color: cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '1'
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,
+                                                  : cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -531,7 +531,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: cloud.isGCB || cloud.MCBModeStatus && cloud.MainsHealthyStatus == true
+                                              color: (cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '1') || (cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '1')
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
