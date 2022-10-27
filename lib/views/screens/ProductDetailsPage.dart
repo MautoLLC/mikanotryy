@@ -78,7 +78,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               child: CachedNetworkImage(
                                 imageUrl: '${widget.product.Image}',
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                                 progressIndicatorBuilder:
                                     (context, url, downloadProgress) => Center(
                                         child: CircularProgressIndicator(
