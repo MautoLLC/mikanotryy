@@ -178,7 +178,8 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
                       print(this.DashboardFirstTimeAccess);
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
-                      if (index == 1 && this.DashboardFirstTimeAccess == true) {
+                      if (MenuListNames == "Generator Dashboard" &&
+                          this.DashboardFirstTimeAccess == true) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             // builder: (context) => ApiConfigurationPage(),
