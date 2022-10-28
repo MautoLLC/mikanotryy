@@ -69,13 +69,7 @@ Login(String username, String password, BuildContext context) async {
             settings: RouteSettings(name: 'dashboard')),
       );
       prefs.setBool('IsLoggedIn', true);
-      await prefs.setString("isTechnician", 'false');
-      for (var item in jwtData['roles']) {
-        if (item.toString() == "Technician") {
-          await prefs.setString("isTechnician", 'true');
-          break;
-        }
-      }
+      prefs.setString("Role", jwtData['roles'][0].toString().toLowerCase());
       await prefs.setBool('GuestLogin', false);
       SuccessToast();
       return true;

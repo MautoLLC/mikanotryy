@@ -31,7 +31,7 @@ class MenuScreen extends StatefulWidget {
   _MenuScreenState createState() => _MenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
+class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
   bool guestLogin = true;
   bool DashboardFirstTimeAccess = true;
   int RefreshRate = 60;
@@ -56,12 +56,13 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
     this.generatorType =
         await prefs.getString(prefs_ApiConfigurationOption).toString();
   }
- void isNotFirstTime() async {
+
+  void isNotFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.DashboardFirstTimeAccess = false;
-    prefs.setBool(prefs_DashboardFirstTimeAccess, false); 
+    prefs.setBool(prefs_DashboardFirstTimeAccess, false);
     notifyListeners();
-  } 
+  }
   // void notFirstTimeDashboardAccess() async {
   //   this.prefs = await SharedPreferences.getInstance();
   //   this.prefs?.setBool('DashboardFirstTimeAccess', false);
@@ -84,11 +85,43 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserState>(context, listen: false);
+    String role = user.Role;
+
+    List<String> EcommerceRoles = [
+      "user",
+      "gen client",
+      "gen employee",
+      "fm client",
+      "fm employee",
+      "gen & fm client",
+      "gen & fm employee",
+    ];
+
+    List<String> GeneratorRoles = [
+      "gen client",
+      "gen employee",
+      "gen & fm client",
+      "gen & fm employee",
+    ];
+
+    List<String> FacilityClientRoles = [
+      "fm client",
+      "gen & fm client",
+    ];
+
+    List<String> FacilityEmployeeRoles = [
+      "fm employee",
+      "gen & fm employee",
+    ];
 
     List<String> MenuListNames = [
-      if (!guestLogin)
-        !user.isTechnician ? "Maintenance & Repair" : "My Inspections",
-      if (!guestLogin) "Generator Dashboard",
+      if (!guestLogin &&
+          (FacilityClientRoles.contains(role) ||
+              FacilityEmployeeRoles.contains(role)))
+        FacilityEmployeeRoles.contains(role)
+            ? "Maintenance & Repair"
+            : "My Inspections",
+      if (!guestLogin && (GeneratorRoles.contains(role))) "Generator Dashboard",
       if (!guestLogin) "Favorites",
       if (!guestLogin) "Address",
       // if (!guestLogin) "Cards",
@@ -97,9 +130,13 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
     ];
 
     List<Widget> MenuListScreens = [
-      if (!guestLogin)
-        !user.isTechnician ? T5Maintenance() : MyInspectionsScreen(),
-      if (!guestLogin) getPage(),
+      if (!guestLogin &&
+          (FacilityClientRoles.contains(role) ||
+              FacilityEmployeeRoles.contains(role)))
+        FacilityEmployeeRoles.contains(role)
+            ? T5Maintenance()
+            : MyInspectionsScreen(),
+      if (!guestLogin && (GeneratorRoles.contains(role))) getPage(),
       if (!guestLogin) FavoritesScreen(),
       if (!guestLogin) AddressScreen(),
       // if (!guestLogin) CardsScreen(),
@@ -108,8 +145,11 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
     ];
 
     List<String> MenuListIcons = [
-      if (!guestLogin) ic_Mainteance_and_Repair,
-      if (!guestLogin) ic_Generator_Info,
+      if (!guestLogin &&
+          (FacilityClientRoles.contains(role) ||
+              FacilityEmployeeRoles.contains(role)))
+        ic_Mainteance_and_Repair,
+      if (!guestLogin && (GeneratorRoles.contains(role))) ic_Generator_Info,
       if (!guestLogin) ic_Favorites,
       if (!guestLogin) ic_Address,
       // if (!guestLogin) ic_Cards,
@@ -134,29 +174,24 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                   child: GestureDetector(
-                    onTap: () async{                
+                    onTap: () async {
                       print(this.DashboardFirstTimeAccess);
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      if (index == 1 && this.DashboardFirstTimeAccess == true) {                     
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      if (index == 1 && this.DashboardFirstTimeAccess == true) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             // builder: (context) => ApiConfigurationPage(),
                             builder: (context) => ApiConfigurationPagee(),
                           ),
                         );
-                        
-                       
                       } else {
-                      
-  
-                       
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => MenuListScreens[index],
                           ),
                         );
-                       }
-                      
+                      }
                     },
                     child: Container(
                       height: 50,
@@ -219,7 +254,7 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier{
                             color: Colors.white,
                             fontFamily: PoppinsFamily,
                             fontSize: 18,
-                          ),  
+                          ),
                         ),
                       ))
                 ],
