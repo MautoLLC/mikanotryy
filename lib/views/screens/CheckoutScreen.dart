@@ -13,7 +13,7 @@ import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TopRowBar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-
+import 'package:intl/intl.dart';
 import 'AddressScreen.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -214,7 +214,7 @@ class CheckoutScreen extends StatelessWidget {
                         ),
                         Text(
                           '${currencyState.currency.currencySymbol}' +
-                              "${productState.selectedProductsPrice.toStringAsFixed(2)}",
+                              "${NumberFormat.decimalPattern().format(productState.selectedProductsPrice)}",
                           style: TextStyle(fontSize: 14, color: mainColorTheme),
                         ),
                       ],

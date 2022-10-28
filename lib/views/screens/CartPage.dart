@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
@@ -130,7 +131,7 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Text(lbl_Total_Price, style: TextStyle(fontSize: 14)),
                     Text(
-                      "${currencyState.currency.currencySymbol} ${ProductState.selectedProducts.length != 0 ? ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity) : ProductState.productsInCart.length != 0 ? ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity).toStringAsFixed(2) : 0}",
+                      "${currencyState.currency.currencySymbol} ${ProductState.selectedProducts.length != 0 ? NumberFormat.decimalPattern().format(ProductState.selectedProducts.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)) : ProductState.productsInCart.length != 0 ? NumberFormat.decimalPattern().format(ProductState.productsInCart.fold(0, (total, product) => (total.toString()).toDouble() + product.product.Price * product.quantity)) : 0}",
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -266,7 +267,7 @@ class CartItem extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "${currencyState.currency.currencySymbol} ${product.product.Price.toStringAsFixed(2)}",
+                                      "${currencyState.currency.currencySymbol} ${NumberFormat.decimalPattern().format(product.product.Price)}",
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: "Poppins",
