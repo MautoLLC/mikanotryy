@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -86,7 +87,22 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     return configModel;
   }
 
-  
+  bool timedelayMCBFeedback(CloudGeneratorState c){
+  bool state = false;
+   if(c.MCBFeedback.value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
+  bool timedelayGCBFeedback(CloudGeneratorState c){
+  bool state = false;
+   if(c.GCBFeedback.value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String test=prefs.getString('Configurations').toString();
@@ -405,6 +421,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   ),
                                 ],
                               ),
+                             
                               SizedBox(
                                 height: 20,
                               ),
@@ -435,6 +452,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
                                               ))),
+                                              
                                       Positioned(
                                           top: 15,
                                           left: 80,
@@ -445,11 +463,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: ((double.parse(cloud
                                                         .mainsvoltageL1N 
-                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '1'
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true
                                                   ? GreenpowerColor
                                                   : ((double.parse(cloud
                                                         .mainsvoltageL1N 
-                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,  
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == false ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -473,7 +491,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (cloud.ControllerModeStatus != 2)
+                                      if (cloud.ControllerModeStatus != 2) 
                                         Positioned(
                                           top: 4,
                                           left: 241,
@@ -518,9 +536,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '1'
+                                              color: cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == true
                                                   ? GreenpowerColor
-                                                  : cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '0' ? mainColorTheme: mainGreyColorTheme,
+                                                  : cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == false ? mainColorTheme : mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -531,7 +549,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: (cloud.ReadyToLoad.value == '1' && cloud.GCBFeedback.value == '1') || (cloud.MainsHealthy.value == '1' && cloud.MCBFeedback.value == '1')
+                                              color: (cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == true) || (cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
