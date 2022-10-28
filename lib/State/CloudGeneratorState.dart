@@ -341,7 +341,7 @@ class CloudGeneratorState extends ChangeNotifier {
         PowerStatus = true;
       else
         PowerStatus = false;
-      if(MCBFeedback.value == 1)
+      if(MCBFeedback.value == '1')
       MCBFeedbackState = true;
       else
       MCBFeedbackState = false;

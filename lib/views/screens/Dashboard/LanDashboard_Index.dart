@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -91,7 +92,22 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   //       .toList();
   //   return configsList;
   // }
-
+   bool timedelayMCBFeedback(LanGeneratorState c){
+  bool state = false;
+   if(c.MCBFeedback.return_value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
+  bool timedelayGCBFeedback(LanGeneratorState c){
+  bool state = false;
+   if(c.GCBFeedback.return_value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
   @override
   void dispose() {
     timer.cancel();
@@ -451,11 +467,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: ((double.parse(lan
                                                         .mainsvoltageL1N 
-                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '1'
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == true
                                                   ? GreenpowerColor
                                                   : ((double.parse(lan
                                                         .mainsvoltageL1N 
-                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,  
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == false ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (lan.ControllerModeStatus != 2)
@@ -525,9 +541,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '1'
+                                              color: lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == true
                                                   ? GreenpowerColor
-                                                  : lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '0' ? mainColorTheme: mainGreyColorTheme,
+                                                  : lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == false ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -538,7 +554,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: (lan.ReadyToLoad.return_value == '1' && lan.GCBFeedback.return_value == '1') || (lan.MainsHealthy.return_value == '1' && lan.MCBFeedback.return_value == '1')
+                                              color: (lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == true) || (lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
