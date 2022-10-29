@@ -42,6 +42,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   late ConfigurationModel configModel;
   late Generator ConfigGenerator;
   bool isReset = false;
+  bool greenline = false;
   //late final List<ConfigurationModel> configsList;  
   
   @override
@@ -463,11 +464,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: ((double.parse(cloud
                                                         .mainsvoltageL1N 
-                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true && cloud.MCBModeStatus == true
                                                   ? GreenpowerColor
                                                   : ((double.parse(cloud
                                                         .mainsvoltageL1N 
-                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == false ? mainColorTheme: mainGreyColorTheme,  
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == false && cloud.MCBModeStatus == true ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -536,9 +537,9 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == true
+                                              color: greenline == true && cloud.isGCB == true
                                                   ? GreenpowerColor
-                                                  : cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == false ? mainColorTheme : mainGreyColorTheme,
+                                                  : cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == false && cloud.isGCB == true ? mainColorTheme : mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -549,7 +550,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: (cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == true) || (cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true)
+                                              color: (cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == true && cloud.isGCB == true) || (cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true && cloud.MCBModeStatus == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -561,12 +562,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           
                                           child: new GestureDetector(
                                               onTap: () {
+                                                    sleep(Duration(seconds: 2));
                                                     if(cloud.MCBModeStatus == false){
-
+                                                      
                                                       cloud.changeMCBModeStatus(
                                                           true);  
                                                     }
                                                     else{
+                                                      
                                                       cloud.changeMCBModeStatus(
                                                           false); 
                                                     }
@@ -590,16 +593,25 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           child: new GestureDetector(
                                           
                                               onTap: () {
-                                                
-                                                 if(cloud.isGCB==false){
+                                                 sleep(Duration(seconds: 2));
+                                                 if(cloud.ReadyToLoad.value == '1' && cloud.isGCB){
+                                                    sleep(Duration(seconds: 2));
+                                                    if(cloud.GCBFeedback.value == '1'){
+                                                      greenline = true;
+                                                    }
+                                                  
+                                                 }
+                                                  if(cloud.isGCB == false){
+                                                      
+                                                      cloud.changeIsGCB(
+                                                          true);  
+                                                    }
+                                                    else{
+                                                       
+                                                      cloud.changeIsGCB(
+                                                          false); 
+                                                    }
                                                    
-                                                    
-                                                      cloud.changeIsGCB(true);
-                                                 }
-                                                 else{
-                                                  cloud.changeIsGCB(false);
-                                                 }
-                                                    
                                               },
                                               child: Container(
                                                   width: 60,
