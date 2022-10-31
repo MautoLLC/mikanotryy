@@ -69,7 +69,10 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
   // }
 
   Widget getPage() {
-    if (this.generatorType == 'cloud') {
+     if (this.DashboardFirstTimeAccess == true) {
+      return ApiConfigurationPagee();
+    } 
+    else if (this.generatorType == 'cloud') {
       return CloudDashboard_Index(
           /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/
           RefreshRate: this.RefreshRate);
@@ -175,24 +178,12 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 0.0),
                   child: GestureDetector(
                     onTap: () async {
-                      print(this.DashboardFirstTimeAccess);
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      if (MenuListNames == "Generator Dashboard" &&
-                          this.DashboardFirstTimeAccess == true) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            // builder: (context) => ApiConfigurationPage(),
-                            builder: (context) => ApiConfigurationPagee(),
-                          ),
-                        );
-                      } else {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => MenuListScreens[index],
-                          ),
-                        );
-                      }
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MenuListScreens[index],
+                        ),
+                      );
+
                     },
                     child: Container(
                       height: 50,
