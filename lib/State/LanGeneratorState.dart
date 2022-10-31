@@ -228,6 +228,37 @@ class LanGeneratorState extends ChangeNotifier {
       name: "Error",
       hardware: "Error",
       connected: "Error");  
+      LANSensor mainsvoltageL1L2N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor mainsvoltageL1L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor mainsvoltageL2L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor generatorvoltageL1L2N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor generatorvoltageL1L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor generatorvoltageL2L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
  int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   // bool PowerStatus = false;
@@ -314,6 +345,12 @@ class LanGeneratorState extends ChangeNotifier {
       MainsHealthy = await LanService.FetchSensorData("MainsHealthy");
       MCBFeedback = await LanService.FetchSensorData("MCBFeedback");
       GCBFeedback = await LanService.FetchSensorData("GCBFeedback");
+      mainsvoltageL1L2N = await LanService.FetchSensorData("MainVL1L2N");
+       mainsvoltageL1L3N = await LanService.FetchSensorData("MainVL3L1N");
+       mainsvoltageL2L3N = await LanService.FetchSensorData("MainVL2L3N");
+       generatorvoltageL1L2N = await LanService.FetchSensorData("GenVL1L2N");
+       generatorvoltageL1L3N = await LanService.FetchSensorData("GenVL3L1N");
+       generatorvoltageL2L3N = await LanService.FetchSensorData("GenVL2L3N");
       if (ControllerMode.return_value == 2 )
         ControllerModeStatus = 2;  
       else if (ControllerMode.return_value == 1 )

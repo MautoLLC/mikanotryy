@@ -754,6 +754,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             title: "L3-N",
                                             value: lan.generatorL3N.return_value.toString()+ " "+ "V",
                                           ),
+                                           infotile(
+                                            title: "L1-L2",
+                                            value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: lan.generatorvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
                                           infotile(
                                             title: "L1",
                                             value: lan.LoadAL1.return_value.toString()+ " "+ "A",
@@ -797,6 +809,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           infotile(
                                             title: "L3-N",
                                             value: lan.mainsvoltageL3N.return_value.toString()+ " "+ "V",
+                                          ),
+                                            infotile(
+                                            title: "L1-L2",
+                                            value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: lan.mainsvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                           infotile(
                                             title: "L1",
