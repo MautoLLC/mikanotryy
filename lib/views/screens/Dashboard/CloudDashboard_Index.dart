@@ -745,6 +745,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: "L3-N",
                                             value: cloud.generatorL3N.value.toString() + " "+ cloud.generatorL3N.unit,
                                           ),
+                                            infotile(
+                                            title: "L1-L2",
+                                            value: cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: cloud.generatorvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
                                           infotile(
                                             title: "L1",
                                             value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
@@ -788,6 +800,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           infotile(
                                             title: "L3-N",
                                             value: cloud.mainsvoltageL3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                           infotile(
+                                            title: "L1-L2",
+                                            value: cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: cloud.mainsvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                           infotile(
                                             title: "L1",

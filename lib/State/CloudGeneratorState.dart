@@ -160,6 +160,42 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
+  CloudSensor mainsvoltageL1L2N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor mainsvoltageL1L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor mainsvoltageL2L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor generatorvoltageL1L2N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor generatorvoltageL1L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor generatorvoltageL2L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
   CloudSensor mainsFrequency = CloudSensor(
       sensorID: "Error",
       sensorName: "Error",
@@ -310,6 +346,18 @@ class CloudGeneratorState extends ChangeNotifier {
       MainsHealthy = FindSensor(cloudsensors, dotenv.env['MainsHealthy_id'].toString());
       MCBFeedback = FindSensor(cloudsensors, dotenv.env['MCBFeedback_id'].toString());
       GCBFeedback = FindSensor(cloudsensors, dotenv.env['GCBFeedback_id'].toString());
+     mainsvoltageL1L2N= FindSensor(
+          cloudsensors, dotenv.env['mainsvoltage_L1-L2_id'].toString());
+    mainsvoltageL1L3N= FindSensor(
+          cloudsensors, dotenv.env['mainsvoltage_L1-L3_id'].toString());
+      mainsvoltageL2L3N= FindSensor(
+          cloudsensors, dotenv.env['mainsvoltage_L2-L3_id'].toString());
+  generatorvoltageL1L2N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L1-L2_id'].toString());
+  generatorvoltageL1L3N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L1-L3_id'].toString());
+     generatorvoltageL2L3N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L2-L3_id'].toString());
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
 
@@ -346,7 +394,7 @@ class CloudGeneratorState extends ChangeNotifier {
       else
       MCBFeedbackState = false;
       if(GCBFeedback.value == 1)
-      GCBFeedbackState = true;
+      GCBFeedbackState = true; 
       else
       GCBFeedbackState = false;
        if(MCBFeedback.value == 1)
