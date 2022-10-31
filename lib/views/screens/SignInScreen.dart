@@ -200,31 +200,34 @@ class T13SignInScreenState extends State<T13SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Expanded(
-                          child: T13Button(
-                            // onPressed: (){},
-                            textContent: lbl_lbl_login,
-                            onPressed: () async {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
-                              }
-                              if (!pressed) {
-                                pressed = true;
+                          child: IgnorePointer(
+                            ignoring: pressed,
+                            child: T13Button(
+                              // onPressed: (){},
+                              textContent: lbl_lbl_login,
+                              onPressed: () async {
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                }
                                 FocusScope.of(context).unfocus();
+                                pressed = true;
                                 loading = true;
                                 setState(() {});
-                                bool response = await Login(
-                                    emailController.text.toString(),
-                                    passController.text.toString(),
-                                    this.context);
-                                emailController.text = "";
-                                passController.text = "";
-                                if (!response) {
+                                try {
+                                  bool response = await Login(
+                                      emailController.text.toString(),
+                                      passController.text.toString(),
+                                      this.context);
+                                } catch (e) {
                                   loading = false;
+                                } finally {
+                                  pressed = false;
+                                  emailController.text = "";
+                                  passController.text = "";
                                 }
-                                pressed = false;
                                 setState(() {});
-                              }
-                            },
+                              },
+                            ),
                           ),
                           flex: 2,
                         ),
