@@ -69,10 +69,9 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
   // }
 
   Widget getPage() {
-     if (this.DashboardFirstTimeAccess == true) {
+    if (this.DashboardFirstTimeAccess == true) {
       return ApiConfigurationPagee();
-    } 
-    else if (this.generatorType == 'cloud') {
+    } else if (this.generatorType == 'cloud') {
       return CloudDashboard_Index(
           /*ApiEndPoint: "https//iotapi.mauto.co/api/generators/values/",*/
           RefreshRate: this.RefreshRate);
@@ -91,6 +90,7 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
     String role = user.Role;
 
     List<String> EcommerceRoles = [
+      "admin",
       "user",
       "gen client",
       "gen employee",
@@ -101,6 +101,7 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
     ];
 
     List<String> GeneratorRoles = [
+      "admin",
       "gen client",
       "gen employee",
       "gen & fm client",
@@ -108,11 +109,13 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
     ];
 
     List<String> FacilityClientRoles = [
+      "admin",
       "fm client",
       "gen & fm client",
     ];
 
     List<String> FacilityEmployeeRoles = [
+      "admin",
       "fm employee",
       "gen & fm employee",
     ];
@@ -183,7 +186,6 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
                           builder: (context) => MenuListScreens[index],
                         ),
                       );
-
                     },
                     child: Container(
                       height: 50,
