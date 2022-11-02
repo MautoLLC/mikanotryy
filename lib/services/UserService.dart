@@ -15,7 +15,7 @@ class UserService {
   Future<bool> EditUserInfo(
       String firstName, String lastName, String phoneNumber) async {
     await PrepareCall();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();  
     String url = userEditInfoUrl.replaceAll(
         "{id}", prefs.getString('UserID').toString());
     try {
@@ -49,10 +49,10 @@ class UserService {
             TechnicianModel.fromJson(response.data);
         return technicianModel;
       } else {
-        throw Exception('Error');
+        throw Exception('Error'); 
       }
     } catch (e) {
-      throw Exception('Error');
+      throw Exception(e.toString());
     }
   }
 

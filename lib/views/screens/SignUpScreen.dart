@@ -117,7 +117,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                         style: TextStyle(
                             fontSize: textSizeMedium,
                             fontFamily: PoppinsFamily),
-                        obscureText: _passwordVisible,
+                        obscureText: !_passwordVisible,
                         cursorColor: black,
                         controller: passwController,
                         keyboardType: TextInputType.visiblePassword,
@@ -125,7 +125,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                           suffixIcon: IconButton(
                             icon: Icon(
                               // Based on passwordVisible state choose the icon
-                              _passwordVisible
+                              !_passwordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                               color: Theme.of(context).primaryColorDark,
@@ -175,7 +175,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                         style: TextStyle(
                             fontSize: textSizeMedium,
                             fontFamily: PoppinsFamily),
-                        obscureText: _passwordVisible2,
+                        obscureText: !_passwordVisible2,
                         cursorColor: black,
                         controller: confpasswController,
                         keyboardType: TextInputType.visiblePassword,
@@ -183,7 +183,7 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
                           suffixIcon: IconButton(
                             icon: Icon(
                               // Based on passwordVisible state choose the icon
-                              _passwordVisible2
+                              !_passwordVisible2
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                               color: Theme.of(context).primaryColorDark,

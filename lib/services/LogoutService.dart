@@ -19,7 +19,9 @@ logout() async {
             "Content-Type": "application/json",
             "Authorization": "Bearer ${prefs.getString("accessToken")}"
           });
-
+  } catch (e) {
+    debugPrint(e.toString());
+  } finally {
     if (!await prefs.getBool('GuestLogin')!) gps.canceled = true;
     prefs.clear();
     await prefs.setString("DeviceToken", token.toString());
@@ -29,7 +31,5 @@ logout() async {
     navigator.currentState!.pushReplacement(
       MaterialPageRoute(builder: (context) => T13SignInScreen()),
     );
-  } catch (e) {
-    debugPrint(e.toString());
   }
 }

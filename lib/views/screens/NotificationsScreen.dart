@@ -66,12 +66,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       .notifications
                       .length,
                   itemBuilder: (context, index) {
-                    NotificationModel notification = NotificationModel(
-                        Message: Provider.of<NotificationState>(context)
-                            .notifications[index]
-                            .Message);
+                    NotificationModel notification =
+                        Provider.of<NotificationState>(context)
+                            .notifications[index];
                     return NotificationItem(
-                        Message: notification.Message, Date: notification.Date);
+                      notification: notification,
+                    );
                   },
                 ),
               ),

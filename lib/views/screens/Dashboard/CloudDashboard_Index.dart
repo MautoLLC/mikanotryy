@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -41,6 +42,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   late ConfigurationModel configModel;
   late Generator ConfigGenerator;
   bool isReset = false;
+  bool greenline = false;
   //late final List<ConfigurationModel> configsList;  
   
   @override
@@ -66,7 +68,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     await Provider.of<CloudGeneratorState>(context, listen: false)
         .ReinitiateCloudService();
     isFetched = await Provider.of<CloudGeneratorState>(context, listen: false)
-        .FetchData(); 
+        .FetchData();
   }  
     
   Future<ConfigurationModel> getSelectedConfigurationModel() async {
@@ -86,7 +88,22 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     return configModel;
   }
 
-  
+  bool timedelayMCBFeedback(CloudGeneratorState c){
+  bool state = false;
+   if(c.MCBFeedback.value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
+  bool timedelayGCBFeedback(CloudGeneratorState c){
+  bool state = false;
+   if(c.GCBFeedback.value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
   // Future<List<ConfigurationModel>> getListConfigurationModel() async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
   //   String test=prefs.getString('Configurations').toString();
@@ -405,6 +422,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   ),
                                 ],
                               ),
+                             
                               SizedBox(
                                 height: 20,
                               ),
@@ -428,11 +446,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: cloud.MCBModeStatus
+                                                    color: ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1'
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
                                               ))),
+                                              
                                       Positioned(
                                           top: 15,
                                           left: 80,
@@ -441,9 +462,13 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: cloud.MCBModeStatus  
+                                              color: ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true && cloud.MCBModeStatus == true
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,  
+                                                  : ((double.parse(cloud
+                                                        .mainsvoltageL1N 
+                                                        .value)) > 0 || (double.parse(cloud.mainsvoltageL2N.value)) > 0 || (double.parse(cloud.mainsvoltageL3N.value)) > 0)  && cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == false && cloud.MCBModeStatus == true ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (cloud.ControllerModeStatus != 2)
@@ -454,9 +479,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                               onTap: () {
                                            
                                                 setState(() {
-                                                  isOnleft = false;  
-                                                  isOnMiddle = false;
-                                                  isOnRight = false;
+                                                 
                                                    cloud.changeIsIO(false); 
                                                 });
                                               },
@@ -469,40 +492,20 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (cloud.ControllerModeStatus != 2)
+                                      if (cloud.ControllerModeStatus != 2) 
                                         Positioned(
                                           top: 4,
                                           left: 241,
                                           child: new GestureDetector(
                                               onTap: (){
                                             
-                                                    
+                                                  
                                                   setState(() async{
                                                     
                                                     
                                                     cloud.changeIsIO(true);
                                                   }
-                                                   );
-                                                   
-                                                if ((double.parse(cloud
-                                                        .GeneratorVoltage  
-                                                        .value)) >
-                                                    0) {
-                                                  setState(() { 
-                                                    isOnRight = true;  
-                                                  });
-                                                }
-                                                if (cloud.MCBModeStatus == 
-                                                    true) {
-                                                  setState(() {
-                                                    isOnleft = true;
-                                                  });
-                                                }
-                                                if (cloud.isGCB == true) {
-                                                  setState(() {
-                                                    isOnMiddle = true;
-                                                  });
-                                                }
+                                                   );                   
                                               },
                                               child: Container(
                                                   width: 48,
@@ -519,24 +522,24 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           child: Container(
                                             width: 60,  
                                             height: 28,
-                                            child: ImageIcon(
+                                            child: ImageIcon(    
                                               AssetImage(ic_g),
-                                              color: isOnRight
-                                                  ? GreenpowerColor
+                                              color: cloud.ReadyToLoad.value == '1'
+                                                  ? GreenpowerColor 
                                                   : mainGreyColorTheme,
-                                            ),
+                                            ), 
                                           )),
                                       Positioned(
                                           top: 15,
                                           left: 150,
-                                          child: Container(
+                                          child: Container(  
                                             width: 50,
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: isOnMiddle
+                                              color: greenline == true && cloud.isGCB == true
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,
+                                                  : cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == false && cloud.isGCB == true ? mainColorTheme : mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -547,7 +550,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: cloud.isGCB
+                                              color: (cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == true && cloud.isGCB == true) || (cloud.MainsHealthy.value == '1' && timedelayMCBFeedback(cloud) == true && cloud.MCBModeStatus == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -559,12 +562,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           
                                           child: new GestureDetector(
                                               onTap: () {
+                                                    sleep(Duration(seconds: 2));
                                                     if(cloud.MCBModeStatus == false){
-
+                                                      
                                                       cloud.changeMCBModeStatus(
                                                           true);  
                                                     }
                                                     else{
+                                                      
                                                       cloud.changeMCBModeStatus(
                                                           false); 
                                                     }
@@ -588,16 +593,25 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           child: new GestureDetector(
                                           
                                               onTap: () {
-                                                
-                                                 if(cloud.isGCB==false){
+                                                 sleep(Duration(seconds: 2));
+                                                 if(cloud.ReadyToLoad.value == '1' && cloud.isGCB){
+                                                    sleep(Duration(seconds: 2));
+                                                    if(cloud.GCBFeedback.value == '1'){
+                                                      greenline = true;
+                                                    }
+                                                  
+                                                 }
+                                                  if(cloud.isGCB == false){
+                                                      
+                                                      cloud.changeIsGCB(
+                                                          true);  
+                                                    }
+                                                    else{
+                                                       
+                                                      cloud.changeIsGCB(
+                                                          false); 
+                                                    }
                                                    
-                                                    
-                                                      cloud.changeIsGCB(true);
-                                                 }
-                                                 else{
-                                                  cloud.changeIsGCB(false);
-                                                 }
-                                                    
                                               },
                                               child: Container(
                                                   width: 60,
@@ -731,6 +745,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: "L3-N",
                                             value: cloud.generatorL3N.value.toString() + " "+ cloud.generatorL3N.unit,
                                           ),
+                                            infotile(
+                                            title: "L1-L2",
+                                            value: cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: cloud.generatorvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
                                           infotile(
                                             title: "L1",
                                             value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
@@ -775,6 +801,18 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: "L3-N",
                                             value: cloud.mainsvoltageL3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
+                                           infotile(
+                                            title: "L1-L2",
+                                            value: cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: cloud.mainsvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
                                           infotile(
                                             title: "L1",
                                             value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
@@ -792,8 +830,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             value: cloud.mainsFrequency.value.toString() + " "+ cloud.mainsFrequency.unit,
                                           ),
                                           infotile(
-                                            title: "Pf",
-                                            value: cloud.LoadPowerFactor.value.toString() + " "+ "Kw",
+                                            title: "Pf ",
+                                            value: cloud.LoadPowerFactor.value.toString(),
                                           ),
                                         ],
                                       ),

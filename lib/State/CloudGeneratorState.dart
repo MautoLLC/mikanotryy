@@ -160,6 +160,42 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
+  CloudSensor mainsvoltageL1L2N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor mainsvoltageL1L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor mainsvoltageL2L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor generatorvoltageL1L2N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor generatorvoltageL1L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+  CloudSensor generatorvoltageL2L3N = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
   CloudSensor mainsFrequency = CloudSensor(
       sensorID: "Error",
       sensorName: "Error",
@@ -172,12 +208,39 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
+   CloudSensor ReadyToLoad = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+    CloudSensor MainsHealthy = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error"); 
+    CloudSensor MCBFeedback = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
+    CloudSensor GCBFeedback = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
   int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
   bool isGCB = false;
   bool isIO = false;
-
+  bool isReadyToLoad = false;
+  bool MCBFeedbackState = false;
+  bool GCBFeedbackState = false;
+  bool MainsHealthyStatus = false;  
   changeControllerModeStatus(value) async {
     bool isSuccess = await cloudService.SwitchControllerMode(value);
     if (isSuccess == true) {
@@ -279,6 +342,22 @@ class CloudGeneratorState extends ChangeNotifier {
           FindSensor(cloudsensors, dotenv.env['Mains_Frequency_id'].toString());
       LoadPowerFactor = FindSensor(
           cloudsensors, dotenv.env['Load_Power_Factor_id'].toString());
+ ReadyToLoad = FindSensor(cloudsensors, dotenv.env['ReadyToLoad_id'].toString());
+      MainsHealthy = FindSensor(cloudsensors, dotenv.env['MainsHealthy_id'].toString());
+      MCBFeedback = FindSensor(cloudsensors, dotenv.env['MCBFeedback_id'].toString());
+      GCBFeedback = FindSensor(cloudsensors, dotenv.env['GCBFeedback_id'].toString());
+     mainsvoltageL1L2N= FindSensor(
+          cloudsensors, dotenv.env['mainsvoltage_L1-L2_id'].toString());
+    mainsvoltageL1L3N= FindSensor(
+          cloudsensors, dotenv.env['mainsvoltage_L1-L3_id'].toString());
+      mainsvoltageL2L3N= FindSensor(
+          cloudsensors, dotenv.env['mainsvoltage_L2-L3_id'].toString());
+  generatorvoltageL1L2N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L1-L2_id'].toString());
+  generatorvoltageL1L3N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L1-L3_id'].toString());
+     generatorvoltageL2L3N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L2-L3_id'].toString());
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
 
@@ -291,7 +370,7 @@ class CloudGeneratorState extends ChangeNotifier {
 
       //for testing purposes only
       //MCBMode.value="1";
-      if (MCBMode.value == "Close-On")
+      if (MCBMode.value == "Close-On")  
         MCBModeStatus = true; 
       else
         MCBModeStatus = false;
@@ -310,7 +389,28 @@ class CloudGeneratorState extends ChangeNotifier {
         PowerStatus = true;
       else
         PowerStatus = false;
+      if(MCBFeedback.value == '1')
+      MCBFeedbackState = true;
+      else
+      MCBFeedbackState = false;
+      if(GCBFeedback.value == 1)
+      GCBFeedbackState = true; 
+      else
+      GCBFeedbackState = false;
+       if(MCBFeedback.value == 1)
+      MCBFeedbackState = true;
+      else
+      MCBFeedbackState = false;
+      if(GCBFeedback.value == 1)
+      GCBFeedbackState = true;
+      else
+      GCBFeedbackState = false;
+      if(ReadyToLoad.value == 1)
+      isReadyToLoad = true;
+      else
+      isReadyToLoad = false;
       notifyListeners();
+      
       return true;
     }
   }

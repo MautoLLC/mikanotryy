@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/State/UserState.dart';
@@ -77,7 +78,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               child: CachedNetworkImage(
                                 imageUrl: '${widget.product.Image}',
                                 height: 100,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                                 progressIndicatorBuilder:
                                     (context, url, downloadProgress) => Center(
                                         child: CircularProgressIndicator(
@@ -168,7 +169,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${Provider.of<CurrencyState>(context, listen: false).currency.currencySymbol} ${widget.product.Price.toStringAsFixed(2)}',
+                          '${Provider.of<CurrencyState>(context, listen: false).currency.currencySymbol} ${NumberFormat.decimalPattern().format(widget.product.Price)}',
                           style: TextStyle(
                               fontSize: 20, fontFamily: PoppinsFamily),
                         ),
@@ -196,7 +197,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           style: TextStyle(
                               fontSize: 12,
                               fontFamily: PoppinsFamily,
-                              color: mainGreyColorTheme),
+                              color: Colors.black),
                         ),
                         SizedBox(height: 30),
                         if (widget.product.dataSheetLabel.toString() != "")
@@ -210,15 +211,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       Path: widget.product.dataSheet.toString(),
                                       Code: widget.product.Code)));
                             },
-                            child: Text(
-                              widget.product.dataSheetLabel.toString(),
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: PoppinsFamily,
-                                  color: Colors.lightBlue),
+                            child: Icon(
+                              Icons.picture_as_pdf,
+                              size: 80,
                             ),
                           ),
-                        SizedBox(height: 50),
                       ],
                     ),
                     SizedBox(

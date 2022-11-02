@@ -204,7 +204,61 @@ class LanGeneratorState extends ChangeNotifier {
       name: "Error",
       hardware: "Error",
       connected: "Error"); 
-  
+   LANSensor ReadyToLoad = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error"); 
+      LANSensor MainsHealthy = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
+     LANSensor MCBFeedback = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
+     LANSensor GCBFeedback = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
+      LANSensor mainsvoltageL1L2N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor mainsvoltageL1L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor mainsvoltageL2L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor generatorvoltageL1L2N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor generatorvoltageL1L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  LANSensor generatorvoltageL2L3N = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
  int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   // bool PowerStatus = false;
@@ -212,7 +266,10 @@ class LanGeneratorState extends ChangeNotifier {
   late bool MCBisAuto = MCBModeStatus;
   bool isIO = false;
   bool isGCB = false;
-
+  bool isReadyToLoad = false;
+  bool MCBFeedbackState = false;
+  bool GCBFeedbackState = false;
+  bool MainsHealthyStatus = false; 
   changeControllerModeStatus(value) async {
     bool isSuccess = await LanService.SwitchControllerMode(value);
     if (isSuccess == true) {
@@ -238,7 +295,7 @@ class LanGeneratorState extends ChangeNotifier {
   }
 
   changeMCBModeStatus(value) async {
-    bool isSuccess = await LanService.SwitchMCBMode(value);
+    bool isSuccess = await LanService.SwitchMCBMode(value); 
     if (isSuccess == true) {
       MCBModeStatus = value;
       notifyListeners();
@@ -284,6 +341,16 @@ class LanGeneratorState extends ChangeNotifier {
       mainsFrequency = await LanService.FetchSensorData("MainFrequency");
       generatorFrequency = await LanService.FetchSensorData("Frequency");
       LoadPowerFactor = await LanService.FetchSensorData("PowerFactor");
+      ReadyToLoad = await LanService.FetchSensorData("ReadyToLoad");
+      MainsHealthy = await LanService.FetchSensorData("MainsHealthy");
+      MCBFeedback = await LanService.FetchSensorData("MCBFeedback");
+      GCBFeedback = await LanService.FetchSensorData("GCBFeedback");
+      mainsvoltageL1L2N = await LanService.FetchSensorData("MainVL1L2N");
+       mainsvoltageL1L3N = await LanService.FetchSensorData("MainVL3L1N");
+       mainsvoltageL2L3N = await LanService.FetchSensorData("MainVL2L3N");
+       generatorvoltageL1L2N = await LanService.FetchSensorData("GenVL1L2N");
+       generatorvoltageL1L3N = await LanService.FetchSensorData("GenVL3L1N");
+       generatorvoltageL2L3N = await LanService.FetchSensorData("GenVL2L3N");
       if (ControllerMode.return_value == 2 )
         ControllerModeStatus = 2;  
       else if (ControllerMode.return_value == 1 )
@@ -305,7 +372,18 @@ class LanGeneratorState extends ChangeNotifier {
         isIO = true;
       else
         isIO = false;
-
+      if(MCBFeedback.return_value == 1)
+      MCBFeedbackState = true;
+      else
+      MCBFeedbackState = false;
+      if(GCBFeedback.return_value == 1)
+      GCBFeedbackState = true;
+      else
+      GCBFeedbackState = false;
+      if(ReadyToLoad.return_value == 1)
+      isReadyToLoad = true;
+      else
+      isReadyToLoad = false;
       // if (EngineState.return_value == 8 || EngineState.return_value == 7)
       //   PowerStatus = true;
       // else

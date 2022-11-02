@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -39,6 +40,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool isOnleft = false;
   bool isOnMiddle = false;
   bool isOnRight = false;
+   bool greenline = false;
    late LanDashBoard_Service LanService;
   late final ConfigurationModel configModel;
   late CloudGeneratorState cloud;
@@ -91,7 +93,22 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   //       .toList();
   //   return configsList;
   // }
-
+   bool timedelayMCBFeedback(LanGeneratorState c){
+  bool state = false;
+   if(c.MCBFeedback.return_value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
+  bool timedelayGCBFeedback(LanGeneratorState c){
+  bool state = false;
+   if(c.GCBFeedback.return_value == '1'){
+   sleep(Duration(seconds: 2));
+   state = true;
+   }
+   return state;
+  }
   @override
   void dispose() {
     timer.cancel();
@@ -434,7 +451,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: lan.MCBModeStatus
+                                                    color: ((double.parse(lan
+                                                        .mainsvoltageL1N 
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1'
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -442,14 +461,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       Positioned(
                                           top: 15,
                                           left: 80,
-                                          child: Container(
+                                          child: Container( 
                                             width: 40,
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: lan.MCBModeStatus  
+                                              color:((double.parse(lan
+                                                        .mainsvoltageL1N 
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == true && lan.MCBModeStatus == true
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,  
+                                                  : ((double.parse(lan
+                                                        .mainsvoltageL1N 
+                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value== '1' && timedelayMCBFeedback(lan) == false && lan.MCBModeStatus == true ? mainColorTheme: mainGreyColorTheme,  
                                             ),
                                           )),
                                       if (lan.ControllerModeStatus != 2)
@@ -457,13 +480,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 72,
                                           left: 232,
                                           child: new GestureDetector( 
-                                              onTap: () {
+                                           onTap: () {
                                            
                                                 setState(() {
-                                                  isOnleft = false;  
-                                                  isOnMiddle = false;
-                                                  isOnRight = false;
-                                                   lan.changeIsIO(false); 
+                                               
+                                                  lan.changeIsIO(false); 
                                                 });
                                               },
                                               child: Container(  
@@ -480,35 +501,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 4,
                                           left: 241,
                                           child: new GestureDetector(
-                                              onTap: (){
+                                               onTap: (){
                                             
                                                     
                                                   setState(() async{
                                                     
-                                                    
+                                                 
                                                     lan.changeIsIO(true);
                                                   }
-                                                   );
-                                                   
-                                                if ((double.parse(lan
-                                                        .GeneratorVoltage  
-                                                        .return_value)) >
-                                                    0) {
-                                                  setState(() { 
-                                                    isOnRight = true;  
-                                                  });
-                                                }
-                                                if (lan.MCBModeStatus == 
-                                                    true) {
-                                                  setState(() {
-                                                    isOnleft = true;
-                                                  });
-                                                }
-                                                if (lan.isGCB == true) {
-                                                  setState(() {
-                                                    isOnMiddle = true;
-                                                  });
-                                                }
+                                                   );                   
                                               },
                                               child: Container(
                                                   width: 48,
@@ -516,6 +517,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
                                                         image: AssetImage(ic_i),
+                                                      
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
@@ -527,7 +529,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),
-                                              color: isOnRight
+                                              color: lan.ReadyToLoad.return_value == '1'
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -540,9 +542,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: isOnMiddle
+                                              color: greenline == true && lan.isGCB == true
                                                   ? GreenpowerColor
-                                                  : mainColorTheme,
+                                                  : lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == false && lan.isGCB == true ? mainColorTheme : mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -553,7 +555,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: lan.isGCB
+                                              color: (lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == true && lan.isGCB == true) || (lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == true && lan.MCBModeStatus == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -564,13 +566,15 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 67,
                                           
                                           child: new GestureDetector(
-                                              onTap: () {
+                                             onTap: () {
+                                                    sleep(Duration(seconds: 2));
                                                     if(lan.MCBModeStatus == false){
-
+                                                      
                                                       lan.changeMCBModeStatus(
                                                           true);  
                                                     }
                                                     else{
+                                                      
                                                       lan.changeMCBModeStatus(
                                                           false); 
                                                     }
@@ -592,18 +596,26 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 72,
                                           left: 147,
                                           child: new GestureDetector(
-                                          
-                                              onTap: () {
-                                                
-                                                 if(lan.isGCB==false){
+                                          onTap: () {
+                                                 sleep(Duration(seconds: 2));
+                                                 if(lan.ReadyToLoad.return_value == '1' && lan.isGCB){
+                                                    sleep(Duration(seconds: 2));
+                                                    if(lan.GCBFeedback.return_value == '1'){
+                                                      greenline = true;
+                                                    }
+                                                  
+                                                 }
+                                                  if(lan.isGCB == false){
+                                                      
+                                                      lan.changeIsGCB(
+                                                          true);  
+                                                    }
+                                                    else{
+                                                       
+                                                      lan.changeIsGCB(
+                                                          false); 
+                                                    }
                                                    
-                                                    
-                                                      lan.changeIsGCB(true);
-                                                 }
-                                                 else{
-                                                  lan.changeIsGCB(false);
-                                                 }
-                                                    
                                               },
                                               child: Container(
                                                   width: 60,
@@ -742,6 +754,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             title: "L3-N",
                                             value: lan.generatorL3N.return_value.toString()+ " "+ "V",
                                           ),
+                                           infotile(
+                                            title: "L1-L2",
+                                            value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: lan.generatorvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
                                           infotile(
                                             title: "L1",
                                             value: lan.LoadAL1.return_value.toString()+ " "+ "A",
@@ -759,7 +783,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             value: lan.generatorFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
-                                            title: "Pf",
+                                            title: "Pf ",
                                             value: lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],
@@ -767,7 +791,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     ],
                                   ),
                                   ExpansionTile(
-                                    title: Text("Mains"),
+                                    title: Text("Mains"), 
                                     children: [
                                       ListView(
                                         shrinkWrap: true,
@@ -785,6 +809,18 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           infotile(
                                             title: "L3-N",
                                             value: lan.mainsvoltageL3N.return_value.toString()+ " "+ "V",
+                                          ),
+                                            infotile(
+                                            title: "L1-L2",
+                                            value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L1-L3",
+                                            value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                          ),
+                                            infotile(
+                                            title: "L2-L3",
+                                            value: lan.mainsvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                           infotile(
                                             title: "L1",

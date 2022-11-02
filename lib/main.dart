@@ -12,6 +12,9 @@ import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/State/WSVGeneratorState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
+import 'package:mymikano_app/views/screens/Dashboard/AlarmPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
+import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
 

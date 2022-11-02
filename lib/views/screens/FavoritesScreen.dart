@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/ProductState.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCartModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductFavoriteModel.dart';
@@ -188,7 +189,7 @@ class FavoritesItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "\$${product.product.Price}",
+                            "\$${NumberFormat.decimalPattern().format(product.product.Price)}",
                             style: TextStyle(
                               fontSize: 14,
                               fontFamily: "Poppins",

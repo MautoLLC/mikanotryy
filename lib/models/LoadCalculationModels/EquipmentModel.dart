@@ -4,8 +4,8 @@ import 'UnitModel.dart';
 class Equipment {
   int? _id;
   String? _name;
-  int? _startPower;
-  int? _runningPower;
+  double? _startPower;
+  double? _runningPower;
   int? _categoryId;
   Category? _category;
   int? _unitId;
@@ -14,8 +14,8 @@ class Equipment {
   Equipment(
       {int? id,
       String? name,
-      int? startPower,
-      int? runningPower,
+      double? startPower,
+      double? runningPower,
       int? categoryId,
       Category? category,
       int? unitId,
@@ -54,13 +54,13 @@ class Equipment {
 
   set name(String? name) => _name = name;
 
-  int? get startPower => _startPower;
+  double? get startPower => _startPower;
 
-  set startPower(int? startPower) => _startPower = startPower;
+  set startPower(double? startPower) => _startPower = startPower;
 
-  int? get runningPower => _runningPower;
+  double? get runningPower => _runningPower;
 
-  set runningPower(int? runningPower) => _runningPower = runningPower;
+  set runningPower(double? runningPower) => _runningPower = runningPower;
 
   int? get categoryId => _categoryId;
 
@@ -81,8 +81,8 @@ class Equipment {
   Equipment.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
-    _startPower = json['startPower'];
-    _runningPower = json['runningPower'];
+    _startPower = json['startPower'].toDouble();
+    _runningPower = json['runningPower'].toDouble();
     _categoryId = json['categoryId'];
     _category = json['category'] != null
         ? new Category.fromJson(json['category'])

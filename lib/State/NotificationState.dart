@@ -3,22 +3,18 @@ import 'package:mymikano_app/models/NotificationModel.dart';
 import 'package:mymikano_app/services/LocalStorageService.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../services/NotificationService.dart';
+
 class NotificationState extends ChangeNotifier {
   int _notificationCount = 0;
   List<NotificationModel> _notifications = [];
 
   update() async {
-    LocalStorageService localStorageService = LocalStorageService();
-    dynamic tempCount = await localStorageService.getItem("Count") ?? "0";
-    Clear();
-    setNotificationCount(int.parse(tempCount));
-    for (int i = 0; i < _notificationCount + 1; i++) {
-      dynamic TempMessage =
-          await localStorageService.getItem("notification $i");
-      String data = TempMessage.toString();
-      if (!data.isEmptyOrNull)
-        addNotification(NotificationModel(Message: data));
-    }
+    _notifications.clear();
+    List<NotificationModel> notifications =
+        await NotificationService().getNotificationsByLoggedInUser();
+    _notifications.addAll(notifications);
+    _notificationCount = notifications.length;
     notifyListeners();
   }
 
@@ -40,5 +36,24 @@ class NotificationState extends ChangeNotifier {
     _notifications.clear();
     _notificationCount = 0;
     notifyListeners();
+  }
+
+  deleteNotification(int Id, String source) async {
+    try {
+      bool result =
+          await NotificationService().deleteNotificationById(Id, source);
+      if (result) {
+        for (var item in _notifications) {
+          if (item.notificationId!.toInt() == Id) {
+            _notifications.remove(item);
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      throw Exception("Failed to delete Notification");
+    } finally {
+      notifyListeners();
+    }
   }
 }

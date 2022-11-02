@@ -7,7 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 class UserState extends ChangeNotifier {
   TechnicianModel User = TechnicianModel("1", 'null', '', 'null', 'null');
-  bool isTechnician = false;
+  String Role = "user";
   bool termsAccepted = true;
   bool NotificationsEnabled = true;
   Address ChosenAddress = Address();
@@ -15,13 +15,9 @@ class UserState extends ChangeNotifier {
   bool guestLogin = true;
   List<Address> listofAddresses = [];
 
-  // UserState() {
-  //   update();
-  // }
-
   void clear() {
     User = TechnicianModel("1", 'null', '', 'null', 'null');
-    isTechnician = false;
+    Role = "user";
     termsAccepted = true;
     NotificationsEnabled = true;
     ChosenAddress = Address();
@@ -54,7 +50,7 @@ class UserState extends ChangeNotifier {
   void fillUserInfo() async {
     User = await UserService().GetUserInfo();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isTechnician = prefs.getString("isTechnician") == "true" ? true : false;
+    Role = prefs.getString("Role").toString();
     notifyListeners();
   }
 
