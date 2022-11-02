@@ -594,8 +594,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           
                                               onTap: () {
                                                  sleep(Duration(seconds: 2));
-                                                 if(cloud.ReadyToLoad.value == '1' && cloud.isGCB){
-                                                    sleep(Duration(seconds: 2));
+                                                 if(cloud.ReadyToLoad.value == '1' ){
+                                                   
                                                     if(cloud.GCBFeedback.value == '1'){
                                                       greenline = true;
                                                     }
