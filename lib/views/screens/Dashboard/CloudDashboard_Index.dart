@@ -537,7 +537,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: greenline == true && cloud.isGCB == true
+                                              color: greenline == true && cloud.isGCB == true && timedelayGCBFeedback(cloud) == true
                                                   ? GreenpowerColor
                                                   : cloud.ReadyToLoad.value == '1' && timedelayGCBFeedback(cloud) == false && cloud.isGCB == true ? mainColorTheme : mainGreyColorTheme,
                                             ),
