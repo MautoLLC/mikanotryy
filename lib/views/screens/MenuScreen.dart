@@ -124,7 +124,7 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
       if (!guestLogin &&
           (FacilityClientRoles.contains(role) ||
               FacilityEmployeeRoles.contains(role)))
-        FacilityEmployeeRoles.contains(role)
+        FacilityClientRoles.contains(role)
             ? "Maintenance & Repair"
             : "My Inspections",
       if (!guestLogin && (GeneratorRoles.contains(role))) "Generator Dashboard",
@@ -139,7 +139,7 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
       if (!guestLogin &&
           (FacilityClientRoles.contains(role) ||
               FacilityEmployeeRoles.contains(role)))
-        FacilityEmployeeRoles.contains(role)
+        FacilityClientRoles.contains(role)
             ? T5Maintenance()
             : MyInspectionsScreen(),
       if (!guestLogin && (GeneratorRoles.contains(role))) getPage(),
