@@ -144,7 +144,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 children: [
                   Text(
-                    "Running Power: ${NumberFormat.decimalPattern().format(loadCalculationState.getrunningPower())} KVA",
+                    "Running Power: ${NumberFormat.decimalPattern().format(loadCalculationState.getrunningPower().toStringAsFixed(2).toDouble())} KVA",
                     style: TextStyle(color: Colors.grey, fontSize: 22),
                   ),
                 ],
@@ -152,7 +152,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 children: [
                   Text(
-                    "Starting Power: ${NumberFormat.decimalPattern().format(loadCalculationState.getstartingPower())} KVA",
+                    "Starting Power: ${NumberFormat.decimalPattern().format(loadCalculationState.getstartingPower().toStringAsFixed(2).toDouble())} KVA",
                     style: TextStyle(color: Colors.grey, fontSize: 22),
                   ),
                 ],
@@ -160,7 +160,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 children: [
                   Text(
-                    "KVA: ${NumberFormat.decimalPattern().format(loadCalculationState.KVA())}",
+                    "KVA: ${NumberFormat.decimalPattern().format(loadCalculationState.KVA().toStringAsFixed(2).toDouble())}",
                     style: TextStyle(color: Colors.grey, fontSize: 22),
                   ),
                 ],

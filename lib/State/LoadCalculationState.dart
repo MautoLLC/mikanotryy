@@ -5,6 +5,8 @@ import 'package:mymikano_app/models/LoadCalculationModels/EquipmentModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
 import 'package:mymikano_app/services/LoadCalculationService.dart';
 
+import '../models/LoadCalculationModels/KVAResponse.dart';
+
 class LoadCalculationState extends ChangeNotifier {
   int _fieldsCount = 0;
   double _runningPower = 0;
@@ -25,8 +27,18 @@ class LoadCalculationState extends ChangeNotifier {
     return await LoadCalculationService().fetchGeneratorsResult(_KVA);
   }
 
-  CalculateKVA() {
-    _KVA = _runningPower / 0.8 * _utils / 100;
+  CalculateKVA() async {
+    List<int> EquipmentIds = <int>[];
+    for (int i = 0; i < getComponentListLength(); i++) {
+      for (int j = 0; j < _componentQuantity[i]; j++) {
+        EquipmentIds.add(_components.elementAt(i).id!.toInt());
+      }
+    }
+    KVAResponse result =
+        await LoadCalculationService().CalculateKVA(_utils, EquipmentIds);
+    _KVA = result.kvaValue!.toDouble();
+    _runningPower = result.runningPower!.toDouble();
+    _startingPower = result.startPower!.toDouble();
     notifyListeners();
   }
 
@@ -55,16 +67,16 @@ class LoadCalculationState extends ChangeNotifier {
 
   void incrementComponentQuantity(int index) {
     _componentQuantity[index]++;
-    _runningPower = 0;
-    _startingPower = 0;
-    for (int i = 0; i < _components.length; i++) {
-      _runningPower += _components[i].runningPower!.toDouble() *
-          _componentQuantity[i].toDouble();
-    }
-    for (int i = 0; i < _components.length; i++) {
-      _startingPower += _components[i].startPower!.toDouble() *
-          _componentQuantity[i].toDouble();
-    }
+    // _runningPower = 0;
+    // _startingPower = 0;
+    // for (int i = 0; i < _components.length; i++) {
+    //   _runningPower += _components[i].runningPower!.toDouble() *
+    //       _componentQuantity[i].toDouble();
+    // }
+    // for (int i = 0; i < _components.length; i++) {
+    //   _startingPower += _components[i].startPower!.toDouble() *
+    //       _componentQuantity[i].toDouble();
+    // }
     CalculateKVA();
     notifyListeners();
   }
@@ -72,16 +84,16 @@ class LoadCalculationState extends ChangeNotifier {
   void decrementComponentQuantity(int index) {
     if (_componentQuantity[index] != 0) {
       _componentQuantity[index]--;
-      _runningPower = 0;
-      _startingPower = 0;
-      for (int i = 0; i < _components.length; i++) {
-        _runningPower += _components[i].runningPower!.toDouble() *
-            _componentQuantity[i].toDouble();
-      }
-      for (int i = 0; i < _components.length; i++) {
-        _startingPower += _components[i].startPower!.toDouble() *
-            _componentQuantity[i].toDouble();
-      }
+      //   _runningPower = 0;
+      //   _startingPower = 0;
+      //   for (int i = 0; i < _components.length; i++) {
+      //     _runningPower += _components[i].runningPower!.toDouble() *
+      //         _componentQuantity[i].toDouble();
+      //   }
+      //   for (int i = 0; i < _components.length; i++) {
+      //     _startingPower += _components[i].startPower!.toDouble() *
+      //         _componentQuantity[i].toDouble();
+      //   }
     }
     CalculateKVA();
     notifyListeners();
@@ -132,16 +144,16 @@ class LoadCalculationState extends ChangeNotifier {
     Equipment equipment = _allComponents.elementAt(index);
     _components.add(equipment);
     _componentQuantity.add(1);
-    _runningPower = 0;
-    _startingPower = 0;
-    for (int i = 0; i < _components.length; i++) {
-      _runningPower += _components[i].runningPower!.toDouble() *
-          _componentQuantity[i].toDouble();
-    }
-    for (int i = 0; i < _components.length; i++) {
-      _startingPower += _components[i].startPower!.toDouble() *
-          _componentQuantity[i].toDouble();
-    }
+    // _runningPower = 0;
+    // _startingPower = 0;
+    // for (int i = 0; i < _components.length; i++) {
+    //   _runningPower += _components[i].runningPower!.toDouble() *
+    //       _componentQuantity[i].toDouble();
+    // }
+    // for (int i = 0; i < _components.length; i++) {
+    //   _startingPower += _components[i].startPower!.toDouble() *
+    //       _componentQuantity[i].toDouble();
+    // }
     CalculateKVA();
     notifyListeners();
   }
