@@ -128,9 +128,21 @@ class LoadCalculationState extends ChangeNotifier {
 
   void incrementFieldsCount() {
     _fieldsCount++;
-    _components
-        .add(_allComponents.elementAt(Random().nextInt(_allComponents.length)));
-    _componentQuantity.add(0);
+    int index = Random().nextInt(_allComponents.length);
+    Equipment equipment = _allComponents.elementAt(index);
+    _components.add(equipment);
+    _componentQuantity.add(1);
+    _runningPower = 0;
+    _startingPower = 0;
+    for (int i = 0; i < _components.length; i++) {
+      _runningPower += _components[i].runningPower!.toDouble() *
+          _componentQuantity[i].toDouble();
+    }
+    for (int i = 0; i < _components.length; i++) {
+      _startingPower += _components[i].startPower!.toDouble() *
+          _componentQuantity[i].toDouble();
+    }
+    CalculateKVA();
     notifyListeners();
   }
 
