@@ -1,4 +1,4 @@
-const bool isProduction = false;
+const bool isProduction = true;
 
 const KeyCloakBaseUrl = isProduction
     ? 'https://authorization.mikano-intl.com'
