@@ -129,13 +129,13 @@ const MikanoLoadCalculationCalculation =
     "$MikanoLoadCalculationURL/LoadCalculation/{util}";
 
 const LoginUrl = isProduction
-    ? "https://services.mikano-intl.com/identity-mediator-api/api/Authorization/Login"
+    ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Login"
     : "http://dev.codepickles.com:8096/api/Authorization/Login";
 const NotificationsUrl = isProduction
-    ? "https://services.mikano-intl.com/identity-mediator-api/api/Notifications"
+    ? "https://services.mikano-intl.com/mediator-api/api/Notifications"
     : "http://dev.codepickles.com:8096/api/Notifications";
 const NotificationsDeleteUrl = isProduction
-    ? "https://services.mikano-intl.com/identity-mediator-api/api/Notifications/{id}"
+    ? "https://services.mikano-intl.com/mediator-api/api/Notifications/{id}"
     : "http://dev.codepickles.com:8096/api/Notifications/{id}";
 
 const mainAppName = 'My Mikano App';
