@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/LoadCalculationState.dart';
 import 'package:mymikano_app/models/LoadCalculationModels/EquipmentModel.dart';
 import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
@@ -143,7 +144,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 children: [
                   Text(
-                    "Running Power: ${loadCalculationState.getrunningPower()} KVA",
+                    "Running Power: ${NumberFormat.decimalPattern().format(loadCalculationState.getrunningPower())} KVA",
                     style: TextStyle(color: Colors.grey, fontSize: 22),
                   ),
                 ],
@@ -151,7 +152,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 children: [
                   Text(
-                    "Starting Power: ${loadCalculationState.getstartingPower()} KVA",
+                    "Starting Power: ${NumberFormat.decimalPattern().format(loadCalculationState.getstartingPower())} KVA",
                     style: TextStyle(color: Colors.grey, fontSize: 22),
                   ),
                 ],
@@ -159,7 +160,7 @@ class _LoadCalculationScreenState extends State<LoadCalculationScreen> {
               Row(
                 children: [
                   Text(
-                    "KVA: ${loadCalculationState.KVA()}",
+                    "KVA: ${NumberFormat.decimalPattern().format(loadCalculationState.KVA())}",
                     style: TextStyle(color: Colors.grey, fontSize: 22),
                   ),
                 ],

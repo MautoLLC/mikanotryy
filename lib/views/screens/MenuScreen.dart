@@ -121,12 +121,9 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
     ];
 
     List<String> MenuListNames = [
-      if (!guestLogin &&
-          (FacilityClientRoles.contains(role) ||
-              FacilityEmployeeRoles.contains(role)))
-        FacilityClientRoles.contains(role)
-            ? "Maintenance & Repair"
-            : "My Inspections",
+      if (!guestLogin && FacilityClientRoles.contains(role))
+        "Maintenance & Repair",
+      if (!guestLogin && FacilityEmployeeRoles.contains(role)) "My Inspections",
       if (!guestLogin && (GeneratorRoles.contains(role))) "Generator Dashboard",
       if (!guestLogin) "Favorites",
       if (!guestLogin) "Address",
@@ -136,12 +133,9 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
     ];
 
     List<Widget> MenuListScreens = [
-      if (!guestLogin &&
-          (FacilityClientRoles.contains(role) ||
-              FacilityEmployeeRoles.contains(role)))
-        FacilityClientRoles.contains(role)
-            ? T5Maintenance()
-            : MyInspectionsScreen(),
+      if (!guestLogin && FacilityClientRoles.contains(role)) T5Maintenance(),
+      if (!guestLogin && FacilityEmployeeRoles.contains(role))
+        MyInspectionsScreen(),
       if (!guestLogin && (GeneratorRoles.contains(role))) getPage(),
       if (!guestLogin) FavoritesScreen(),
       if (!guestLogin) AddressScreen(),
@@ -151,9 +145,9 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
     ];
 
     List<String> MenuListIcons = [
-      if (!guestLogin &&
-          (FacilityClientRoles.contains(role) ||
-              FacilityEmployeeRoles.contains(role)))
+      if (!guestLogin && FacilityClientRoles.contains(role))
+        ic_Mainteance_and_Repair,
+      if (!guestLogin && FacilityEmployeeRoles.contains(role))
         ic_Mainteance_and_Repair,
       if (!guestLogin && (GeneratorRoles.contains(role))) ic_Generator_Info,
       if (!guestLogin) ic_Favorites,
