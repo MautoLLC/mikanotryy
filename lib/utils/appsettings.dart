@@ -116,6 +116,8 @@ const MikanoLoadCalculationURL = isProduction
     ? "https://services.mikano-intl.com/load-calculation-api/api"
     : "http://dev.codepickles.com:8095/api";
 const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
+const MikanoLoadCalculationCalculateKVA =
+    "$MikanoLoadCalculationURL/LoadCalculation/{utils}";
 const MikanoLoadCalculationCategoriesWithId =
     "$MikanoLoadCalculationURL/Categories/{id}";
 const MikanoLoadCalculationEquipments = "$MikanoLoadCalculationURL/Equipments";

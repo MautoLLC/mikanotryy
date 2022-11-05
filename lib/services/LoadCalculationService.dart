@@ -5,6 +5,7 @@ import 'package:mymikano_app/models/StoreModels/ProductCategory.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../models/LoadCalculationModels/KVAResponse.dart';
 import 'DioClass.dart';
 
 class LoadCalculationService {
@@ -57,5 +58,24 @@ class LoadCalculationService {
       throw Exception();
     }
     return listresult;
+  }
+
+  Future<KVAResponse> CalculateKVA(int utils, List<int> Ids) async {
+    Response response;
+    KVAResponse result;
+    try {
+      response = await Dio().post(
+          MikanoLoadCalculationCalculateKVA.replaceAll(
+              "{utils}", utils.toString()),
+          data: Ids);
+      if (response.statusCode == 200) {
+        result = KVAResponse.fromJson(response.data);
+        return result;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Exception();
+    }
+    throw Exception();
   }
 }
