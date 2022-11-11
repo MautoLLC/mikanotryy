@@ -137,19 +137,15 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                             Column(children: [
                               Row(
                                 children: [
-                                  IconButton(
+                                 IconButton(
                                     icon: Icon(
                                       Icons.arrow_back_ios,
                                       color: backArrowColor,
                                     ),
                                     onPressed: () {
-                                     Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MenuScreen()));
+                                     Navigator.of(context).pop();
                                     },
-                                  ),
-                                  Spacer(),
+                                  ),                                   Spacer(), 
                                   Container(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 25),
@@ -174,8 +170,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           items: value.configsList
                                               .map(buildMenuItem)
                                               .toList(),
-                                          //value:value.selectedConfigurationModel.generatorId,
-                                          value: configModel.generatorId,
+                                        //  value:value.selectedConfigurationModel.generatorId,
+                                         value: configModel.generatorId,
                                           onChanged: (item) async { 
                               
                                             ConfigurationModel model = value
