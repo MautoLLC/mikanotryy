@@ -38,7 +38,7 @@ class CloudDashBoard_Service {
 
   //fin added by youssef//
 
-  late List<CloudSensor> cloudsensors = [];
+  late List<CloudSensor> cloudsensors = [];  
 
   Future<List<CloudSensor>> FetchData() async {
     final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
@@ -71,10 +71,12 @@ class CloudDashBoard_Service {
       cloudsensors =
           (data['values'] as List).map((s) => CloudSensor.fromJson(s)).toList();
       cloudsensors.add(nominalLoadkW);
-      return cloudsensors;
-    } else {
+      
+      return cloudsensors;  
+    } else { 
       debugPrint(response.toString());
      // printLongString(response.toString());
+     
       List<CloudSensor> emptylist = [];
       return emptylist;
     }
