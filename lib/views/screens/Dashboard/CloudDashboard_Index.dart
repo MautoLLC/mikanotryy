@@ -488,7 +488,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                         fit: BoxFit.fitWidth),
                                                   ))),
                                         ),
-                                      if (cloud.ControllerModeStatus != 2) 
+                                      if (cloud.ControllerModeStatus != 2)  
                                         Positioned(
                                           top: 4,
                                           left: 241,

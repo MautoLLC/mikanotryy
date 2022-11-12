@@ -232,6 +232,12 @@ class CloudGeneratorState extends ChangeNotifier {
       value: "100",
       unit: "Error",
       timeStamp: "Error");
+     CloudSensor AlarmClear = CloudSensor(
+      sensorID: "Error",
+      sensorName: "Error",
+      value: "100",
+      unit: "Error",
+      timeStamp: "Error");
   int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   bool PowerStatus = false;
@@ -241,14 +247,21 @@ class CloudGeneratorState extends ChangeNotifier {
   bool MCBFeedbackState = false;
   bool GCBFeedbackState = false;
   bool MainsHealthyStatus = false;  
+  bool alarmsclear = false;
   changeControllerModeStatus(value) async {
     bool isSuccess = await cloudService.SwitchControllerMode(value);
     if (isSuccess == true) {
-      ControllerModeStatus = value;
+      ControllerModeStatus = value;  
       notifyListeners();
     }
   }
-
+  changeAlarmClear(value) async{
+    bool isSuccess = await cloudService.SwitchAlarmClear(value);
+    if (isSuccess == true) {
+      alarmsclear = value;  
+      notifyListeners();
+    }
+  }
   changeIsIO(value) async {
     bool isSuccess = await cloudService.TurnGeneratorEngineOnOff(value);
     if (isSuccess == true) {
@@ -356,8 +369,9 @@ class CloudGeneratorState extends ChangeNotifier {
           cloudsensors, dotenv.env['generatorvoltage_L1-L2_id'].toString());
   generatorvoltageL1L3N= FindSensor(
           cloudsensors, dotenv.env['generatorvoltage_L1-L3_id'].toString());
-     generatorvoltageL2L3N= FindSensor(
-          cloudsensors, dotenv.env['generatorvoltage_L2-L3_id'].toString());
+  generatorvoltageL2L3N= FindSensor(
+          cloudsensors, dotenv.env['generatorvoltage_L2-L3_id'].toString()); 
+  
       //for testing purposes only//
       //MCBMode = await DashModelView.GetControllerMode();
 
@@ -409,7 +423,7 @@ class CloudGeneratorState extends ChangeNotifier {
       isReadyToLoad = true;
       else
       isReadyToLoad = false;
-      notifyListeners();
+   
       
       return true;
     }
