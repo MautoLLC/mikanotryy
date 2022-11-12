@@ -131,6 +131,9 @@ const MikanoLoadCalculationCalculation =
 const LoginUrl = isProduction
     ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Login"
     : "http://dev.codepickles.com:8096/api/Authorization/Login";
+const RegisterUrl = isProduction
+    ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Register"
+    : "http://dev.codepickles.com:8096/api/Authorization/Register";
 const NotificationsUrl = isProduction
     ? "https://services.mikano-intl.com/mediator-api/api/Notifications"
     : "http://dev.codepickles.com:8096/api/Notifications";
