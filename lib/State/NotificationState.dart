@@ -18,7 +18,7 @@ class NotificationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get notificationCount => _notificationCount;
+  int get notificationCount => _notificationCount; 
 
   List<NotificationModel> get notifications => _notifications;
 
