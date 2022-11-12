@@ -143,7 +143,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       color: backArrowColor,
                                     ),
                                     onPressed: () {
-                                     Navigator.of(context).pop();
+                                     Navigator.of(context).pop();  
                                     },
                                   ),                                   Spacer(), 
                                   Container(
