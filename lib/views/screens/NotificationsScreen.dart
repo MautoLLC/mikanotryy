@@ -69,17 +69,17 @@ class _NotificationsPageState extends State<NotificationsPage> {
             c.changeAlarmClear(true);
           },
           style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.black,
               backgroundColor: Colors.white,
-              padding: const EdgeInsets.all(2),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
               shape: RoundedRectangleBorder(
          borderRadius: BorderRadius.circular(16.0),
       ),
               ),
              
-          child: const Text('Fault reset'), 
+          child: const Text('Fault reset', style: TextStyle(color: Colors.black)), 
         ),
               ),
+   
               ]),
               
             
