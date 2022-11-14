@@ -33,7 +33,6 @@ class T13SignUpScreenState extends State<T13SignUpScreen> {
   //A function that validate user entered password
   bool validatePassword(String pass) {
     String _password = pass.trim();
-    return true;
     if (pass_valid.hasMatch(_password)) {
       return true;
     } else {
