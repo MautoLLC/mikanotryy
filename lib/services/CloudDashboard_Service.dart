@@ -141,10 +141,8 @@ class CloudDashBoard_Service {
     return isSuccess;
   }
 Future<bool> SwitchAlarmClear(bool status) async {
-
     double alarmclearvalue;
     bool isSuccess = false;
-
     if (status)
       alarmclearvalue = 1;
     else
@@ -173,7 +171,6 @@ Future<bool> SwitchAlarmClear(bool status) async {
         }
       ]),
     );
-
     if (response.statusCode == 200) {
       isSuccess = true;
     } else {
