@@ -60,25 +60,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     textSize: 24,
                   ),
                 ),
-              Align(
-                  alignment: Alignment.centerRight,
-                 child: OutlinedButton(
-          onPressed: () {
-            CloudGeneratorState c = CloudGeneratorState();
-
-            c.changeAlarmClear(true);
-          },
-          style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              shape: RoundedRectangleBorder(
-         borderRadius: BorderRadius.circular(16.0),
-      ),
-              ),
-             
-          child: const Text('Fault reset', style: TextStyle(color: Colors.black)), 
-        ),
-              ),
+              
    
               ]),
               

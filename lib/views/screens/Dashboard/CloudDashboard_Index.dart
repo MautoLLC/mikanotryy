@@ -148,7 +148,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   ),                                   Spacer(), 
                                   Container(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 25),
+                                        EdgeInsets.symmetric(horizontal: 15),
                                     width:
                                         MediaQuery.of(context).size.width / 2.3,
                                     child: DropdownButtonHideUnderline(
@@ -312,7 +312,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       ),
                                     ),
                                   ),
-                                  
+                         
                                   Spacer(),
                                   IconButton(
                                       onPressed: () {
@@ -334,6 +334,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             
                                       },
                                       icon: Icon(Icons.settings)),
+                                     
+                                 
                                   // Spacer(),
                                   // IconButton(
                                   //   onPressed: () {
@@ -353,6 +355,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       },
                                       child: Icon(Icons.warning)),   */
                                 ],
+                                
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -416,6 +419,23 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                       });
                                     },
                                   ),
+                                 Align(
+                  alignment: Alignment.centerRight,
+                 child: OutlinedButton(
+          onPressed: () {
+            cloud.changeAlarmClear(true);
+          },
+          style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+              shape: RoundedRectangleBorder(  
+         borderRadius: BorderRadius.circular(16.0),
+      ),
+              ),
+             
+          child: const Text('Clear Alarms', style: TextStyle(color: Colors.black)), 
+        ),
+              ),
                                 ],
                               ),
                              
@@ -717,6 +737,26 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             value: cloud.BatteryVoltage.value
                                                 .toString() + " "+ cloud.BatteryVoltage.unit,
                                           ),
+                                          infotile(
+                                            title: "Fuel consumption",
+                                            value: cloud.TotalFuelConsumption.value
+                                                .toString() + " "+ cloud.BatteryVoltage.unit,
+                                          ),
+                                          infotile(
+                                            title: "Load KVA",
+                                            value: cloud.LoadKva.value
+                                                .toString() + " "+ cloud.BatteryVoltage.unit,
+                                          ),
+                                          infotile(
+                                            title: "Load KVr",
+                                            value: cloud.LoadKvar.value
+                                                .toString() + " "+ cloud.BatteryVoltage.unit,
+                                          ),
+                                        /*  infotile(
+                                            title: "Energy",
+                                            value: cloud.LoadKWh.value
+                                                .toString() + " "+ cloud.BatteryVoltage.unit,
+                                          ), */
                                         ],
                                       ),
                                     ],
