@@ -91,7 +91,9 @@ class CloudDashBoard_ModelView {
   Future<bool> SwitchControllerMode(int status) async {
     return await DashBoardService.SwitchControllerMode(status);
   }
-
+Future<bool> SwitchAlarmClear(bool status) async {
+    return await DashBoardService.SwitchAlarmClear(status);
+  }
   Future<bool> SwitchMCBMode(bool status) async {
     return await DashBoardService.SwitchMCBMode(status);
   }

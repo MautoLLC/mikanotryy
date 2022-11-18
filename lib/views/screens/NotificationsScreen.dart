@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymikano_app/State/CloudGeneratorState.dart';
 import 'package:mymikano_app/State/NotificationState.dart';
 import 'package:mymikano_app/models/NotificationModel.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -51,6 +52,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     },
                   ),
                 ),
+                
                 Align(
                   alignment: Alignment.center,
                   child: TitleText(
@@ -58,7 +60,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     textSize: 24,
                   ),
                 ),
+              
+   
               ]),
+              
+            
               SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(

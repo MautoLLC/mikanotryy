@@ -140,6 +140,44 @@ class CloudDashBoard_Service {
     }
     return isSuccess;
   }
+Future<bool> SwitchAlarmClear(bool status) async {
+    double alarmclearvalue;
+    bool isSuccess = false;
+    if (status)
+      alarmclearvalue = 1;
+    else
+      alarmclearvalue = 0;
+    final responseAuth = await http.post(Uri.parse(cloudIotMautoAuthUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'email': configModel.cloudUser,
+          'password': configModel.cloudPassword,
+        }));
+    final token = jsonDecode((responseAuth.body))['token'];
+
+    final response = await http.post(
+      Uri.parse(cloudIotMautoSensorsUrl + configModel.generatorId),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token.toString()
+      },
+      body: jsonEncode([
+        <String, String>{
+          'generatorSensorID': dotenv.env['AlarmClear_id'].toString(),
+          'value': alarmclearvalue.toString(),
+          'timeStamp': DateTime.now().toIso8601String()
+        }
+      ]),
+    );
+    if (response.statusCode == 200) {
+      isSuccess = true;
+    } else {
+      throw Exception('Failed to update sensor');
+    }
+    return isSuccess;
+  }
 
   Future<bool> SwitchMCBMode(bool status) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -315,3 +353,4 @@ void printLongString(String text) {
       .allMatches(text)
       .forEach((RegExpMatch match) => print(match.group(0)));
 }
+
