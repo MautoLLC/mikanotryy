@@ -421,9 +421,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   ),
                                  Align(
                   alignment: Alignment.centerRight,
-                 child: OutlinedButton(
+                 child: IconButton(
+                     icon: Image.asset(ic_faultReset),
           onPressed: () {
             cloud.changeAlarmClear(true);
+
           },
           style: OutlinedButton.styleFrom(
               backgroundColor: Colors.white,
@@ -432,8 +434,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
          borderRadius: BorderRadius.circular(16.0),
       ),
               ),
-             
-          child: const Text('Clear Alarms', style: TextStyle(color: Colors.black)), 
+          //child: const Text('Clear Alarms', style: TextStyle(color: Colors.black)),
         ),
               ),
                                 ],

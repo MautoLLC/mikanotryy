@@ -60,3 +60,5 @@ const ic_io = "assets/icons8-whitesquare.png";
 const ic_factory = "assets/icons8-factory-64.png";
 const ic_g = "assets/icons8-circledG.png";
 const ic_line = "assets/PowerLine.png";
+
+const ic_faultReset="assets/faultReset.png";
