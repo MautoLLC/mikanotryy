@@ -38,7 +38,7 @@ class LanDashBoard_Service {
     // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
     String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     final response =
-        await http.get(Uri.parse(apiLanEndpoint + '/getValue?params=' + param));
+        await http.get(Uri.parse(apiLanEndpoint + '/getValue?param=' + param));
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       LANSensor sensor = LANSensor.fromJson(data);
@@ -69,7 +69,7 @@ class LanDashBoard_Service {
     bool isSuccess = false;
 
     final response = await http.get(Uri.parse(
-        apiLanEndpoint + '/setControllerMode?params=' + Mode.toString()));
+        apiLanEndpoint + '/setControllerMode?param=' + Mode.toString()));
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
@@ -94,7 +94,7 @@ class LanDashBoard_Service {
 
     bool isSuccess = false;
     final response = await http.get(
-        Uri.parse(apiLanEndpoint + '/setMCBMode?params=' + Mode.toString()));
+        Uri.parse(apiLanEndpoint + '/setMCBMode?param=' + Mode.toString()));
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
@@ -120,7 +120,7 @@ class LanDashBoard_Service {
 
     bool isSuccess = false;
     final response = await http.get(
-        Uri.parse(apiLanEndpoint + '/setGCBMode?params=' + Mode.toString()));
+        Uri.parse(apiLanEndpoint + '/setGCBMode?param=' + Mode.toString()));
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
@@ -145,7 +145,7 @@ class LanDashBoard_Service {
       Command = 0;
     bool isSuccess = false;
     final response = await http.get(Uri.parse(
-        apiLanEndpoint + '/setEngineMode?params=' + Command.toString()));
+        apiLanEndpoint + '/setEngineMode?param=' + Command.toString()));
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
