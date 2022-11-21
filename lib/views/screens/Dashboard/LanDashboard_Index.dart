@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -451,9 +452,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               height: 61,
                                               child: IconButton(
                                                 icon: Image.asset(ic_tower,
-                                                    color: ((double.parse(lan
+                                                    color: (lan
                                                         .mainsvoltageL1N 
-                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1'
+                                                        .return_value > 0 || lan.mainsvoltageL2N.return_value > 0 || lan.mainsvoltageL3N.return_value > 0)  && lan.MainsHealthy.return_value== 1
                                                         ? GreenpowerColor 
                                                         : mainGreyColorTheme),
                                                 onPressed: () {},
@@ -466,13 +467,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color:((double.parse(lan
+                                              color:(lan
                                                         .mainsvoltageL1N 
-                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == true && lan.MCBModeStatus == true
+                                                        .return_value > 0 || lan.mainsvoltageL2N.return_value > 0 || lan.mainsvoltageL3N.return_value > 0)  && lan.MainsHealthy.return_value == 1 && timedelayMCBFeedback(lan) == true && lan.MCBModeStatus == true
                                                   ? GreenpowerColor
-                                                  : ((double.parse(lan
+                                                  : (lan
                                                         .mainsvoltageL1N 
-                                                        .return_value)) > 0 || (double.parse(lan.mainsvoltageL2N.return_value)) > 0 || (double.parse(lan.mainsvoltageL3N.return_value)) > 0)  && lan.MainsHealthy.return_value== '1' && timedelayMCBFeedback(lan) == false && lan.MCBModeStatus == true ? mainColorTheme: mainGreyColorTheme,  
+                                                        .return_value > 0 || lan.mainsvoltageL2N.return_value > 0 || lan.mainsvoltageL3N.return_value > 0)  && lan.MainsHealthy.return_value== 1 && timedelayMCBFeedback(lan) == false && lan.MCBModeStatus == true ? mainColorTheme: mainGreyColorTheme,
                                             ),
                                           )),
                                       if (lan.ControllerModeStatus != 2)
@@ -756,16 +757,22 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           ),
                                            infotile(
                                             title: "L1-L2",
-                                            value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                          ),
+                                            //value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                             value: lan.generatorvoltageL1L2N.return_value.toString()
+
+                                           ),
                                             infotile(
                                             title: "L1-L3",
-                                            value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                          ),
+                                            //value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                              value: lan.generatorvoltageL1L2N.return_value.toString()
+
+                                            ),
                                             infotile(
                                             title: "L2-L3",
-                                            value: lan.generatorvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                          ),
+                                            //value: lan.generatorvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                              value: lan.generatorvoltageL2L3N.return_value.toString()
+
+                                            ),
                                           infotile(
                                             title: "L1",
                                             value: lan.LoadAL1.return_value.toString()+ " "+ "A",
@@ -812,16 +819,22 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           ),
                                             infotile(
                                             title: "L1-L2",
-                                            value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                          ),
+                                            //value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                              value: lan.mainsvoltageL1L2N.return_value.toString()
+
+                                            ),
                                             infotile(
                                             title: "L1-L3",
-                                            value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                          ),
+                                            //value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                              value: lan.mainsvoltageL1L2N.return_value.toString()
+
+                                            ),
                                             infotile(
                                             title: "L2-L3",
-                                            value: lan.mainsvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                          ),
+                                            //value: lan.mainsvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                              value: lan.mainsvoltageL2L3N.return_value.toString()
+
+                                            ),
                                           infotile(
                                             title: "L1",
                                             value: lan.LoadAL1.return_value.toString()+ " "+ "A",
