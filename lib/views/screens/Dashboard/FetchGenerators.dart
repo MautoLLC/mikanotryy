@@ -400,21 +400,27 @@ class _FetchGenerators  extends State<FetchGenerators>{
                             onPressed: () async {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
-                              value.Loading(true);
-                              await value.service.Connecttossid(
-                                  value.chosenSSID,
-                                  passwordController.text,
-                                  value.cloudUsername,
-                                  value.cloudPassword,
-                                  value.cloudMode.toString(),
-                                  value.chosenGeneratorId,
-                                  value.ControllerAddress);
-
+                              //added by youssef//
+                              if(value.chosenSSID==null){
+                                value.chosenSSID="";
+                                value.password="";
+                              }
+                              else {
+                                value.Loading(true);
+                                await value.service.Connecttossid(
+                                    value.chosenSSID,
+                                    passwordController.text,
+                                    value.cloudUsername,
+                                    value.cloudPassword,
+                                    value.cloudMode.toString(),
+                                    value.chosenGeneratorId,
+                                    value.ControllerAddress);
+                                Timer(Duration(seconds: 15), () {
+                                  // to add before this switch to cloud mode as get request to the esp
+                                  value.Loading(false);
+                                });
+                              }
                               // value.service.RestartESP();
-                              Timer(Duration(seconds: 15), () {
-                                // to add before this switch to cloud mode as get request to the esp
-                                value.Loading(false);
-                              });
                             }),
                         SizedBox(
                           height: 20,
