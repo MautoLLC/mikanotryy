@@ -133,7 +133,31 @@ class LanDashBoard_Service {
 
     return isSuccess;
   }
+Future<bool> SwitchAlarmClear(bool status) async {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
+    String apiLanEndpoint = "http://" + configModel.espapiendpoint;
+   double alarmclearvalue;
+    bool isSuccess = false;
+    if (status)
+      alarmclearvalue = 1;
+    else
+      alarmclearvalue = 0;
 
+    final response = await http.get(
+        Uri.parse(apiLanEndpoint + '/setFaultReset?params=' + alarmclearvalue.toString()));
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      isSuccess = true;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to send command.');
+    }
+
+    return isSuccess;
+  } 
   Future<bool> TurnGeneratorEngineOnOff(bool status) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // apiLanEndpoint = await prefs.getString(prefs_ApiLanEndpoint)!;
