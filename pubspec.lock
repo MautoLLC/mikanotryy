@@ -258,6 +258,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.0"
+  flutter_bounceable:
+    dependency: "direct main"
+    description:
+      name: flutter_bounceable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_cache_manager:
     dependency: transitive
     description:

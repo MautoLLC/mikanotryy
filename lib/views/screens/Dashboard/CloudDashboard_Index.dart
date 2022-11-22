@@ -21,7 +21,7 @@ import 'package:provider/provider.dart';
 import 'package:mymikano_app/services/CloudDashboard_Service.dart';
 import '../../../State/ApiConfigurationStatee.dart';
 import '../../widgets/Custom_GaugeWidget.dart';
-
+import 'package:flutter_bounceable/flutter_bounceable.dart';
 class CloudDashboard_Index extends StatefulWidget {
   final int RefreshRate;
   CloudDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
@@ -430,7 +430,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
           style: OutlinedButton.styleFrom(
               backgroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-              shape: RoundedRectangleBorder(  
+              shape: RoundedRectangleBorder(
          borderRadius: BorderRadius.circular(16.0),
       ),
               ),
@@ -492,7 +492,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         Positioned(
                                           top: 72,
                                           left: 232,
-                                          child: new GestureDetector( 
+                                          child: new Bounceable(
                                               onTap: () {
                                            
                                                 setState(() {
@@ -513,11 +513,11 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         Positioned(
                                           top: 4,
                                           left: 241,
-                                          child: new GestureDetector(
+                                          child: new Bounceable(
                                               onTap: (){
                                             
                                                   
-                                                  setState(() async{
+                                                  setState(() {
                                                     
                                                     
                                                     cloud.changeIsIO(true);
@@ -577,19 +577,22 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           top: 72,
                                           left: 67,
                                           
-                                          child: new GestureDetector(
-                                              onTap: () {
-                                                    sleep(Duration(seconds: 2));
-                                                    if(cloud.MCBModeStatus == false){
-                                                      
-                                                      cloud.changeMCBModeStatus(
-                                                          true);  
-                                                    }
-                                                    else{
-                                                      
-                                                      cloud.changeMCBModeStatus(
-                                                          false); 
-                                                    }
+                                          child: new Bounceable(
+                                              onTap: () async {
+                                               //     sleep(Duration(seconds: 2));
+                                                await  Future.delayed(Duration(seconds: 2), () {
+                                                  if(cloud.MCBModeStatus == false){
+
+                                                    cloud.changeMCBModeStatus(
+                                                        true);
+                                                  }
+                                                  else{
+
+                                                    cloud.changeMCBModeStatus(
+                                                        false);
+                                                  }
+                                                });
+
                                                     
                                               },
                                               child: Container(
@@ -607,10 +610,10 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         Positioned(
                                           top: 72,
                                           left: 147,
-                                          child: new GestureDetector(
+                                          child: new Bounceable(
                                           
-                                              onTap: () {
-                                                 sleep(Duration(seconds: 2));
+                                              onTap: () async {
+    await  Future.delayed(Duration(seconds: 2), () {
                                                  if(cloud.ReadyToLoad.value == '1' ){
                                                    
                                                     if(cloud.GCBFeedback.value == '1'){
@@ -628,8 +631,8 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                       cloud.changeIsGCB(
                                                           false); 
                                                     }
-                                                   
-                                              },
+                                              });
+    },
                                               child: Container(
                                                   width: 60,
                                                   height: 48,
