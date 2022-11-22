@@ -248,17 +248,43 @@ class LanGeneratorState extends ChangeNotifier {
       id: "Error",
       name: "Error",
       hardware: "Error",
-      connected: "Error");  LANSensor generatorvoltageL1L3N = LANSensor(
+      connected: "Error");  
+      LANSensor generatorvoltageL1L3N = LANSensor(
       return_value: 10,
       id: "Error",
       name: "Error",
       hardware: "Error",
-      connected: "Error");  LANSensor generatorvoltageL2L3N = LANSensor(
+      connected: "Error"); 
+      LANSensor generatorvoltageL2L3N = LANSensor(
       return_value: 10,
       id: "Error",
       name: "Error",
       hardware: "Error",
       connected: "Error");  
+         LANSensor LoadKvr = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
+         LANSensor LoadKWh = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
+         LANSensor LoadKVA = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");  
+           LANSensor TotalFuelConsumption = LANSensor(
+      return_value: 10,
+      id: "Error",
+      name: "Error",
+      hardware: "Error",
+      connected: "Error");
  int ControllerModeStatus = 1;
   bool MCBModeStatus = false;
   // bool PowerStatus = false;
@@ -269,7 +295,8 @@ class LanGeneratorState extends ChangeNotifier {
   bool isReadyToLoad = false;
   bool MCBFeedbackState = false;
   bool GCBFeedbackState = false;
-  bool MainsHealthyStatus = false; 
+  bool MainsHealthyStatus = false;  
+   bool alarmsclear = false;
   changeControllerModeStatus(value) async {
     bool isSuccess = await LanService.SwitchControllerMode(value);
     if (isSuccess == true) {
@@ -277,7 +304,13 @@ class LanGeneratorState extends ChangeNotifier {
       notifyListeners();
     }
   }
-
+ changeAlarmClear(value) async {
+    bool isSuccess = await LanService.SwitchAlarmClear(value);
+    if (isSuccess == true) {
+       alarmsclear = value;
+      notifyListeners();
+    }
+  }
   changeIsIO(value) async {
     bool isSuccess = await LanService.TurnGeneratorEngineOnOff(value);
     if (isSuccess == true) {
@@ -332,6 +365,9 @@ class LanGeneratorState extends ChangeNotifier {
       LoadAL1 = await LanService.FetchSensorData("LoadAL1");
       LoadAL2 = await LanService.FetchSensorData("LoadAL2"); 
       LoadAL3 = await LanService.FetchSensorData("LoadAL3");
+      LoadKvr = await LanService.FetchSensorData("LoadKvr");
+      LoadKWh = await LanService.FetchSensorData("LoadKWh");
+      LoadKVA = await LanService.FetchSensorData("LoadKVA");
       generatorL1N = await LanService.FetchSensorData("GenVL1N");
       generatorL2N = await LanService.FetchSensorData("GenVL2N");
       generatorL3N = await LanService.FetchSensorData("GenVL3N");

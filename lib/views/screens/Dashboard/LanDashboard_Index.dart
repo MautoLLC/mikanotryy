@@ -427,6 +427,24 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       });
                                     },
                                   ),
+                                   Align(
+                  alignment: Alignment.centerRight,
+                 child: IconButton(
+                     icon: Image.asset(ic_faultReset),
+          onPressed: () {
+            lan.changeAlarmClear(true);
+
+          },
+          style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+              shape: RoundedRectangleBorder(  
+         borderRadius: BorderRadius.circular(16.0),
+      ),
+              ),
+          //child: const Text('Clear Alarms', style: TextStyle(color: Colors.black)),
+        ),
+              ), 
                                 ],
                               ),
                               SizedBox(
@@ -731,6 +749,12 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                     10)
                                                 .toString()+ " "+ "V",
                                           ),
+                                          infotile(
+                                            title: "Total fuel consumption",
+                                           
+                                              value: lan.TotalFuelConsumption.return_value.toString() + " " + "L",
+
+                                            ),
                                         ],
                                       ),
                                     ],
@@ -784,6 +808,21 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           infotile(
                                             title: "L3",
                                             value: lan.LoadAL3.return_value.toString()+ " "+ "A",
+                                          ),
+                                            infotile(
+                                            title: "Load KVA",
+                                            value: lan.LoadKVA.return_value
+                                                .toString() + " "+ "A",
+                                          ),
+                                          infotile(
+                                            title: "Load KVr",
+                                            value: lan.LoadKvr.return_value
+                                                .toString() + " "+ "A",
+                                          ),
+                                           infotile(
+                                            title: "Load KWh",
+                                            value: lan.LoadKWh.return_value
+                                                .toString() + " "+ "A",
                                           ),
                                           infotile(
                                             title: "Hz",
@@ -846,6 +885,21 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           infotile(
                                             title: "L3",
                                             value: lan.LoadAL3.return_value.toString()+ " "+ "A",
+                                          ),
+                                           infotile(
+                                            title: "Load KVA",
+                                            value: lan.LoadKVA.return_value
+                                                .toString() + " "+ "A",
+                                          ),
+                                          infotile(
+                                            title: "Load KVr",
+                                            value: lan.LoadKvr.return_value
+                                                .toString() + " "+ "A",
+                                          ),
+                                           infotile(
+                                            title: "Energy",
+                                            value: lan.LoadKWh.return_value
+                                                .toString() + " "+ "A",
                                           ),
                                           infotile(
                                             title: "Hz",

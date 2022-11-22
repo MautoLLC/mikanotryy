@@ -744,20 +744,12 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                                 .toString() + " "+ cloud.BatteryVoltage.unit,
                                           ),
                                           infotile(
-                                            title: "Load KVA",
-                                            value: cloud.LoadKva.value
-                                                .toString() + " "+ cloud.BatteryVoltage.unit,
-                                          ),
-                                          infotile(
-                                            title: "Load KVr",
-                                            value: cloud.LoadKvar.value
-                                                .toString() + " "+ cloud.BatteryVoltage.unit,
-                                          ),
-                                        /*  infotile(
-                                            title: "Energy",
-                                            value: cloud.LoadKWh.value
-                                                .toString() + " "+ cloud.BatteryVoltage.unit,
-                                          ), */
+                                            title: "Total fuel consumption",
+                                           
+                                              value: cloud.TotalFuelConsumption.value + " " + cloud.TotalFuelConsumption.unit,
+
+                                            ),
+                                         
                                         ],
                                       ),
                                     ],
@@ -802,9 +794,14 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: "L2",
                                             value: cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
                                           ),
-                                          infotile(
+                                          infotile( 
                                             title: "L3",
                                             value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
+                                          ),
+                                          infotile(
+                                            title: "Energy",
+                                            value: cloud.LoadKWh.value
+                                                .toString() + " "+ cloud.LoadKWh.unit,
                                           ),
                                           infotile(
                                             title: "Hz",
@@ -825,7 +822,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         shrinkWrap: true,
                                         physics: const ScrollPhysics(),
                                         padding: EdgeInsets.zero,
-                                        children: [
+                                        children: [  
                                           infotile(
                                             title: "L1-N",
                                             value: cloud.mainsvoltageL1N.value.toString() + " "+ cloud.mainsvoltageL1N.unit,
@@ -857,10 +854,25 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           infotile(
                                             title: "L2",
                                             value: cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
-                                          ),
+                                          ), 
                                           infotile(
                                             title: "L3",
                                             value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
+                                          ),
+                                           infotile(
+                                            title: "Load KVA",
+                                            value: cloud.LoadKva.value
+                                                .toString() + " "+ cloud.LoadKva.unit,
+                                          ),
+                                          infotile(
+                                            title: "Load KVr",
+                                            value: cloud.LoadKvar.value
+                                                .toString() + " "+ cloud.LoadKvar.unit,
+                                          ),
+                                          infotile(
+                                            title: "Energy",
+                                            value: cloud.LoadKWh.value
+                                                .toString() + " "+ cloud.LoadKWh.unit,
                                           ),
                                           infotile(
                                             title: "Hz",
