@@ -25,7 +25,7 @@ import '../../../models/ConfigurationModel.dart';
 import '../../widgets/Custom_GaugeWidget.dart';
 import 'CloudDashboard_Index.dart';
 import 'FetchGenerators.dart';
-
+import 'package:flutter_bounceable/flutter_bounceable.dart';
 class LanDashboard_Index extends StatefulWidget {
   final int RefreshRate;
   LanDashboard_Index({Key? key, required this.RefreshRate}) : super(key: key);
@@ -498,7 +498,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         Positioned(
                                           top: 72,
                                           left: 232,
-                                          child: new GestureDetector( 
+                                          child: new Bounceable(
                                            onTap: () {
                                            
                                                 setState(() {
@@ -519,11 +519,11 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         Positioned(
                                           top: 4,
                                           left: 241,
-                                          child: new GestureDetector(
+                                          child: new Bounceable(
                                                onTap: (){
                                             
                                                     
-                                                  setState(() async{
+                                                  setState(() {
                                                     
                                                  
                                                     lan.changeIsIO(true);
@@ -584,9 +584,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 72,
                                           left: 67,
                                           
-                                          child: new GestureDetector(
-                                             onTap: () {
-                                                    sleep(Duration(seconds: 2));
+                                          child: new Bounceable(
+                                             onTap: () async {
+    await  Future.delayed(Duration(seconds: 2), () {
                                                     if(lan.MCBModeStatus == false){
                                                       
                                                       lan.changeMCBModeStatus(
@@ -598,7 +598,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                           false); 
                                                     }
                                                     
-                                              },
+                                              });},
                                               child: Container(
                                                 
                                                   width: 60,
@@ -614,9 +614,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         Positioned(
                                           top: 72,
                                           left: 147,
-                                          child: new GestureDetector(
-                                          onTap: () {
-                                                 sleep(Duration(seconds: 2));
+                                          child: new Bounceable(
+                                          onTap: () async {
+    await  Future.delayed(Duration(seconds: 2), () {
                                                  if(lan.ReadyToLoad.return_value == '1' && lan.isGCB){
                                                     sleep(Duration(seconds: 2));
                                                     if(lan.GCBFeedback.return_value == '1'){
@@ -635,7 +635,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                           false); 
                                                     }
                                                    
-                                              },
+                                              });},
                                               child: Container(
                                                   width: 60,
                                                   height: 48,
