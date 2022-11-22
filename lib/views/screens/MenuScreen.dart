@@ -31,6 +31,9 @@ class MenuScreen extends StatefulWidget {
   _MenuScreenState createState() => _MenuScreenState();
 }
 
+
+
+
 class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
   bool guestLogin = true;
   bool DashboardFirstTimeAccess = true;
@@ -57,6 +60,22 @@ class _MenuScreenState extends State<MenuScreen> with ChangeNotifier {
         await prefs.getString(prefs_ApiConfigurationOption).toString();
   }
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   void isNotFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.DashboardFirstTimeAccess = false;
