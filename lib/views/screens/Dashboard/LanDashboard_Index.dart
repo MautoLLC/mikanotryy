@@ -429,7 +429,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                   ),
                                    Align(
                   alignment: Alignment.centerRight,
-                 child: IconButton(
+                 child: IconButton( 
                      icon: Image.asset(ic_faultReset),
           onPressed: () {
             lan.changeAlarmClear(true);
@@ -561,7 +561,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 48,
                                             child: ImageIcon(
                                               AssetImage(ic_line),
-                                              color: greenline == true && lan.isGCB == true
+                                              color: greenline == true && lan.isGCB == true && timedelayGCBFeedback(lan) == true
                                                   ? GreenpowerColor
                                                   : lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == false && lan.isGCB == true ? mainColorTheme : mainGreyColorTheme,
                                             ),
