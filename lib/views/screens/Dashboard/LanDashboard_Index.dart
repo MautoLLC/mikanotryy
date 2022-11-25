@@ -207,7 +207,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       value.chosenGeneratorName);
                               value.chosenGeneratorId = Chosen.generatorId;
                               await sharedPreferences.setStringList(
-                                  "generatorNameList", gens);
+                                  "generatorNameList", gens);  
                              if(model.cloudMode == 1){
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
