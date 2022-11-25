@@ -155,7 +155,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButtonFormField<String>(
                                           isExpanded: true,
-                                          hint: Text(
+                                          hint: Text( 
                                             lbl_Generator_ID,
                                             style: TextStyle(
                                               fontSize: 24,
