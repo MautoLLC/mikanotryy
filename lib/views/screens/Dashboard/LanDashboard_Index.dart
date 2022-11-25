@@ -155,7 +155,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButtonFormField<String>(
                                           isExpanded: true,
-                                          hint: Text(
+                                          hint: Text( 
                                             lbl_Generator_ID,
                                             style: TextStyle(
                                               fontSize: 24,
@@ -207,7 +207,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                       value.chosenGeneratorName);
                               value.chosenGeneratorId = Chosen.generatorId;
                               await sharedPreferences.setStringList(
-                                  "generatorNameList", gens);
+                                  "generatorNameList", gens);  
                              if(model.cloudMode == 1){
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(

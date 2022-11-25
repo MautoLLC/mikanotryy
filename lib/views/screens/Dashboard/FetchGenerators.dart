@@ -490,6 +490,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                 controllerAddress:
                                     ControllerAddressController.text,
                               );
+                               if (value.generatorNameList.length != 1) {
                               SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
                               
@@ -505,10 +506,10 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                   SelectedConfigurationModel);
                               sharedPreferences.setBool(
                                   prefs_DashboardFirstTimeAccess, false);
-                              value.generatorNameList.removeWhere((generator) =>
-                                  generator == value.chosenGeneratorName);
+                                  value.generatorNameList.removeWhere((generator) =>
+                                  generator == value.chosenGeneratorName); 
                               value.chosenGeneratorName =
-                                  value.generatorNameList.elementAt(0);
+                                  value.generatorNameList.elementAt(0);                                                   
                               List<String> gens = await sharedPreferences
                                   .getStringList("generatorNameList")!;
                               gens.remove(value.chosenGeneratorName);
@@ -542,7 +543,64 @@ class _FetchGenerators  extends State<FetchGenerators>{
                               value.isNotFirstTime();
                               prefs.setBool(
                                   prefs_DashboardFirstTimeAccess, false);
+                               }
+                              else if (value.generatorNameList.length == 1) {
+                                SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+                              
+                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                              //String Configs=jsonEncode(value.ConfigurationModelsList);
+                              String Configs = jsonEncode(value.configsList);
+                              String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                              await sharedPreferences.setString(
+                                  'Configurations', Configs);
+                              await sharedPreferences.setString(
+                                  'SelectedConfigurationModel', 
+                                  SelectedConfigurationModel);
+                              sharedPreferences.setBool(
+                                  prefs_DashboardFirstTimeAccess, false);
+            
+                              value.chosenGeneratorName =
+                                  value.generatorNameList.elementAt(0);                                                   
+                              List<String> gens = await sharedPreferences
+                                  .getStringList("generatorNameList")!;
+                              gens.remove(value.chosenGeneratorName);
+                              Generator Chosen = value.gens.firstWhere(
+                                  (element) =>
+                                      element.name ==
+                                      value.chosenGeneratorName);
+                              value.chosenGeneratorId = Chosen.generatorId;
+                              await sharedPreferences.setStringList(
+                                  "genneratorNameList", gens);
+                              if (value.option == 'cloud') {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CloudDashboard_Index(
+                                                RefreshRate:
+                                                    value.RefreshRate)));
+                              } else if (value.option == 'comap') {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Dashboard_Index()));
+                              } else {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            LanDashboard_Index(
+                                              RefreshRate: value.RefreshRate,
+                                            )));
+                              }
+                              value.isNotFirstTime();
+                              prefs.setBool(
+                                  prefs_DashboardFirstTimeAccess, false);
+                              value.generatorNameList.removeWhere((generator) =>
+                                  generator == value.chosenGeneratorName); 
+                              }
                             }),
+  
                         SizedBox(height: 20),
                         SizedBox(
                           height: 25,
