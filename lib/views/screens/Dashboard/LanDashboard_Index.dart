@@ -907,7 +907,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: lan.LoadPowerFactor.return_value.toString()+ " "+ "kW",
+                                            value: lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],
                                       ),
