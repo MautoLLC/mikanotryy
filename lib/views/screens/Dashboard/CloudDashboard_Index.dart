@@ -876,7 +876,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: "Energy",
                                             value: cloud.LoadKWh.value
                                                 .toString() + " "+ cloud.LoadKWh.unit,
-                                          ),
+                                          ), 
                                           infotile(
                                             title: "Hz",
                                             value: cloud.mainsFrequency.value.toString() + " "+ cloud.mainsFrequency.unit,

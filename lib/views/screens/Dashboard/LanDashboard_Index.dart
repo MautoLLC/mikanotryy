@@ -96,7 +96,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   // }
    bool timedelayMCBFeedback(LanGeneratorState c){
   bool state = false;
-   if(c.MCBFeedback.return_value == '1'){
+   if(c.MCBFeedback.return_value == 1){
    sleep(Duration(seconds: 2));
    state = true;
    }
@@ -104,7 +104,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   }
   bool timedelayGCBFeedback(LanGeneratorState c){
   bool state = false;
-   if(c.GCBFeedback.return_value == '1'){
+   if(c.GCBFeedback.return_value == 1){
    sleep(Duration(seconds: 2));
    state = true;
    }
@@ -525,7 +525,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                     
                                                   setState(() {
                                                     
-                                                 
+                                                   print(lan.ReadyToLoad.return_value);
                                                     lan.changeIsIO(true);
                                                   }
                                                    );                   
@@ -548,7 +548,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 28,
                                             child: ImageIcon(
                                               AssetImage(ic_g),
-                                              color: lan.ReadyToLoad.return_value == '1'
+                                              color: lan.ReadyToLoad.return_value == 1
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -563,7 +563,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                               AssetImage(ic_line),
                                               color: greenline == true && lan.isGCB == true && timedelayGCBFeedback(lan) == true
                                                   ? GreenpowerColor
-                                                  : lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == false && lan.isGCB == true ? mainColorTheme : mainGreyColorTheme,
+                                                  : lan.ReadyToLoad.return_value == 1 && timedelayGCBFeedback(lan) == false && lan.isGCB == true ? mainColorTheme : mainGreyColorTheme,
                                             ),
                                           )),
                                       Positioned(
@@ -574,7 +574,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             height: 26,
                                             child: ImageIcon(
                                               AssetImage(ic_factory),
-                                              color: (lan.ReadyToLoad.return_value == '1' && timedelayGCBFeedback(lan) == true && lan.isGCB == true) || (lan.MainsHealthy.return_value == '1' && timedelayMCBFeedback(lan) == true && lan.MCBModeStatus == true)
+                                              color: (lan.ReadyToLoad.return_value == 1 && timedelayGCBFeedback(lan) == true && lan.isGCB == true) || (lan.MainsHealthy.return_value == 1 && timedelayMCBFeedback(lan) == true && lan.MCBModeStatus == true)
                                                   ? GreenpowerColor
                                                   : mainGreyColorTheme,
                                             ),
@@ -617,9 +617,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           child: new Bounceable(
                                           onTap: () async {
     await  Future.delayed(Duration(seconds: 2), () {
-                                                 if(lan.ReadyToLoad.return_value == '1' && lan.isGCB){
+                                                 if(lan.ReadyToLoad.return_value == 1 && lan.isGCB){
                                                     sleep(Duration(seconds: 2));
-                                                    if(lan.GCBFeedback.return_value == '1'){
+                                                    if(lan.GCBFeedback.return_value == 1){
                                                       greenline = true;
                                                     }
                                                   
