@@ -379,7 +379,7 @@ class LanGeneratorState extends ChangeNotifier {
       LoadPowerFactor = await LanService.FetchSensorData("PowerFactor");
       ReadyToLoad = await LanService.FetchSensorData("ReadyToLoad");
       MainsHealthy = await LanService.FetchSensorData("MainsHealthy");
-      MCBFeedback = await LanService.FetchSensorData("MCBFeedback");
+      MCBFeedback = await LanService.FetchSensorData("MCBFeedback");  
       GCBFeedback = await LanService.FetchSensorData("GCBFeedback");
       mainsvoltageL1L2N = await LanService.FetchSensorData("MainVL1L2N");
        mainsvoltageL1L3N = await LanService.FetchSensorData("MainVL3L1N");
@@ -411,7 +411,7 @@ class LanGeneratorState extends ChangeNotifier {
       if(MCBFeedback.return_value == 1)
       MCBFeedbackState = true;
       else
-      MCBFeedbackState = false;
+      MCBFeedbackState = false; 
       if(GCBFeedback.return_value == 1)
       GCBFeedbackState = true;
       else
