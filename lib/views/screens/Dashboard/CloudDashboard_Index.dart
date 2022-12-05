@@ -493,6 +493,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           top: 72,
                                           left: 232,
                                           child: new Bounceable(
+                                              scaleFactor : 0.6,
                                               onTap: () {
                                            
                                                 setState(() {
@@ -514,6 +515,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           top: 4,
                                           left: 241,
                                           child: new Bounceable(
+                                              scaleFactor : 0.6,
                                               onTap: (){
                                             
                                                   
@@ -578,6 +580,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           left: 67,
                                           
                                           child: new Bounceable(
+                                              scaleFactor : 0.6,
                                               onTap: () async {
                                                //     sleep(Duration(seconds: 2));
                                                 await  Future.delayed(Duration(seconds: 2), () {
@@ -611,7 +614,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           top: 72,
                                           left: 147,
                                           child: new Bounceable(
-                                          
+                                              scaleFactor : 0.6,
                                               onTap: () async {
     await  Future.delayed(Duration(seconds: 2), () {
                                                  if(cloud.ReadyToLoad.value == '1' ){

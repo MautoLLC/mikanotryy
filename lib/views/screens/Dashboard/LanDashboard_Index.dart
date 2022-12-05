@@ -499,7 +499,9 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 72,
                                           left: 232,
                                           child: new Bounceable(
-                                           onTap: () {
+                                              scaleFactor : 0.6,
+
+                                              onTap: () {
                                            
                                                 setState(() {
                                                
@@ -520,6 +522,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 4,
                                           left: 241,
                                           child: new Bounceable(
+                                              scaleFactor : 0.6,
+
                                                onTap: (){
                                             
                                                     
@@ -585,6 +589,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 67,
                                           
                                           child: new Bounceable(
+                                              scaleFactor : 0.6,
+
                                              onTap: () async {
     await  Future.delayed(Duration(seconds: 2), () {
                                                     if(lan.MCBModeStatus == false){
@@ -615,6 +621,8 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           top: 72,
                                           left: 147,
                                           child: new Bounceable(
+                                              scaleFactor : 0.6,
+
                                           onTap: () async {
     await  Future.delayed(Duration(seconds: 2), () {
                                                  if(lan.ReadyToLoad.return_value == 1 && lan.isGCB){
