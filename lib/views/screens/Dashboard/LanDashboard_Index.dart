@@ -625,10 +625,10 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
 
                                           onTap: () async {
     await  Future.delayed(Duration(seconds: 2), () {
-                                                 if(lan.ReadyToLoad.return_value == 1 && lan.isGCB){
+                                                 if(lan.ReadyToLoad.return_value == 1){
                                                     sleep(Duration(seconds: 2));
                                                     if(lan.GCBFeedback.return_value == 1){
-                                                      greenline = true;
+                                                      greenline = true;  
                                                     }
                                                   
                                                  }
@@ -830,7 +830,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                            infotile(
                                             title: "Load KWh",
                                             value: lan.LoadKWh.return_value
-                                                .toString() + " "+ "A",
+                                                .toString() + " "+ "Kwh",
                                           ),
                                           infotile(
                                             title: "Hz",
@@ -907,7 +907,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                            infotile(
                                             title: "Energy",
                                             value: lan.LoadKWh.return_value
-                                                .toString() + " "+ "A",
+                                                .toString() + " "+ "Kwh",
                                           ),
                                           infotile(
                                             title: "Hz",
