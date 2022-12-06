@@ -114,14 +114,14 @@ class LanDashBoard_Service {
     String apiLanEndpoint = "http://" + configModel.espapiendpoint;
     int Mode;
     if (status)
-      Mode = 0;
-    else
       Mode = 1;
+    else
+      Mode = 0;
 
-    bool isSuccess = false;
+    bool isSuccess = false;  
     final response = await http.get(
         Uri.parse(apiLanEndpoint + '/setGCBMode?param=' + Mode.toString()));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200) { 
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       isSuccess = true;
