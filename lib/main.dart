@@ -23,6 +23,7 @@ import 'State/CarouselState.dart';
 import 'State/InspectionsState.dart';
 import 'State/LoadCalculationState.dart';
 import 'State/MainDashboardState.dart';
+import 'State/PDFState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
 
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
             create: ((context) => MainDashboardState())),
         ChangeNotifierProvider<NotificationState>(
             create: ((context) => NotificationState())),
+        ChangeNotifierProvider<PDFState>(create: (context) => PDFState()),
       ],
       child: MaterialApp(
         navigatorKey: navigator,
