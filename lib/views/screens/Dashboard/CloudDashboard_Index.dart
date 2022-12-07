@@ -804,10 +804,10 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: "L3",
                                             value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
                                           ),
-                                     /*     infotile(
+                                         infotile(
                                             title: "Energy",
-                                            value: cloud.LoadKWh.value.toString() + " "+ cloud.LoadKWh.unit,
-                                          ), */
+                                             value: cloud.LoadKWh.value.toString() + " "+ cloud.LoadKWh.unit,
+                                          ), 
                                           infotile(
                                             title: "Hz",
                                             value: cloud.GeneratorFrequency.value.toString() + " "+ cloud.GeneratorFrequency.unit,

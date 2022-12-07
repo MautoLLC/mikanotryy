@@ -394,7 +394,7 @@ class CloudGeneratorState extends ChangeNotifier {
   generatorvoltageL1L3N= FindSensor(
           cloudsensors, dotenv.env['generatorvoltage_L1-L3_id'].toString());
   generatorvoltageL2L3N= FindSensor(
-          cloudsensors, dotenv.env['generatorvoltage_L2-L3_id'].toString());   
+          cloudsensors, dotenv.env['generatorvoltage_L2-L3_id'].toString());    
   LoadKva= FindSensor(
           cloudsensors, dotenv.env['LoadKva_id'].toString());
   LoadKvar= FindSensor(
