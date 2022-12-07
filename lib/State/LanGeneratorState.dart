@@ -320,7 +320,7 @@ class LanGeneratorState extends ChangeNotifier {
   }
 
   changeIsGCB(value) async {
-    bool isSuccess = await LanService.SwitchGCBMode(value);
+    bool isSuccess = await LanService.SwitchGCBMode(value);  
     if (isSuccess == true) {
       isGCB = value;
       notifyListeners();
