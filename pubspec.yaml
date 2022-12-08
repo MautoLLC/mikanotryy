@@ -33,7 +33,7 @@ dependencies:
   fluttertoast: ^8.0.7
   multi_image_picker: 
   audioplayers: ^0.19.1
-  permission_handler: ^8.1.4+1
+  permission_handler: ^10.2.0
   firebase_core: ^1.6.0
   firebase_messaging: ^10.0.6
   provider: ^6.0.0
