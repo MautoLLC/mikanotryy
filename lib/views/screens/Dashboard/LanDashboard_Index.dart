@@ -635,7 +635,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                   if(lan.isGCB == false){
                                                       
                                                       lan.changeIsGCB(
-                                                          true);  
+                                                          true);    
                                                     }
                                                     else{
                                                        
