@@ -12,6 +12,7 @@
     <application
         android:label="My Mikano"
         android:exported="true"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
