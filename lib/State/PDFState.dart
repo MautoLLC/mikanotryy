@@ -16,11 +16,11 @@ class PDFState extends ChangeNotifier {
 
   void DownloadPDF(String Path, String Code) async {
     toast("Pdf is downloading, please wait.");
-    Directory directory;
+    Directory? directory;
     if (Platform.isIOS) {
       directory = await getApplicationDocumentsDirectory();
     } else {
-      directory = Directory('/storage/emulated/0/Download');
+      directory = await getExternalStorageDirectory();
     }
 
     try {
@@ -29,7 +29,7 @@ class PDFState extends ChangeNotifier {
       Dio dio = Dio();
       Response response = await dio.download(
         Path,
-        "${directory.path}/${Code}.pdf",
+        "${directory!.path.toString()}/${Code}.pdf",
         onReceiveProgress: (count, total) => progress = total,
       );
       if (response.statusCode == 200) {
