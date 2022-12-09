@@ -15,43 +15,43 @@ class PDFState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void DownloadPDF(String Path, String Code) async {
-    try {
-      PermissionStatus status = await Permission.storage.request();
-      if (status == PermissionStatus.granted) {
-        toast("Pdf is downloading, please wait.");
-        Directory? directory;
-        if (Platform.isIOS) {
-          directory = await getApplicationDocumentsDirectory();
-        } else {
-          // directory = await getExternalStorageDirectory();
-          directory = Directory("/storage/emulated/0/Download");
-        }
-        // List<Directory>? directories = await getExternalStorageDirectories();
+ void DownloadPDF(String Path, String Code) async {
+   try {
+     PermissionStatus status = await Permission.storage.request();
+     if (status == PermissionStatus.granted) {
+       toast("Pdf is downloading, please wait.");
+       Directory? directory;
+       if (Platform.isIOS) {
+         directory = await getApplicationDocumentsDirectory();
+       } else {
+         // directory = await getExternalStorageDirectory();
+         directory = Directory("/storage/emulated/0/Download");
+       }
+       // List<Directory>? directories = await getExternalStorageDirectories();
 
-        try {
-          toggleProgressBarVisibility(true);
-          notifyListeners();
-          Dio dio = Dio();
-          Response response = await dio.download(
-            Path,
-            "${directory!.path.toString()}/${Code}.pdf",
-            onReceiveProgress: (count, total) => progress = total,
-          );
-          if (response.statusCode == 200) {
-            toast("Downloaded Successfully");
-          } else {
-            toast("Failed to Download");
-          }
-        } catch (e) {
-          debugPrint(e.toString());
-        } finally {
-          toggleProgressBarVisibility(false);
-          notifyListeners();
-        }
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
+       try {
+         toggleProgressBarVisibility(true);
+         notifyListeners();
+         Dio dio = Dio();
+         Response response = await dio.download(
+           Path,
+           "${directory!.path.toString()}/${Code}_${DateTime.now().millisecondsSinceEpoch}.pdf",
+           onReceiveProgress: (count, total) => progress = total,
+         );
+         if (response.statusCode == 200) {
+           toast("Downloaded Successfully");
+         } else {
+           toast("Failed to Download");
+         }
+       } catch (e) {
+         debugPrint(e.toString());
+       } finally {
+         toggleProgressBarVisibility(false);
+         notifyListeners();
+       }
+     }
+   } catch (e) {
+     rethrow;
+   }
+ }
 }
