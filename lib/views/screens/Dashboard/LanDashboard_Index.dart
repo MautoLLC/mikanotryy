@@ -730,8 +730,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             title: lbl_Pressure,
                                             value: ((lan.OilPressure
                                                         .return_value
-                                                        .toDouble()) /
-                                                    10)
+                                                        .toDouble()) )
                                                 .toString() + " "+ "Bar",
                                           ),
                                           infotile(
@@ -753,14 +752,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             title: "Battery Voltage",
                                             value: ((lan.BatteryVoltage
                                                         .return_value
-                                                        .toDouble()) /
-                                                    10)
+                                                        .toDouble()) )
                                                 .toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "Total fuel consumption",
                                            
-                                              value: lan.TotalFuelConsumption.return_value.toString() + " " + "L",
+                                              value: lan.FuelLevel.return_value.toString() + " " + "L",
 
                                             ),
                                         ],
