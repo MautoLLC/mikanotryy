@@ -140,8 +140,8 @@ class FavoritesItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
-                          child:
-                              commonCacheImageWidget(product.product.Image, 65),
+                          child: commonCacheImageWidget(
+                              product.product.Images.first, 65),
                         )
                       ]),
                   SizedBox(width: 22),

@@ -36,10 +36,11 @@ class _RFQFormScreenState extends State<RFQFormScreen> {
     nameController.text = user.username;
     emailController.text = user.email;
     phoneNumberController.text = user.phoneNumber;
-    addressController.text = Provider.of<UserState>(context, listen: false)
+    String Address = Provider.of<UserState>(context, listen: false)
         .ChosenAddress
         .address1
         .toString();
+    addressController.text = Address == 'null' ? '' : Address;
   }
 
   @override

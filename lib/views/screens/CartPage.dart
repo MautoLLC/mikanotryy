@@ -218,7 +218,7 @@ class CartItem extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     child: commonCacheImageWidget(
-                                        product.product.Image, 65),
+                                        product.product.Images.first, 65),
                                   )
                                 ]),
                             SizedBox(width: 22),

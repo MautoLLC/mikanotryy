@@ -5,7 +5,7 @@ class Product {
   String Name;
   double Price;
   String Description;
-  String Image;
+  List<String> Images;
   String Code;
   String Category;
   int Rating;
@@ -19,7 +19,7 @@ class Product {
       {required this.Name,
       required this.Price,
       required this.Description,
-      required this.Image,
+      required this.Images,
       required this.Code,
       required this.Category,
       required this.Rating,
@@ -49,12 +49,16 @@ class Product {
     }
     double price =
         double.parse(double.parse(json['price'].toString()).toStringAsFixed(2));
+    List<String> imagesUrls = [];
+    for (var image in json['images']) {
+      imagesUrls.add(image['src']);
+    }
     return Product(
         id: json['id'],
         Name: json['name'],
         Price: price,
         Description: full_description,
-        Image: json['images'].length == 0 ? '' : json['images'][0]['src'],
+        Images: imagesUrls,
         Code: json['sku'] == null ? '' : json['sku'],
         Category: json['Category'] == null ? '' : json['Category'],
         dataSheet: data_Sheet,
@@ -71,9 +75,7 @@ class Product {
       'name': Name,
       'price': Price,
       'full_description': Description,
-      'images': [
-        {'src': Image}
-      ],
+      'images': Images,
       'sku': Code,
       'Category': Category,
       'approved_rating_sum': Rating,

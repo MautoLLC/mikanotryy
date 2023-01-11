@@ -84,6 +84,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PDFState>(create: (context) => PDFState()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: !isProduction,
         navigatorKey: navigator,
         title: 'My Mikano',
         theme: ThemeData(

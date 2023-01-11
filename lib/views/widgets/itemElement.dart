@@ -74,7 +74,7 @@ class _ItemElementState extends State<ItemElement> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(0))),
                           child: commonCacheImageWidget(
-                              widget.product.Image, 106,
+                              widget.product.Images.first, 106,
                               fit: BoxFit.cover)),
                     ),
                   ],
