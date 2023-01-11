@@ -15,6 +15,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'AddressScreen.dart';
+import 'PrivacyPolicyScreen.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
@@ -136,16 +137,27 @@ class CheckoutScreen extends StatelessWidget {
                     Row(
                       children: [
                         Checkbox(
-                            value: state.checkedValueForOrder,
+                            value: state.termsAccepted,
                             onChanged: (value) {
-                              state.setcheckedValueForOrder(value!);
+                              state.setTermsState(value!);
                             }),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.75,
-                          child: Text(
-                            txt_Terms_Of_User_Order,
-                            style: TextStyle(
-                                color: mainGreyColorTheme, fontSize: 14),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PrivacyPolicyScreen()));
+                            },
+                            child: Text(
+                              txt_Terms_Of_User_Order,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.lightBlue,
+                                  fontSize: 14),
+                            ),
                           ),
                         )
                       ],

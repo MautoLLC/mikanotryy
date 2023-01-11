@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mymikano_app/State/CurrencyState.dart';
@@ -68,27 +69,58 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         children: [
                           Expanded(
                             child: Container(
-                              height: size.height / 2,
-                              padding:
-                                  EdgeInsets.fromLTRB(45.0, 0.0, 45.0, 0.0),
+                              height: size.height / 2.7,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15))),
-                              child: CachedNetworkImage(
-                                imageUrl: '${widget.product.Image}',
-                                height: 100,
-                                fit: BoxFit.contain,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) => Center(
-                                        child: CircularProgressIndicator(
-                                            value: downloadProgress.progress)),
-                                errorWidget: (_, __, ___) {
-                                  return SizedBox(height: 85, width: 85);
-                                },
-                              ),
+                              child: CarouselSlider.builder(
+                                  options: CarouselOptions(
+                                    height: 400,
+                                    aspectRatio: 16 / 9,
+                                    viewportFraction: 0.8,
+                                    initialPage: 0,
+                                    enableInfiniteScroll: false,
+                                    reverse: false,
+                                    autoPlay: false,
+                                    autoPlayInterval: Duration(seconds: 5),
+                                    autoPlayAnimationDuration:
+                                        Duration(milliseconds: 800),
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    enlargeCenterPage: true,
+                                    enlargeFactor: 0.2,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                  itemCount: widget.product.Images.length,
+                                  itemBuilder: (BuildContext context, int index,
+                                          int pageViewIndex) =>
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.grey.shade300),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              '${widget.product.Images[index]}',
+                                          fit: BoxFit.contain,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (_, __, ___) {
+                                            return SizedBox(
+                                                height: 85, width: 85);
+                                          },
+                                        ),
+                                      )),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Row(

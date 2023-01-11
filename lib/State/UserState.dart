@@ -120,7 +120,9 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> setTermsState(bool state) async {
-    termsAccepted = await CustomerService().setTermsState(state);
+    if (await CustomerService().setTermsState(state)) {
+      termsAccepted = state;
+    }
     notifyListeners();
   }
 
