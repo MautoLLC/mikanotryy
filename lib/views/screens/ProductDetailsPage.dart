@@ -64,101 +64,98 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: size.height / 2.7,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              child: CarouselSlider.builder(
-                                  options: CarouselOptions(
-                                    height: 400,
-                                    aspectRatio: 16 / 9,
-                                    viewportFraction: 0.8,
-                                    initialPage: 0,
-                                    enableInfiniteScroll: false,
-                                    reverse: false,
-                                    autoPlay: false,
-                                    autoPlayInterval: Duration(seconds: 5),
-                                    autoPlayAnimationDuration:
-                                        Duration(milliseconds: 800),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enlargeCenterPage: true,
-                                    enlargeFactor: 0.2,
-                                    scrollDirection: Axis.horizontal,
-                                  ),
-                                  itemCount: widget.product.Images.length,
-                                  itemBuilder: (BuildContext context, int index,
-                                          int pageViewIndex) =>
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.grey.shade300),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                        ),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              '${widget.product.Images[index]}',
-                                          fit: BoxFit.contain,
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress)),
-                                          errorWidget: (_, __, ___) {
-                                            return SizedBox(
-                                                height: 85, width: 85);
-                                          },
-                                        ),
-                                      )),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            IconButton(
+                                onPressed: () => finish(context),
+                                icon: Icon(Icons.arrow_back_ios_new)),
+                            IconButton(
+                                onPressed: () {
+                                  // Pop until dashboard screen
+                                  Navigator.popUntil(context,
+                                      ModalRoute.withName('dashboard'));
+                                },
+                                icon: Icon(Icons.home)),
+                          ],
+                        ),
+                        userState.guestLogin
+                            ? Container()
+                            : Consumer<ProductState>(
+                                builder: (context, state, child) =>
+                                    GestureDetector(
+                                        onTap: () {
+                                          state.addorremoveProductToFavorite(
+                                              widget.product);
+                                        },
+                                        child: commonCacheImageWidget(
+                                            ic_heart, 30,
+                                            color: widget.product.liked
+                                                ? mainColorTheme
+                                                : null)),
+                              )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: size.height / 2.7,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: CarouselSlider.builder(
+                                options: CarouselOptions(
+                                  height: 400,
+                                  aspectRatio: 16 / 9,
+                                  viewportFraction: 0.8,
+                                  initialPage: 0,
+                                  enableInfiniteScroll: false,
+                                  reverse: false,
+                                  autoPlay: false,
+                                  autoPlayInterval: Duration(seconds: 5),
+                                  autoPlayAnimationDuration:
+                                      Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enlargeCenterPage: true,
+                                  enlargeFactor: 0.2,
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                                itemCount: widget.product.Images.length,
+                                itemBuilder: (BuildContext context, int index,
+                                        int pageViewIndex) =>
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.grey.shade300),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${widget.product.Images[index]}',
+                                        fit: BoxFit.contain,
+                                        progressIndicatorBuilder: (context, url,
+                                                downloadProgress) =>
+                                            Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                        value: downloadProgress
+                                                            .progress)),
+                                        errorWidget: (_, __, ___) {
+                                          return SizedBox(
+                                              height: 85, width: 85);
+                                        },
+                                      ),
+                                    )),
                           ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              IconButton(
-                                  onPressed: () => finish(context),
-                                  icon: Icon(Icons.arrow_back_ios_new)),
-                              IconButton(
-                                  onPressed: () {
-                                    // Pop until dashboard screen
-                                    Navigator.popUntil(context,
-                                        ModalRoute.withName('dashboard'));
-                                  },
-                                  icon: Icon(Icons.home)),
-                            ],
-                          ),
-                          userState.guestLogin
-                              ? Container()
-                              : Consumer<ProductState>(
-                                  builder: (context, state, child) =>
-                                      GestureDetector(
-                                          onTap: () {
-                                            state.addorremoveProductToFavorite(
-                                                widget.product);
-                                          },
-                                          child: commonCacheImageWidget(
-                                              ic_heart, 30,
-                                              color: widget.product.liked
-                                                  ? mainColorTheme
-                                                  : null)),
-                                )
-                        ],
-                      ),
-                    ]),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
