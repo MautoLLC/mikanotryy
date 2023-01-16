@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:ui';
+
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +21,7 @@ import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'State/ApiConfigurationStatee.dart';
 import 'State/CarouselState.dart';
@@ -26,6 +31,7 @@ import 'State/MainDashboardState.dart';
 import 'State/PDFState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
+import 'models/LanAlarm.dart';
 
 final GlobalKey<NavigatorState> navigator =
     GlobalKey<NavigatorState>(); //Create a key for navigator
@@ -44,6 +50,9 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
+
+
+
 
 class MyApp extends StatelessWidget {
   @override

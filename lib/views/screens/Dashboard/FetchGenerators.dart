@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
+import 'package:mymikano_app/services/LanNotificationService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -533,6 +534,9 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                         builder: (context) =>
                                             Dashboard_Index()));
                               } else {
+                                //added by youssef k to initialize the background lan notification service//
+                                await initializeService();
+                                ///////////////////////////////////////////////////////////////////////////
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
