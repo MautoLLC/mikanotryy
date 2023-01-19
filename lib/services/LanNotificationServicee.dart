@@ -5,17 +5,19 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/views/screens/Dashboard/NotificationPage.dart';
+import 'package:mymikano_app/views/screens/NotificationsScreen.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart';
 import '../models/LanAlarm.dart';
 import '../utils/appsettings.dart';
 import '../utils/strings.dart';
@@ -44,6 +46,17 @@ Future<FlutterBackgroundService> initializeService() async {
       onBackground: onIosBackground,
     ),
   );
+  //tap listiner on notification added by youssef k for lan notification //
+  AwesomeNotifications().actionStream.listen((ReceivedNotification receivedNotification) {
+    print("bliblo" + receivedNotification.payload!['name'].toString());
+    //redirect to notification page//
+    // navigatorKey.currentContext?.push(
+    //   MaterialPageRoute(builder: (context) => NotificationPage(),),);
+    Navigator.push(
+      navigator.currentContext!,
+      MaterialPageRoute(builder: (context) => NotificationsPage()),
+    );
+  });
   //starting service
   service.startService();
   return service;
@@ -67,39 +80,6 @@ Future<void> GetAndPushNotifications (ServiceInstance service) async {
   var dio = Dio();
   // Only available for flutter 3.0.0 and later
   DartPluginRegistrant.ensureInitialized();
-
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'Lan_Notification', // id
-    'Lan_Notification', // title
-    description:
-    'This channel is used for Generators Lan  notifications.', // description
-    importance: Importance.high, // importance must be at low or higher level
-  );
-
-
- final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
-  const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('ic_notification_icon');
-  final DarwinInitializationSettings initializationSettingsDarwin =
-  DarwinInitializationSettings(
-      onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-  final LinuxInitializationSettings initializationSettingsLinux =
-  LinuxInitializationSettings(
-      defaultActionName: 'Open notification');
-  final InitializationSettings initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsDarwin,
-      linux: initializationSettingsLinux);
-  flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse);
-
-
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
   if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
       service.setAsForegroundService();
@@ -208,20 +188,22 @@ Future<void> GetAndPushNotifications (ServiceInstance service) async {
         String ms=now.millisecond.toString();
         String sId=sec+ms;
         int notificataionId=int.parse(sId);
-        flutterLocalNotificationsPlugin.show(
-          notificataionId,
-          alarm.text,
-          "level: ${alarm.level.toString()} active: ${alarm.active.toString()} confirmed: ${alarm.confirmed.toString()}",
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'Lan_Notification',
-              'Lan_Notification',
-              icon: 'ic_notification_icon',
-              ongoing:true,
-            ),
-          ),
-          payload: "Lan Notification"
-        );
+        bool isallowed = await AwesomeNotifications().isNotificationAllowed();
+        if (!isallowed) {
+          //no permission of local notification
+          AwesomeNotifications().requestPermissionToSendNotifications();
+        }else{
+          //show notification
+          AwesomeNotifications().createNotification(
+              content: NotificationContent( //simgple notification
+                id: notificataionId,
+                channelKey: 'LanNotification', //set configuration wuth key "basic"
+                title: alarm.text,
+                body: "level: ${alarm.level.toString()} active: ${alarm.active.toString()} confirmed: ${alarm.confirmed.toString()}",
+                  payload: {"name":"Lan_Notification"}
+              )
+          );
+        }
       }
     }
 
@@ -243,18 +225,3 @@ Future<void> GetAndPushNotifications (ServiceInstance service) async {
   });
 }
 
-void onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
-  final String? payload = notificationResponse.payload;
-  if (notificationResponse.payload != null) {
-    debugPrint('notification payload: $payload');
-    navigatorKey.currentState?.push( MaterialPageRoute( builder: (context) => NotificationPage(), ), );
-  }
-
-}
-
-void onDidReceiveLocalNotification(
-    int id, String ? title, String ? body, String ? payload) async {
-  // display a dialog with the notification details, tap ok to go to another page
-  navigatorKey.currentState?.push( MaterialPageRoute( builder: (context) => NotificationPage(), ), );
-
-}

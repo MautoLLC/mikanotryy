@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
 import 'package:mymikano_app/models/GeneratorModel.dart';
-import 'package:mymikano_app/services/LanNotificationService.dart';
 import 'package:mymikano_app/utils/AppColors.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/utils/strings.dart';
@@ -18,6 +17,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../State/ApiConfigurationStatee.dart';
+import '../../../services/LanNotificationServicee.dart';
 class FetchGenerators extends StatefulWidget {
   final int RefreshRate;
   FetchGenerators({Key? key, required this.RefreshRate}) : super(key: key);
@@ -535,7 +535,10 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                             Dashboard_Index()));
                               } else {
                                 //added by youssef k to initialize the background lan notification service//
-                                await initializeService();
+                                if(await prefs.getBool("FirstLanGen")==null) {
+                                  await initializeService();
+                                }
+                                await prefs.setBool("FirstLanGen", false);
                                 ///////////////////////////////////////////////////////////////////////////
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(

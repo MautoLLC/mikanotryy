@@ -170,6 +170,7 @@ const cloudIotMautoUrl = "https://iotapi.mauto.co/api";
 const cloudIotMautoAuthUrl = cloudIotMautoUrl + "/User/token";
 const cloudIotMautoSensorsUrl = cloudIotMautoUrl + "/generators/values/";
 const cloudIotMautoUserGeneratorsUrl = cloudIotMautoUrl + "/generators/list/";
+const cloudIotMautoNotifications = cloudIotMautoUrl + "/Notifications/";
 const lanESPUrl = "espapiendpoint";
 const resetESPUrl = "http://" + lanESPUrl + "/reset";
 

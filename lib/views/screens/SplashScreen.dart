@@ -1,9 +1,10 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:mymikano_app/utils/images.dart';
 import 'package:mymikano_app/views/screens/EntryPage.dart';
 import 'package:mymikano_app/views/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'Dashboard/NotificationPage.dart';
 import 'MainDashboard.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     Future.delayed(Duration(seconds: 4), () {
       checkIfLoggedIn().then((value) {
         if (value) {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,9 @@ import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/AlarmPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/NotificationPage.dart';
 import 'package:mymikano_app/views/screens/SplashScreen.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,6 +41,22 @@ final GlobalKey<NavigatorState> navigator =
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //aded by yousef k for lan notification
+  AwesomeNotifications().initialize(
+      'resource://drawable/ic_notification_icon',
+      [            // notification icon
+        NotificationChannel(
+          channelGroupKey: 'LanNotification_test',
+          channelKey: 'LanNotification',
+          channelName: 'LanNotification',
+          channelDescription: 'Notification channel for lan',
+          channelShowBadge: true,
+          importance: NotificationImportance.High,
+          enableVibration: true,
+        ),
+      ]);
+
+  ///////////////////////////////////////
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Future.delayed(Duration(milliseconds: 1)).then(
@@ -105,3 +124,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
