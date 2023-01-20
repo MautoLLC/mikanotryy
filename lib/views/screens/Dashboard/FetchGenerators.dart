@@ -17,6 +17,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../State/ApiConfigurationStatee.dart';
+import '../../../services/LanNotificationServicee.dart';
 class FetchGenerators extends StatefulWidget {
   final int RefreshRate;
   FetchGenerators({Key? key, required this.RefreshRate}) : super(key: key);
@@ -533,6 +534,12 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                         builder: (context) =>
                                             Dashboard_Index()));
                               } else {
+                                //added by youssef k to initialize the background lan notification service//
+                                if(await prefs.getBool("FirstLanGen")==null) {
+                                  await initializeService();
+                                }
+                                await prefs.setBool("FirstLanGen", false);
+                                ///////////////////////////////////////////////////////////////////////////
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
