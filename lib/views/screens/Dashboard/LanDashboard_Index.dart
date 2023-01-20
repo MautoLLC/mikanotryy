@@ -242,69 +242,100 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         child: InkWell(
                                           
                                          onTap: () async {
-                                        
-                                            value.resetPreferences(configModel.espapiendpoint);
-                                            // Navigator.of(context).push(
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             ApiConfigurationPage()));
-                                            value.generatorNameList.add(
-                                                configModel.generatorName);
+                                           // show the dialog
+                                           showDialog(
+                                             context: context,
+                                             builder: (BuildContext context)=> AlertDialog(
+                                               title: const Text('Reset Dialog'),
+                                               content: SingleChildScrollView(
+                                                 child: ListBody(
+                                                   children: const <Widget>[
+                                                     Text('Are you sure you want to Reset ?'),
+                                                   ],
+                                                 ),
+                                               ),
+                                               actions: <Widget>[
+                                                 TextButton(
+                                                   child: const Text('Yes'),
+                                                   onPressed: () async {
+                                                     //Navigator.pop(context);
+                                                     value.resetPreferences(configModel.espapiendpoint);
+                                                     // Navigator.of(context).push(
+                                                     //     MaterialPageRoute(
+                                                     //         builder: (context) =>
+                                                     //             ApiConfigurationPage()));
+                                                     value.generatorNameList.add(
+                                                         configModel.generatorName);
 
-                                            //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
-                                            value.configsList.removeWhere(
-                                                (element) =>
-                                                    element.generatorId ==
-                                                    configModel.generatorId);
-                                            
-                                            if (value.configsList.length != 0){
-                                              value.configModel =
-                                                  value.configsList.elementAt(
-                                                      0);
-                                             SharedPreferences sharedPreferences =
-                                  await SharedPreferences.getInstance();
-                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                              //String Configs=jsonEncode(value.ConfigurationModelsList);
-                              String Configs = jsonEncode(value.configsList);
-                              String SelectedConfigurationModel =
-                                  jsonEncode(value.configModel);
-                              await sharedPreferences.setString(
-                                  'Configurations', Configs);
-                              await sharedPreferences.setString(
-                                  'SelectedConfigurationModel',
-                                  SelectedConfigurationModel);
-                              
-                              List<String> gens = await sharedPreferences
-                                  .getStringList("generatorNameList")!;
-                           
-                              value.chosenGeneratorName =
-                                  value.generatorNameList.elementAt(0);
-                              Generator Chosen = value.gens.firstWhere(
-                                  (element) =>
-                                      element.name ==
-                                      value.chosenGeneratorName);
-                              value.chosenGeneratorId = Chosen.generatorId;
-                              await sharedPreferences.setStringList(
-                                  "generatorNameList", gens);
-                             
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CloudDashboard_Index(
-                                              RefreshRate: 10)));
-                            
-                              value.isNotFirstTime();
-                         
-                                            }
-                                    
-                                              else{
-                                                 Navigator.of(context)
-                                                  .pushReplacement(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                         FetchGenerators(RefreshRate: 10)));
-                                              }
-                                            },
+                                                     //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                                     value.configsList.removeWhere(
+                                                             (element) =>
+                                                         element.generatorId ==
+                                                             configModel.generatorId);
+
+                                                     if (value.configsList.length != 0){
+                                                       value.configModel =
+                                                           value.configsList.elementAt(
+                                                               0);
+                                                       SharedPreferences sharedPreferences =
+                                                       await SharedPreferences.getInstance();
+                                                       //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                                       //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                                       String Configs = jsonEncode(value.configsList);
+                                                       String SelectedConfigurationModel =
+                                                       jsonEncode(value.configModel);
+                                                       await sharedPreferences.setString(
+                                                           'Configurations', Configs);
+                                                       await sharedPreferences.setString(
+                                                           'SelectedConfigurationModel',
+                                                           SelectedConfigurationModel);
+
+                                                       List<String> gens = await sharedPreferences
+                                                           .getStringList("generatorNameList")!;
+
+                                                       value.chosenGeneratorName =
+                                                           value.generatorNameList.elementAt(0);
+                                                       Generator Chosen = value.gens.firstWhere(
+                                                               (element) =>
+                                                           element.name ==
+                                                               value.chosenGeneratorName);
+                                                       value.chosenGeneratorId = Chosen.generatorId;
+                                                       await sharedPreferences.setStringList(
+                                                           "generatorNameList", gens);
+
+                                                       Navigator.of(context).pushReplacement(
+                                                           MaterialPageRoute(
+                                                               builder: (context) =>
+                                                                   CloudDashboard_Index(
+                                                                       RefreshRate: 10)));
+
+                                                       value.isNotFirstTime();
+
+                                                     }
+
+                                                     else{
+                                                       Navigator.of(context)
+                                                           .pushReplacement(
+                                                           MaterialPageRoute(
+                                                               builder: (context) =>
+                                                                   FetchGenerators(RefreshRate: 10)));
+                                                     }
+                                                     //toExit = true;
+                                                   },
+                                                 ),
+                                                 TextButton(
+                                                   child: const Text('No'),
+                                                   onPressed: () {
+                                                     Navigator.pop(context);
+                                                     //toExit = false;
+                                                   },
+                                                 ),
+                                               ],
+                                             ),
+                                           );
+
+
+                                         },
                                           
                                           child: Column(
                                             
@@ -950,11 +981,13 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                     ),
                   ),
                 )));
+
   }
 
   DropdownMenuItem<String> buildMenuItem(ConfigurationModel model) =>
       DropdownMenuItem(
           value: model.generatorId, child: Text(model.generatorName));
+
 }
 
 class infotile extends StatelessWidget {
@@ -1004,6 +1037,7 @@ class infotile extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class Custom_Alert extends StatelessWidget {
@@ -1027,3 +1061,10 @@ class Custom_Alert extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
