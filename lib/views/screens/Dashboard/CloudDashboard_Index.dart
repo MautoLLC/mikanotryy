@@ -751,12 +751,15 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: lbl_Pressure,
                                             value: (double.parse(
                                                     cloud.OilPressure.value))
+                                                .toString() == '65523.0' ? 'N/A' : (double.parse(
+                                                    cloud.OilPressure.value))
                                                 .toString() + " "+ cloud.OilPressure.unit,
                                           ),
                                           infotile(
                                             title: lbl_Temperature,
-                                            value: cloud.CoolantTemp.value
-                                                .toString() + " "+ cloud.CoolantTemp.unit,
+                                            value: cloud.CoolantTemp.value   
+                                                .toString() == '65523' ? 'N/A' : cloud.CoolantTemp.value
+                                                .toString()  + " "+ cloud.CoolantTemp.unit,
                                           ),
                                           infotile(
                                             title: "Fuel Level",

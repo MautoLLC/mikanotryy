@@ -762,12 +762,16 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             value: ((lan.OilPressure
                                                         .return_value
                                                         .toDouble()) )
+                                                .toString() == '65523.0' ? 'N/A' : ((lan.OilPressure
+                                                        .return_value
+                                                        .toDouble()) )
                                                 .toString() + " "+ "Bar",
                                           ),
                                           infotile(
                                             title: lbl_Temperature,
                                             value: lan.CoolantTemp.return_value
-                                                .toString() + " " + "Celsius ",
+                                                .toString() == '65523' ? 'N/A' : lan.CoolantTemp.return_value
+                                                .toString()  + " " + "Celsius ",
                                           ),
                                           infotile(
                                             title: "Fuel Level",
