@@ -17,6 +17,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController CityController = TextEditingController();
   TextEditingController StateController = TextEditingController();
+  TextEditingController PhoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           isPassword: false)),
                 ],
               ),
+              SizedBox(height: 10),
+              t13EditTextStyle(lbl_Phone_Number, PhoneNumberController,
+                  isPassword: false, keyboardType: TextInputType.phone),
               Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
@@ -54,10 +58,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     textContent: lbl_Add_Address,
                     onPressed: () {
                       FocusScope.of(context).unfocus();
-                      state.addAddress(
-                        addressController.text,
-                        CityController.text,
-                      );
+                      state.addAddress(addressController.text,
+                          CityController.text, PhoneNumberController.text);
                       Navigator.pop(context);
                     }),
               )

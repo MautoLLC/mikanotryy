@@ -70,10 +70,9 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addAddress(String address, String city) async {
-    debugPrint(User.phoneNumber);
-    debugPrint(User.phoneNumber.isEmptyOrNull.toString());
-    if (User.phoneNumber.isEmptyOrNull) {
+  Future<void> addAddress(
+      String address, String city, String phoneNumber) async {
+    if (phoneNumber.isEmptyOrNull) {
       toast("Please Add a phone number first");
       return;
     }
@@ -86,7 +85,7 @@ class UserState extends ChangeNotifier {
         countryId: 2,
         stateProvinceId: 2,
         zipPostalCode: "1001",
-        phoneNumber: User.phoneNumber);
+        phoneNumber: phoneNumber);
     ChosenAddress = newAddress;
     if (await CustomerService().addShippingAddress(newAddress) &&
         !listofAddresses

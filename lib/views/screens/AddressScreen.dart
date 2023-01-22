@@ -103,6 +103,10 @@ class _AddressScreenState extends State<AddressScreen> {
                                       state.listofAddresses
                                           .elementAt(index)
                                           .city
+                                          .toString(),
+                                      state.listofAddresses
+                                          .elementAt(index)
+                                          .phoneNumber
                                           .toString());
                                 }),
                             if (state.listofAddresses
