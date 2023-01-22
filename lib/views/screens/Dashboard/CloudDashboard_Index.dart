@@ -228,73 +228,102 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         child: InkWell(
                                           
                                          onTap: () async {
-                                        
-                                            value.resetPreferences(configModel.espapiendpoint);
-                                            // Navigator.of(context).push(
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) =>
-                                            //             ApiConfigurationPage()));
-                                            value.generatorNameList.add(
-                                                configModel.generatorName);
-                                            
-                                            //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
-                                            value.configsList.removeWhere(
-                                                (element) =>
-                                                    element.generatorId ==
-                                                    configModel.generatorId);
-                                                     SharedPreferences sharedPreferences =
-                                  await SharedPreferences.getInstance();
-                                            
-                                            if (value.configsList.length != 0){
-                                              value.configModel =
-                                                  value.configsList.elementAt(
-                                                      0);
-        
-                              String Configs = jsonEncode(value.configsList);
-                              String SelectedConfigurationModel =
-                                  jsonEncode(value.configModel);
-                              await sharedPreferences.setString(
-                                  'Configurations', Configs);
-                              await sharedPreferences.setString(
-                                  'SelectedConfigurationModel',
-                                  SelectedConfigurationModel);
-                              
-                              List<String> gens = await sharedPreferences
-                                  .getStringList("generatorNameList")!;
-                           
-                              value.chosenGeneratorName =
-                                  value.generatorNameList.elementAt(0);
-                              Generator Chosen = value.gens.firstWhere(
-                                  (element) =>
-                                      element.name ==
-                                      value.chosenGeneratorName);
-                              value.chosenGeneratorId = Chosen.generatorId;
-                              await sharedPreferences.setStringList(
-                                  "generatorNameList", gens);
+                                           showDialog(
+                                             context: context,
+                                             builder: (BuildContext context)=> AlertDialog(
+                                               title: const Text('Reset Dialog'),
+                                               content: SingleChildScrollView(
+                                                 child: ListBody(
+                                                   children: const <Widget>[
+                                                     Text('Are you sure you want to Reset ?'),
+                                                   ],
+                                                 ),
+                                               ),
+                                               actions: <Widget>[
+                                                 TextButton(
+                                                   child: const Text('Yes'),
+                                                   onPressed: () async {
+                                                     value.resetPreferences(configModel.espapiendpoint);
+                                                     // Navigator.of(context).push(
+                                                     //     MaterialPageRoute(
+                                                     //         builder: (context) =>
+                                                     //             ApiConfigurationPage()));
+                                                     value.generatorNameList.add(
+                                                         configModel.generatorName);
 
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CloudDashboard_Index(
-                                              RefreshRate: configModel
-                                                                  .refreshRate)));
-                              value.isNotFirstTime();
-                                            }
-                                    
-                                              else{
-                                              String Configs = jsonEncode(value.configsList);
-                                               await sharedPreferences.setString(
-                                  'Configurations', Configs);
-                                             
-                                                 Navigator.of(context)
-                                                  .pushReplacement(
-                                                  MaterialPageRoute( 
-                                                      builder: (context) =>
-                                                          FetchGenerators(RefreshRate: 10)));
-                                                           sharedPreferences.setBool(
-                                                          prefs_DashboardFirstTimeAccess, true);    
-                                                        
-                                              }
+                                                     //value.chosenGeneratorName=value.generatorNameList.elementAt(0);
+                                                     value.configsList.removeWhere(
+                                                             (element) =>
+                                                         element.generatorId ==
+                                                             configModel.generatorId);
+                                                     SharedPreferences sharedPreferences =
+                                                     await SharedPreferences.getInstance();
+
+                                                     if (value.configsList.length != 0){
+                                                       value.configModel =
+                                                           value.configsList.elementAt(
+                                                               0);
+
+                                                       String Configs = jsonEncode(value.configsList);
+                                                       String SelectedConfigurationModel =
+                                                       jsonEncode(value.configModel);
+                                                       await sharedPreferences.setString(
+                                                           'Configurations', Configs);
+                                                       await sharedPreferences.setString(
+                                                           'SelectedConfigurationModel',
+                                                           SelectedConfigurationModel);
+
+                                                       List<String> gens = await sharedPreferences
+                                                           .getStringList("generatorNameList")!;
+
+                                                       value.chosenGeneratorName =
+                                                           value.generatorNameList.elementAt(0);
+                                                       Generator Chosen = value.gens.firstWhere(
+                                                               (element) =>
+                                                           element.name ==
+                                                               value.chosenGeneratorName);
+                                                       value.chosenGeneratorId = Chosen.generatorId;
+                                                       await sharedPreferences.setStringList(
+                                                           "generatorNameList", gens);
+
+                                                       Navigator.of(context).pushReplacement(
+                                                           MaterialPageRoute(
+                                                               builder: (context) =>
+                                                                   CloudDashboard_Index(
+                                                                       RefreshRate: configModel
+                                                                           .refreshRate)));
+                                                       value.isNotFirstTime();
+                                                     }
+
+                                                     else{
+                                                       String Configs = jsonEncode(value.configsList);
+                                                       await sharedPreferences.setString(
+                                                           'Configurations', Configs);
+
+                                                       Navigator.of(context)
+                                                           .pushReplacement(
+                                                           MaterialPageRoute(
+                                                               builder: (context) =>
+                                                                   FetchGenerators(RefreshRate: 10)));
+                                                       sharedPreferences.setBool(
+                                                           prefs_DashboardFirstTimeAccess, true);
+
+                                                     }
+
+
+                                                   },
+                                                 ),
+                                                 TextButton(
+                                                   child: const Text('No'),
+                                                   onPressed: () {
+                                                     Navigator.pop(context);
+                                                     //toExit = false;
+                                                   },
+                                                 ),
+                                               ],
+                                             ),
+                                           );
+
                                             },
                                           
                                           child: Column(
@@ -722,12 +751,15 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: lbl_Pressure,
                                             value: (double.parse(
                                                     cloud.OilPressure.value))
+                                                .toString() == '65523.0' ? 'N/A' : (double.parse(
+                                                    cloud.OilPressure.value))
                                                 .toString() + " "+ cloud.OilPressure.unit,
                                           ),
                                           infotile(
                                             title: lbl_Temperature,
-                                            value: cloud.CoolantTemp.value
-                                                .toString() + " "+ cloud.CoolantTemp.unit,
+                                            value: cloud.CoolantTemp.value   
+                                                .toString() == '65523' ? 'N/A' : cloud.CoolantTemp.value
+                                                .toString()  + " "+ cloud.CoolantTemp.unit,
                                           ),
                                           infotile(
                                             title: "Fuel Level",
