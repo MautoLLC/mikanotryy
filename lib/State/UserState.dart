@@ -64,7 +64,7 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> addAddress(
-      String address, String city, String phoneNumber) async {
+      String address, String city, String phoneNumber, int stateId) async {
     if (phoneNumber.isEmptyOrNull) {
       toast("Please Add a phone number first");
       return;
@@ -75,8 +75,8 @@ class UserState extends ChangeNotifier {
         firstName: User.username,
         lastName: User.username,
         email: User.email,
-        countryId: 2,
-        stateProvinceId: 2,
+        countryId: 163,
+        stateProvinceId: stateId,
         zipPostalCode: "1001",
         phoneNumber: phoneNumber);
     ChosenAddress = newAddress;
