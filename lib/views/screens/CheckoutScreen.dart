@@ -235,7 +235,7 @@ class CheckoutScreen extends StatelessWidget {
                     T13Button(
                         textContent: lbl_Pay,
                         onPressed: () async {
-                          if (state.checkedValueForOrder) {
+                          if (state.termsAccepted) {
                             TechnicianModel user = state.User;
                             if (!productState.getCashOnDelivery) {
                               String? result = await PaymentService().pay(
@@ -274,37 +274,6 @@ class CheckoutScreen extends StatelessWidget {
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               }
-                              // if (await PaymentService().pay(
-                              //     user.id,
-                              //     user.username,
-                              //     user.email,
-                              //     user.phoneNumber,
-                              //     productState.selectedProductsPrice.toInt())) {
-                              //   Fluttertoast.showToast(
-                              //       msg: "Payment Successful",
-                              //       toastLength: Toast.LENGTH_SHORT,
-                              //       gravity: ToastGravity.BOTTOM,
-                              //       timeInSecForIosWeb: 1,
-                              //       backgroundColor: Colors.green,
-                              //       textColor: Colors.white,
-                              //       fontSize: 16.0);
-                              //   productState
-                              //       .checkout(state.ChosenAddress, byCard: true)
-                              //       .then((value) {
-                              //     if (value) {
-                              //       Navigator.pop(context);
-                              //     }
-                              //   });
-                              // } else {
-                              //   Fluttertoast.showToast(
-                              //       msg: "Payment Failed",
-                              //       toastLength: Toast.LENGTH_SHORT,
-                              //       gravity: ToastGravity.BOTTOM,
-                              //       timeInSecForIosWeb: 1,
-                              //       backgroundColor: Colors.red,
-                              //       textColor: Colors.white,
-                              //       fontSize: 16.0);
-                              // }
                             } else {
                               productState
                                   .checkout(state.ChosenAddress)

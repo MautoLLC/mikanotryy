@@ -11,7 +11,6 @@ class UserState extends ChangeNotifier {
   bool termsAccepted = true;
   bool NotificationsEnabled = true;
   Address ChosenAddress = Address();
-  bool checkedValueForOrder = false;
   bool guestLogin = true;
   List<Address> listofAddresses = [];
 
@@ -21,7 +20,6 @@ class UserState extends ChangeNotifier {
     termsAccepted = true;
     NotificationsEnabled = true;
     ChosenAddress = Address();
-    checkedValueForOrder = false;
     notifyListeners();
   }
 
@@ -62,11 +60,6 @@ class UserState extends ChangeNotifier {
       User.username = firstName + " " + lastName;
       User.phoneNumber = PhoneNumber;
     }
-    notifyListeners();
-  }
-
-  Future<void> setcheckedValueForOrder(bool value) async {
-    checkedValueForOrder = value;
     notifyListeners();
   }
 
