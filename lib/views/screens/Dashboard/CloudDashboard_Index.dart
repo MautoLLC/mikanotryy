@@ -58,6 +58,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
     });
 
     timer = Timer.periodic(Duration(seconds: widget.RefreshRate), (Timer t) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(       content: Text("Refreshing values..."),     ));
       isDataFetched().whenComplete(() {
         setState(() {});
       });
