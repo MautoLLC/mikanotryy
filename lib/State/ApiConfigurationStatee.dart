@@ -18,7 +18,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   String chosenGeneratorId = '';
   var chosenSSID;
   var chosenGeneratorName;
-  int RefreshRate = 60;
+  int RefreshRate =3;
   String ControllerAddress = '';
   int cloudMode = 0;
   String password = '';

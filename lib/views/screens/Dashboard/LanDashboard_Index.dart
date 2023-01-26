@@ -97,7 +97,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
    bool timedelayMCBFeedback(LanGeneratorState c){
   bool state = false;
    if(c.MCBFeedback.return_value == 1){
-   sleep(Duration(seconds: 2));
+ //  sleep(Duration(seconds: 2));
    state = true;
    }
    return state;
@@ -105,7 +105,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
   bool timedelayGCBFeedback(LanGeneratorState c){
   bool state = false;
    if(c.GCBFeedback.return_value == 1){
-   sleep(Duration(seconds: 2));
+  // sleep(Duration(seconds: 2));
    state = true;
    }
    return state;
@@ -621,21 +621,34 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           
                                           child: new Bounceable(
                                               scaleFactor : 0.6,
+                                              onTap: (){
+                                                if(lan.MCBModeStatus == false){
 
-                                             onTap: () async {
-    await  Future.delayed(Duration(seconds: 2), () {
-                                                    if(lan.MCBModeStatus == false){
-                                                      
-                                                      lan.changeMCBModeStatus(
-                                                          true);  
-                                                    }
-                                                    else{
-                                                      
-                                                      lan.changeMCBModeStatus(
-                                                          false); 
-                                                    }
+                                                  lan.changeMCBModeStatus(
+                                                      true);
+                                                }
+                                                else{
+
+                                                  lan.changeMCBModeStatus(
+                                                      false);
+                                                }
+
+
+                                              },
+    //                                          onTap: () async {
+    // await  Future.delayed(Duration(seconds: 2), () {
+    //                                                 if(lan.MCBModeStatus == false){
+    //
+    //                                                   lan.changeMCBModeStatus(
+    //                                                       true);
+    //                                                 }
+    //                                                 else{
+    //
+    //                                                   lan.changeMCBModeStatus(
+    //                                                       false);
+    //                                                 }
                                                     
-                                              });},
+  //                                            });},
                                               child: Container(
                                                 
                                                   width: 60,
@@ -653,28 +666,45 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           left: 147,
                                           child: new Bounceable(
                                               scaleFactor : 0.6,
+                                                      onTap:(){
+                                                        if(lan.ReadyToLoad.return_value == 1){
+                                                              if(lan.GCBFeedback.return_value == 1){
+                                                        greenline = true;
+                                                        }
 
-                                          onTap: () async {
-    await  Future.delayed(Duration(seconds: 2), () {
-                                                 if(lan.ReadyToLoad.return_value == 1){
-                                                    sleep(Duration(seconds: 2));
-                                                    if(lan.GCBFeedback.return_value == 1){
-                                                      greenline = true;  
-                                                    }
-                                                  
-                                                 }
-                                                  if(lan.isGCB == false){
-                                                      
-                                                      lan.changeIsGCB(
-                                                          true);    
-                                                    }
-                                                    else{
-                                                       
-                                                      lan.changeIsGCB(
-                                                          false); 
-                                                    }
-                                                   
-                                              });},
+                                                        }
+                                                        if(lan.isGCB == false){
+
+                                                        lan.changeIsGCB(
+                                                        true);
+                                                        }
+                                                        else{
+
+                                                        lan.changeIsGCB(
+                                                        false);
+                                                        }
+                                                        },
+    //                                       onTap: () async {
+    // await  Future.delayed(Duration(seconds: 2), () {
+    //                                              if(lan.ReadyToLoad.return_value == 1){
+    //                                                 sleep(Duration(seconds: 2));
+    //                                                 if(lan.GCBFeedback.return_value == 1){
+    //                                                   greenline = true;
+    //                                                 }
+    //
+    //                                              }
+    //                                               if(lan.isGCB == false){
+    //
+    //                                                   lan.changeIsGCB(
+    //                                                       true);
+    //                                                 }
+    //                                                 else{
+    //
+    //                                                   lan.changeIsGCB(
+    //                                                       false);
+    //                                                 }
+    //
+    //                                           });},
                                               child: Container(
                                                   width: 60,
                                                   height: 48,
