@@ -91,7 +91,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   bool timedelayMCBFeedback(CloudGeneratorState c){
   bool state = false;
    if(c.MCBFeedback.value == '1'){
-   sleep(Duration(seconds: 2));
+   //sleep(Duration(seconds: 2));
    state = true;
    }
    return state;
@@ -99,7 +99,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
   bool timedelayGCBFeedback(CloudGeneratorState c){
   bool state = false;
    if(c.GCBFeedback.value == '1'){
-   sleep(Duration(seconds: 2));
+   //sleep(Duration(seconds: 2));
    state = true;
    }
    return state;
@@ -610,23 +610,33 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           
                                           child: new Bounceable(
                                               scaleFactor : 0.6,
-                                              onTap: () async {
-                                               //     sleep(Duration(seconds: 2));
-                                                await  Future.delayed(Duration(seconds: 2), () {
-                                                  if(cloud.MCBModeStatus == false){
-
+                                              onTap:(){
+                                                    if(cloud.MCBModeStatus == false){
                                                     cloud.changeMCBModeStatus(
-                                                        true);
-                                                  }
-                                                  else{
-
+                                                    true);
+                                                    }
+                                                    else{
                                                     cloud.changeMCBModeStatus(
-                                                        false);
-                                                  }
-                                                });
-
-                                                    
+                                                    false);
+                                                    }
                                               },
+                                              // onTap: () async {
+                                              //       sleep(Duration(seconds: 2));
+                                              //   await  Future.delayed(Duration(seconds: 2), () {
+                                              //     if(cloud.MCBModeStatus == false){
+                                              //
+                                              //       cloud.changeMCBModeStatus(
+                                              //           true);
+                                              //     }
+                                              //     else{
+                                              //
+                                              //       cloud.changeMCBModeStatus(
+                                              //           false);
+                                              //     }
+                                              //   });
+                                              //
+                                              //
+                                              // },
                                               child: Container(
                                                 
                                                   width: 60,
@@ -644,27 +654,46 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                           left: 147,
                                           child: new Bounceable(
                                               scaleFactor : 0.6,
-                                              onTap: () async {
-    await  Future.delayed(Duration(seconds: 2), () {
-                                                 if(cloud.ReadyToLoad.value == '1' ){
-                                                   
-                                                    if(cloud.GCBFeedback.value == '1'){
-                                                      greenline = true;
-                                                    }
-                                                  
-                                                 }
-                                                  if(cloud.isGCB == false){
-                                                      
-                                                      cloud.changeIsGCB(
-                                                          true);  
-                                                    }
-                                                    else{
-                                                       
-                                                      cloud.changeIsGCB(
-                                                          false); 
-                                                    }
-                                              });
-    },
+                                                onTap:(){
+                                                                        if(cloud.ReadyToLoad.value == '1' ){
+
+                                                                        if(cloud.GCBFeedback.value == '1'){
+                                                                        greenline = true;
+                                                                        }
+
+                                                                        }
+                                                                        if(cloud.isGCB == false){
+
+                                                                        cloud.changeIsGCB(
+                                                                        true);
+                                                                        }
+                                                                        else{
+
+                                                                        cloud.changeIsGCB(
+                                                                        false);
+                                                                        }
+                                                                        },
+    //                                           onTap: () async {
+    // await  Future.delayed(Duration(seconds: 2), () {
+    //                                              if(cloud.ReadyToLoad.value == '1' ){
+    //
+    //                                                 if(cloud.GCBFeedback.value == '1'){
+    //                                                   greenline = true;
+    //                                                 }
+    //
+    //                                              }
+    //                                               if(cloud.isGCB == false){
+    //
+    //                                                   cloud.changeIsGCB(
+    //                                                       true);
+    //                                                 }
+    //                                                 else{
+    //
+    //                                                   cloud.changeIsGCB(
+    //                                                       false);
+    //                                                 }
+    //                                           });
+    // },
                                               child: Container(
                                                   width: 60,
                                                   height: 48,
