@@ -736,7 +736,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           
                                          child: Custom_GaugeWidget(
                                             title: lbl_Actual_Power,
-                                            value: (double.parse(
+                                            value:  (double.parse(
                                                      lan.GeneratorLoad.return_value.toString())),    
                                                     
                                             needleColor: mainColorTheme,
@@ -777,7 +777,7 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                               SizedBox(
                                 height: 20,
                               ),
-                              Column(
+                             Column(
                                 children: <Widget>[
                                   ExpansionTile(
                                     title: Text(lbl_Engine),
@@ -792,7 +792,19 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             value: ((lan.OilPressure
                                                         .return_value
                                                         .toDouble()) )
-                                                .toString() == '65523.0' ? 'N/A' : ((lan.OilPressure
+                                                .toString() == '65523.0' || ((lan.OilPressure
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString() == '32678.0' || ((lan.OilPressure
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString().compareTo('3267.8') == 0 || ((lan.OilPressure
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString() == '65536.0' || ((lan.OilPressure
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString().compareTo('6553.6') == 0  ? 'N/A' : ((lan.OilPressure
                                                         .return_value
                                                         .toDouble()) )
                                                 .toString() + " "+ "Bar",
@@ -800,17 +812,31 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                           infotile(
                                             title: lbl_Temperature,
                                             value: lan.CoolantTemp.return_value
-                                                .toString() == '65523' ? 'N/A' : lan.CoolantTemp.return_value
+                                                .toString() == '65523' || lan.CoolantTemp.return_value
+                                                .toString() == '32678' || lan.CoolantTemp.return_value
+                                                .toString().compareTo('3267.8') == 0 ||  lan.CoolantTemp.return_value
+                                                .toString() == '65536' || lan.CoolantTemp.return_value
+                                                .toString().compareTo('6553.6') == 0  ? 'N/A' : lan.CoolantTemp.return_value
                                                 .toString()  + " " + "Celsius ",
                                           ),
                                           infotile(
                                             title: "Fuel Level",
                                             value: lan.FuelLevel.return_value
+                                                .toString() == '65523' || lan.FuelLevel.return_value
+                                                .toString() == '32678' || lan.FuelLevel.return_value
+                                                .toString().compareTo('3267.8') == 0 || lan.FuelLevel.return_value
+                                                .toString() == '65536' || lan.FuelLevel.return_value
+                                                .toString().compareTo('6553.6') == 0 ?'N/A' : lan.FuelLevel.return_value
                                                 .toString() + " "+ "L",
                                           ),
                                           infotile(
                                             title: "Running Hours",
                                             value: lan.RunningHours.return_value
+                                                .toString() == '65523'  || lan.RunningHours.return_value
+                                                .toString() == '32678'  || lan.RunningHours.return_value
+                                                .toString().compareTo('3267.8') == 0  || lan.RunningHours.return_value
+                                                .toString() == '65536'  || lan.RunningHours.return_value
+                                                .toString().compareTo('6553.6') == 0 ? 'N/A' : lan.RunningHours.return_value
                                                 .toString() + " "+ "h",
                                           ),
                                           infotile(
@@ -818,12 +844,30 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                             value: ((lan.BatteryVoltage
                                                         .return_value
                                                         .toDouble()) )
+                                                .toString() == '65523.0' || ((lan.BatteryVoltage
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString() == '32678.0' || ((lan.BatteryVoltage
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString().compareTo('3267.8') == 0 || ((lan.BatteryVoltage
+                                                        .return_value
+                                                        .toDouble()) )
+                                                .toString().compareTo('65536.0') == 0 ? 'N/A' : ((lan.BatteryVoltage
+                                                        .return_value
+                                                        .toDouble()) )
                                                 .toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "Total fuel consumption",
                                            
-                                              value: lan.FuelLevel.return_value.toString() + " " + "L",
+                                              value: lan.FuelLevel.return_value
+                                                .toString() == '65523' || lan.FuelLevel.return_value
+                                                .toString() == '32678' || lan.FuelLevel.return_value
+                                                .toString().compareTo('3267.8') == 0 || lan.FuelLevel.return_value
+                                                .toString() == '65536' || lan.FuelLevel.return_value
+                                                .toString().compareTo('6553.6') == 0 ?'N/A' : lan.FuelLevel.return_value
+                                                .toString() + " "+ "L",
 
                                             ),
                                         ],
@@ -840,68 +884,97 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: lan.generatorL1N.return_value.toString()+ " "+ "V",
+                                            value: lan.generatorL1N.return_value.toString() == '65523' || lan.generatorL1N.return_value.toString() == '32678' ||
+                                            lan.generatorL1N.return_value.toString().compareTo('3267.8') == 0 || lan.generatorL1N.return_value.toString() == '65536' ||
+                                            lan.generatorL1N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.generatorL1N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: lan.generatorL2N.return_value.toString()+ " "+ "V",
+                                            value: lan.generatorL2N.return_value.toString() == '65523' || lan.generatorL2N.return_value.toString() == '32678' || 
+                                            lan.generatorL2N.return_value.toString().compareTo('3267.8') == 0 || lan.generatorL2N.return_value.toString() == '65536' ||
+                                            lan.generatorL2N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.generatorL2N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: lan.generatorL3N.return_value.toString()+ " "+ "V",
+                                            value: lan.generatorL3N.return_value.toString() == '65523' || lan.generatorL3N.return_value.toString() == '32678' ||
+                                            lan.generatorL3N.return_value.toString().compareTo('3267.8') == 0 || lan.generatorL3N.return_value.toString() == '65536' ||
+                                            lan.generatorL3N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.generatorL3N.return_value.toString()+ " "+ "V",
                                           ),
                                            infotile(
                                             title: "L1-L2",
                                             //value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                             value: lan.generatorvoltageL1L2N.return_value.toString()
+                                             value: lan.generatorvoltageL1L2N.return_value.toString() == '65523' || lan.generatorvoltageL1L2N.return_value.toString() == '32678' ||
+                                             lan.generatorvoltageL1L2N.return_value.toString().compareTo('3267.8') == 0 || lan.generatorvoltageL1L2N.return_value.toString() == '65536'
+                                              || lan.generatorvoltageL1L2N.return_value.toString().compareTo('6553.6') == 0
+                                              ? 'N/A' : lan.generatorvoltageL1L2N.return_value.toString()
 
                                            ),
                                             infotile(
                                             title: "L1-L3",
                                             //value: lan.generatorvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                              value: lan.generatorvoltageL1L2N.return_value.toString()
+                                              value: lan.generatorvoltageL1L2N.return_value.toString() == '65523' || lan.generatorvoltageL1L2N.return_value.toString() == '32678' ||
+                                              lan.generatorvoltageL1L2N.return_value.toString().compareTo('3267.8') == 0 || lan.generatorvoltageL1L2N.return_value.toString() == '65536'
+                                              || lan.generatorvoltageL1L2N.return_value.toString().compareTo('6553.6') == 0
+                                               ? 'N/A' 
+                                              : lan.generatorvoltageL1L2N.return_value.toString()
 
                                             ),
                                             infotile(
                                             title: "L2-L3",
                                             //value: lan.generatorvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                              value: lan.generatorvoltageL2L3N.return_value.toString()
+                                              value: lan.generatorvoltageL2L3N.return_value.toString() == '65523' || lan.generatorvoltageL2L3N.return_value.toString() == '32678' ||
+                                              lan.generatorvoltageL2L3N.return_value.toString().compareTo('3267.8') == 0 || lan.generatorvoltageL2L3N.return_value.toString() == '65536' ||
+                                              lan.generatorvoltageL2L3N.return_value.toString().compareTo('6553.6') == 0
+                                              ? 'N/A' : lan.generatorvoltageL2L3N.return_value.toString()
 
                                             ),
                                           infotile(
                                             title: "L1",
-                                            value: lan.LoadAL1.return_value.toString()+ " "+ "A",
+                                            value: lan.LoadAL1.return_value.toString() == '65523' || lan.LoadAL1.return_value.toString() == '32678' || 
+                                            lan.LoadAL1.return_value.toString().compareTo('3267.8') == 0 || lan.LoadAL1.return_value.toString() == '65536' ||
+                                            lan.LoadAL1.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadAL1.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: lan.LoadAL2.return_value.toString()+ " "+ "A",
+                                            value: lan.LoadAL2.return_value.toString() == '65523' || lan.LoadAL2.return_value.toString() == '32678' ||
+                                            lan.LoadAL2.return_value.toString().compareTo('3267.8') == 0 || lan.LoadAL2.return_value.toString() == '65536' ||
+                                            lan.LoadAL2.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadAL2.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: lan.LoadAL3.return_value.toString()+ " "+ "A",
+                                            value: lan.LoadAL3.return_value.toString() == '65523' || lan.LoadAL3.return_value.toString() == '32678' ||
+                                            lan.LoadAL3.return_value.toString().compareTo('3267.8') == 0 || lan.LoadAL3.return_value.toString() == '65536' ||
+                                            lan.LoadAL3.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadAL3.return_value.toString()+ " "+ "A",
                                           ),
                                             infotile(
                                             title: "Load KVA",
-                                            value: lan.LoadKVA.return_value
-                                                .toString() + " "+ "A",
+                                            value: lan.LoadKVA.return_value.toString() == '65523' || lan.LoadKVA.return_value.toString() == '32678' ||
+                                            lan.LoadKVA.return_value.toString().compareTo('3267.8') == 0 || lan.LoadKVA.return_value.toString() == '65536' ||
+                                            lan.LoadKVA.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadKVA.return_value.toString() + " "+ "A",
                                           ),
                                           infotile(
                                             title: "Load KVr",
-                                            value: lan.LoadKvr.return_value
-                                                .toString() + " "+ "A",
+                                            value: lan.LoadKvr.return_value.toString() == '65523' || lan.LoadKvr.return_value.toString() == '32678' ||
+                                            lan.LoadKvr.return_value.toString().compareTo('3267.8') == 0 || lan.LoadKvr.return_value.toString() == '65536' ||
+                                            lan.LoadKvr.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadKvr.return_value.toString() + " "+ "A",
                                           ),
                                            infotile(
                                             title: "Load KWh",
-                                            value: lan.LoadKWh.return_value
-                                                .toString() + " "+ "Kwh",
+                                            value: lan.LoadKWh.return_value.toString() == '65523' || lan.LoadKWh.return_value.toString() == '32678' ||
+                                            lan.LoadKWh.return_value.toString().compareTo('3267.8') == 0 || lan.LoadKWh.return_value.toString() == '65536' ||
+                                            lan.LoadKWh.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadKWh.return_value.toString() + " "+ "Kwh",
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: lan.generatorFrequency.return_value.toString()+ " "+ "Hz",
+                                            value: lan.generatorFrequency.return_value.toString() == '65523' || lan.generatorFrequency.return_value.toString() == '32678' ||
+                                            lan.generatorFrequency.return_value.toString().compareTo('3267.8') == 0 || lan.generatorFrequency.return_value.toString() == '65536' ||
+                                            lan.generatorFrequency.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.generatorFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
                                             title: "Pf ",
-                                            value: lan.LoadPowerFactor.return_value.toString(),
+                                            value: lan.LoadPowerFactor.return_value.toString() == '65523' || lan.LoadPowerFactor.return_value.toString() == '32678' ||
+                                            lan.LoadPowerFactor.return_value.toString().compareTo('3267.8') == 0 || lan.LoadPowerFactor.return_value.toString() == '65536' ||
+                                            lan.LoadPowerFactor.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],
                                       ),
@@ -917,68 +990,93 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: lan.mainsvoltageL1N.return_value.toString()+ " "+ "V",
+                                            value: lan.mainsvoltageL1N.return_value.toString() == '65523' || lan.mainsvoltageL1N.return_value.toString() == '32678' ||
+                                            lan.mainsvoltageL1N.return_value.toString().compareTo('3267.8') == 0 || lan.mainsvoltageL1N.return_value.toString() == '65536' ||
+                                            lan.mainsvoltageL1N.return_value.toString().compareTo('6553.6') == 0  ? 'N/A' : lan.mainsvoltageL1N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: lan.mainsvoltageL2N.return_value.toString()+ " "+ "V",
+                                            value: lan.mainsvoltageL2N.return_value.toString() == '65523' || lan.mainsvoltageL2N.return_value.toString() == '32678' ||
+                                            lan.mainsvoltageL2N.return_value.toString().compareTo('3267.8') == 0 || lan.mainsvoltageL2N.return_value.toString() == '65536' ||
+                                            lan.mainsvoltageL2N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A'  :lan.mainsvoltageL2N.return_value.toString()+ " "+ "V",
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: lan.mainsvoltageL3N.return_value.toString()+ " "+ "V",
+                                            value: lan.mainsvoltageL3N.return_value.toString() == '65523' || lan.mainsvoltageL3N.return_value.toString() == '32678' ||
+                                            lan.mainsvoltageL3N.return_value.toString().compareTo('3267.8') == 0 || lan.mainsvoltageL3N.return_value.toString() == '65536' ||
+                                            lan.mainsvoltageL3N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.mainsvoltageL3N.return_value.toString()+ " "+ "V",
                                           ),
                                             infotile(
                                             title: "L1-L2",
                                             //value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                              value: lan.mainsvoltageL1L2N.return_value.toString()
+                                              value: lan.mainsvoltageL1L2N.return_value.toString() == '65523' || lan.mainsvoltageL1L2N.return_value.toString() == '32678' ||
+                                              lan.mainsvoltageL1L2N.return_value.toString().compareTo('3267.8') == 0 || lan.mainsvoltageL1L2N.return_value.toString() == '65536' ||
+                                              lan.mainsvoltageL1L2N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.mainsvoltageL1L2N.return_value.toString()
 
                                             ),
                                             infotile(
                                             title: "L1-L3",
                                             //value: lan.mainsvoltageL1L2N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                              value: lan.mainsvoltageL1L2N.return_value.toString()
+                                              value: lan.mainsvoltageL1L3N.return_value.toString() == '65523' || lan.mainsvoltageL1L3N.return_value.toString() == '32678' ||
+                                              lan.mainsvoltageL1L3N.return_value.toString().compareTo('3267.8') == 0 || lan.mainsvoltageL1L3N.return_value.toString() == '65536' ||
+                                              lan.mainsvoltageL1L3N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.mainsvoltageL1L3N.return_value.toString()
 
-                                            ),
+                                            ),    
                                             infotile(
                                             title: "L2-L3",
                                             //value: lan.mainsvoltageL2L3N.return_value.toString() + " "+ cloud.mainsvoltageL3N.unit,
-                                              value: lan.mainsvoltageL2L3N.return_value.toString()
+                                              value: lan.mainsvoltageL2L3N.return_value.toString() == '65523' || lan.mainsvoltageL2L3N.return_value.toString() == '32678' ||
+                                              lan.mainsvoltageL2L3N.return_value.toString().compareTo('3267.8') == 0 || lan.mainsvoltageL2L3N.return_value.toString() == '65536' ||
+                                              lan.mainsvoltageL2L3N.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.mainsvoltageL2L3N.return_value.toString()
 
                                             ),
                                           infotile(
                                             title: "L1",
-                                            value: lan.LoadAL1.return_value.toString()+ " "+ "A",
+                                            value: lan.LoadAL1.return_value.toString() == '65523' || lan.LoadAL1.return_value.toString() == '32678' || 
+                                            lan.LoadAL1.return_value.toString().compareTo('3267.8') == 0 || lan.LoadAL1.return_value.toString() == '65536' ||
+                                            lan.LoadAL1.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadAL1.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: lan.LoadAL2.return_value.toString()+ " "+ "A",
+                                            value: lan.LoadAL2.return_value.toString() == '65523' || lan.LoadAL2.return_value.toString() == '32678' ||
+                                            lan.LoadAL2.return_value.toString().compareTo('3267.8') == 0 || lan.LoadAL2.return_value.toString() == '65536' ||
+                                            lan.LoadAL2.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadAL2.return_value.toString()+ " "+ "A",
                                           ),
                                           infotile(
                                             title: "L3",
-                                            value: lan.LoadAL3.return_value.toString()+ " "+ "A",
+                                            value: lan.LoadAL3.return_value.toString() == '65523' || lan.LoadAL3.return_value.toString() == '32678' ||
+                                            lan.LoadAL3.return_value.toString().compareTo('3267.8') == 0 || lan.LoadAL3.return_value.toString() == '65536' ||
+                                            lan.LoadAL3.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadAL3.return_value.toString()+ " "+ "A",
                                           ),
-                                           infotile(
+                                            infotile(
                                             title: "Load KVA",
-                                            value: lan.LoadKVA.return_value
-                                                .toString() + " "+ "A",
+                                            value: lan.LoadKVA.return_value.toString() == '65523' || lan.LoadKVA.return_value.toString() == '32678' ||
+                                            lan.LoadKVA.return_value.toString().compareTo('3267.8') == 0 || lan.LoadKVA.return_value.toString() == '65536' ||
+                                            lan.LoadKVA.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadKVA.return_value.toString() + " "+ "A",
                                           ),
                                           infotile(
                                             title: "Load KVr",
-                                            value: lan.LoadKvr.return_value
-                                                .toString() + " "+ "A",
+                                            value: lan.LoadKvr.return_value.toString() == '65523' || lan.LoadKvr.return_value.toString() == '32678' ||
+                                            lan.LoadKvr.return_value.toString().compareTo('3267.8') == 0 || lan.LoadKvr.return_value.toString() == '65536' ||
+                                            lan.LoadKvr.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadKvr.return_value.toString() + " "+ "A",
                                           ),
                                            infotile(
                                             title: "Energy",
-                                            value: lan.LoadKWh.return_value
-                                                .toString() + " "+ "Kwh",
+                                            value: lan.LoadKWh.return_value.toString() == '65523' || lan.LoadKWh.return_value.toString() == '32678' ||
+                                            lan.LoadKWh.return_value.toString().compareTo('3267.8') == 0 || lan.LoadKWh.return_value.toString() == '65536' ||
+                                            lan.LoadKWh.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadKWh.return_value.toString() + " "+ "Kwh",
                                           ),
                                           infotile(
                                             title: "Hz",
-                                            value: lan.mainsFrequency.return_value.toString()+ " "+ "Hz",
+                                            value: lan.mainsFrequency.return_value.toString() == '65523' || lan.mainsFrequency.return_value.toString() == '32678' ||
+                                            lan.mainsFrequency.return_value.toString().compareTo('3267.8') == 0 || lan.mainsFrequency.return_value.toString() == '65536' ||
+                                            lan.mainsFrequency.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.mainsFrequency.return_value.toString()+ " "+ "Hz",
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: lan.LoadPowerFactor.return_value.toString(),
+                                            value: lan.LoadPowerFactor.return_value.toString() == '65523' || lan.LoadPowerFactor.return_value.toString() == '32678' ||
+                                            lan.LoadPowerFactor.return_value.toString().compareTo('3267.8') == 0 || lan.LoadPowerFactor.return_value.toString() == '65536' ||
+                                            lan.LoadPowerFactor.return_value.toString().compareTo('6553.6') == 0 ? 'N/A' : lan.LoadPowerFactor.return_value.toString(),
                                           ),
                                         ],
                                       ),
@@ -1095,6 +1193,10 @@ class Custom_Alert extends StatelessWidget {
     );
   }
 }
+
+
+
+
 
 
 

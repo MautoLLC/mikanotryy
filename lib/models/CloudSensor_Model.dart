@@ -17,7 +17,7 @@ class CloudSensor {
     return CloudSensor(
       sensorID: JsonData['sensorID'],
       sensorName: JsonData['sensorName'],
-      value: JsonData['value']??'0.0',
+      value: JsonData['value']??'N/A',
       unit: JsonData['unit'],
       timeStamp: JsonData['timeStamp'],
     );
