@@ -46,7 +46,7 @@ class LanDashBoard_Service {
     } else {
       debugPrint(response.toString());
       return LANSensor(
-          return_value: 0,
+          return_value: 'N/A',  
           id: "id",
           name: "name",
           hardware: "hardware",

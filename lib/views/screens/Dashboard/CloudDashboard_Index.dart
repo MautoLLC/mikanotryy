@@ -781,40 +781,58 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                             title: lbl_Pressure,
                                             value: (double.parse(
                                                     cloud.OilPressure.value))
-                                                .toString() == '65523.0' ? 'N/A' : (double.parse(
+                                                .toString() == '65523.0' || (double.parse(
+                                                    cloud.OilPressure.value))
+                                                .toString() == '32678.0' || (double.parse(
+                                                    cloud.OilPressure.value))
+                                                .toString().compareTo('3267.8') == 0 || (double.parse(
+                                                    cloud.OilPressure.value))
+                                                .toString() == '65536' || (double.parse(
+                                                    cloud.OilPressure.value))
+                                                .toString().compareTo('6553.6') == 0 ? 'N/A' : (double.parse(
                                                     cloud.OilPressure.value))
                                                 .toString() + " "+ cloud.OilPressure.unit,
                                           ),
                                           infotile(
                                             title: lbl_Temperature,
                                             value: cloud.CoolantTemp.value   
-                                                .toString() == '65523' ? 'N/A' : cloud.CoolantTemp.value
+                                                .toString() == '65523' || cloud.CoolantTemp.value   
+                                                .toString() == '32678' || cloud.CoolantTemp.value   
+                                                .toString().compareTo('3267.8') == 0 || cloud.CoolantTemp.value   
+                                                .toString() == '65536' || cloud.CoolantTemp.value   
+                                                .toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.CoolantTemp.value
                                                 .toString()  + " "+ cloud.CoolantTemp.unit,
                                           ),
                                           infotile(
                                             title: "Fuel Level",
-                                            value: cloud.FuelLevel.value
-                                                .toString() + " "+ cloud.FuelLevel.unit,
+                                            value: cloud.FuelLevel.value.toString() == '65523' || cloud.FuelLevel.value.toString() == '32678' ||
+                                            cloud.FuelLevel.value.toString().compareTo('3267.8') == 0 || cloud.FuelLevel.value.toString() == '65536' ||
+                                            cloud.FuelLevel.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.FuelLevel.value.toString() + " "+ cloud.FuelLevel.unit,
                                           ),
                                           infotile(
                                             title: "Running Hours",
-                                            value: cloud.RunningHours.value
-                                                .toString() + " "+ cloud.RunningHours.unit,
+                                            value: cloud.RunningHours.value.toString() == '65523' || cloud.RunningHours.value.toString() == '32678' ||
+                                            cloud.RunningHours.value.toString().compareTo('3267.8') == 0 || cloud.RunningHours.value.toString() == '65536' ||
+                                            cloud.RunningHours.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.RunningHours.value.toString() + " "+ cloud.RunningHours.unit,
                                           ),
                                           infotile(
                                             title: "Battery Voltage",
-                                            value: cloud.BatteryVoltage.value
-                                                .toString() + " "+ cloud.BatteryVoltage.unit,
+                                            value: cloud.BatteryVoltage.value.toString() == '65523' || cloud.BatteryVoltage.value.toString() == '32678' ||
+                                            cloud.BatteryVoltage.value.toString().compareTo('3267.8') == 0 || cloud.BatteryVoltage.value.toString() == '65536' ||
+                                            cloud.BatteryVoltage.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.BatteryVoltage.value.toString() + " "+ cloud.BatteryVoltage.unit,
                                           ),
                                           infotile(
                                             title: "Fuel consumption",
-                                            value: cloud.TotalFuelConsumption.value
-                                                .toString() + " "+ cloud.BatteryVoltage.unit,
+                                            value: cloud.TotalFuelConsumption.value.toString() == '65523' || cloud.TotalFuelConsumption.value.toString() == '32678' ||
+                                            cloud.TotalFuelConsumption.value.toString().compareTo('3267.8') == 0 || cloud.TotalFuelConsumption.value.toString() == '65536' ||
+                                            cloud.TotalFuelConsumption.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.TotalFuelConsumption.value.toString() + " "+ cloud.BatteryVoltage.unit,
                                           ),
                                           infotile(
                                             title: "Total fuel consumption",
                                            
-                                              value: cloud.TotalFuelConsumption.value + " " + cloud.TotalFuelConsumption.unit,
+                                              value: cloud.TotalFuelConsumption.value == '65523' || cloud.TotalFuelConsumption.value == '32678' ||
+                                              cloud.TotalFuelConsumption.value == '3267.8' || cloud.TotalFuelConsumption.value == '65536' ||
+                                              cloud.TotalFuelConsumption.value == '6553.6' ? 'N/A' : cloud.TotalFuelConsumption.value + " " + cloud.TotalFuelConsumption.unit,
 
                                             ),
                                          
@@ -832,51 +850,75 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         children: [
                                           infotile(
                                             title: "L1-N",
-                                            value: cloud.generatorL1N.value.toString() + " "+ cloud.generatorL1N.unit,
+                                            value: cloud.generatorL1N.value.toString() == '65523' || cloud.generatorL1N.value.toString() == '32678' ||
+                                            cloud.generatorL1N.value.toString().compareTo('3267.8') == 0 || cloud.generatorL1N.value.toString() == '65536' ||
+                                            cloud.generatorL1N.value.toString().compareTo('6553.6') == 0 ? 'N/A' :  cloud.generatorL1N.value.toString() + " "+ cloud.generatorL1N.unit,
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: cloud.generatorL2N.value.toString() + " "+ cloud.generatorL2N.unit,
+                                            value: cloud.generatorL2N.value.toString() == '65523' || cloud.generatorL2N.value.toString() == '32678' ||
+                                            cloud.generatorL2N.value.toString().compareTo('3267.8') == 0 || cloud.generatorL2N.value.toString() == '65536' ||
+                                            cloud.generatorL2N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.generatorL2N.value.toString() + " "+ cloud.generatorL2N.unit,
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: cloud.generatorL3N.value.toString() + " "+ cloud.generatorL3N.unit,
+                                            value: cloud.generatorL3N.value.toString() == '65523' || cloud.generatorL3N.value.toString() == '32678' ||
+                                            cloud.generatorL3N.value.toString().compareTo('3267.8') == 0 || cloud.generatorL3N.value.toString() == '65536' ||
+                                            cloud.generatorL3N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.generatorL3N.value.toString() + " "+ cloud.generatorL3N.unit,
                                           ),
                                             infotile(
                                             title: "L1-L2",
-                                            value: cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.generatorvoltageL1L2N.value.toString() == '65523' || cloud.generatorvoltageL1L2N.value.toString() == '32678' ||
+                                            cloud.generatorvoltageL1L2N.value.toString().compareTo('3267.8') == 0 || cloud.generatorvoltageL1L2N.value.toString() == '65536' ||
+                                            cloud.generatorvoltageL1L2N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                             infotile(
                                             title: "L1-L3",
-                                            value: cloud.generatorvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.generatorvoltageL1L3N.value.toString() == '65523' || cloud.generatorvoltageL1L3N.value.toString() == '32678' ||
+                                            cloud.generatorvoltageL1L3N.value.toString().compareTo('3267.8') == 0 || cloud.generatorvoltageL1L3N.value.toString() == '65536' ||
+                                            cloud.generatorvoltageL1L3N.value.toString().compareTo('6553.6') == 0  ? 'N/A' : cloud.generatorvoltageL1L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,  
                                           ),
                                             infotile(
                                             title: "L2-L3",
-                                            value: cloud.generatorvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.generatorvoltageL2L3N.value.toString() == '65523' || cloud.generatorvoltageL2L3N.value.toString() == '32678' ||
+                                            cloud.generatorvoltageL2L3N.value.toString().compareTo('3267.8') == 0 || cloud.generatorvoltageL2L3N.value.toString() == '65536' ||
+                                            cloud.generatorvoltageL2L3N.value.toString().compareTo('6553.6') == 0 ? 'N/A' :  cloud.generatorvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                           infotile(
                                             title: "L1",
-                                            value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
+                                            value: cloud.LoadAL1.value.toString() == '65523' || cloud.LoadAL1.value.toString() == '32678' ||
+                                            cloud.LoadAL1.value.toString().compareTo('3267.8') == 0 || cloud.LoadAL1.value.toString() == '65536' ||
+                                            cloud.LoadAL1.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
+                                            value: cloud.LoadAL2.value.toString() == '65523' || cloud.LoadAL2.value.toString() == '32678' ||
+                                            cloud.LoadAL2.value.toString().compareTo('3267.8') == 0 || cloud.LoadAL2.value.toString() == '65536' ||
+                                            cloud.LoadAL2.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
                                           ),
                                           infotile( 
                                             title: "L3",
-                                            value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
+                                            value: cloud.LoadAL3.value.toString() == '65523' || cloud.LoadAL3.value.toString() == '32678' ||
+                                            cloud.LoadAL3.value.toString().compareTo('3267.8') == 0 || cloud.LoadAL3.value.toString() == '65536' ||
+                                            cloud.LoadAL3.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
                                           ),
                                          infotile(
                                             title: "Energy",
-                                             value: cloud.LoadKWh.value.toString() + " "+ cloud.LoadKWh.unit,
+                                             value: cloud.LoadKWh.value.toString() == '65523' || cloud.LoadKWh.value.toString() == '32678' ||
+                                             cloud.LoadKWh.value.toString().compareTo('3267.8') == 0 || cloud.LoadKWh.value.toString() == '65536' ||
+                                             cloud.LoadKWh.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadKWh.value.toString() + " "+ cloud.LoadKWh.unit,
                                           ), 
                                           infotile(
                                             title: "Hz",
-                                            value: cloud.GeneratorFrequency.value.toString() + " "+ cloud.GeneratorFrequency.unit,
+                                            value: cloud.GeneratorFrequency.value.toString() == '65523' || cloud.GeneratorFrequency.value.toString() == '32678' ||
+                                            cloud.GeneratorFrequency.value.toString().compareTo('3267.8') == 0 || cloud.GeneratorFrequency.value.toString() == '65536' ||
+                                            cloud.GeneratorFrequency.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.GeneratorFrequency.value.toString() + " "+ cloud.GeneratorFrequency.unit,
                                           ),
                                           infotile(
                                             title: "Pf",
-                                            value: cloud.LoadPowerFactor.value.toString(),
+                                            value: cloud.LoadPowerFactor.value.toString() == '65523' || cloud.LoadPowerFactor.value.toString() == '32678' ||
+                                            cloud.LoadPowerFactor.value.toString().compareTo('3267.8') == 0 || cloud.LoadPowerFactor.value.toString() == '65536' ||
+                                            cloud.LoadPowerFactor.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadPowerFactor.value.toString(),
                                           ),
                                         ],
                                       ),
@@ -892,61 +934,87 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                         children: [  
                                           infotile(
                                             title: "L1-N",
-                                            value: cloud.mainsvoltageL1N.value.toString() + " "+ cloud.mainsvoltageL1N.unit,
+                                            value: cloud.mainsvoltageL1N.value.toString() == '65523' || cloud.mainsvoltageL1N.value.toString() == '32678' ||
+                                            cloud.mainsvoltageL1N.value.toString().compareTo('3267.8') == 0 || cloud.mainsvoltageL1N.value.toString() == '65536' ||
+                                            cloud.mainsvoltageL1N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.mainsvoltageL1N.value.toString() + " "+ cloud.mainsvoltageL1N.unit,
                                           ),
                                           infotile(
                                             title: "L2-N",
-                                            value: cloud.mainsvoltageL2N.value.toString() + " "+ cloud.mainsvoltageL2N.unit,
+                                            value: cloud.mainsvoltageL2N.value.toString() == '65523' || cloud.mainsvoltageL2N.value.toString() == '32678' ||
+                                            cloud.mainsvoltageL2N.value.toString().compareTo('3267.8') == 0 || cloud.mainsvoltageL2N.value.toString() == '65536' ||
+                                            cloud.mainsvoltageL2N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.mainsvoltageL2N.value.toString() + " "+ cloud.mainsvoltageL2N.unit,
                                           ),
                                           infotile(
                                             title: "L3-N",
-                                            value: cloud.mainsvoltageL3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.mainsvoltageL3N.value.toString() == '65523' || cloud.mainsvoltageL3N.value.toString() == '32678' ||
+                                            cloud.mainsvoltageL3N.value.toString().compareTo('3267.8') == 0 || cloud.mainsvoltageL3N.value.toString() == '65536' ||
+                                            cloud.mainsvoltageL3N.value.toString().compareTo('6553.6') == 0  ? 'N/A' : cloud.mainsvoltageL3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                            infotile(
                                             title: "L1-L2",
-                                            value: cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.mainsvoltageL1L2N.value.toString() == '65523' || cloud.mainsvoltageL1L2N.value.toString() == '32678' ||
+                                            cloud.mainsvoltageL1L2N.value.toString().compareTo('3267.8') == 0 || cloud.mainsvoltageL1L2N.value.toString() == '65536' ||
+                                            cloud.mainsvoltageL1L2N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                             infotile(
                                             title: "L1-L3",
-                                            value: cloud.mainsvoltageL1L2N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.mainsvoltageL1L3N.value.toString() == '65523' || cloud.mainsvoltageL1L3N.value.toString() == '32678' ||
+                                            cloud.mainsvoltageL1L3N.value.toString().compareTo('3267.8') == 0 || cloud.mainsvoltageL1L3N.value.toString() == '65536' ||
+                                            cloud.mainsvoltageL1L3N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.mainsvoltageL1L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
                                             infotile(
                                             title: "L2-L3",
-                                            value: cloud.mainsvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
+                                            value: cloud.mainsvoltageL2L3N.value.toString() == '65523' || cloud.mainsvoltageL2L3N.value.toString() == '32678' || 
+                                            cloud.mainsvoltageL2L3N.value.toString().compareTo('3267.8') == 0 || cloud.mainsvoltageL2L3N.value.toString() == '65536' ||
+                                            cloud.mainsvoltageL2L3N.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.mainsvoltageL2L3N.value.toString() + " "+ cloud.mainsvoltageL3N.unit,
                                           ),
-                                          infotile(
+                                         infotile(
                                             title: "L1",
-                                            value: cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
+                                            value: cloud.LoadAL1.value.toString() == '65523' || cloud.LoadAL1.value.toString() == '32678' ||
+                                            cloud.LoadAL1.value.toString().compareTo('3267.8') == 0 || cloud.LoadAL1.value.toString() == '65536' ||
+                                            cloud.LoadAL1.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadAL1.value.toString() + " "+ cloud.LoadAL1.unit,
                                           ),
                                           infotile(
                                             title: "L2",
-                                            value: cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
-                                          ), 
-                                          infotile(
+                                            value: cloud.LoadAL2.value.toString() == '65523' || cloud.LoadAL2.value.toString() == '32678' ||
+                                            cloud.LoadAL2.value.toString().compareTo('3267.8') == 0 || cloud.LoadAL2.value.toString() == '65536' ||
+                                            cloud.LoadAL2.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadAL2.value.toString() + " "+ cloud.LoadAL2.unit,
+                                          ),
+                                          infotile( 
                                             title: "L3",
-                                            value: cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
+                                            value: cloud.LoadAL3.value.toString() == '65523' || cloud.LoadAL3.value.toString() == '32678' ||
+                                            cloud.LoadAL3.value.toString().compareTo('3267.8') == 0 || cloud.LoadAL3.value.toString() == '65536' ||
+                                            cloud.LoadAL3.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadAL3.value.toString() + " "+ cloud.LoadAL3.unit,
                                           ),
                                            infotile(
                                             title: "Load KVA",
-                                            value: cloud.LoadKva.value
-                                                .toString() + " "+ cloud.LoadKva.unit,
+                                            value: cloud.LoadKva.value.toString() == '65523' || cloud.LoadKva.value.toString() == '32678' ||
+                                            cloud.LoadKva.value.toString().compareTo('3267.8') == 0 || cloud.LoadKva.value.toString() == '65536' ||
+                                            cloud.LoadKva.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadKva.value.toString() + " "+ cloud.LoadKva.unit,
                                           ),
                                           infotile(
                                             title: "Load KVr",
-                                            value: cloud.LoadKvar.value
-                                                .toString() + " "+ cloud.LoadKvar.unit,
+                                            value: cloud.LoadKvar.value.toString() == '65523' || cloud.LoadKvar.value.toString() == '32678' ||
+                                            cloud.LoadKvar.value.toString().compareTo('3267.8') == 0 || cloud.LoadKvar.value.toString() == '65536' ||
+                                            cloud.LoadKvar.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadKvar.value.toString() + " "+ cloud.LoadKvar.unit,
                                           ),
                                          infotile(
                                             title: "Energy",
-                                             value: cloud.LoadKWh.value.toString() + " "+ cloud.LoadKWh.unit,
+                                             value: cloud.LoadKWh.value.toString() == '65523' || cloud.LoadKWh.value.toString() == '32678' ||
+                                             cloud.LoadKWh.value.toString().compareTo('3267.8') == 0 || cloud.LoadKWh.value.toString() == '65536' ||
+                                             cloud.LoadKWh.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadKWh.value.toString() + " "+ cloud.LoadKWh.unit,
                                           ), 
                                           infotile(
                                             title: "Hz",
-                                            value: cloud.mainsFrequency.value.toString() + " "+ cloud.mainsFrequency.unit,
+                                            value: cloud.mainsFrequency.value.toString() == '65523' || cloud.mainsFrequency.value.toString() == '32678' ||
+                                            cloud.mainsFrequency.value.toString().compareTo('3267.8') == 0 || cloud.mainsFrequency.value.toString() == '65536' ||
+                                            cloud.mainsFrequency.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.mainsFrequency.value.toString() + " "+ cloud.mainsFrequency.unit,
                                           ),
                                           infotile(
                                             title: "Pf ",
-                                            value: cloud.LoadPowerFactor.value.toString(),
+                                            value: cloud.LoadPowerFactor.value.toString() == '65523' || cloud.LoadPowerFactor.value.toString() == '32678' ||
+                                            cloud.LoadPowerFactor.value.toString().compareTo('3267.8') == 0 || cloud.LoadPowerFactor.value.toString() == '65536' ||
+                                            cloud.LoadPowerFactor.value.toString().compareTo('6553.6') == 0 ? 'N/A' : cloud.LoadPowerFactor.value.toString(),
                                           ),
                                         ],
                                       ),

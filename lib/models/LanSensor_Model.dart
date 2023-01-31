@@ -14,8 +14,8 @@ class LANSensor {
 
   factory LANSensor.fromJson(Map<String, dynamic> JsonData) {
     return LANSensor(
-        return_value: JsonData['return_value']??'0.0',
-        id: JsonData['id'],
+        return_value: JsonData['return_value']??'N/A', 
+        id: JsonData['id'],  
         name: JsonData['name'],
         hardware: JsonData['hardware'],
         connected: JsonData['connected']);
