@@ -544,8 +544,8 @@ class ApiConfigurationPage extends StatelessWidget {
                                             RefreshRate: value.RefreshRate,
                                           )));
                                 }
-                                value.isNotFirstTime();
-                                prefs.setBool(
+                               value.isNotFirstTime();
+                              prefs.setBool(
                                     prefs_DashboardFirstTimeAccess, false);
                               }),
                           SizedBox(height: 20),
@@ -573,13 +573,12 @@ class ApiConfigurationPage extends StatelessWidget {
                                       value.cloudMode,
                                       value.chosenGeneratorId);
                                 }
-
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         CloudDashboard_Index(RefreshRate: 10)));
                                 value.isNotFirstTime();
-                                prefs.setBool(
-                                    prefs_DashboardFirstTimeAccess, false);
+                               prefs.setBool(
+                                  prefs_DashboardFirstTimeAccess, false);  
                               }),
                       ]),
                     ),

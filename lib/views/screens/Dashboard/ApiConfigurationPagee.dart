@@ -55,7 +55,7 @@ class ApiConfigurationPagee extends StatelessWidget {
                         controller: cloudUsernameController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
-                          hintText: lbl_Cloud_Username,
+                          hintText: lbl_Cloud_Username,   
                           hintStyle:
                               primaryTextStyle(color: textFieldHintColor),
                           filled: true, 
@@ -102,7 +102,7 @@ class ApiConfigurationPagee extends StatelessWidget {
                                       size: 10,
                                     ),
                                   ),
-                                ),
+                                ),    
                                 Text(value.Message)
                               ],
                             )),
@@ -147,11 +147,11 @@ class ApiConfigurationPagee extends StatelessWidget {
                                     cloudPasswordController.text,
                                   );
                                   if (value.isSuccess) {
-                                    value.isNotFirstTime();
+                                   // value.isNotFirstTime();
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         // builder: (context) => ApiConfigurationPage(),
-                                        builder: (context) => FetchGenerators(RefreshRate: 10),
+                                        builder: (context) => FetchGenerators(RefreshRate: 10), 
                                       ),
                                     );
                                   }

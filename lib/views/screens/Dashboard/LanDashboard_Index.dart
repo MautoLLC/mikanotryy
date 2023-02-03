@@ -314,11 +314,14 @@ class _LanDashboard_IndexState extends State<LanDashboard_Index> {
                                                      }
 
                                                      else{
+                                                      
                                                        Navigator.of(context)
                                                            .pushReplacement(
                                                            MaterialPageRoute(
                                                                builder: (context) =>
                                                                    FetchGenerators(RefreshRate: 10)));
+                                                            sharedPreferences.setBool(
+                                    prefs_DashboardFirstTimeAccess, true);          
                                                      }
                                                      //toExit = true;
                                                    },
