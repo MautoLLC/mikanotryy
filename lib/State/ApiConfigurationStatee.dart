@@ -15,6 +15,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   bool loading = false;
   String option = 'lan';
   String Message = '';
+  String apiEndpointMessage = '';
   String chosenGeneratorId = '';
   var chosenSSID;
   var chosenGeneratorName;
@@ -95,7 +96,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
   DeviceToken = pref.getString("DeviceToken").toString();
     List<Generator> generators =
         await service.getGeneratorsOfUser(clouduser, cloudpass,DeviceToken);   
-    gens = generators; 
+    gens = generators;  
     //generatorNameList.add(generators.elementAt(0).name);
     if (gens.isEmpty) {
       isSuccess = false;
@@ -139,7 +140,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
 
   void changeApiLanEndpoint(apiendpoint) {
     apiLanEndpoint = apiendpoint;
-    notifyListeners();
+    notifyListeners();   
   }
 
   void changeCloudPassword(password) {
@@ -208,7 +209,7 @@ class ApiConfigurationStatee extends ChangeNotifier {
 
   void setApiLanEndpoint(String apiEndpoint) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(prefs_ApiLanEndpoint, apiEndpoint);
+    prefs.setString(prefs_ApiLanEndpoint, apiEndpoint);  
   }
 
   //added newly by youssef for multiple gens//

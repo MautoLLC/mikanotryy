@@ -115,7 +115,7 @@ Future<void> GetAndPushNotifications (ServiceInstance service) async {
                     .toList();
             for(LanAlarm alarm in listAlarms){
               alarm.text="WLAN-"+model.generatorName+" "+alarm.text;
-              listAllAlarms.add(alarm);
+              listAllAlarms.add(alarm);   
             }
           }
         }

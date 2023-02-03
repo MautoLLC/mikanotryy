@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mymikano_app/models/ConfigurationModel.dart';
@@ -15,9 +16,10 @@ import 'package:mymikano_app/views/widgets/T13Widget.dart';
 import 'package:mymikano_app/views/widgets/TitleText.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter/material.dart';
 import '../../../State/ApiConfigurationStatee.dart';
 import '../../../services/LanNotificationServicee.dart';
+
 class FetchGenerators extends StatefulWidget {
   final int RefreshRate;
   FetchGenerators({Key? key, required this.RefreshRate}) : super(key: key);
@@ -33,7 +35,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
   final passwordController = TextEditingController();
   final apiEndpointLanController = TextEditingController(text: lanESPUrl);
   late ConfigurationModel configModel;
-   
+  bool hasError = false;
 
   //late final List<ConfigurationModel> configsList;
   @override
@@ -60,7 +62,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                       TitleText(
                         title: lbl_API_Configuration,
                       ),
-
+                    
                       SizedBox(
                         height: 35,
                       ),
@@ -227,7 +229,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                               padding: EdgeInsets.all(0.0),
                             ),
                             onPressed: () {
-                              value.ChangeMode('comap');
+                              value.ChangeMode('comap'); 
                               // if (value.DashBoardFirstTimeAccess == false) {
                               //   Navigator.of(context).push(MaterialPageRoute(
                               //       builder: (context) => Dashboard_Index()));
@@ -411,7 +413,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                 await value.service.Connecttossid(
                                     value.chosenSSID,
                                     passwordController.text,
-                                    value.cloudUsername,
+                                    value.cloudUsername, 
                                     value.cloudPassword,
                                     value.cloudMode.toString(),
                                     value.chosenGeneratorId,
@@ -427,6 +429,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                           height: 20,
                         ),
                         TextFormField(
+            
                           onChanged: (apiendpoint) =>
                               value.changeApiLanEndpoint(apiendpoint),
                           style: TextStyle(
@@ -438,14 +441,14 @@ class _FetchGenerators  extends State<FetchGenerators>{
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(26, 14, 4, 14),
                             hintText: lbl_Api_Endpoint,
-                            hintStyle:
+                            hintStyle: 
                                 primaryTextStyle(color: textFieldHintColor),
-                            filled: true,
-                            fillColor: lightBorderColor,
+                            filled: true,   
+                            fillColor: hasError ? Colors.red : lightBorderColor, 
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),  
                               borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0.0),
+                                  color:  Colors.transparent, width: 0.0),
                             ),
                             focusedBorder: OutlineInputBorder(
                               // borderRadius: BorderRadius.circular(24),
@@ -453,19 +456,27 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                   color: Colors.transparent, width: 0.0),
                             ),
                           ),
+               
                         ),
                         SizedBox(height: 20),
                         T13Button(
                             textContent: lbl_Submit_Settings,
                             onPressed: () async {
+                               // final response = await http.get(Uri.parse("http://" + apiEndpointLanController.text));
+                              var dio = Dio();
+                           
+                           final response = await dio.get('http://'+ apiEndpointLanController.text +'/getValue?param=CoolantTemp');   
+                             if (response.statusCode == 200) {
+                                            
                               SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
+                                  await SharedPreferences.getInstance();      
+                            
                               value.setApiLanEndpoint(
-                                  "http://" + apiEndpointLanController.text);
-                              value.configsList.add(ConfigurationModel(
-                                  ssid: value.chosenSSID,
+                                  "http://" + apiEndpointLanController.text);    
+                              value.configsList.add(ConfigurationModel(  
+                                  ssid: value.chosenSSID,           
                                   password: value.password,
-                                  refreshRate: value.RefreshRate,
+                                  refreshRate: value.RefreshRate,     
                                   cloudUser: value.cloudUsername,
                                   cloudPassword: value.cloudPassword,
                                   cloudMode: value.cloudMode,
@@ -491,7 +502,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                 controllerAddress:
                                     ControllerAddressController.text,
                               );
-                               if (value.generatorNameList.length != 1) {
+                               if (value.generatorNameList.length != 1) {  
                               SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
                               
@@ -579,13 +590,13 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                       value.chosenGeneratorName);
                               value.chosenGeneratorId = Chosen.generatorId;
                               await sharedPreferences.setStringList(
-                                  "genneratorNameList", gens);
+                                  "genneratorNameList", gens);   
                               if (value.option == 'cloud') {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            CloudDashboard_Index(
-                                                RefreshRate:
+                                            CloudDashboard_Index(  
+                                                RefreshRate:  
                                                     value.RefreshRate)));
                               } else if (value.option == 'comap') {
                                 Navigator.of(context).pushReplacement(
@@ -606,13 +617,21 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                               RefreshRate: value.RefreshRate,
                                             )));
                               }
-                              value.isNotFirstTime();
+                             value.isNotFirstTime();
                               prefs.setBool(
                                   prefs_DashboardFirstTimeAccess, false);
                               value.generatorNameList.removeWhere((generator) =>
                                   generator == value.chosenGeneratorName); 
                               }
-                            }),
+                                     
+                            }
+                            else{
+                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(       content: Text("Refreshing values..."),     ));
+
+                            }
+                          
+  }
+                            ),
   
                         SizedBox(height: 20),
                         SizedBox(
@@ -732,7 +751,7 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                 value.generatorNameList.removeWhere(
                                     (generator) =>
                                         generator == value.chosenGeneratorName);
-                              }
+                              }  
 
                               // prefs.setBool(
                               //     prefs_DashboardFirstTimeAccess, false);

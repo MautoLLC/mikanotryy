@@ -740,7 +740,7 @@ class _CloudDashboard_IndexState extends State<CloudDashboard_Index> {
                                   Column( 
                                     children: [
                                       SizedBox(
-                                        height: 10,
+                                        height: 10, 
                                       ),
                                       Row(
                                         children: [
