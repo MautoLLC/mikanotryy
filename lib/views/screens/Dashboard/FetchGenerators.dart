@@ -464,19 +464,38 @@ class _FetchGenerators  extends State<FetchGenerators>{
                             onPressed: () async {
                                // final response = await http.get(Uri.parse("http://" + apiEndpointLanController.text));
                               var dio = Dio();
-                           
-                           final response = await dio.get('http://'+ apiEndpointLanController.text +'/getValue?param=CoolantTemp');   
-                             if (response.statusCode == 200) {
-                                            
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();      
-                            
-                              value.setApiLanEndpoint(
-                                  "http://" + apiEndpointLanController.text);    
-                              value.configsList.add(ConfigurationModel(  
-                                  ssid: value.chosenSSID,           
+                              final response;
+                           try {
+                              response= await dio.get(
+                                 'http://' + apiEndpointLanController.text +
+                                     '/getValue?param=CoolantTemp');
+                              if (response.statusCode == 200) {
+
+                                SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                                value.setApiLanEndpoint(
+                                    "http://" + apiEndpointLanController.text);
+                                value.configsList.add(ConfigurationModel(
+                                    ssid: value.chosenSSID,
+                                    password: value.password,
+                                    refreshRate: value.RefreshRate,
+                                    cloudUser: value.cloudUsername,
+                                    cloudPassword: value.cloudPassword,
+                                    cloudMode: value.cloudMode,
+                                    generatorId: value.chosenGeneratorId,
+                                    generatorName: value.chosenGeneratorName,
+                                    espapiendpoint: apiEndpointLanController.text,
+                                    controllerAddress:
+                                    ControllerAddressController.text));
+                                prefs.setBool(
+                                    prefs_DashboardFirstTimeAccess, false);
+                                //await getListConfigurationModel();
+                                //configsList.add(ConfigurationModel(ssid:value.chosenSSID, password:value.password, refreshRate:value.RefreshRate, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: apiEndpointLanController.text));
+                                value.configModel = ConfigurationModel(
+                                  ssid: value.chosenSSID,
                                   password: value.password,
-                                  refreshRate: value.RefreshRate,     
+                                  refreshRate: value.RefreshRate,
                                   cloudUser: value.cloudUsername,
                                   cloudPassword: value.cloudPassword,
                                   cloudMode: value.cloudMode,
@@ -484,152 +503,135 @@ class _FetchGenerators  extends State<FetchGenerators>{
                                   generatorName: value.chosenGeneratorName,
                                   espapiendpoint: apiEndpointLanController.text,
                                   controllerAddress:
-                                      ControllerAddressController.text));
-                              prefs.setBool(
-                                  prefs_DashboardFirstTimeAccess, false);
-                              //await getListConfigurationModel();
-                              //configsList.add(ConfigurationModel(ssid:value.chosenSSID, password:value.password, refreshRate:value.RefreshRate, cloudUser: value.cloudUsername, cloudPassword: value.cloudPassword, cloudMode: value.cloudMode, generatorId: value.chosenGeneratorId,generatorName: value.chosenGeneratorName,espapiendpoint: apiEndpointLanController.text));
-                              value.configModel = ConfigurationModel(
-                                ssid: value.chosenSSID,
-                                password: value.password,
-                                refreshRate: value.RefreshRate,
-                                cloudUser: value.cloudUsername,
-                                cloudPassword: value.cloudPassword,
-                                cloudMode: value.cloudMode,
-                                generatorId: value.chosenGeneratorId,
-                                generatorName: value.chosenGeneratorName,
-                                espapiendpoint: apiEndpointLanController.text,
-                                controllerAddress:
-                                    ControllerAddressController.text,
-                              );
-                               if (value.generatorNameList.length != 1) {  
-                              SharedPreferences sharedPreferences =
+                                  ControllerAddressController.text,
+                                );
+                                if (value.generatorNameList.length != 1) {
+                                  SharedPreferences sharedPreferences =
                                   await SharedPreferences.getInstance();
-                              
-                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                              //String Configs=jsonEncode(value.ConfigurationModelsList);
-                              String Configs = jsonEncode(value.configsList);
-                              String SelectedConfigurationModel =
-                                  jsonEncode(value.configModel);
-                              await sharedPreferences.setString(
-                                  'Configurations', Configs);
-                              await sharedPreferences.setString(
-                                  'SelectedConfigurationModel', 
-                                  SelectedConfigurationModel);
-                              sharedPreferences.setBool(
-                                  prefs_DashboardFirstTimeAccess, false);
-                                  value.generatorNameList.removeWhere((generator) =>
-                                  generator == value.chosenGeneratorName); 
-                              value.chosenGeneratorName =
-                                  value.generatorNameList.elementAt(0);                                                   
-                              List<String> gens = await sharedPreferences
-                                  .getStringList("generatorNameList")!;
-                              gens.remove(value.chosenGeneratorName);
-                              Generator Chosen = value.gens.firstWhere(
-                                  (element) =>
-                                      element.name ==
-                                      value.chosenGeneratorName);
-                              value.chosenGeneratorId = Chosen.generatorId;
-                              await sharedPreferences.setStringList(
-                                  "genneratorNameList", gens);
-                              if (value.option == 'cloud') {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CloudDashboard_Index(
-                                                RefreshRate:
-                                                    value.RefreshRate)));
-                              } else if (value.option == 'comap') {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Dashboard_Index()));
-                              } else {
-                                //added by youssef k to initialize the background lan notification service//
-                                if(await prefs.getBool("FirstLanGen")==null) {
-                                  await initializeService();
-                                }
-                                await prefs.setBool("FirstLanGen", false);
-                                ///////////////////////////////////////////////////////////////////////////
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            LanDashboard_Index(
-                                              RefreshRate: value.RefreshRate,
-                                            )));
-                              }
-                              value.isNotFirstTime();
-                              prefs.setBool(
-                                  prefs_DashboardFirstTimeAccess, false);
-                               }
-                              else if (value.generatorNameList.length == 1) {
-                                SharedPreferences sharedPreferences =
-                                  await SharedPreferences.getInstance();
-                              
-                              //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
-                              //String Configs=jsonEncode(value.ConfigurationModelsList);
-                              String Configs = jsonEncode(value.configsList);
-                              String SelectedConfigurationModel =
-                                  jsonEncode(value.configModel);
-                              await sharedPreferences.setString(
-                                  'Configurations', Configs);
-                              await sharedPreferences.setString(
-                                  'SelectedConfigurationModel', 
-                                  SelectedConfigurationModel);
-                              sharedPreferences.setBool(
-                                  prefs_DashboardFirstTimeAccess, false);
-            
-                              value.chosenGeneratorName =
-                                  value.generatorNameList.elementAt(0);                                                   
-                              List<String> gens = await sharedPreferences
-                                  .getStringList("generatorNameList")!;
-                              gens.remove(value.chosenGeneratorName);
-                              Generator Chosen = value.gens.firstWhere(
-                                  (element) =>
-                                      element.name ==
-                                      value.chosenGeneratorName);
-                              value.chosenGeneratorId = Chosen.generatorId;
-                              await sharedPreferences.setStringList(
-                                  "genneratorNameList", gens);   
-                              if (value.option == 'cloud') {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CloudDashboard_Index(  
-                                                RefreshRate:  
-                                                    value.RefreshRate)));
-                              } else if (value.option == 'comap') {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Dashboard_Index()));
-                              } else {
-                                //added by youssef k to initialize the background lan notification service//
-                                if(await prefs.getBool("FirstLanGen")==null) {
-                                  await initializeService();
-                                }
-                                await prefs.setBool("FirstLanGen", false);
-                                ///////////////////////////////////////////////////////////////////////////
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            LanDashboard_Index(
-                                              RefreshRate: value.RefreshRate,
-                                            )));
-                              }
-                             value.isNotFirstTime();
-                              prefs.setBool(
-                                  prefs_DashboardFirstTimeAccess, false);
-                              value.generatorNameList.removeWhere((generator) =>
-                                  generator == value.chosenGeneratorName); 
-                              }
-                                     
-                            }
-                            else{
-                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(       content: Text("Refreshing values..."),     ));
 
-                            }
-                          
+                                  //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                  //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                  String Configs = jsonEncode(value.configsList);
+                                  String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                                  await sharedPreferences.setString(
+                                      'Configurations', Configs);
+                                  await sharedPreferences.setString(
+                                      'SelectedConfigurationModel',
+                                      SelectedConfigurationModel);
+                                  sharedPreferences.setBool(
+                                      prefs_DashboardFirstTimeAccess, false);
+                                  value.generatorNameList.removeWhere((generator) =>
+                                  generator == value.chosenGeneratorName);
+                                  value.chosenGeneratorName =
+                                      value.generatorNameList.elementAt(0);
+                                  List<String> gens = await sharedPreferences
+                                      .getStringList("generatorNameList")!;
+                                  gens.remove(value.chosenGeneratorName);
+                                  Generator Chosen = value.gens.firstWhere(
+                                          (element) =>
+                                      element.name ==
+                                          value.chosenGeneratorName);
+                                  value.chosenGeneratorId = Chosen.generatorId;
+                                  await sharedPreferences.setStringList(
+                                      "genneratorNameList", gens);
+                                  if (value.option == 'cloud') {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CloudDashboard_Index(
+                                                    RefreshRate:
+                                                    value.RefreshRate)));
+                                  } else if (value.option == 'comap') {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Dashboard_Index()));
+                                  } else {
+                                    //added by youssef k to initialize the background lan notification service//
+                                    if(await prefs.getBool("FirstLanGen")==null) {
+                                      await initializeService();
+                                    }
+                                    await prefs.setBool("FirstLanGen", false);
+                                    ///////////////////////////////////////////////////////////////////////////
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LanDashboard_Index(
+                                                  RefreshRate: value.RefreshRate,
+                                                )));
+                                  }
+                                  value.isNotFirstTime();
+                                  prefs.setBool(
+                                      prefs_DashboardFirstTimeAccess, false);
+                                }
+                                else if (value.generatorNameList.length == 1) {
+                                  SharedPreferences sharedPreferences =
+                                  await SharedPreferences.getInstance();
+
+                                  //List<String> ConfigsEncoded = value.ConfigurationModelsList.map((config) => jsonEncode(ConfigurationModel.toJson())).;
+                                  //String Configs=jsonEncode(value.ConfigurationModelsList);
+                                  String Configs = jsonEncode(value.configsList);
+                                  String SelectedConfigurationModel =
+                                  jsonEncode(value.configModel);
+                                  await sharedPreferences.setString(
+                                      'Configurations', Configs);
+                                  await sharedPreferences.setString(
+                                      'SelectedConfigurationModel',
+                                      SelectedConfigurationModel);
+                                  sharedPreferences.setBool(
+                                      prefs_DashboardFirstTimeAccess, false);
+
+                                  value.chosenGeneratorName =
+                                      value.generatorNameList.elementAt(0);
+                                  List<String> gens = await sharedPreferences
+                                      .getStringList("generatorNameList")!;
+                                  gens.remove(value.chosenGeneratorName);
+                                  Generator Chosen = value.gens.firstWhere(
+                                          (element) =>
+                                      element.name ==
+                                          value.chosenGeneratorName);
+                                  value.chosenGeneratorId = Chosen.generatorId;
+                                  await sharedPreferences.setStringList(
+                                      "genneratorNameList", gens);
+                                  if (value.option == 'cloud') {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CloudDashboard_Index(
+                                                    RefreshRate:
+                                                    value.RefreshRate)));
+                                  } else if (value.option == 'comap') {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Dashboard_Index()));
+                                  } else {
+                                    //added by youssef k to initialize the background lan notification service//
+                                    if(await prefs.getBool("FirstLanGen")==null) {
+                                      await initializeService();
+                                    }
+                                    await prefs.setBool("FirstLanGen", false);
+                                    ///////////////////////////////////////////////////////////////////////////
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LanDashboard_Index(
+                                                  RefreshRate: value.RefreshRate,
+                                                )));
+                                  }
+                                  value.isNotFirstTime();
+                                  prefs.setBool(
+                                      prefs_DashboardFirstTimeAccess, false);
+                                  value.generatorNameList.removeWhere((generator) =>
+                                  generator == value.chosenGeneratorName);
+                                }
+
+                              }
+                           }
+                          on Exception catch (_) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(       content: Text("Api EndPoint Not Valid !"),     ));
+                          }
   }
                             ),
   
