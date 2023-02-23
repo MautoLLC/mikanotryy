@@ -20,4 +20,8 @@
 ## distribution for google play store
 
 1. flutter build appbundle
-## to run the second main use the command : flutter run -t lib/secondmain.dart
+
+## Generator Dashboard:
+1. Make it as a standalone web application.
+2. Building a second main that only access the generator dashboard.
+3. To run the second main use the command : flutter run -t lib/secondmain.dart
