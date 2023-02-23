@@ -20,3 +20,4 @@
 ## distribution for google play store
 
 1. flutter build appbundle
+## to run the second main use the command : flutter run -t lib/secondmain.dart
