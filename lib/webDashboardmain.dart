@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:dio/adapter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +17,10 @@ import 'package:mymikano_app/State/LanGeneratorState.dart';
 import 'package:mymikano_app/State/NotificationState.dart';
 import 'package:mymikano_app/State/RequestFormState.dart';
 import 'package:mymikano_app/State/WSVGeneratorState.dart';
-import 'package:mymikano_app/services/pushNotificationService.dart';
+import 'package:mymikano_app/services/pushNotificationService.dart';  
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/AlarmPage.dart';
+import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPagee.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/NotificationPage.dart';
@@ -35,11 +38,12 @@ import 'State/PDFState.dart';
 import 'State/ProductState.dart';
 import 'State/UserState.dart';
 import 'models/LanAlarm.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 final GlobalKey<NavigatorState> navigator =
     GlobalKey<NavigatorState>(); //Create a key for navigator
 
 Future<void> main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   //aded by yousef k for lan notification
   AwesomeNotifications().initialize(
@@ -65,8 +69,20 @@ Future<void> main() async {
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
           )));
-  await Firebase.initializeApp();
+ await Firebase.initializeApp(
+   
+    options: FirebaseOptions(
+     apiKey: "AIzaSyCR4VDiB4LS6gbbRnNt4fQFsvDtpX02qLU",
+   authDomain: "mymikano.firebaseapp.com",
+   projectId: "mymikano",
+   storageBucket: "mymikano.appspot.com",
+   messagingSenderId: "612745398831",
+   appId: "1:612745398831:web:98c04e6a827cb7212954da",
+   measurementId: "G-RZDFLJFHZD"
+    ),
+  );
   await dotenv.load(fileName: ".env");
+   
   runApp(MyApp());
 }
 
@@ -119,7 +135,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.red,
             scaffoldBackgroundColor: Colors.white,
             fontFamily: PoppinsFamily),
-        home: new SplashScreen(),
+        home: new ApiConfigurationPagee(), 
       ),
     );
   }

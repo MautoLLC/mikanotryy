@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:dio/adapter.dart';
+import 'package:dio/adapter_browser.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart';
@@ -94,12 +96,16 @@ class ApiConfigurationService {
   Future<List<Generator>> getGeneratorsOfUser(String cloudUsername, String cloudPassword,String DeviceToken) async {
     List<Generator> generators = [];
     Dio dio = Dio();
+    if (kIsWeb) {
+  dio.httpClientAdapter = BrowserHttpClientAdapter();
+} else{
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
       return null;  
     };
+}
     try {
       final responseAuth = await dio.post(cloudIotMautoAuthUrl,
           options: Options(
@@ -117,7 +123,7 @@ class ApiConfigurationService {
       if (isAuthenticated == false) {
         return [];
       }
-      final token = (responseAuth.data)['token'];
+      final token = (responseAuth.data)['token'];  
       final userID = (responseAuth.data)['id'];
      
       SharedPreferences prefs = await SharedPreferences.getInstance();
