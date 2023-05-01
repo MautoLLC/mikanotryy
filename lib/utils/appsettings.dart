@@ -2,16 +2,16 @@ const bool isProduction = false;
 
 const KeyCloakBaseUrl = isProduction
     ? 'https://authorization.mikano-intl.com'
-    : 'https://dev.mauto.co';
+    : 'https://authorization.codepickles.com';
 const identifier = 'MymikanoApp';
-const secret = '45475923-b3ef-46c5-aa70-79475824d3f9';
+const secret = 'Wy2JMrLhbLBs239nxmONV1RtsXAemx88';
 const authorizationEndpoint =
     '$KeyCloakBaseUrl/auth/realms/master/protocol/openid-connect/token';
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 
 const userApiUrl = isProduction
     ? 'https://services.mikano-intl.com/users-api'
-    : 'http://dev.codepickles.com:8083';
+    : 'https://maintenancecms.codepickles.com/users-api';
 const UserURL = '$userApiUrl/api/Users';
 const userEditInfoUrl = '$userApiUrl/api/Users/{id}';
 const userGetInfoUrl = '$userApiUrl/api/Users/{id}';
@@ -28,7 +28,7 @@ const MikanoShopResetPassword = '$userApiUrl/api/Users/reset-credentials';
 
 const MaintenanceApiBaseUrl = isProduction
     ? 'https://services.mikano-intl.com/maintenance-api'
-    : 'http://dev.codepickles.com:8085';
+    : 'https://maintenancecms.codepickles.com/maintenance-api';
 const GetMainCategoriesURL =
     '$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';
 const GetSubCategoriesURL =
@@ -52,7 +52,7 @@ const MikanoCarouselImagesUrl = '$MaintenanceApiBaseUrl/api/carousel-images';
 
 const InspectionApiBaseUrl = isProduction
     ? 'https://services.mikano-intl.com/inspection-api'
-    : 'http://dev.codepickles.com:8087';
+    : 'https://maintenancecms.codepickles.com/inspection-api';
 const GetInspectionURL = '$InspectionApiBaseUrl/api/Inspections/';
 const GetTechnicianInspectionURL =
     '$InspectionApiBaseUrl/api/Inspections/TechnicianInspections/';
@@ -114,7 +114,7 @@ const MikanoShopRfq = "$MikanoShopMainURl/rfq";
 
 const MikanoLoadCalculationURL = isProduction
     ? "https://services.mikano-intl.com/load-calculation-api/api"
-    : "http://dev.codepickles.com:8095/api";
+    : "https://maintenancecms.codepickles.com/load-calculation-api/api";
 const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
 const MikanoLoadCalculationCalculateKVA =
     "$MikanoLoadCalculationURL/LoadCalculation/{utils}";
@@ -130,16 +130,16 @@ const MikanoLoadCalculationCalculation =
 
 const LoginUrl = isProduction
     ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Login"
-    : "http://dev.codepickles.com:8096/api/Authorization/Login";
+    : "https://maintenancecms.codepickles.com/mediator-api/api/Authorization/Login";
 const RegisterUrl = isProduction
     ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Register"
-    : "http://dev.codepickles.com:8096/api/Authorization/Register";
+    : "https://maintenancecms.codepickles.com/mediator-api/api/Authorization/Register";
 const NotificationsUrl = isProduction
     ? "https://services.mikano-intl.com/mediator-api/api/Notifications"
-    : "http://dev.codepickles.com:8096/api/Notifications";
+    : "https://maintenancecms.codepickles.com/mediator-api/api/Notifications";
 const NotificationsDeleteUrl = isProduction
     ? "https://services.mikano-intl.com/mediator-api/api/Notifications/{id}"
-    : "http://dev.codepickles.com:8096/api/Notifications/{id}";
+    : "https://maintenancecms.codepickles.com/api/Notifications/{id}";
 
 const mainAppName = 'My Mikano App';
 
@@ -176,6 +176,6 @@ const resetESPUrl = "http://" + lanESPUrl + "/reset";
 
 const LocationUrl = isProduction
     ? 'https://services.mikano-intl.com/location-tracking-api'
-    : 'http://dev.codepickles.com:8094';
+    : 'https://maintenancecms.codepickles.com/location-tracking-api';
 const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
 const LocationByDeviceUrl = '$LocationUrl/api/TrackedUsers/Location';
