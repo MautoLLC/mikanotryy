@@ -270,7 +270,7 @@ class CheckoutScreen extends StatelessWidget {
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.BOTTOM,
                                     timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
+                                    backgroundColor: const Color(0xFF076834),
                                     textColor: Colors.white,
                                     fontSize: 16.0);
                               }

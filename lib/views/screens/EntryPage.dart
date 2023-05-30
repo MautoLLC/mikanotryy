@@ -28,8 +28,10 @@ class _EntryPageState extends State<EntryPage>
               children: <Widget>[
                 Spacer(),
                 Spacer(),
-                commonCacheImageWidget(Splash_Screen_Mikano_Logo, 205,
-                    fit: BoxFit.fill),
+                Padding(padding:EdgeInsets.fromLTRB(25, 0, 25, 0),child:
+                commonCacheImageWidget(Splash_Screen_Mikano_Logo, 100,
+                    fit: BoxFit.contain),
+                ),
                 Spacer(),
                 GestureDetector(
                   onTap: () {

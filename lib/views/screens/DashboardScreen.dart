@@ -218,7 +218,7 @@ class DashboardState extends State<Dashboard> {
                     height: 40,
                   ),
                   Container(
-                    color: Colors.red,
+                    color: const Color(0xFF076834),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
@@ -382,7 +382,7 @@ class DashboardState extends State<Dashboard> {
                     height: 40,
                   ),
                   Container(
-                    color: Colors.red,
+                    color: const Color(0xFF076834),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
@@ -486,7 +486,7 @@ class DashboardState extends State<Dashboard> {
                     height: 40,
                   ),
                   Container(
-                    color: Colors.red,
+                    color: const Color(0xFF076834),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(

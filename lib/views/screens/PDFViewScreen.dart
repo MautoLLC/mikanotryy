@@ -45,7 +45,7 @@ class PDFViewScreen extends StatelessWidget {
                       child: Expanded(
                         child: LinearProgressIndicator(
                           backgroundColor: Colors.transparent,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                          valueColor: AlwaysStoppedAnimation<Color>(const Color(0xFF076834)),
                         ),
                       ),
                     ),

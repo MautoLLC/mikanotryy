@@ -5,8 +5,8 @@ const ic_electricity = "assets/electricity.png";
 const ic_steel = "assets/steel_i_beam.png";
 
 // Auth Pages
-const login_Page_PNG = "assets/Login.jpg";
-const Splash_Screen_Mikano_Logo = "assets/SplashScreenMikanoLogo.png";
+const login_Page_PNG = "assets/Login.png";
+const Splash_Screen_Mikano_Logo = "assets/SplashScreenMikanoLogo.jpeg";
 const ForgotPassword_Screen_PNG = "assets/ForgotPassword.png";
 
 // Social Media Icons
@@ -46,7 +46,8 @@ const ic_Cart = "assets/cart.png";
 const ic_Location_Pin = "assets/icons8-location.png";
 const ic_error = "assets/icons8-error.png";
 
-const ic_AppLogo = "assets/MyMikanoLogo2.png";
+//const ic_AppLogo = "assets/MyMikanoLogo2.png";
+const ic_AppLogo = "assets/MyMikanoLogo2.jpeg";
 const ic_Filter = "assets/icons8-conversion.png";
 const ic_sorting = "assets/icons8-sorting.png";
 

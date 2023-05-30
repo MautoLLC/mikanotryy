@@ -75,6 +75,19 @@ Future<void> main() async {
 
 
 class MyApp extends StatelessWidget {
+  MaterialColor primaryColor = MaterialColor(0xFF076834, <int, Color>{
+    50: Color(0xFF076834),
+    100: Color(0xFF076834),
+    200: Color(0xFF076834),
+    300: Color(0xFF076834),
+    400: Color(0xFF076834),
+    500: Color(0xFF076834),
+    600: Color(0xFF076834),
+    700: Color(0xFF076834),
+    800: Color(0xFF076834),
+    900: Color(0xFF076834)
+  },
+  );
   @override
   Widget build(BuildContext context) {
     FirebaseMessaging _fcm = FirebaseMessaging.instance;
@@ -117,7 +130,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigator,
         title: 'My Mikano',
         theme: ThemeData(
-            primarySwatch: Colors.red,
+            primarySwatch: primaryColor,
             scaffoldBackgroundColor: Colors.white,
             fontFamily: PoppinsFamily),
         home: new ApiConfigurationPagee(),

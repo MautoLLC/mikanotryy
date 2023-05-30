@@ -63,10 +63,10 @@ class _RecorderState extends State<Recorder> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red, width: 2),
+                    border: Border.all(color:const Color(0xFF076834), width: 2),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.mic, color: Colors.red),
+                  child: Icon(Icons.mic, color:const Color(0xFF076834)),
                 ),
               )
             : Row(
@@ -131,7 +131,7 @@ class _RecorderState extends State<Recorder> {
     setState(() {
       canRecord = true;
       _recordIcon = Icons.pause;
-      colo = Colors.red;
+      colo = const Color(0xFF076834);
     });
   }
 
@@ -163,7 +163,7 @@ class _RecorderState extends State<Recorder> {
       Fluttertoast.showToast(msg: "Start Recording");
       setState(() {
         _recordIcon = Icons.pause;
-        colo = Colors.red;
+        colo = const Color(0xFF076834);
         stop = true;
       });
     } else {

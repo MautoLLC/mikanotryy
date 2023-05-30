@@ -57,6 +57,7 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_background_service: ^2.4.6
   awesome_notifications: ^0.6.19
+
 #  flutter_absolute_path:
 #    git:
 #      url: https://github.com/kornperkus/flutter_absolute_path.git
@@ -72,7 +73,8 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "images/MyMikanoLogo.png"
+  image_path: "assets/Mautoicon.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

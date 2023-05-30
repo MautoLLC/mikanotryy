@@ -854,7 +854,7 @@ class MaintenanceRequestScreenState extends State<MaintenanceRequestScreen> {
                         child: Icon(
                           Icons.cancel,
                           size: 24,
-                          color: Colors.red,
+                          color:const Color(0xFF076834),
                         ),
                         onTap: () {
                           setState(() {

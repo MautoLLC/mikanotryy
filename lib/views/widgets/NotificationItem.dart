@@ -38,7 +38,7 @@ class NotificationItem extends StatelessWidget {
                   )
                 : Image.asset(
                     'assets/Alarms-notifications-icon.png',
-                    color: Colors.red,
+              color: const Color(0xFF076834),
                     width: 35,
                   ),
           ),

@@ -49,7 +49,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: commonCacheImageWidget(Splash_Screen_Mikano_Logo, 200),
+        child:  Padding(padding:EdgeInsets.fromLTRB(25, 0, 25, 0),child:
+        commonCacheImageWidget(Splash_Screen_Mikano_Logo, 100,
+            fit: BoxFit.contain),
+        ),
       ),
     );
   }
