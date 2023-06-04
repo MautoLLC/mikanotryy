@@ -89,7 +89,7 @@ class DashboardState extends State<Dashboard> {
                                       height: 50, width: 50))),
                           Align(
                               alignment: Alignment.center,
-                              child: commonCacheImageWidget(ic_AppLogo, 60)),
+                              child: commonCacheImageWidget(ic_AppLogo, 35)),
                           !guestLogin
                               ? Align(
                                   alignment: Alignment.centerRight,
