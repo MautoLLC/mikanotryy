@@ -1,7 +1,7 @@
 const bool isProduction = false;
 
 const KeyCloakBaseUrl = isProduction
-    ? 'https://authorization.mikano-intl.com'
+    ? 'https://authorization.mikano.com'
     : 'https://authorization.codepickles.com';
 const identifier = 'MymikanoApp';
 const secret = 'Wy2JMrLhbLBs239nxmONV1RtsXAemx88';
@@ -10,7 +10,7 @@ const authorizationEndpoint =
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
 
 const userApiUrl = isProduction
-    ? 'https://services.mikano-intl.com/users-api'
+    ? 'https://services.mikano.com/users-api'
     : 'https://maintenancecms.codepickles.com/users-api';
 const UserURL = '$userApiUrl/api/Users';
 const userEditInfoUrl = '$userApiUrl/api/Users/{id}';
@@ -27,7 +27,7 @@ const MikanoShopSetNotificationsState =
 const MikanoShopResetPassword = '$userApiUrl/api/Users/reset-credentials';
 
 const MaintenanceApiBaseUrl = isProduction
-    ? 'https://services.mikano-intl.com/maintenance-api'
+    ? 'https://services.mikano.com/maintenance-api'
     : 'https://maintenancecms.codepickles.com/maintenance-api';
 const GetMainCategoriesURL =
     '$MaintenanceApiBaseUrl/api/RealEstateMaintenanceCategories/MainRealEstateMaintenanceCategories';
@@ -51,7 +51,7 @@ const MikanoCompanyInfoUrl = '$MaintenanceApiBaseUrl/api/Company';
 const MikanoCarouselImagesUrl = '$MaintenanceApiBaseUrl/api/carousel-images';
 
 const InspectionApiBaseUrl = isProduction
-    ? 'https://services.mikano-intl.com/inspection-api'
+    ? 'https://services.mikano.com/inspection-api'
     : 'https://maintenancecms.codepickles.com/inspection-api';
 const GetInspectionURL = '$InspectionApiBaseUrl/api/Inspections/';
 const GetTechnicianInspectionURL =
@@ -79,7 +79,7 @@ const ChangeComponentStatusURL =
     '$InspectionApiBaseUrl/api/Inspections/InspectionChecklistItem?inspectionChecklistItemID={inspectionChecklistItemID}&componentStatusID={componentStatusID}';
 
 const MikanoShopMainURl = isProduction
-    ? 'Https://shop.mikano-intl.com/api'
+    ? 'Https://shop.mikano.com/api'
     : 'http://mikanoshop.mauto.co/api';
 const MikanoShopTokenURL = '$MikanoShopMainURl/token';
 const MikanoShopGetAllProductsURL = '$MikanoShopMainURl/products';
@@ -113,7 +113,7 @@ const MikanoShopCategoriesKva =
 const MikanoShopRfq = "$MikanoShopMainURl/rfq";
 
 const MikanoLoadCalculationURL = isProduction
-    ? "https://services.mikano-intl.com/load-calculation-api/api"
+    ? "https://services.mikano.com/load-calculation-api/api"
     : "https://maintenancecms.codepickles.com/load-calculation-api/api";
 const MikanoLoadCalculationCategories = "$MikanoLoadCalculationURL/Categories";
 const MikanoLoadCalculationCalculateKVA =
@@ -129,16 +129,16 @@ const MikanoLoadCalculationCalculation =
     "$MikanoLoadCalculationURL/LoadCalculation/{util}";
 
 const LoginUrl = isProduction
-    ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Login"
+    ? "https://services.mikano.com/mediator-api/api/Authorization/Login"
     : "https://maintenancecms.codepickles.com/mediator-api/api/Authorization/Login";
 const RegisterUrl = isProduction
-    ? "https://services.mikano-intl.com/mediator-api/api/Authorization/Register"
+    ? "https://services.mikano.com/mediator-api/api/Authorization/Register"
     : "https://maintenancecms.codepickles.com/mediator-api/api/Authorization/Register";
 const NotificationsUrl = isProduction
-    ? "https://services.mikano-intl.com/mediator-api/api/Notifications"
+    ? "https://services.mikano.com/mediator-api/api/Notifications"
     : "https://maintenancecms.codepickles.com/mediator-api/api/Notifications";
 const NotificationsDeleteUrl = isProduction
-    ? "https://services.mikano-intl.com/mediator-api/api/Notifications/{id}"
+    ? "https://services.mikano.com/mediator-api/api/Notifications/{id}"
     : "https://maintenancecms.codepickles.com/api/Notifications/{id}";
 
 const mainAppName = 'My Mikano App';
@@ -175,7 +175,7 @@ const lanESPUrl = "espapiendpoint";
 const resetESPUrl = "http://" + lanESPUrl + "/reset";
 
 const LocationUrl = isProduction
-    ? 'https://services.mikano-intl.com/location-tracking-api'
+    ? 'https://services.mikano.com/location-tracking-api'
     : 'https://maintenancecms.codepickles.com/location-tracking-api';
 const LocationSettingsUrl = '$LocationUrl/api/LocationSettings';
 const LocationByDeviceUrl = '$LocationUrl/api/TrackedUsers/Location';
