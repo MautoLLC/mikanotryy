@@ -1,10 +1,12 @@
-const bool isProduction = false;
+const bool isProduction = true;
 
 const KeyCloakBaseUrl = isProduction
     ? 'https://authorization.mikano.com'
     : 'https://authorization.codepickles.com';
 const identifier = 'MymikanoApp';
-const secret = 'Wy2JMrLhbLBs239nxmONV1RtsXAemx88';
+const secret = isProduction
+            ? '9817dbef-c26a-420d-abac-63b4b296cc1e'
+            : 'Wy2JMrLhbLBs239nxmONV1RtsXAemx88';
 const authorizationEndpoint =
     '$KeyCloakBaseUrl/auth/realms/master/protocol/openid-connect/token';
 const RegisterUserURL = '$KeyCloakBaseUrl/auth/admin/realms/master/users';
