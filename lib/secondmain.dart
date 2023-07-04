@@ -18,7 +18,6 @@ import 'package:mymikano_app/State/WSVGeneratorState.dart';
 import 'package:mymikano_app/services/pushNotificationService.dart';
 import 'package:mymikano_app/utils/appsettings.dart';
 import 'package:mymikano_app/views/screens/Dashboard/AlarmPage.dart';
-import 'package:mymikano_app/views/screens/Dashboard/ApiConfigurationPagee.dart';
 import 'package:mymikano_app/views/screens/Dashboard/Dashboard_Index.dart';
 import 'package:mymikano_app/views/screens/Dashboard/GeneratorAlertsPage.dart';
 import 'package:mymikano_app/views/screens/Dashboard/NotificationPage.dart';
@@ -120,7 +119,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.red,
             scaffoldBackgroundColor: Colors.white,
             fontFamily: PoppinsFamily),
-        home: new ApiConfigurationPagee(),
+        home: new SplashScreen(),
       ),
     );
   }
